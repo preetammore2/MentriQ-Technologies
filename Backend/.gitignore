@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Secret files
+.env
+.env.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Production
+dist/
+build/
+
+# Uploads
+uploads/
+
+# Vercel
+.vercel/
