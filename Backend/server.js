@@ -45,14 +45,14 @@ app.use("/api/", limiter);
 
 const envOrigins = (process.env.CORS_ORIGINS || "")
   .split(",")
-  .map((origin) => origin.trim())
+  .map((origin) => origin.trim().replace(/\/$/, ""))
   .filter(Boolean);
 
 const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    process.env.CLIENT_URL,
+    process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null,
     ...envOrigins
   ].filter(Boolean)
 );
