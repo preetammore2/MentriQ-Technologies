@@ -3,6 +3,7 @@ import { apiClient as api } from "../../utils/apiClient";
 import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
+import { resolveImageUrl } from "../../utils/imageUtils";
 
 const MentorManagement = () => {
     const [mentors, setMentors] = useState([]);
@@ -17,17 +18,10 @@ const MentorManagement = () => {
         role: "",
         company: "",
         bio: "",
-        imageUrl: "",
-        linkedinUrl: ""
+        image: "",
+        linkedin: ""
     };
     const [formData, setFormData] = useState(initialFormState);
-
-    const getImageUrl = (path) => {
-        if (!path) return null;
-        if (path.startsWith('http')) return path;
-        const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || 'http://localhost:5000';
-        return `${baseUrl}${path}`;
-    };
 
     const fetchMentors = async () => {
         try {
@@ -58,7 +52,8 @@ const MentorManagement = () => {
             const { data } = await api.post('/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            return data.imagePath;
+            // upload route returns plain string path
+            return typeof data === "string" ? data : data?.imagePath || data?.path || "";
         } catch (error) {
             toast.error('Image upload failed');
             return null;
@@ -68,13 +63,18 @@ const MentorManagement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let finalImageUrl = formData.imageUrl;
+            let finalImageUrl = formData.image;
             if (imageFile) {
                 const uploadedPath = await handleImageUpload(imageFile);
                 if (uploadedPath) finalImageUrl = uploadedPath;
             }
 
-            const payload = { ...formData, imageUrl: finalImageUrl };
+            const payload = {
+                ...formData,
+                image: finalImageUrl,
+                imageUrl: undefined,
+                linkedinUrl: formData.linkedin
+            };
 
             if (editingMentor) {
                 await api.put(`/mentors/${editingMentor._id}`, payload);
@@ -106,16 +106,16 @@ const MentorManagement = () => {
 
     const openEditModal = (mentor) => {
         setEditingMentor(mentor);
-        setFormData({
-            name: mentor.name,
-            role: mentor.role,
-            company: mentor.company,
-            bio: mentor.bio,
-            imageUrl: mentor.imageUrl || "",
-            linkedinUrl: mentor.linkedinUrl || ""
-        });
-        setIsModalOpen(true);
-    };
+            setFormData({
+                name: mentor.name,
+                role: mentor.role,
+                company: mentor.company,
+                bio: mentor.bio || mentor.description || "",
+                image: mentor.image || mentor.imageUrl || "",
+                linkedin: mentor.linkedin || mentor.linkedinUrl || ""
+            });
+            setIsModalOpen(true);
+        };
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -174,9 +174,9 @@ const MentorManagement = () => {
                             </thead>
                             <tbody className="divide-y divide-white/5">
                                 <AnimatePresence mode="popLayout">
-                                    {mentors.map((mentor) => (
-                                        <motion.tr
-                                            key={mentor._id}
+                                        {mentors.map((mentor) => (
+                                            <motion.tr
+                                                key={mentor._id}
                                             layout
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
@@ -186,8 +186,8 @@ const MentorManagement = () => {
                                             <td className="px-6 py-5">
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-12 h-12 rounded-xl overflow-hidden bg-indigo-500/10 border border-indigo-500/20 shrink-0 shadow-lg">
-                                                        {mentor.imageUrl ? (
-                                                            <img src={getImageUrl(mentor.imageUrl)} alt={mentor.name} className="w-full h-full object-cover" />
+                                                        {mentor.image || mentor.imageUrl ? (
+                                                            <img src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")} alt={mentor.name} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center text-indigo-400 font-bold">
                                                                 {mentor.name.charAt(0)}
@@ -196,8 +196,8 @@ const MentorManagement = () => {
                                                     </div>
                                                     <div>
                                                         <div className="font-bold text-white text-sm">{mentor.name}</div>
-                                                        {mentor.linkedinUrl && (
-                                                            <a href={mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold">
+                                                        {(mentor.linkedin || mentor.linkedinUrl) && (
+                                                            <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold">
                                                                 <Linkedin size={10} /> LinkedIn
                                                             </a>
                                                         )}
@@ -262,8 +262,8 @@ const MentorManagement = () => {
                                         <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center group-hover:border-indigo-500/50 transition-all">
                                             {imageFile ? (
                                                 <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
-                                            ) : formData.imageUrl ? (
-                                                <img src={getImageUrl(formData.imageUrl)} alt="Current" className="w-full h-full object-cover" />
+                                            ) : formData.image ? (
+                                                <img src={resolveImageUrl(formData.image, "/images/user.png")} alt="Current" className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors">
                                                     <User size={32} strokeWidth={1.5} />
@@ -294,6 +294,7 @@ const MentorManagement = () => {
                                     <div className="col-span-2 space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
                                         <input value={formData.linkedinUrl} onChange={e => setFormData({ ...formData, linkedinUrl: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="https://linkedin.com/in/unique-id" />
+                                        <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="https://linkedin.com/in/unique-id" />
                                     </div>
                                     <div className="col-span-2 space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expert Profile Brief</label>
