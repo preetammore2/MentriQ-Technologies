@@ -3,7 +3,7 @@ import { motion, useTransform, useMotionValue, useAnimationFrame, useSpring } fr
 import { apiClient as api } from '../../utils/apiClient';
 import { resolveImageUrl } from '../../utils/imageUtils';
 
-const MENTORS_DATA = [
+const FALLBACK_MENTORS = [
     {
         name: "Litesh Singh", image: "/images/litesh.jpg", description: "5+ Years Experience in Automation and Deveops", stats: [
             { value: "5+", label: "Years" },
@@ -102,10 +102,11 @@ const MENTORS_DATA = [
     },
 ];
 
+const MotionDiv = motion.div;
+const MotionH3 = motion.h3;
+
 const MentorCard = ({ item, scrollX, index, totalItems }) => {
     const cardRef = useRef(null);
-    if (!item) return null;
-
     const CARD_WIDTH = 350;
     const GAP = 52;
     const FULL_STEP = CARD_WIDTH + GAP;
@@ -259,12 +260,11 @@ const MentorCard = ({ item, scrollX, index, totalItems }) => {
 };
 
 const MentorsSection = () => {
-    const [mentors, setMentors] = useState(MENTORS_DATA);
+    const [mentors, setMentors] = useState(FALLBACK_MENTORS);
 
     const rawScrollX = useMotionValue(0);
     const scrollX = useSpring(rawScrollX, { damping: 50, stiffness: 400, mass: 0.5 });
 
-    /* 
     useEffect(() => {
         const fetchMentors = async () => {
             try {
@@ -278,8 +278,6 @@ const MentorsSection = () => {
         };
         fetchMentors();
     }, []);
-    */
-
 
     useAnimationFrame((t, d) => {
         const moveBy = -1.5 * (d / 16);
