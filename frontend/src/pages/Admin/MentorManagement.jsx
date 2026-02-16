@@ -16,10 +16,12 @@ const MentorManagement = () => {
     const initialFormState = {
         name: "",
         role: "",
-        company: "",
+        company: "", // Note: Schema might allow arbitrary fields or we use role/description
         bio: "",
         image: "",
-        linkedin: ""
+        linkedin: "",
+        yearsExperience: "",
+        projectsCompleted: ""
     };
     const [formData, setFormData] = useState(initialFormState);
 
@@ -73,7 +75,11 @@ const MentorManagement = () => {
                 ...formData,
                 image: finalImageUrl,
                 imageUrl: undefined,
-                linkedinUrl: formData.linkedin
+                linkedinUrl: formData.linkedin,
+                stats: [
+                    { value: formData.yearsExperience, label: "Years" },
+                    { value: formData.projectsCompleted, label: "Projects" }
+                ]
             };
 
             if (editingMentor) {
@@ -106,16 +112,18 @@ const MentorManagement = () => {
 
     const openEditModal = (mentor) => {
         setEditingMentor(mentor);
-            setFormData({
-                name: mentor.name,
-                role: mentor.role,
-                company: mentor.company,
-                bio: mentor.bio || mentor.description || "",
-                image: mentor.image || mentor.imageUrl || "",
-                linkedin: mentor.linkedin || mentor.linkedinUrl || ""
-            });
-            setIsModalOpen(true);
-        };
+        setFormData({
+            name: mentor.name,
+            role: mentor.role,
+            company: mentor.company,
+            bio: mentor.bio || mentor.description || "",
+            image: mentor.image || mentor.imageUrl || "",
+            linkedin: mentor.linkedin || mentor.linkedinUrl || "",
+            yearsExperience: mentor.stats?.find(s => s.label === "Years")?.value || "",
+            projectsCompleted: mentor.stats?.find(s => s.label === "Projects")?.value || ""
+        });
+        setIsModalOpen(true);
+    };
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -174,9 +182,9 @@ const MentorManagement = () => {
                             </thead>
                             <tbody className="divide-y divide-white/5">
                                 <AnimatePresence mode="popLayout">
-                                        {mentors.map((mentor) => (
-                                            <motion.tr
-                                                key={mentor._id}
+                                    {mentors.map((mentor) => (
+                                        <motion.tr
+                                            key={mentor._id}
                                             layout
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
