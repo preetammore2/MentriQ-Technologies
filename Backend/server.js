@@ -22,6 +22,7 @@ const serviceRoutes = require("./src/routes/service.routes");
 const jobRoutes = require("./src/routes/jobPost.routes");
 const contactRoutes = require("./src/routes/contact.routes");
 const statsRoutes = require("./src/routes/stats.routes");
+const technologyRoutes = require("./src/routes/technology.routes");
 const { notFound, errorHandler } = require("./src/middleware/error.middleware");
 const ensureSuperAdmin = require("./src/utils/ensureSuperAdmin");
 
@@ -98,6 +99,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/stats", statsRoutes);
+app.use("/api/technologies", technologyRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
