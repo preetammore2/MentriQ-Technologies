@@ -10,8 +10,8 @@ const createAdmin = async () => {
     try {
         await connectDB();
 
-        const email = "admin@mentriq.com";
-        const password = "admin123"; // Simple password for initial access
+        const email = "admin@mentriqtechnologies.in";
+        const password = "mentriq@123";
         const name = "Super Admin";
 
         // Check if exists

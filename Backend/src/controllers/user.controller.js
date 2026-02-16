@@ -100,4 +100,33 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, createUser, updateUserRole, deleteUser };
+const resetUserPassword = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { password } = req.body;
+
+        if (!password || password.length < 6) {
+            return res.status(400).json({ message: "Password must be at least 6 characters" });
+        }
+
+        const targetUser = await User.findById(id);
+        if (!targetUser) return res.status(404).json({ message: "User not found" });
+
+        // Prevent modifying Super Admin by others (optional, but good practice)
+        // Checks if target is super admin and requester is NOT super admin
+        if (targetUser.email === SUPER_ADMIN_EMAIL && req.user.email !== SUPER_ADMIN_EMAIL) {
+            return res.status(403).json({ message: "Only Super Admin can reset their own password" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        targetUser.password = await bcrypt.hash(password, salt);
+        await targetUser.save();
+
+        res.json({ success: true, message: "Password reset successfully" });
+    } catch (error) {
+        console.error("RESET PASSWORD ERROR", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+module.exports = { getAllUsers, createUser, updateUserRole, deleteUser, resetUserPassword };
