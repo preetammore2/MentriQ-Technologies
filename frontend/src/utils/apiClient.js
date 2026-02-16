@@ -4,9 +4,6 @@ const resolvedBaseURL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api');
 
-console.log('MentriQ API Base URL:', resolvedBaseURL);
-console.log('Environment Mode:', import.meta.env.MODE);
-
 const MAX_RETRIES = Number(import.meta.env.VITE_API_RETRY_COUNT || 2);
 const RETRY_DELAY_MS = Number(import.meta.env.VITE_API_RETRY_DELAY_MS || 700);
 
