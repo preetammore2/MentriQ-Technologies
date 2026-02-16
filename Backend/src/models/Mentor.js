@@ -7,6 +7,10 @@ const mentorSchema = new mongoose.Schema(
         image: { type: String, required: true }, // URL or path
         linkedin: { type: String, trim: true },
         description: { type: String, trim: true },
+        stats: [{
+            value: { type: String },
+            label: { type: String }
+        }]
     },
     { timestamps: true }
 );
