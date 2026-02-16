@@ -7,12 +7,7 @@ import { useToast } from "../../context/ToastContext";
 const MotionTr = motion.tr;
 const MotionDiv = motion.div;
 
-const getImageUrl = (path) => {
-    if (!path) return "";
-    if (path.startsWith("http")) return path;
-    const baseUrl = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").replace('/api', '');
-    return `${baseUrl}${path}`;
-};
+import { resolveImageUrl } from "../../utils/imageUtils";
 
 const getSafeWebsiteHost = (website) => {
     if (!website) return "";
@@ -219,7 +214,7 @@ const PartnerManagement = () => {
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-16 h-10 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center p-2 shrink-0">
                                                         <img
-                                                            src={getImageUrl(partner.logo)}
+                                                            src={resolveImageUrl(partner.logo)}
                                                             alt={partner.name}
                                                             className="w-full h-full object-contain"
                                                             onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/80?text=Logo"; }}
@@ -293,7 +288,7 @@ const PartnerManagement = () => {
                                         <div className={`w-48 h-48 rounded-[2rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.logo ? 'border-indigo-500/50' : 'border-white/10 bg-white/5 hover:border-indigo-500/30'}`}>
                                             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:8px_8px]" />
                                             {formData.logo ? (
-                                                <img src={getImageUrl(formData.logo)} alt="Preview" className="w-full h-full object-contain p-6 relative z-10" />
+                                                <img src={resolveImageUrl(formData.logo)} alt="Preview" className="w-full h-full object-contain p-6 relative z-10" />
                                             ) : (
                                                 <div className="flex flex-col items-center gap-4 text-gray-600 group-hover:text-indigo-400 transition-colors relative z-10">
                                                     <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/5">

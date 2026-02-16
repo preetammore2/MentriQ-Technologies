@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { apiClient as api } from '../../utils/apiClient';
+import { resolveImageUrl } from '../../utils/imageUtils';
+
 const MotionDiv = motion.div;
 
-// Helper to get full image URL
-const getImageUrl = (path) => {
-    if (!path) return "";
-    if (path.startsWith("http")) return path;
-    const baseUrl = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").replace('/api', '');
-    return `${baseUrl}${path}`;
-};
+const FALLBACK_PARTNERS = [
+    { name: "MongoDB", logo: "/images/mongodb.png", website: "https://www.mongodb.com" },
+    { name: "React", logo: "/images/react.png", website: "https://react.dev" },
+    { name: "Node.js", logo: "/images/node2.png", website: "https://nodejs.org" },
+    { name: "Express", logo: "/images/Expressjs.png", website: "https://expressjs.com" },
+    { name: "Python", logo: "/images/python.png", website: "https://www.python.org" },
+    { name: "Java", logo: "/images/java.png", website: "https://www.java.com" },
+    { name: "Flutter", logo: "/images/flutter.png", website: "https://flutter.dev" },
+    { name: "Microsoft Power BI", logo: "/images/powerBI.png", website: "https://powerbi.microsoft.com" },
+    { name: "Google Cloud", logo: "/images/bigdata.png", website: "https://cloud.google.com" },
+    { name: "Blockchain Council", logo: "/images/blockchain.png", website: "https://www.blockchain-council.org" }
+];
 
 const PartnersSection = () => {
     const [partners, setPartners] = useState([]);
@@ -19,9 +26,14 @@ const PartnersSection = () => {
         const fetchPartners = async () => {
             try {
                 const { data } = await api.get('/partners');
-                setPartners(Array.isArray(data) ? data : []);
+                if (Array.isArray(data) && data.length > 0) {
+                    setPartners(data);
+                } else {
+                    setPartners(FALLBACK_PARTNERS);
+                }
             } catch (error) {
                 console.error("Failed to fetch partners", error);
+                setPartners(FALLBACK_PARTNERS);
             } finally {
                 setLoading(false);
             }
@@ -30,8 +42,7 @@ const PartnersSection = () => {
         fetchPartners();
     }, []);
 
-    if (loading) return null;
-    if (partners.length === 0) return null;
+    const displayPartners = partners.length > 0 ? partners : FALLBACK_PARTNERS;
 
     return (
         <section className="py-24 bg-[#0f172a] overflow-hidden relative">
@@ -74,7 +85,7 @@ const PartnersSection = () => {
                             ease: "linear",
                         }}
                     >
-                        {[...partners, ...partners].map((partner, index) => (
+                        {[...displayPartners, ...displayPartners].map((partner, index) => (
                             <PartnerCard key={`top-${index}`} partner={partner} />
                         ))}
                     </MotionDiv>
@@ -91,7 +102,7 @@ const PartnersSection = () => {
                             ease: "linear",
                         }}
                     >
-                        {[...partners, ...partners].map((partner, index) => (
+                        {[...displayPartners, ...displayPartners].map((partner, index) => (
                             <PartnerCard key={`bottom-${index}`} partner={partner} />
                         ))}
                     </MotionDiv>
@@ -108,7 +119,7 @@ const PartnerCard = ({ partner }) => (
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
         <img
-            src={getImageUrl(partner.logo)}
+            src={resolveImageUrl(partner.logo)}
             alt={partner.name}
             className="max-h-12 w-auto object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
             onError={(e) => e.target.src = "https://via.placeholder.com/150"}
