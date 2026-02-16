@@ -11,6 +11,9 @@ export const resolveImageUrl = (path, fallback = "") => {
     const apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
     const serverRoot = apiBase.replace(/\/api\/?$/, "");
 
+    // Fix: Treat /images as frontend static assets, not backend
+    if (path.startsWith("/images/")) return path;
+
     if (path.startsWith("/")) return `${serverRoot}${path}`;
     return `${serverRoot}/${path}`;
 };
