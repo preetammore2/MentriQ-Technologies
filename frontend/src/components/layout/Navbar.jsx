@@ -48,10 +48,7 @@ const Navbar = () => {
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center">
                         {/* Logo */}
-                        <Link to="/" className="flex items-center space-x-3 group">
-                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/10 overflow-hidden transition-transform group-hover:scale-105">
-                                <img className='w-full h-full object-cover' src="/images/logo2.png" alt="MentriQ" />
-                            </div>
+                        <Link to="/" className="flex items-center group">
                             <div className="flex flex-col">
                                 <span className="text-xl font-black text-slate-900 tracking-tight leading-none group-hover:text-indigo-600 transition-colors">
                                     MentriQ
@@ -69,8 +66,8 @@ const Navbar = () => {
                                     key={item.name}
                                     to={item.path}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.path
-                                            ? 'text-indigo-600 bg-indigo-50'
-                                            : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'
+                                        ? 'text-indigo-600 bg-indigo-50'
+                                        : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     {item.name}
@@ -123,8 +120,8 @@ const Navbar = () => {
                                 to={item.path}
                                 onClick={() => setMobileOpen(false)}
                                 className={`px-4 py-3 rounded-xl text-sm font-bold ${location.pathname === item.path
-                                        ? 'bg-indigo-50 text-indigo-600'
-                                        : 'text-slate-600 hover:bg-slate-50'
+                                    ? 'bg-indigo-50 text-indigo-600'
+                                    : 'text-slate-600 hover:bg-slate-50'
                                     }`}
                             >
                                 {item.name}
