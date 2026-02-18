@@ -154,20 +154,21 @@ const CourseManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Course Management</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage curriculum, pricing, and course details.</p>
+            {/* Header Section */}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-6 md:p-8 rounded-3xl border border-white/5 shadow-xl">
+                <div className="w-full lg:w-auto">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Course Management</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mt-1">Manage curriculum, pricing, and course details.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 flex items-center group focus-within:border-indigo-500/50 transition-all w-full sm:w-auto">
+                        <Search className="text-gray-500 ml-4 shrink-0" size={18} />
                         <input
                             type="text"
                             placeholder="Search courses..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
                         />
                     </div>
                     <button
@@ -177,7 +178,7 @@ const CourseManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap w-full sm:w-auto"
                     >
                         <Plus size={18} />
                         <span>Add Course</span>

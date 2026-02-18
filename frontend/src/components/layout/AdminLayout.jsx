@@ -33,6 +33,13 @@ const AdminLayout = ({ children }) => {
     const { logout } = useAuth();
     const toast = useToast();
 
+    useEffect(() => {
+        // Auto-close sidebar on mobile when navigating
+        if (window.innerWidth < 1024) {
+            setIsSidebarOpen(false);
+        }
+    }, [location.pathname]);
+
     const menuItems = [
         { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { path: '/admin/users', icon: Users, label: 'Users' },

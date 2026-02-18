@@ -146,36 +146,38 @@ const UserManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Student Management</h2>
-                    <p className="text-gray-400 text-sm mt-1">Only student users are shown here. Admins and moderators are managed in Staff section.</p>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-6 md:p-8 rounded-3xl border border-white/5 shadow-xl">
+                <div className="w-full lg:w-auto">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Student Management</h2>
+                    <p className="text-gray-400 text-xs md:text-sm mt-1">Only student users are shown here. Admins and moderators are managed in Staff section.</p>
                 </div>
-                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full md:w-auto group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 flex items-center w-full sm:w-auto group focus-within:border-indigo-500/50 transition-all">
+                        <Search className="text-gray-500 ml-4 shrink-0" size={18} />
                         <input
                             type="text"
                             placeholder="Search students..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
                         />
                     </div>
-                    <button
-                        onClick={handleExportStudents}
-                        className="bg-emerald-600 text-white hover:bg-emerald-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap"
-                    >
-                        <Download size={18} />
-                        <span>Download Excel</span>
-                    </button>
-                    <button
-                        onClick={openCreateModal}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
-                    >
-                        <Plus size={18} />
-                        <span>Add Student</span>
-                    </button>
+                    <div className="flex gap-3 overflow-x-auto pb-1 sm:pb-0">
+                        <button
+                            onClick={handleExportStudents}
+                            className="bg-emerald-600 text-white hover:bg-emerald-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap flex-1 sm:flex-none justify-center"
+                        >
+                            <Download size={18} />
+                            <span>Export</span>
+                        </button>
+                        <button
+                            onClick={openCreateModal}
+                            className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap flex-1 sm:flex-none justify-center"
+                        >
+                            <Plus size={18} />
+                            <span>Add</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
