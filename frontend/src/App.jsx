@@ -1,54 +1,50 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Preloader from './components/common/Preloader';
 import AppErrorBoundary from './components/common/AppErrorBoundary';
 import Layout from './components/layout/Layout';
 import AdminLayout from './components/layout/AdminLayout';
-import HomePage from './pages/HomePage';
-import MyEnrollmentsPage from "./pages/MyEnrollmentsPage";
-// import EnrollmentSuccessPage from './pages/EnrollmentSuccessPage';
-import CoursesPage from './pages/CoursesPage';
-import CourseDetailPage from './pages/CourseDetailPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import NotFoundPage from './pages/NotFoundPage';
+
+// Lazy load pages for better performance
+const HomePage = lazy(() => import('./pages/HomePage'));
+const MyEnrollmentsPage = lazy(() => import('./pages/MyEnrollmentsPage'));
+const CoursesPage = lazy(() => import('./pages/CoursesPage'));
+const CourseDetailPage = lazy(() => import('./pages/CourseDetailPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const AdminLogin = lazy(() => import('./pages/Admin/AdminLogin'));
+const Dashboard = lazy(() => import('./pages/Admin/Dashboard'));
+const CourseManagement = lazy(() => import('./pages/Admin/CourseManagement'));
+const EnrollmentManagement = lazy(() => import('./pages/Admin/EnrollmentManagement'));
+const MentorManagement = lazy(() => import('./pages/Admin/MentorManagement'));
+const FeedbackManagement = lazy(() => import('./pages/Admin/FeedbackManagement'));
+const PartnerManagement = lazy(() => import('./pages/Admin/PartnerManagement'));
+const UserManagement = lazy(() => import('./pages/Admin/UserManagement'));
+const InternshipManagement = lazy(() => import('./pages/Admin/InternshipManagement'));
+const JourneyManagement = lazy(() => import('./pages/Admin/JourneyManagement'));
+const CertificateManagement = lazy(() => import('./pages/Admin/CertificateManagement'));
+const ServiceManagement = lazy(() => import('./pages/Admin/ServiceManagement'));
+const CityManagement = lazy(() => import('./pages/Admin/CityManagement'));
+const JobPostManagement = lazy(() => import('./pages/Admin/JobPostManagement'));
+const InquiryManagement = lazy(() => import('./pages/Admin/InquiryManagement'));
+const StaffManagement = lazy(() => import('./pages/Admin/StaffManagement'));
+const InternshipApplicationPage = lazy(() => import('./pages/InternshipApplicationPage'));
+const UserAuthPage = lazy(() => import('./pages/UserAuthPage'));
+const TrainingPage = lazy(() => import('./pages/TrainingPage'));
+const TrainingDetailPage = lazy(() => import('./pages/TrainingDetailPage'));
+const EnrollmentFormPage = lazy(() => import('./pages/EnrollmentFormPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const TrainingEnrollmentFormPage = lazy(() => import('./pages/TrainingEnrollmentFormPage'));
+const VerifyCertificatePage = lazy(() => import('./pages/VerifyCertificatePage'));
+const RecruitPage = lazy(() => import('./pages/RecruitPage'));
+const DemoTypewriter = lazy(() => import('./pages/DemoTypewriter'));
+const DemoSplinePage = lazy(() => import('./pages/DemoSplinePage'));
+
 import AdminRoute from './components/auth/AdminRoute';
-import AdminLogin from './pages/Admin/AdminLogin';
-import Dashboard from './pages/Admin/Dashboard';
-import CourseManagement from './pages/Admin/CourseManagement';
-import EnrollmentManagement from './pages/Admin/EnrollmentManagement';
-import MentorManagement from './pages/Admin/MentorManagement';
-import FeedbackManagement from './pages/Admin/FeedbackManagement';
-import PartnerManagement from './pages/Admin/PartnerManagement';
-import UserManagement from './pages/Admin/UserManagement';
-import InternshipManagement from './pages/Admin/InternshipManagement';
-import JourneyManagement from './pages/Admin/JourneyManagement';
-import CertificateManagement from './pages/Admin/CertificateManagement';
-import ServiceManagement from './pages/Admin/ServiceManagement';
-import CityManagement from './pages/Admin/CityManagement';
-import JobPostManagement from './pages/Admin/JobPostManagement';
-
-// ... (existing imports)
-
-
-import InquiryManagement from './pages/Admin/InquiryManagement';
-import StaffManagement from './pages/Admin/StaffManagement';
-import InternshipApplicationPage from './pages/InternshipApplicationPage';
-import UserAuthPage from './pages/UserAuthPage';
-import TrainingPage from './pages/TrainingPage';
-import TrainingDetailPage from './pages/TrainingDetailPage';
-import EnrollmentFormPage from "./pages/EnrollmentFormPage";
-import ServicesPage from './pages/ServicesPage';
-import TrainingEnrollmentFormPage from './pages/TrainingEnrollmentFormPage';
-import VerifyCertificatePage from './pages/VerifyCertificatePage';
-import RecruitPage from './pages/RecruitPage';
 import ScrollToTop from './pages/ScrollToTop';
-import DemoTypewriter from './pages/DemoTypewriter';
-import DemoSplinePage from './pages/DemoSplinePage';
-
 import { useAuth } from './context/AuthContext';
-
 import EnrollmentSuccessWrapper from './pages/EnrollmentSuccessWrapper';
 // import Test from './pages/Test';
 
@@ -62,7 +58,7 @@ function App() {
     // Simulate loading time (e.g., waiting for assets or initial checks)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -74,7 +70,7 @@ function App() {
       </AnimatePresence>
 
       {!loading && (
-        <>
+        <Suspense fallback={<Preloader />}>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Layout><HomePage /></Layout>} />
@@ -261,7 +257,7 @@ function App() {
             <Route path="/demo-spline" element={<Layout><DemoSplinePage /></Layout>} />
             <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
           </Routes>
-        </>
+        </Suspense>
       )}
     </AppErrorBoundary>
   );

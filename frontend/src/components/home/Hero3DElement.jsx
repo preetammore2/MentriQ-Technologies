@@ -1,8 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, useAnimation } from 'framer-motion';
 import { Code, Cpu, Database, Shield, Zap, Brain, Layers } from 'lucide-react';
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
+
+class LocalErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
+    static getDerivedStateFromError() { return { hasError: true }; }
+    render() {
+        if (this.state.hasError) return this.props.fallback;
+        return this.props.children;
+    }
+}
 
 const FloatingIcon = ({ element, index, smoothMouseX, smoothMouseY }) => {
     const Icon = element.icon;
@@ -182,10 +194,14 @@ const Hero3DElement = () => {
                     translateZ={50}
                     style={{ transformStyle: 'preserve-3d' }}
                 >
-                    <SplineScene
-                        scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                        className="w-full h-full animate-in fade-in zoom-in duration-1000"
-                    />
+                    <LocalErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center bg-indigo-500/5 rounded-full border border-indigo-500/10 text-indigo-400/40 text-[10px] uppercase tracking-tighter">Scene Offline</div>}>
+                        <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-2 h-2 bg-indigo-500 rounded-full animate-ping" /></div>}>
+                            <SplineScene
+                                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                                className="w-full h-full animate-in fade-in zoom-in duration-1000"
+                            />
+                        </Suspense>
+                    </LocalErrorBoundary>
 
                     {/* Glass Portal Reflection Overlay - Refined for Light Theme */}
                     <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/20 to-transparent rounded-full mix-blend-overlay opacity-40 blur-2xl animate-pulse" />

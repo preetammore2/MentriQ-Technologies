@@ -29,7 +29,7 @@ const Preloader = () => {
         window.addEventListener('mousemove', handleMouseMove);
         const interval = setInterval(() => {
             setProgress(prev => (prev < 100 ? prev + 1 : 100));
-        }, 30);
+        }, 10);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             clearInterval(interval);
