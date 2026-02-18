@@ -20,11 +20,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'spline-vendor': ['@splinetool/react-spline', '@splinetool/runtime'],
-          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
-          'ui-vendor': ['framer-motion', 'lucide-react', 'antd'],
-        }
       }
     }
   }
