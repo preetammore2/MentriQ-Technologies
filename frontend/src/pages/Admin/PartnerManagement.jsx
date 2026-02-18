@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Link as LinkIcon } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Link as LinkIcon, Handshake } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 
