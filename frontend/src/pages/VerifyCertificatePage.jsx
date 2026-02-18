@@ -136,8 +136,8 @@ const VerifyCertificatePage = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className={`rounded-[3rem] p-10 border-2 ${result.valid
-                                ? 'bg-emerald-600/10 border-emerald-500/30'
-                                : 'bg-red-600/10 border-red-500/30'
+                            ? 'bg-emerald-600/10 border-emerald-500/30'
+                            : 'bg-red-600/10 border-red-500/30'
                             }`}
                     >
                         <div className="text-center">
@@ -201,7 +201,7 @@ const VerifyCertificatePage = () => {
                                                 </h4>
                                             </div>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {result.modules.map((module, index) => (
+                                                {Array.isArray(result.modules) && result.modules.map((module, index) => (
                                                     <div
                                                         key={index}
                                                         className="bg-white/5 rounded-xl p-4 border border-white/5 hover:border-emerald-500/30 transition-colors"

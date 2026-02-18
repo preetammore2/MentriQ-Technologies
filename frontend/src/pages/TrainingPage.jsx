@@ -20,8 +20,8 @@ const TrainingPage = () => {
                 const coursesData = Array.isArray(coursesRes.data) ? coursesRes.data : []
                 const internshipsData = Array.isArray(internshipsRes.data) ? internshipsRes.data : []
 
-                const trainingCourses = coursesData.filter(c => c.category === 'Training').map(c => ({ ...c, type: 'course', baseUrl: '/training' }))
-                const internships = internshipsData.filter(i => i.status === 'Active').map(i => ({
+                const trainingCourses = (Array.isArray(coursesData) ? coursesData : []).filter(c => c.category === 'Training').map(c => ({ ...c, type: 'course', baseUrl: '/training' }))
+                const internships = (Array.isArray(internshipsData) ? internshipsData : []).filter(i => i.status === 'Active').map(i => ({
                     ...i,
                     type: 'internship',
                     baseUrl: '/internship/apply',

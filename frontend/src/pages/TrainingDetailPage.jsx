@@ -258,7 +258,7 @@ const TrainingDetailPage = () => {
                         </h2>
 
                         <div className="space-y-4">
-                            {modules.map((m, i) => (
+                            {(Array.isArray(modules) ? modules : []).map((m, i) => (
                                 <div
                                     key={i}
                                     className="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-indigo-100 transition-all duration-300"

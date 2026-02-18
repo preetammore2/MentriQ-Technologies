@@ -15,7 +15,7 @@ const MyEnrollmentsPage = () => {
       <h1 className="text-4xl font-bold mb-10">My Enrollments</h1>
 
       <div className="grid md:grid-cols-3 gap-8">
-        {enrollments.map((e, i) => (
+        {(Array.isArray(enrollments) ? enrollments : []).map((e, i) => (
           <motion.div
             key={e._id}
             initial={{ opacity: 0, y: 30 }}

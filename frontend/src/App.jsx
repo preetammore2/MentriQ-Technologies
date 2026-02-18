@@ -58,7 +58,7 @@ function App() {
     // Simulate loading time (e.g., waiting for assets or initial checks)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);

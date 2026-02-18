@@ -225,7 +225,7 @@ const RecruitPage = () => {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {jobs.map((job, idx) => (
+                            {(Array.isArray(jobs) ? jobs : []).map((job, idx) => (
                                 <motion.div
                                     key={job._id}
                                     initial={{ opacity: 0, y: 20 }}
