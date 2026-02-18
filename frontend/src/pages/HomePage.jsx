@@ -18,6 +18,8 @@ const HomePage = () => {
     const [services, setServices] = useState([])
     const [statsData, setStatsData] = useState(null)
     const [dynamicPartners, setDynamicPartners] = useState([])
+    const [dynamicTestimonials, setDynamicTestimonials] = useState([])
+    const [dynamicTechnologies, setDynamicTechnologies] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
 
@@ -25,15 +27,30 @@ const HomePage = () => {
     useEffect(() => {
         const fetchAllData = async () => {
             try {
-                const [servicesRes, statsRes, partnersRes] = await Promise.all([
+                const [servicesRes, statsRes, partnersRes, feedbackRes, techRes] = await Promise.all([
                     api.get('/services'),
                     api.get('/stats'),
-                    api.get('/partners')
+                    api.get('/partners'),
+                    api.get('/feedbacks'),
+                    api.get('/technologies')
                 ])
 
                 setServices(Array.isArray(servicesRes.data) ? servicesRes.data.slice(0, 6) : [])
                 setStatsData(statsRes.data || null)
                 setDynamicPartners(Array.isArray(partnersRes.data) ? partnersRes.data : [])
+
+                if (Array.isArray(feedbackRes.data) && feedbackRes.data.length > 0) {
+                    const formatted = feedbackRes.data.map(f => ({
+                        name: f.name,
+                        feedback: f.message, // Map backend 'message' to frontend 'feedback'
+                        image: f.image
+                    }));
+                    setDynamicTestimonials(formatted);
+                }
+
+                if (techRes.data?.success && Array.isArray(techRes.data.data)) {
+                    setDynamicTechnologies(techRes.data.data);
+                }
             } catch (error) {
                 console.error('Failed to fetch home page data:', error)
                 setServices([])
@@ -688,7 +705,7 @@ const HomePage = () => {
 
                 <div className="relative max-w-7xl mx-auto px-6">
                     <SectionErrorBoundary fallback={<div className="w-full h-40 rounded-3xl bg-slate-50 border border-slate-100" />}>
-                        <OneByOneTestimonial testimonials={testimonials} />
+                        <OneByOneTestimonial testimonials={dynamicTestimonials.length > 0 ? dynamicTestimonials : testimonials} />
                     </SectionErrorBoundary>
                 </div>
             </section >
@@ -867,7 +884,7 @@ const HomePage = () => {
                         style={{ transformStyle: 'preserve-3d' }}
                     >
                         {/* Dual Buffer for Seamless Loop */}
-                        {[...technologies, ...technologies].map((tech, index) => (
+                        {(dynamicTechnologies.length > 0 ? [...dynamicTechnologies, ...dynamicTechnologies] : [...technologies, ...technologies]).map((tech, index) => (
                             <motion.div
                                 key={index}
                                 whileHover={{
