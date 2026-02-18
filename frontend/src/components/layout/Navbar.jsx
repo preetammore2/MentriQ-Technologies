@@ -100,7 +100,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/contact"
-                  className="group relative flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-slate-900/20 overflow-hidden"
+                  className="group relative flex items-center gap-2 px-6 py-2.5 bg-[oklch(0.55_0.25_260)] text-white rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-indigo-500/20 overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:animate-shine" />
                   <span className="relative z-10 flex items-center gap-2">
@@ -153,7 +153,7 @@ const Navbar = () => {
                 <Link
                   to="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="block w-full text-center px-4 py-3 bg-slate-900 text-white rounded-lg text-sm font-bold shadow-lg active:scale-95 transition-transform"
+                  className="block w-full text-center px-4 py-3 bg-[oklch(0.55_0.25_260)] text-white rounded-lg text-sm font-bold shadow-lg active:scale-95 transition-transform"
                 >
                   Contact
                 </Link>
