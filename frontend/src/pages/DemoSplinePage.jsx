@@ -1,5 +1,5 @@
 import React from "react";
-import { SplineSceneBasic } from "@/components/ui/demo";
+import { SplineSceneBasic } from "../components/ui/demo";
 
 const DemoSplinePage = () => {
   return (

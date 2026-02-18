@@ -1,5 +1,4 @@
-'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 type Testimonial = {

@@ -64,7 +64,7 @@ function App() {
   }, []);
 
   return (
-    <AppErrorBoundary>
+    <>
       <AnimatePresence mode="wait">
         {loading && <Preloader key="preloader" />}
       </AnimatePresence>
@@ -259,7 +259,7 @@ function App() {
           </Routes>
         </Suspense>
       )}
-    </AppErrorBoundary>
+    </>
   );
 }
 

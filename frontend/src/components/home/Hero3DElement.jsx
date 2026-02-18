@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, useAnimation } from 'framer-motion';
 import { Code, Cpu, Database, Shield, Zap, Brain, Layers } from 'lucide-react';
-import { SplineScene } from "@/components/ui/splite";
-import { Spotlight } from "@/components/ui/spotlight";
+import { SplineScene } from "../ui/splite";
+import { Spotlight } from "../ui/spotlight";
 
 class LocalErrorBoundary extends React.Component {
     constructor(props) {
