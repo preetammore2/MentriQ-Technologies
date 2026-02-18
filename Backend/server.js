@@ -90,7 +90,7 @@ app.use(cors({
 
 app.use(express.json({ limit: '10kb' })); // Limit body size
 app.use(cookieParser());
-// Note: /uploads static serving removed — images are now stored on Cloudinary
+app.use('/uploads', express.static(require('path').join(__dirname, 'uploads')));
 
 app.get("/", (req, res) => {
   res.json({ status: "MentriQ API running" });
