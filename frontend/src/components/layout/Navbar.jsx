@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { Menu, X, LogOut, ChevronRight } from 'lucide-react'
+import { Menu, X, LogOut } from 'lucide-react'
 import AuthModal from '../auth/AuthModal'
 
 const Navbar = () => {
@@ -100,13 +100,9 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/contact"
-                  className="group relative flex items-center gap-2 px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-indigo-600/20 overflow-hidden"
+                  className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-colors shadow-none"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:animate-shine" />
-                  <span className="relative z-10 flex items-center gap-2">
-                    Contact Us
-                    <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                  </span>
+                  Contact Us
                 </Link>
               )}
             </div>
