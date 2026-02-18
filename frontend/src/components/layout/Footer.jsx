@@ -38,16 +38,56 @@ const Footer = () => {
         },
     ];
 
+    const [settings, setSettings] = React.useState({
+        email: "support@mentriqtechnologies.in",
+        phone: "+918890301264",
+        address: "MentriQ Technologies, Sector 3, Jaipur",
+        mapLink: "https://www.google.com/maps/place/MentriQ+Technologies/@26.8032657,75.8052318,17z/data=!4m14!1m7!3m6!1s0x396dcb785ab8c2cb:0x4bac0e52b5e07df!2s2nd+floor,+34%2F57,+Haldighati+Marg+E,+Sanganer,+Sector+3,+Pratap+Nagar,+Jaipur,+Rajasthan+302033!3b1!8m2!3d26.8032657!4d75.8052318!3m5!1s0x396dcb31ccbce14d:0x9f153a03ffb8fdd0!8m2!3d26.8023101!4d75.8047414!16s%2Fg%2F11yy2ld3gd?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D",
+        socialLinks: {
+            instagram: "https://www.instagram.com/mentriqtechnologies/",
+            linkedin: "https://www.linkedin.com/company/mentriqtechnologies/",
+            twitter: "https://x.com/MentriqT51419",
+            whatsapp: "https://wa.me/918890301264"
+        }
+    });
+
+    React.useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/settings`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setSettings(prev => ({
+                        ...prev,
+                        email: data.email || prev.email,
+                        phone: data.phone || prev.phone,
+                        address: data.address || prev.address,
+                        mapLink: data.mapLink || prev.mapLink,
+                        socialLinks: {
+                            instagram: data.socialLinks?.instagram || prev.socialLinks.instagram,
+                            linkedin: data.socialLinks?.linkedin || prev.socialLinks.linkedin,
+                            twitter: data.socialLinks?.twitter || prev.socialLinks.twitter,
+                            whatsapp: data.socialLinks?.whatsapp || prev.socialLinks.whatsapp
+                        }
+                    }));
+                }
+            } catch (error) {
+                console.error("Failed to fetch settings", error);
+            }
+        };
+        fetchSettings();
+    }, []);
+
     const socialLinks = [
-        { icon: Instagram, href: "https://www.instagram.com/mentriqtechnologies/", label: "Instagram" },
-        { icon: Linkedin, href: "https://www.linkedin.com/company/mentriqtechnologies/", label: "LinkedIn" },
-        { icon: Twitter, href: "https://x.com/MentriqT51419", label: "Twitter" },
-        { icon: MessageCircle, href: "https://wa.me/918890301264", label: "WhatsApp" },
+        { icon: Instagram, href: settings.socialLinks.instagram, label: "Instagram" },
+        { icon: Linkedin, href: settings.socialLinks.linkedin, label: "LinkedIn" },
+        { icon: Twitter, href: settings.socialLinks.twitter, label: "Twitter" },
+        { icon: MessageCircle, href: settings.socialLinks.whatsapp, label: "WhatsApp" },
     ];
 
-    const emailAddress = "support@mentriqtechnologies.in";
-    const phoneNumber = "+918890301264";
-    const mapsLink = "https://www.google.com/maps/place/MentriQ+Technologies/@26.8032657,75.8052318,17z/data=!4m14!1m7!3m6!1s0x396dcb785ab8c2cb:0x4bac0e52b5e07df!2s2nd+floor,+34%2F57,+Haldighati+Marg+E,+Sanganer,+Sector+3,+Pratap+Nagar,+Jaipur,+Rajasthan+302033!3b1!8m2!3d26.8032657!4d75.8052318!3m5!1s0x396dcb31ccbce14d:0x9f153a03ffb8fdd0!8m2!3d26.8023101!4d75.8047414!16s%2Fg%2F11yy2ld3gd?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D";
+    const emailAddress = settings.email;
+    const phoneNumber = settings.phone;
+    const mapsLink = settings.mapLink;
 
     return (
         <footer className="relative bg-slate-950 border-t border-slate-800 overflow-hidden pt-12 pb-8 mt-6">
@@ -159,7 +199,7 @@ const Footer = () => {
                                 </div>
                                 <div className="pt-0.5">
                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1.5">Location</p>
-                                    <p className="text-sm font-bold text-slate-100">MentriQ Technologies, Sector 3, Jaipur</p>
+                                    <p className="text-sm font-bold text-slate-100">{settings.address}</p>
                                 </div>
                             </a>
                         </div>

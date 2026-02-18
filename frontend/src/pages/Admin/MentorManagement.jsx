@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";

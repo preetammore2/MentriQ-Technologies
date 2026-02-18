@@ -49,6 +49,7 @@ const AdminLayout = ({ children }) => {
         { path: '/admin/staff', icon: UserCog, label: 'Staff' },
         { path: '/admin/inquiries', icon: Mail, label: 'Inquiries' },
         { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
+        { path: '/admin/settings', icon: Settings, label: 'Settings' },
     ];
 
     const handleLogout = () => {

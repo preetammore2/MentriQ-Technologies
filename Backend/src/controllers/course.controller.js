@@ -220,7 +220,9 @@ const updateCourse = async (req, res) => {
       "level",
       "duration",
       "category",
-      "mode"
+      "mode",
+      "thumbnailUrl",
+      "slug"
     ];
 
     fields.forEach(field => {

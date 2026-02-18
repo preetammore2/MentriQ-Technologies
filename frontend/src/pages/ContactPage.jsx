@@ -13,14 +13,53 @@ const ContactPage = () => {
   })
   const [submitted, setSubmitted] = useState(false)
 
-  const phoneNumber = "+918890301264";
+  const [settings, setSettings] = useState({
+    email: "support@mentriqtechnologies.in",
+    phone: "+918890301264",
+    address: "MentriQ Technologies, Sector 3, Jaipur",
+    mapLink: "https://www.google.com/maps/place/MentriQ+Technologies/@26.8032657,75.8052318,17z/data=!4m14!1m7!3m6!1s0x396dcb785ab8c2cb:0x4bac0e52b5e07df!2s2nd+floor,+34%2F57,+Haldighati+Marg+E,+Sanganer,+Sector+3,+Pratap+Nagar,+Jaipur,+Rajasthan+302033!3b1!8m2!3d26.8032657!4d75.8052318!3m5!1s0x396dcb31ccbce14d:0x9f153a03ffb8fdd0!8m2!3d26.8023101!4d75.8047414!16s%2Fg%2F11yy2ld3gd?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D",
+    socialLinks: {
+      instagram: "https://www.instagram.com/mentriqtechnologies/",
+      linkedin: "https://www.linkedin.com/company/mentriqtechnologies/",
+      twitter: "https://x.com/MentriqT51419",
+      whatsapp: "https://wa.me/918890301264"
+    }
+  });
 
-  const email = "support@mentriqtechnologies.in";
+  React.useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/settings`);
+        if (response.ok) {
+          const data = await response.json();
+          setSettings(prev => ({
+            ...prev,
+            email: data.email || prev.email,
+            phone: data.phone || prev.phone,
+            address: data.address || prev.address,
+            mapLink: data.mapLink || prev.mapLink,
+            socialLinks: {
+              instagram: data.socialLinks?.instagram || prev.socialLinks.instagram,
+              linkedin: data.socialLinks?.linkedin || prev.socialLinks.linkedin,
+              twitter: data.socialLinks?.twitter || prev.socialLinks.twitter,
+              whatsapp: data.socialLinks?.whatsapp || prev.socialLinks.whatsapp
+            }
+          }));
+        }
+      } catch (error) {
+        console.error("Failed to fetch settings", error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  const phoneNumber = settings.phone;
+  const email = settings.email;
   const subject = "Support Request";
   const body = "Hello, I need help with...";
 
   const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const mapsLink = "https://www.google.com/maps/place/MentriQ+Technologies/@26.8032657,75.8052318,17z/data=!4m14!1m7!3m6!1s0x396dcb785ab8c2cb:0x4bac0e52b5e07df!2s2nd+floor,+34%2F57,+Haldighati+Marg+E,+Sanganer,+Sector+3,+Pratap+Nagar,+Jaipur,+Rajasthan+302033!3b1!8m2!3d26.8032657!4d75.8052318!3m5!1s0x396dcb31ccbce14d:0x9f153a03ffb8fdd0!8m2!3d26.8023101!4d75.8047414!16s%2Fg%2F11yy2ld3gd?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D";
+  const mapsLink = settings.mapLink;
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -87,7 +126,7 @@ const ContactPage = () => {
     {
       icon: MapPin,
       title: 'HQ Location',
-      value: 'MentriQ Technologies, Sector 3, Jaipur',
+      value: settings.address,
       link: mapsLink,
       desc: 'Global Operations',
       iconClass: 'bg-emerald-50 border-emerald-100 text-emerald-600',
@@ -188,10 +227,10 @@ const ContactPage = () => {
 
             <div className="pt-8 flex gap-4">
               {[
-                { icon: Instagram, color: 'hover:bg-pink-600', link: 'https://www.instagram.com/mentriqtechnologies/' },
-                { icon: Linkedin, color: 'hover:bg-blue-700', link: 'https://www.linkedin.com/company/mentriqtechnologies/' },
-                { icon: Twitter, color: 'hover:bg-sky-600', link: 'https://x.com/MentriqT51419' },
-                { icon: MessageCircle, color: 'hover:bg-green-600', link: 'https://wa.me/918890301264' }
+                { icon: Instagram, color: 'hover:bg-pink-600', link: settings.socialLinks.instagram },
+                { icon: Linkedin, color: 'hover:bg-blue-700', link: settings.socialLinks.linkedin },
+                { icon: Twitter, color: 'hover:bg-sky-600', link: settings.socialLinks.twitter },
+                { icon: MessageCircle, color: 'hover:bg-green-600', link: settings.socialLinks.whatsapp }
               ].map((social, idx) => (
                 <motion.a
                   key={idx}

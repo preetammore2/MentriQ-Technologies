@@ -30,6 +30,7 @@ const CityManagement = lazy(() => import('./pages/Admin/CityManagement'));
 const JobPostManagement = lazy(() => import('./pages/Admin/JobPostManagement'));
 const InquiryManagement = lazy(() => import('./pages/Admin/InquiryManagement'));
 const StaffManagement = lazy(() => import('./pages/Admin/StaffManagement'));
+const SettingsManagement = lazy(() => import('./pages/Admin/SettingsManagement'));
 const InternshipApplicationPage = lazy(() => import('./pages/InternshipApplicationPage'));
 const UserAuthPage = lazy(() => import('./pages/UserAuthPage'));
 const TrainingPage = lazy(() => import('./pages/TrainingPage'));
@@ -249,6 +250,15 @@ function App() {
                 <AdminRoute>
                   <AdminLayout>
                     <CityManagement />
+                  </AdminLayout>
+                </AdminRoute>
+              }
+            />
+            <Route path="/admin/settings"
+              element={
+                <AdminRoute>
+                  <AdminLayout>
+                    <SettingsManagement />
                   </AdminLayout>
                 </AdminRoute>
               }

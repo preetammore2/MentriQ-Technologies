@@ -11,11 +11,16 @@ const normalizeMentorPayload = (body = {}, { partial = false } = {}) => {
     const linkedin = cleanString(body.linkedin || body.linkedinUrl);
     const description = cleanString(body.description || body.bio);
 
+    const company = cleanString(body.company);
+    const stats = Array.isArray(body.stats) ? body.stats : [];
+
     if (!partial || body.name !== undefined) payload.name = name;
     if (!partial || body.role !== undefined) payload.role = role;
     if (!partial || body.image !== undefined || body.imageUrl !== undefined) payload.image = image;
     if (!partial || body.linkedin !== undefined || body.linkedinUrl !== undefined) payload.linkedin = linkedin;
     if (!partial || body.description !== undefined || body.bio !== undefined) payload.description = description;
+    if (!partial || body.company !== undefined) payload.company = company;
+    if (!partial || body.stats !== undefined) payload.stats = stats;
 
     return payload;
 };
