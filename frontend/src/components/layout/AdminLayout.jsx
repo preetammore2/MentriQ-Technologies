@@ -40,6 +40,7 @@ const AdminLayout = ({ children }) => {
         { path: '/admin/enrollments', icon: GraduationCap, label: 'Enrollments' },
         { path: '/admin/internships', icon: Briefcase, label: 'Internships' },
         { path: '/admin/services', icon: Layers, label: 'Services' },
+        { path: '/admin/cities', icon: MapPin, label: 'Cities' },
         { path: '/admin/partners', icon: Handshake, label: 'Partners' },
         { path: '/admin/jobs', icon: Briefcase, label: 'Jobs' },
         { path: '/admin/journey', icon: MapPin, label: 'Journey' },
@@ -190,8 +191,8 @@ const AdminLayout = ({ children }) => {
                             />
                         </div>
                         <div className="flex flex-col">
-                        <span className="font-black text-lg tracking-tight leading-none">MentriQ</span>
-                        <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.2em] mt-0.5">Admin</span>
+                            <span className="font-black text-lg tracking-tight leading-none">MentriQ</span>
+                            <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.2em] mt-0.5">Admin</span>
                         </div>
                     </div>
                 </header>

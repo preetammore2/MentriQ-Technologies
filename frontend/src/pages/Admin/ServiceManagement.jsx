@@ -3,24 +3,31 @@ import { apiClient as api } from "../../utils/apiClient";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
+import { resolveImageUrl } from "../../utils/imageUtils";
 
 const ServiceManagement = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingService, setEditingService] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
     const toast = useToast();
 
+    // Form State
     const initialFormState = {
         title: "",
         description: "",
-        icon: "Box"
+        icon: "Box", // Default icon
+        iconType: "icon", // 'icon' or 'image'
+        iconFile: null,
+        features: "" // New field
     };
     const [formData, setFormData] = useState(initialFormState);
+    const [imagePreview, setImagePreview] = useState(null);
 
     const fetchServices = async () => {
         try {
-            const { data } = await api.get("/services/admin"); // Using admin endpoint to get all services
+            const { data } = await api.get("/services/admin");
             setServices(data);
         } catch (err) {
             toast.error("Failed to load services");
@@ -31,12 +38,7 @@ const ServiceManagement = () => {
 
     useEffect(() => {
         fetchServices();
-
-        // Auto-refresh every 15 seconds
-        const interval = setInterval(() => {
-            fetchServices();
-        }, 15000);
-
+        const interval = setInterval(fetchServices, 15000);
         return () => clearInterval(interval);
     }, []);
 
@@ -45,42 +47,106 @@ const ServiceManagement = () => {
         try {
             await api.delete(`/services/${id}`);
             toast.success("Service deleted");
-            fetchServices();
+            setServices(services.filter(s => s._id !== id));
         } catch (err) {
             toast.error("Failed to delete service");
         }
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFormData({ ...formData, iconFile: file });
+            setImagePreview(URL.createObjectURL(file));
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
         try {
+            let finalIcon = formData.icon;
+
+            // Handle Image Upload if 'image' type is selected and file exists
+            if (formData.iconType === 'image' && formData.iconFile) {
+                const uploadData = new FormData();
+                uploadData.append("image", formData.iconFile);
+
+                try {
+                    const uploadRes = await api.post("/upload", uploadData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    finalIcon = uploadRes.data.imageUrl;
+                } catch (uploadError) {
+                    console.error("Upload failed", uploadError);
+                    toast.error("Image upload failed");
+                    setSubmitting(false);
+                    return;
+                }
+            } else if (formData.iconType === 'image' && !formData.iconFile && editingService) {
+                // If editing and kept existing image, finalIcon is already set to the URL
+                // Verify it's not the default "Box" if we are in image mode
+                if (finalIcon === "Box" || !finalIcon.includes("/")) {
+                    // Fallback check: if user switched to image but provided nothing, this might be an issue.
+                    // But usually, initial load sets the icon correctly.
+                }
+            }
+
+            const payload = {
+                title: formData.title,
+                description: formData.description,
+                icon: finalIcon,
+                features: formData.features.split('\n').map(f => f.trim()).filter(f => f) // Convert newline to array
+            };
+
             if (editingService) {
-                await api.put(`/services/${editingService._id}`, formData);
+                await api.put(`/services/${editingService._id}`, payload);
                 toast.success("Service updated");
             } else {
-                await api.post("/services", formData);
+                await api.post("/services", payload);
                 toast.success("Service created");
             }
-            setIsModalOpen(false);
-            setEditingService(null);
-            setFormData(initialFormState);
+            closeModal();
             fetchServices();
         } catch (err) {
             toast.error("Operation failed");
+        } finally {
+            setSubmitting(false);
         }
     };
 
     const handleEdit = (service) => {
         setEditingService(service);
+
+        // Determine if current icon is an image URL or Lucide icon name
+        const isImage = service.icon.startsWith("http") || service.icon.startsWith("/") || service.icon.startsWith("data:");
+
         setFormData({
             title: service.title,
             description: service.description,
-            icon: service.icon
+            icon: service.icon,
+            iconType: isImage ? "image" : "icon",
+            iconFile: null,
+            features: Array.isArray(service.features) ? service.features.join('\n') : "" // Convert array to newline string
         });
+
+        if (isImage) {
+            setImagePreview(resolveImageUrl(service.icon));
+        } else {
+            setImagePreview(null);
+        }
+
         setIsModalOpen(true);
     };
 
-    // Icon Selector
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingService(null);
+        setFormData(initialFormState);
+        setImagePreview(null);
+    };
+
+    // Icon Selector Component
     const IconSelector = () => {
         const iconList = ['Globe', 'Smartphone', 'Code', 'Server', 'Shield', 'Database', 'Cloud', 'PenTool', 'Megaphone', 'Cpu', 'Layers', 'Zap'];
 
@@ -93,7 +159,7 @@ const ServiceManagement = () => {
                             key={iconName}
                             type="button"
                             onClick={() => setFormData({ ...formData, icon: iconName })}
-                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${formData.icon === iconName
+                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${formData.icon === iconName && formData.iconType === 'icon'
                                 ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
                                 : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                                 }`}
@@ -108,7 +174,7 @@ const ServiceManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
+            {/* Header Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
                 <div>
                     <h2 className="text-3xl font-bold text-white tracking-tight">Services & Capabilities</h2>
@@ -118,6 +184,7 @@ const ServiceManagement = () => {
                     onClick={() => {
                         setEditingService(null);
                         setFormData(initialFormState);
+                        setImagePreview(null);
                         setIsModalOpen(true);
                     }}
                     className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
@@ -159,12 +226,18 @@ const ServiceManagement = () => {
                                 </tr>
                             ) : (
                                 services.map((service) => {
-                                    const Icon = Icons[service.icon] || Icons.Box;
+                                    const isImage = service.icon.startsWith("http") || service.icon.startsWith("/") || service.icon.startsWith("data:");
+                                    const Icon = !isImage ? (Icons[service.icon] || Icons.Box) : null;
+
                                     return (
                                         <tr key={service._id} className="hover:bg-white/[0.02] transition-colors group">
                                             <td className="px-6 py-5">
-                                                <div className="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400 border border-indigo-500/10">
-                                                    <Icon size={20} />
+                                                <div className="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400 border border-indigo-500/10 overflow-hidden">
+                                                    {isImage ? (
+                                                        <img src={resolveImageUrl(service.icon)} alt={service.title} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <Icon size={20} />
+                                                    )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-5">
@@ -209,28 +282,69 @@ const ServiceManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col"
+                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                            <div className="p-8 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight">{editingService ? "Update System" : "Integrate Service"}</h2>
-                                    <p className="text-gray-500 text-sm mt-1 font-bold uppercase tracking-widest">Global Offering Config</p>
+                                    <h2 className="text-2xl font-black text-white tracking-tight">{editingService ? "Update System" : "Integrate Service"}</h2>
+                                    <p className="text-gray-500 text-xs mt-1 font-bold uppercase tracking-widest">Global Offering Config</p>
                                 </div>
-                                <button onClick={() => setIsModalOpen(false)} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><Icons.X size={24} /></button>
+                                <button onClick={closeModal} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><Icons.X size={20} /></button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-10 space-y-8">
+                            <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto custom-scrollbar">
                                 <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Icon Identifier</label>
-                                    <IconSelector />
+                                    <div className="flex items-center justify-between">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Icon Representation</label>
+                                        <div className="flex bg-white/5 rounded-lg p-1 border border-white/10">
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData({ ...formData, iconType: 'icon' })}
+                                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${formData.iconType === 'icon' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                            >
+                                                Standard Icon
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFormData({ ...formData, iconType: 'image' })}
+                                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${formData.iconType === 'image' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                            >
+                                                Custom Image
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {formData.iconType === 'icon' ? (
+                                        <IconSelector />
+                                    ) : (
+                                        <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                                            <div className="w-20 h-20 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                                                {imagePreview ? (
+                                                    <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <Icons.Image className="text-gray-600" size={24} />
+                                                )}
+                                            </div>
+                                            <div className="flex-1">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleImageChange}
+                                                    className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20"
+                                                />
+                                                <p className="text-xs text-gray-600 mt-2">Upload a custom SVG, PNG, or JPG icon.</p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
+
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Display Title</label>
                                     <input
                                         required
                                         value={formData.title}
                                         onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
                                         placeholder="Service Title"
                                     />
                                 </div>
@@ -241,25 +355,37 @@ const ServiceManagement = () => {
                                         rows={4}
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed"
                                         placeholder="Describe the service complexity..."
                                     />
                                 </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Key Features (One per line)</label>
+                                    <textarea
+                                        rows={4}
+                                        value={formData.features}
+                                        onChange={e => setFormData({ ...formData, features: e.target.value })}
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed font-mono text-xs"
+                                        placeholder="e.g. 24/7 Support&#10;Cloud Integration&#10;Security First"
+                                    />
+                                </div>
 
-                                <div className="pt-8 flex justify-end gap-6 items-center">
+                                <div className="pt-6 flex justify-end gap-3 items-center shrink-0">
                                     <button
                                         type="button"
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-10 py-5 rounded-2xl hover:bg-white/10"
+                                        onClick={closeModal}
+                                        disabled={submitting}
+                                        className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-6 py-3 rounded-2xl hover:bg-white/10"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
-                                        className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
+                                        disabled={submitting}
+                                        className="px-8 py-3 rounded-[1rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3 disabled:opacity-70 disabled:hover:scale-100"
                                     >
-                                        <Icons.Check size={20} strokeWidth={3} />
-                                        <span>Confirm Save</span>
+                                        {submitting ? <Icons.Loader2 size={20} className="animate-spin" /> : <Icons.Check size={20} strokeWidth={3} />}
+                                        <span>{submitting ? "Saving..." : "Confirm Save"}</span>
                                     </button>
                                 </div>
                             </form>

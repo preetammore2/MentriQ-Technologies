@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Trash2, Search, User, X, Plus, KeyRound, Mail, Download } from "lucide-react";
+import { Trash2, Search, User, X, Plus, KeyRound, Mail, Download, Edit2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 
@@ -10,13 +10,16 @@ const MotionDiv = motion.div;
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [creating, setCreating] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: ""
     });
+
     const toast = useToast();
 
     const fetchUsers = useCallback(async () => {
@@ -58,30 +61,60 @@ const UserManagement = () => {
         }
     };
 
-    const handleCreateUser = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setCreating(true);
+        setSubmitting(true);
         try {
-            const payload = {
-                name: formData.name.trim(),
-                email: formData.email.trim(),
-                password: formData.password,
-                role: "student"
-            };
-            const { data } = await api.post("/users", payload);
-            if (data?.user) {
-                setUsers((prev) => [data.user, ...prev]);
+            if (editingUser) {
+                // Update Mode
+                const payload = {
+                    name: formData.name.trim(),
+                    email: formData.email.trim()
+                };
+                const { data } = await api.put(`/users/${editingUser._id}`, payload);
+                if (data?.success) {
+                    setUsers(prev => prev.map(u => u._id === editingUser._id ? { ...u, ...data.user } : u));
+                    toast.success("Student updated successfully");
+                }
             } else {
-                fetchUsers();
+                // Create Mode
+                const payload = {
+                    name: formData.name.trim(),
+                    email: formData.email.trim(),
+                    password: formData.password,
+                    role: "student"
+                };
+                const { data } = await api.post("/users", payload);
+                if (data?.user) {
+                    setUsers((prev) => [data.user, ...prev]);
+                    toast.success("Student created successfully");
+                }
             }
-            toast.success("Student created successfully");
-            setFormData({ name: "", email: "", password: "" });
-            setIsCreateOpen(false);
+
+            closeModal();
         } catch (err) {
-            toast.error(err?.response?.data?.message || "Failed to create student");
+            toast.error(err?.response?.data?.message || "Operation failed");
         } finally {
-            setCreating(false);
+            setSubmitting(false);
         }
+    };
+
+    const openCreateModal = () => {
+        setEditingUser(null);
+        setFormData({ name: "", email: "", password: "" });
+        setIsModalOpen(true);
+    };
+
+    const openEditModal = (user) => {
+        setEditingUser(user);
+        setFormData({ name: user.name, email: user.email, password: "" });
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingUser(null);
+        setFormData({ name: "", email: "", password: "" });
     };
 
     const handleExportStudents = () => {
@@ -137,7 +170,7 @@ const UserManagement = () => {
                         <span>Download Excel</span>
                     </button>
                     <button
-                        onClick={() => setIsCreateOpen(true)}
+                        onClick={openCreateModal}
                         className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
                     >
                         <Plus size={18} />
@@ -188,13 +221,22 @@ const UserManagement = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <button
-                                                onClick={() => handleDelete(user._id)}
-                                                className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 bg-white/5 hover:bg-red-500/10 transition-all"
-                                                title="Delete Student"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                            <div className="flex justify-end gap-2">
+                                                <button
+                                                    onClick={() => openEditModal(user)}
+                                                    className="p-2.5 rounded-lg text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
+                                                    title="Edit Student"
+                                                >
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(user._id)}
+                                                    className="p-2.5 rounded-lg text-gray-400 hover:text-red-400 bg-white/5 hover:bg-red-500/10 transition-all"
+                                                    title="Delete Student"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
                                         </td>
                                     </MotionTr>
                                 ))}
@@ -214,11 +256,11 @@ const UserManagement = () => {
             </div>
 
             <AnimatePresence>
-                {isCreateOpen && (
+                {isModalOpen && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
                         <div
                             className="absolute inset-0"
-                            onClick={() => !creating && setIsCreateOpen(false)}
+                            onClick={() => !submitting && closeModal()}
                         />
                         <MotionDiv
                             initial={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -228,19 +270,19 @@ const UserManagement = () => {
                         >
                             <div className="flex items-start justify-between gap-4 mb-8">
                                 <div>
-                                    <h3 className="text-2xl font-black text-white">Create Student</h3>
-                                    <p className="text-gray-400 text-sm mt-1">New user will be created with student role.</p>
+                                    <h3 className="text-2xl font-black text-white">{editingUser ? "Edit Student" : "Create Student"}</h3>
+                                    <p className="text-gray-400 text-sm mt-1">{editingUser ? "Update student details." : "New user will be created with student role."}</p>
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => !creating && setIsCreateOpen(false)}
+                                    onClick={() => !submitting && closeModal()}
                                     className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"
                                 >
                                     <X size={18} className="mx-auto" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleCreateUser} className="space-y-5">
+                            <form onSubmit={handleSubmit} className="space-y-5">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
                                     <div className="relative">
@@ -271,36 +313,38 @@ const UserManagement = () => {
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Password</label>
-                                    <div className="relative">
-                                        <KeyRound size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                                        <input
-                                            type="password"
-                                            required
-                                            minLength={6}
-                                            value={formData.password}
-                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                            className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
-                                            placeholder="Min 6 characters"
-                                        />
+                                {!editingUser && (
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Password</label>
+                                        <div className="relative">
+                                            <KeyRound size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                            <input
+                                                type="password"
+                                                required
+                                                minLength={6}
+                                                value={formData.password}
+                                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                                                placeholder="Min 6 characters"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div className="pt-3 flex justify-end gap-3">
                                     <button
                                         type="button"
-                                        onClick={() => !creating && setIsCreateOpen(false)}
+                                        onClick={() => !submitting && closeModal()}
                                         className="px-5 py-2.5 rounded-xl bg-white/5 text-gray-300 hover:bg-white/10 transition-all"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        disabled={creating}
+                                        disabled={submitting}
                                         className="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-500 disabled:opacity-60 transition-all"
                                     >
-                                        {creating ? "Creating..." : "Create Student"}
+                                        {submitting ? "Saving..." : (editingUser ? "Update Student" : "Create Student")}
                                     </button>
                                 </div>
                             </form>

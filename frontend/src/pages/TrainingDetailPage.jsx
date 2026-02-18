@@ -81,7 +81,7 @@ const TrainingDetailPage = () => {
         <div className="min-h-screen bg-gray-50 pt-0">
 
             {/* Hero Section */}
-            <section className="relative bg-[#0f172a] text-white py-20 pt-32 overflow-hidden">
+            <section className="relative bg-[#0f172a] text-white py-16 pt-28 overflow-hidden">
                 {/* Background Effects */}
                 <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px]" />
                 <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[var(--color-accent)]/5 rounded-full blur-[120px]" />
@@ -109,7 +109,7 @@ const TrainingDetailPage = () => {
                             </span>
                         </div>
 
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5">
                             {title}
                         </h1>
 
@@ -247,7 +247,7 @@ const TrainingDetailPage = () => {
             </section>
 
             {/* Content Section */}
-            <section className="max-w-7xl mx-auto px-6 py-20">
+            <section className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid lg:grid-cols-3 gap-12">
 
                     {/* Left: Modules */}

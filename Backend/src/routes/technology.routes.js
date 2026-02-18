@@ -5,7 +5,8 @@ const {
     updateTechnology,
     deleteTechnology
 } = require("../controllers/technology.controller");
-const { protect, isAdmin } = require("../middleware/auth.middleware");
+const { protect } = require("../middleware/auth.middleware");
+const { isAdmin } = require("../middleware/admin.middleware");
 
 const router = express.Router();
 

@@ -24,7 +24,7 @@ const FloatingIcon = ({ element, index, smoothMouseX, smoothMouseY }) => {
             transition={{ delay: element.delay, duration: 1 }}
         >
             <motion.div
-                className="w-16 h-16 bg-white/60 backdrop-blur-3xl rounded-2xl flex items-center justify-center border border-slate-200 cursor-pointer relative overflow-hidden group/box shadow-xl shadow-slate-200/50 transition-all duration-500"
+                className="w-14 h-14 bg-white/60 backdrop-blur-3xl rounded-xl flex items-center justify-center border border-slate-200 cursor-pointer relative overflow-hidden group/box shadow-xl shadow-slate-200/50 transition-all duration-500"
                 whileHover={{
                     scale: 1.2,
                     rotateY: 180,
@@ -96,7 +96,7 @@ const Hero3DElement = () => {
     return (
         <div
             ref={containerRef}
-            className="relative w-full h-[700px] flex items-center justify-center cursor-crosshair select-none group/stage"
+            className="relative w-full h-[600px] flex items-center justify-center cursor-crosshair select-none group/stage"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={triggerPulse}
@@ -178,7 +178,7 @@ const Hero3DElement = () => {
             >
                 {/* Central Spline Scene Integration */}
                 <motion.div
-                    className="relative w-[600px] h-[600px] z-10"
+                    className="relative w-[500px] h-[500px] z-10"
                     translateZ={50}
                     style={{ transformStyle: 'preserve-3d' }}
                 >

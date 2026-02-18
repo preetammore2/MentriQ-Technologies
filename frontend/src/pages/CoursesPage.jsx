@@ -34,14 +34,30 @@ const CoursesPage = () => {
 
   return (
     <div className="min-h-screen pt-0 bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center bg-[#0f172a] text-white overflow-hidden pt-32 pb-20">
+      {/* Premium Dark Hero Section */}
+      <section className="relative min-h-[50vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-28 pb-16">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[100px]" />
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-ping shadow-[0_0_15px_rgba(255,255,255,0.8)]" />
-          <div className="absolute bottom-1/4 right-1/3 w-1.5 h-1.5 bg-indigo-400 rounded-full animate-bounce delay-700" />
+          <motion.div
+            animate={{
+              x: [0, 80, 0],
+              y: [0, 40, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px] animate-pulse"
+          />
+          <motion.div
+            animate={{
+              x: [0, -60, 0],
+              y: [0, 70, 0],
+              scale: [1, 1.3, 1]
+            }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]"
+          />
+          {/* High-Contrast Technical Grid */}
+          <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
@@ -51,28 +67,32 @@ const CoursesPage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center space-x-2 mb-6 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
-              <span className="text-xs font-black uppercase tracking-widest text-indigo-300">New Courses Added</span>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="inline-flex items-center space-x-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20"
+            >
+              <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping"></span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">New Courses Added</span>
+            </motion.div>
 
-            <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-tight mb-8 text-glow">
-              Master Modern
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
-                Technologies
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[0.9] mb-6 tracking-tighter uppercase font-display">
+              MASTER MODERN <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+                TECHNOLOGIES.
               </span>
             </h1>
 
-            <p className="text-xl text-gray-400 max-w-xl leading-relaxed mb-10">
-              Unlock your potential with our curated selection of high-impact courses. Hand-picked lessons from industry titans designed to skyrocket your career.
+            <p className="text-sm md:text-base text-slate-400 max-w-xl leading-relaxed mb-8 opacity-80 font-medium">
+              Unlock your potential with our curated selection of high-impact courses. Hand-picked lessons from industry titans designed to <span className="text-white font-bold">skyrocket your career</span>.
             </p>
 
             <div className="flex flex-wrap gap-5">
-              <button onClick={() => navigate("/contact")} className="group px-10 py-5 rounded-2xl bg-indigo-600 text-white font-bold shadow-2xl shadow-indigo-500/40 hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+              <button onClick={() => navigate("/contact")} className="group px-8 py-4 rounded-2xl bg-indigo-600 text-white font-bold shadow-2xl shadow-indigo-500/40 hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
                 Start Learning Now
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-10 py-5 rounded-2xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-all duration-300 backdrop-blur-md">
+              <button className="px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-all duration-300 backdrop-blur-md">
                 Browse Path
               </button>
             </div>
@@ -96,7 +116,7 @@ const CoursesPage = () => {
                   className="w-full max-w-lg object-cover"
                 />
                 {/* Glass Overlays */}
-                <div className="absolute bottom-6 left-6 right-6 p-6 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="absolute bottom-6 left-6 right-6 p-6 rounded-3xl bg-[#0f172a]/80 backdrop-blur-xl border border-white/20 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">98%</div>
                     <div>
@@ -113,7 +133,7 @@ const CoursesPage = () => {
 
 
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-16">
           {/* Search Bar with 3D depth */}
           <div className="relative flex-1 max-w-2xl w-full group">
@@ -139,7 +159,7 @@ const CoursesPage = () => {
               <BookOpen className="w-7 h-7" />
             </div>
             <div>
-              <div className="text-3xl font-black text-gray-900 tracking-tight">{filteredCourses.length}</div>
+              <div className="text-2xl font-black text-gray-900 tracking-tight">{filteredCourses.length}</div>
               <div className="text-xs font-bold text-indigo-600 uppercase tracking-widest opacity-80">Available Courses</div>
             </div>
           </motion.div>

@@ -17,6 +17,7 @@
     --color-secondary: #06b6d4;
     --color-background: #0f172a;
     --color-surface: #1e293b;
+    --font-display: "Space Grotesk", sans-serif;
 }
 
 /* Custom Utilities */
@@ -30,9 +31,13 @@
     }
 
     .theme-shell {
-        background: radial-gradient(1200px 600px at 15% -5%, rgba(79, 70, 229, 0.1), transparent 50%),
-            radial-gradient(900px 500px at 100% 0%, rgba(6, 182, 212, 0.08), transparent 45%),
+        background: radial-gradient(1200px 600px at 15% -5%, rgba(79, 70, 229, 0.12), transparent 50%),
+            radial-gradient(900px 500px at 100% 0%, rgba(6, 182, 212, 0.1), transparent 45%),
             linear-gradient(180deg, var(--theme-bg-soft) 0%, var(--theme-bg) 60%);
+    }
+
+    .font-display {
+        font-family: var(--font-display);
     }
 
     .theme-glass {
@@ -109,6 +114,20 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    font-size: 15px;
+    /* Premium compact default */
+}
+
+@layer base {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply tracking-tighter;
+    }
 }
 
 body {

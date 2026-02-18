@@ -129,4 +129,45 @@ const resetUserPassword = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, createUser, updateUserRole, deleteUser, resetUserPassword };
+const updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, email } = req.body;
+
+        const targetUser = await User.findById(id);
+        if (!targetUser) return res.status(404).json({ message: "User not found" });
+
+        // PROTECT SUPER ADMIN EMAIL CHANGE
+        if (targetUser.email === SUPER_ADMIN_EMAIL && email && email !== SUPER_ADMIN_EMAIL) {
+            return res.status(403).json({ message: "Super Admin email cannot be changed" });
+        }
+
+        if (email) {
+            const existingUser = await User.findOne({ email: email.toLowerCase() });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ message: "Email already in use" });
+            }
+            targetUser.email = email.toLowerCase();
+        }
+
+        if (name) targetUser.name = name;
+
+        await targetUser.save();
+
+        res.json({
+            success: true,
+            user: {
+                _id: targetUser._id,
+                name: targetUser.name,
+                email: targetUser.email,
+                role: targetUser.role,
+                createdAt: targetUser.createdAt
+            }
+        });
+    } catch (error) {
+        console.error("UPDATE USER ERROR", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+module.exports = { getAllUsers, createUser, updateUserRole, deleteUser, resetUserPassword, updateUser };

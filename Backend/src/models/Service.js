@@ -15,6 +15,10 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Service icon/image URL is required"],
     },
+    features: {
+      type: [String],
+      default: [],
+    },
     active: {
       type: Boolean,
       default: true,

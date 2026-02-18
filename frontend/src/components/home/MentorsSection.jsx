@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useTransform, useMotionValue, useAnimationFrame, useSpring } from 'framer-motion';
+import { Users } from 'lucide-react';
 import { apiClient as api } from '../../utils/apiClient';
 import { resolveImageUrl } from '../../utils/imageUtils';
 
@@ -106,9 +107,8 @@ const MotionDiv = motion.div;
 const MotionH3 = motion.h3;
 
 const MentorCard = ({ item, scrollX, index, totalItems }) => {
-    const cardRef = useRef(null);
-    const CARD_WIDTH = 350;
-    const GAP = 52;
+    const CARD_WIDTH = 280;
+    const GAP = 30;
     const FULL_STEP = CARD_WIDTH + GAP;
 
     const x = useTransform(scrollX, (v) => {
@@ -118,144 +118,130 @@ const MentorCard = ({ item, scrollX, index, totalItems }) => {
         return position - (totalItems * FULL_STEP) / 2;
     });
 
-    const springConfig = { damping: 40, stiffness: 300, mass: 0.3 };
+    const springConfig = { damping: 45, stiffness: 350, mass: 0.5 };
 
-    const rawScale = useTransform(x, [-800, -300, 0, 300, 800], [0.65, 0.78, 1.1, 0.78, 0.65]);
+    // Sharper scaling for center focus
+    const rawScale = useTransform(x, [-600, -250, 0, 250, 600], [0.6, 0.7, 1.05, 0.7, 0.6]);
     const scale = useSpring(rawScale, springConfig);
 
-    const rawOpacity = useTransform(x, [-1000, -400, 0, 400, 1000], [0, 0.15, 1, 0.15, 0]);
+    const rawOpacity = useTransform(x, [-1000, -600, 0, 600, 1000], [0, 0.2, 1, 0.2, 0]);
     const opacity = useSpring(rawOpacity, springConfig);
 
-    const rawBrightness = useTransform(x, [-400, 0, 400], [0.7, 1.08, 0.7]);
+    const rawBrightness = useTransform(x, [-400, 0, 400], [0.8, 1, 0.8]);
     const brightness = useSpring(rawBrightness, springConfig);
-    const rawCenterAccent = useTransform(x, [-260, 0, 260], [0, 1, 0]);
-    const centerAccent = useSpring(rawCenterAccent, springConfig);
-    const cardShadow = useTransform(
-        rawCenterAccent,
-        [0, 1],
-        ["0 24px 50px rgba(15,23,42,0.10)", "0 34px 80px rgba(79,70,229,0.28)"]
-    );
 
-    const zIndex = useTransform(x, [-200, 0, 200], [10, 50, 10]);
+    // DYNAMIC FOCUS: Grayscale to Color transition based on center proximity
+    const grayscale = useTransform(x, [-300, -150, 0, 150, 300], [100, 40, 0, 40, 100]);
+    const filterStyle = useTransform([brightness, grayscale], ([b, g]) => `brightness(${b}) grayscale(${g}%)`);
 
-    const [glitch, setGlitch] = useState({ x: 0, y: 0, opacity: 0 });
-
-    useEffect(() => {
-        let timeoutId;
-
-        const triggerGlitch = () => {
-            if (Math.random() > 0.8) {
-                setGlitch({
-                    x: (Math.random() - 0.5) * 15,
-                    y: (Math.random() - 0.5) * 5,
-                    opacity: 0.8
-                });
-                setTimeout(() => setGlitch({ x: 0, y: 0, opacity: 0 }), 80);
-            }
-            timeoutId = setTimeout(triggerGlitch, Math.random() * 2000 + 400);
-        };
-
-        timeoutId = setTimeout(triggerGlitch, 100);
-        return () => clearTimeout(timeoutId);
-    }, []);
-
-    const glitchFilter = useTransform(x, (v) => {
-        const active = Math.abs(v) < 150;
-        if (!active) return 'none';
-        return glitch.opacity > 0
-            ? `drop-shadow(${glitch.x}px 0 rgba(255,0,0,0.5)) drop-shadow(${-glitch.x}px 0 rgba(0,255,255,0.5))`
-            : 'none';
-    });
-
-    const brightnessFilter = useTransform(brightness, (v) => `brightness(${v})`);
+    const zIndex = useTransform(x, [-200, 0, 200], [10, 60, 10]);
 
     return (
-        <MotionDiv
-            ref={cardRef}
+        <motion.div
             style={{
                 x,
                 scale,
                 opacity,
                 zIndex,
-                filter: brightnessFilter,
-                boxShadow: cardShadow,
+                filter: filterStyle,
                 willChange: "transform, opacity, filter"
             }}
-            className="absolute bg-white/90 backdrop-blur-xl rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_24px_50px_rgba(15,23,42,0.10)] w-[330px] md:w-[350px] flex-shrink-0 group perspective-1000"
+            whileHover={{
+                scale: 1.05,
+                rotateY: 15,
+                rotateX: -8,
+                zIndex: 100,
+                transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] }
+            }}
+            className="absolute bg-white/70 backdrop-blur-3xl rounded-[2.5rem] p-7 border border-white/40 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.06)] w-[280px] flex-shrink-0 group perspective-2000 overflow-hidden"
         >
-            <MotionDiv
-                style={{ opacity: centerAccent }}
-                className="absolute inset-0 rounded-[2rem] pointer-events-none bg-gradient-to-br from-indigo-100/70 via-white/10 to-cyan-100/70"
-            />
-            <MotionDiv
-                style={{ opacity: centerAccent }}
-                className="absolute inset-x-10 top-0 h-1.5 rounded-b-full bg-gradient-to-r from-indigo-500 via-cyan-500 to-indigo-500 pointer-events-none"
-            />
-            <MotionDiv
+            {/* Glassmorphism V2: High-Glow Inner Border */}
+            <div className="absolute inset-px rounded-[2.5rem] border border-white/60 pointer-events-none z-20" />
+
+            {/* Ambient Base Glow (Triggers near center) */}
+            <motion.div
                 style={{
-                    x: glitch.x,
-                    y: glitch.y,
-                    opacity: glitch.opacity,
-                    filter: glitchFilter
+                    opacity: useTransform(x, [-200, 0, 200], [0, 1, 0])
                 }}
-                className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-transparent to-cyan-50/50 rounded-[2rem] pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-cyan-500/5 pointer-events-none"
             />
 
-            <div className="flex flex-col items-center justify-center h-full relative z-10">
-                <div className="relative mb-8">
-                    <div className="absolute -inset-6 bg-indigo-500/10 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            {/* Technical Scanline Overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.02)_50%),linear-gradient(90deg,rgba(255,0,0,0.01),rgba(0,255,0,0.01),rgba(0,0,255,0.01))] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20" />
 
-                    <div className="relative group/img overflow-hidden rounded-full">
+            {/* Animated Top Highlight Line */}
+            <motion.div
+                className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '100%' }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            />
+
+            <div className="flex flex-col items-center justify-center relative z-10">
+                <div className="relative mb-7">
+                    {/* Multi-layered Avatar Glow */}
+                    <div className="absolute -inset-6 bg-indigo-500/10 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                    <div className="absolute -inset-2 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                    <motion.div
+                        whileHover={{ y: -8, scale: 1.1 }}
+                        className="relative overflow-hidden rounded-[2rem] border-4 border-white shadow-2xl group-hover:border-indigo-100 transition-all duration-500"
+                    >
                         <img
                             src={resolveImageUrl(item.image || item.imageUrl, "/images/user.png")}
                             alt={item.name}
-                            className="relative w-28 h-28 md:w-32 md:h-32 object-cover rounded-full border-4 border-white group-hover:border-indigo-300 transition-all duration-500 grayscale group-hover:grayscale-0 shadow-[0_15px_30px_rgba(0,0,0,0.08)]"
+                            className="w-24 h-24 object-cover transition-all duration-1000 scale-110 group-hover:scale-100"
                             onError={(e) => { e.target.src = "/images/user.png" }}
                         />
-                        <MotionDiv
-                            animate={{ y: ["-100%", "200%"] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                            className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent opacity-0 group-hover:opacity-100"
-                        />
-                    </div>
+                    </motion.div>
+
+                    {/* Elite Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="absolute -bottom-2 -right-2 bg-gradient-to-br from-indigo-600 to-indigo-800 text-white p-1.5 rounded-xl shadow-lg border-2 border-white z-20"
+                    >
+                        <Users className="w-3 h-3" />
+                    </motion.div>
                 </div>
 
                 <div className="text-center w-full">
-                    <MotionH3
-                        style={{ x: glitch.x * 0.5 }}
-                        className="text-2xl md:text-3xl font-black text-slate-900 mb-3 tracking-tight uppercase group-hover:text-indigo-600 transition-colors duration-300"
-                    >
+                    <h3 className="text-2xl font-black text-slate-900 mb-1.5 tracking-tighter uppercase font-display group-hover:text-indigo-600 transition-colors duration-300">
                         {item.name}
-                    </MotionH3>
+                    </h3>
 
-                    <div className="inline-block px-4 py-2 bg-indigo-50 rounded-full border border-indigo-100 mb-6 overflow-hidden relative group/tag">
-                        <span className="text-[11px] font-black text-indigo-600 uppercase tracking-[0.22em] whitespace-nowrap relative z-10">
-                            {item.role || "Technical Expert"}
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-indigo-50/50 rounded-full border border-indigo-100/50 mb-5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest font-display">
+                            {item.role || "Expert Mentor"}
                         </span>
-                        <div className="absolute inset-0 bg-indigo-500/5 translate-y-full group-hover/tag:translate-y-0 transition-transform duration-300" />
                     </div>
 
-                    <p className="text-sm text-slate-600 leading-relaxed line-clamp-2 px-2 font-medium italic opacity-75 group-hover:opacity-100 transition-opacity duration-500">
-                        "{item.description || item.bio || "Leading the future of technology through expert mentorship."}"
+                    <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-2 px-3 font-medium italic opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                        "{item.description || "Architecting the digital future through mastery."}"
                     </p>
                 </div>
 
-                <div className="flex justify-center gap-10 pt-7 mt-7 border-t border-slate-100 w-full">
-                    {(item.stats || [{ value: "5+", label: "Exp" }, { value: "10+", label: "Projects" }]).map((stat, i) => (
-                        <div key={i} className="text-center">
-                            <p className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">
+                <motion.div
+                    whileHover={{ y: -4 }}
+                    className="flex justify-center gap-7 pt-6 mt-6 border-t border-slate-100/80 w-full"
+                >
+                    {(item.stats || [{ value: "5+", label: "EXP" }, { value: "15+", label: "WP" }]).map((stat, i) => (
+                        <div key={i} className="text-center group/stat">
+                            <p className="text-xl font-black text-slate-900 tracking-tighter group-hover/stat:text-indigo-600 transition-colors font-display">
                                 {stat.value}
                             </p>
-                            <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.3em] mt-2">
+                            <p className="text-[8px] text-slate-400 font-black uppercase tracking-[0.3em] mt-0.5 opacity-60 group-hover/stat:opacity-100">
                                 {stat.label}
                             </p>
                         </div>
                     ))}
-                </div>
+                </motion.div>
             </div>
 
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] pointer-events-none rounded-[2rem]" />
-        </MotionDiv>
+            {/* Ambient Base Glow */}
+            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-indigo-500/5 rounded-full blur-[80px] pointer-events-none group-hover:bg-indigo-500/10 transition-colors duration-1000" />
+        </motion.div>
     );
 };
 
@@ -280,7 +266,7 @@ const MentorsSection = () => {
     }, []);
 
     useAnimationFrame((t, d) => {
-        const moveBy = -1.5 * (d / 16);
+        const moveBy = -1.2 * (d / 16);
         rawScrollX.set(rawScrollX.get() + moveBy);
     });
 
@@ -288,30 +274,40 @@ const MentorsSection = () => {
     const extendedMentors = [...displayMentors, ...displayMentors];
 
     return (
-        <section className="py-24 md:py-32 bg-white overflow-hidden relative min-h-[860px]">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-indigo-500/5 blur-[140px] rounded-full opacity-50" />
-                <div className="absolute inset-0 opacity-[0.35]" style={{
-                    backgroundImage: `radial-gradient(circle at 2px 2px, rgba(79, 70, 229, 0.08) 1px, transparent 0)`,
-                    backgroundSize: '32px 32px'
+        <section className="py-8 bg-white overflow-hidden relative min-h-[500px]">
+            {/* Advanced Section Background: Subtle Technical Grid */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 opacity-[0.03]" style={{
+                    backgroundImage: `linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px'
                 }} />
+                {/* Dynamic Glows */}
+                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 relative z-10 text-center">
-                <MotionDiv initial={false} animate={{ opacity: 1, scale: 1 }}>
-                    <h2 className="text-5xl md:text-7xl font-black text-slate-900 mb-4 tracking-tighter uppercase leading-[0.85]">
-                        Our Mentors
-                    </h2>
-                    <div className="flex items-center justify-center gap-6 mt-4">
-                        <div className="h-[2px] w-20 bg-gradient-to-r from-transparent via-indigo-600/20 to-transparent" />
-                        <p className="text-indigo-600 font-black uppercase tracking-[0.35em] text-[11px] md:text-[12px] opacity-80">Industry-Guided Learning</p>
-                        <div className="h-[2px] w-20 bg-gradient-to-r from-transparent via-indigo-600/20 to-transparent" />
+            <div className="max-w-7xl mx-auto px-6 mb-12 relative z-10 text-center">
+                <MotionDiv
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-indigo-50 border border-indigo-100 mb-3 shadow-sm">
+                        <Users className="w-3.5 h-3.5 text-indigo-500" />
+                        <span className="text-indigo-600 text-[10px] font-black tracking-widest uppercase">Elite Mentorship Corps</span>
                     </div>
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-3 tracking-tighter uppercase font-display leading-[0.9]">
+                        LEARN FROM THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600">BEST IN CLASS.</span>
+                    </h2>
                 </MotionDiv>
             </div>
 
             <div
-                className="relative h-[620px] md:h-[680px] flex items-center justify-center overflow-visible select-none cursor-grab active:cursor-grabbing"
+                className="relative h-[480px] flex items-center justify-center overflow-visible select-none cursor-grab active:cursor-grabbing"
+                style={{
+                    maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)'
+                }}
             >
                 <div className="relative w-full max-w-7xl flex items-center justify-center">
                     {extendedMentors.map((item, index) => (
@@ -325,8 +321,6 @@ const MentorsSection = () => {
                     ))}
                 </div>
             </div>
-
-            <div className="absolute bottom-0 left-0 w-full h-[30%] bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-20" />
         </section>
     );
 };

@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Play, Users, UserCog, KanbanSquare, Code, ClipboardCheck, BookOpen, Award, Clock, CheckCircle, Star, Globe, Smartphone, Palette, Megaphone, Server, Shield, Database, Layers, Target, Sparkles, GraduationCap, Briefcase, TrendingUp, Zap, HeadphonesIcon, FileCheck } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { apiClient as api } from '../utils/apiClient'
+import { resolveImageUrl } from '../utils/imageUtils'
 import Hero3DElement from '../components/home/Hero3DElement'
 import MentorsSection from '../components/home/MentorsSection.jsx'
-import { Simple3DTestimonial } from '../components/ui/simple-3d-testimonial'
+import CitySection from '../components/home/CitySection';
+import OneByOneTestimonial from '../components/home/OneByOneTestimonial'
 import SectionErrorBoundary from '../components/common/SectionErrorBoundary'
 
 const HomePage = () => {
@@ -53,6 +55,15 @@ const HomePage = () => {
         'Code': Code,
         'Layers': Layers
     }
+
+    const gradients = [
+        'from-blue-500 to-cyan-500',
+        'from-purple-500 to-pink-500',
+        'from-orange-500 to-red-500',
+        'from-green-500 to-emerald-500',
+        'from-indigo-500 to-violet-500',
+        'from-red-600 to-rose-600'
+    ];
 
 
     const stats = [
@@ -253,78 +264,157 @@ const HomePage = () => {
 
     return (
         <>
-            {/* Hero Section - Premium Light Theme */}
-            <section className="relative min-h-screen flex items-center bg-white text-slate-900 overflow-hidden pt-32 pb-20">
-                {/* Animated Background Elements - Refined for Light Mode */}
+            {/* Hero Section - Immersive V2 Ultra-Compact */}
+            <section className="relative min-h-[75vh] flex items-center bg-white text-slate-900 overflow-hidden pt-20 pb-8">
+                {/* Immersive Background Elements */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[120px] animate-pulse" />
-                    <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[100px]" />
-                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-indigo-400 rounded-full animate-ping opacity-20" />
-                    <div className="absolute bottom-1/4 right-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce delay-700 opacity-20" />
+                    {/* Spotlight Effect */}
+                    <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_40%,rgba(79,70,229,0.08)_0%,transparent_60%)] animate-pulse" />
+
+                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[160px]" />
+                    <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[140px]" />
+
+                    {/* Moving Accents */}
+                    <motion.div
+                        animate={{
+                            y: [0, -20, 0],
+                            opacity: [0.1, 0.3, 0.1]
+                        }}
+                        transition={{ duration: 5, repeat: Infinity }}
+                        className="absolute top-1/4 right-1/4 w-1 h-20 bg-gradient-to-b from-indigo-500 to-transparent rounded-full"
+                    />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
+                <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center z-10">
                     {/* LEFT CONTENT */}
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
+                        initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="inline-flex items-center space-x-2 mb-6 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100 backdrop-blur-sm">
-                            <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                            <span className="text-xs font-black uppercase tracking-widest text-indigo-600">Industry-Leading Tech Education</span>
-                        </div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="inline-flex items-center space-x-2 mb-4 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100/50 backdrop-blur-sm shadow-sm"
+                        >
+                            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600">The Future of Intelligence</span>
+                        </motion.div>
 
-                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-tight mb-8 text-slate-900">
-                            Transform Your Career with
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">
-                                MentriQ Technologies
+                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-[1.05] mb-6 text-slate-900 font-display tracking-[-0.04em]">
+                            REWIRE YOUR <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500">
+                                POTENTIAL.
                             </span>
                         </h1>
 
-                        <p className="text-xl text-slate-500 max-w-2xl leading-relaxed mb-10 font-medium">
-                            Master in-demand technologies through expert-led training, hands-on projects, and comprehensive placement support. Join thousands of successful graduates.
+                        <p className="text-lg text-slate-500 max-w-xl leading-relaxed mb-8 font-medium">
+                            MentriQ is where precision meets innovation. Master the core of modern technology with industry-first curriculums and elite mentorship.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                            <button
+                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                            <motion.button
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
                                 onClick={() => navigate("/courses")}
-                                className="group px-10 py-5 rounded-2xl bg-indigo-600 text-white font-bold shadow-xl shadow-indigo-500/20 hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2"
+                                className="group px-10 py-5 rounded-2xl bg-indigo-600 text-white font-black shadow-2xl shadow-indigo-500/25 hover:bg-indigo-700 transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-widest text-sm"
                             >
-                                Explore Courses
+                                Start Learning
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </button>
+                            </motion.button>
 
-                            <button
+                            <motion.button
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
                                 onClick={() => navigate("/contact")}
-                                className="px-10 py-5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-700 font-bold hover:bg-slate-100 transition-all duration-300 shadow-sm"
+                                className="px-10 py-5 rounded-2xl bg-white border-2 border-slate-100 text-slate-700 font-black hover:border-indigo-100 hover:bg-slate-50 transition-all duration-300 shadow-lg shadow-slate-200/50 uppercase tracking-widest text-sm"
                             >
-                                Schedule a Call
-                            </button>
+                                Get a Consultation
+                            </motion.button>
                         </div>
 
-                        <div className="flex items-center gap-2 text-sm text-slate-400 font-semibold">
-                            <CheckCircle className="w-5 h-5 text-emerald-500" />
-                            <span>15-Day Money Back Guarantee</span>
-                        </div>
                     </motion.div>
 
                     {/* RIGHT 3D Element */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, type: "spring", bounce: 0.3 }}
-                        className="hidden lg:flex justify-center items-center"
+                        initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+                        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                        className="hidden lg:flex justify-end items-center relative"
                     >
-                        <SectionErrorBoundary fallback={<div className="w-full h-[320px] rounded-3xl bg-slate-50 border border-slate-100" />}>
+                        <div className="absolute -inset-4 bg-gradient-to-br from-indigo-500/5 to-cyan-500/5 rounded-[4rem] blur-3xl" />
+                        <SectionErrorBoundary fallback={<div className="w-full h-[400px] rounded-[3rem] bg-slate-50 border border-slate-100" />}>
                             <Hero3DElement />
                         </SectionErrorBoundary>
                     </motion.div>
                 </div>
             </section>
 
-            {/* Stats Section - Premium Light Theme */}
-            <section className="py-24 relative bg-slate-50">
+            {/* NEW Vision Section Compact */}
+            <section className="py-12 bg-slate-50 relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative"
+                    >
+                        <div className="aspect-square rounded-[3rem] bg-indigo-100 overflow-hidden relative shadow-2xl">
+                            <img
+                                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200"
+                                alt="Innovation"
+                                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-110 hover:scale-100"
+                            />
+                            <div className="absolute inset-0 bg-indigo-600/10 mix-blend-overlay" />
+                        </div>
+                        {/* Floating Metric Card */}
+                        <motion.div
+                            animate={{ y: [0, -15, 0] }}
+                            transition={{ duration: 4, repeat: Infinity }}
+                            className="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 max-w-[200px]"
+                        >
+                            <TrendingUp className="w-8 h-8 text-indigo-600 mb-2" />
+                            <div className="text-2xl font-black text-slate-900 mb-1 font-display">98%</div>
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-tight">Career Placement Success Rate</div>
+                        </motion.div>
+                    </motion.div>
+
+                    <div className="space-y-10">
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="text-indigo-600 font-black uppercase tracking-[0.4em] text-[10px] mb-4">Our Mission</div>
+                            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4 font-display leading-tight">
+                                DEPLOYING THE NEXT <br />
+                                GENERATION OF AI <br />
+                                <span className="text-indigo-600">ARCHITECTS.</span>
+                            </h2>
+                            <p className="text-base text-slate-500 leading-relaxed font-medium">
+                                At MentriQ, we don't just teach technology; we engineer careers. Our methodology is built on three pillars of excellence: real-world proximity, algorithmic rigor, and global standard certification.
+                            </p>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {[
+                                { title: 'Project First', desc: 'Build 10+ industry projects.' },
+                                { title: 'Elite Network', desc: 'Connect with 60+ partners.' }
+                            ].map((item, idx) => (
+                                <div key={idx} className="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                                    <CheckCircle className="w-4 h-4 text-indigo-500 mb-2" />
+                                    <div className="font-black text-slate-900 text-xs uppercase tracking-tighter mb-1">{item.title}</div>
+                                    <div className="text-[10px] text-slate-400 font-medium">{item.desc}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Stats Section - Premium Light Theme Compact */}
+            <section className="py-8 relative bg-slate-50">
                 {/* Decorative Background */}
                 <div className="absolute inset-0 pointer-events-none opacity-40">
                     <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl" />
@@ -338,18 +428,18 @@ const HomePage = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="text-center mb-16"
+                        className="text-center mb-8"
                     >
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight uppercase">
-                            Our Impact in Numbers
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-2 tracking-tighter uppercase font-display">
+                            THE IMPACT
                         </h2>
-                        <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">
-                            Join thousands of successful professionals who transformed their careers with us
+                        <p className="text-slate-500 text-base max-w-2xl mx-auto font-medium">
+                            Join the ranks of high-performance professionals scaling global industries.
                         </p>
                     </motion.div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {[
                             { number: statsData?.students || '2K+', icon: GraduationCap, label: 'Students Trained', color: 'from-indigo-600 to-indigo-700' },
                             { number: statsData?.courses || '50+', icon: BookOpen, label: 'Live Courses', color: 'from-cyan-600 to-cyan-700' },
@@ -369,15 +459,14 @@ const HomePage = () => {
                                         ease: [0.16, 1, 0.3, 1]
                                     }}
                                     viewport={{ once: true }}
-                                    className="relative bg-white p-10 rounded-[2.5rem] border border-slate-100 hover:border-indigo-100 group text-center transition-all duration-500 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(79,70,229,0.1)]"
+                                    className="relative bg-white p-6 rounded-[2rem] border border-slate-100 hover:border-indigo-100 group text-center transition-all duration-500 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.1)]"
                                 >
                                     {/* Icon */}
-                                    <div className={`inline-flex items-center justify-center w-20 h-20 mb-8 bg-gradient-to-br ${stat.color} rounded-[1.5rem] text-white shadow-xl transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                                        <Icon className="w-10 h-10" strokeWidth={2.5} />
+                                    <div className={`inline-flex items-center justify-center w-14 h-14 mb-4 bg-gradient-to-br ${stat.color} rounded-[1rem] text-white shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                                        <Icon className="w-7 h-7" strokeWidth={2.5} />
                                     </div>
-
                                     {/* Number */}
-                                    <div className="text-5xl md:text-6xl font-black text-slate-900 mb-3 tracking-tighter">
+                                    <div className="text-4xl md:text-5xl font-black text-slate-900 mb-1 tracking-tighter">
                                         {stat.number}
                                     </div>
 
@@ -395,8 +484,10 @@ const HomePage = () => {
                 </div>
             </section>
 
-            {/* Features Section - Interactive Dark Theme */}
-            <section className="py-12 md:py-20 bg-gradient-to-b from-[#0f172a] via-slate-900 to-slate-800 overflow-hidden relative">
+            <CitySection />
+
+            {/* Features Section - Interactive Dark Theme Compact */}
+            <section className="py-6 md:py-8 bg-gradient-to-b from-[#0f172a] via-slate-900 to-slate-800 overflow-hidden relative">
                 {/* Background Effects */}
                 <div className="absolute inset-0 pointer-events-none opacity-20">
                     <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
@@ -409,13 +500,14 @@ const HomePage = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="text-center mb-12"
+                        className="text-center mb-8"
                     >
-                        <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                            Why Choose MentriQ?
+                        <div className="text-indigo-400 font-black uppercase tracking-[0.4em] text-[10px] mb-4">Our Ecosystem</div>
+                        <h2 className="text-4xl md:text-5xl font-black text-white mb-4 font-display tracking-tight">
+                            BEYOND <span className="text-indigo-400">TRADITION.</span>
                         </h2>
-                        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                            Everything you need to launch a successful career in technology
+                        <p className="text-lg text-gray-400 max-w-3xl mx-auto font-medium">
+                            We provide a high-frequency learning environment designed for maximum skill retention and career acceleration.
                         </p>
                     </motion.div>
 
@@ -429,8 +521,8 @@ const HomePage = () => {
                                     whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                                     viewport={{ once: true }}
-                                    whileHover={{ y: -10, scale: 1.03, rotateY: 5 }}
-                                    className="group bg-white/5 backdrop-blur-xl rounded-3xl p-8 shadow-xl shadow-black/20 border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all duration-500 relative overflow-hidden cursor-pointer"
+                                    whileHover={{ y: -6, scale: 1.02, rotateY: 5 }}
+                                    className="group bg-white/5 backdrop-blur-xl rounded-2xl p-6 shadow-xl shadow-black/20 border border-white/10 hover:border-white/20 hover:bg-white/[0.08] transition-all duration-500 relative overflow-hidden cursor-pointer"
                                     style={{ transformStyle: 'preserve-3d' }}
                                 >
                                     {/* Animated Border Gradient */}
@@ -458,10 +550,10 @@ const HomePage = () => {
                                             repeat: Infinity,
                                             delay: index * 0.2
                                         }}
-                                        className={`relative w-18 h-18 mb-6 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center shadow-2xl shadow-${feature.color.split('-')[1]}-500/30 group-hover:scale-110 transition-all duration-500`}
+                                        className={`relative w-14 h-14 mb-4 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center shadow-2xl shadow-${feature.color.split('-')[1]}-500/30 group-hover:scale-110 transition-all duration-500`}
                                     >
-                                        <Icon className="w-9 h-9 text-white" strokeWidth={2.5} />
-                                        <div className="absolute inset-0 bg-white/10 rounded-2xl group-hover:bg-white/20 transition-all" />
+                                        <Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
+                                        <div className="absolute inset-0 bg-white/10 rounded-xl group-hover:bg-white/20 transition-all" />
                                     </motion.div>
 
                                     <h3 className="relative text-xl font-black text-white mb-3 group-hover:text-indigo-300 transition-colors">{feature.title}</h3>
@@ -476,13 +568,13 @@ const HomePage = () => {
                 </div>
             </section>
 
-            {/* Services Section - Premium Light 3D Theme */}
-            <section className="py-24 bg-white overflow-hidden relative">
+            {/* Services Section - Premium Light 3D Theme Compact */}
+            <section className="py-8 bg-white overflow-hidden relative">
                 {/* Ambient Depth Shadows - Refined for Light Mode */}
                 <div className="absolute inset-0 pointer-events-none opacity-20">
-                    <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-slate-50 to-transparent" />
-                    <div className="absolute top-1/2 left-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px]" />
+                    <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-slate-50 to-transparent" />
+                    <div className="absolute top-1/2 left-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-[100px]" />
+                    <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px]" />
                 </div>
 
                 <div className="relative max-w-7xl mx-auto px-6">
@@ -491,25 +583,25 @@ const HomePage = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="text-center mb-20"
+                        className="text-center mb-10"
                     >
                         <motion.div
-                            className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-indigo-50 border border-indigo-100 mb-6"
+                            className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-indigo-50 border border-indigo-100 mb-4"
                         >
-                            <span className="w-2 h-2 bg-indigo-600 rounded-full animate-pulse" />
+                            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
                             <span className="text-indigo-600 text-[10px] font-black tracking-widest uppercase">Expert Solutions</span>
                         </motion.div>
-                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter uppercase">
-                            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">Services</span>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter uppercase font-display">
+                            WHAT WE <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">ENGINEER.</span>
                         </h2>
-                        <p className="text-xl text-slate-500 max-w-3xl mx-auto font-medium">
+                        <p className="text-lg text-slate-500 max-w-3xl mx-auto font-medium">
                             Architecting the future of intelligence with comprehensive technology stacks.
                         </p>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {services.map((service, index) => {
-                            const IconComponent = iconMap[service.icon] || Code
+                            const IconComponent = iconMap[service.icon] || Code;
                             const gradients = [
                                 'from-blue-600 to-blue-700',
                                 'from-indigo-600 to-indigo-700',
@@ -517,120 +609,98 @@ const HomePage = () => {
                                 'from-cyan-600 to-cyan-700',
                                 'from-emerald-600 to-emerald-700',
                                 'from-rose-600 to-rose-700'
-                            ]
-                            const gradient = gradients[index % gradients.length]
+                            ];
+                            const gradient = gradients[index % gradients.length];
+                            const iconValue = service.icon || "";
+                            const isImage = iconValue.startsWith("http") || iconValue.startsWith("/") || iconValue.startsWith("data:");
 
                             return (
                                 <motion.div
-                                    key={service._id}
+                                    key={service._id || index}
+                                    onClick={() => navigate('/services')}
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                                     viewport={{ once: true }}
-                                    whileHover={{ y: -12 }}
-                                    onClick={() => navigate('/services')}
-                                    className="group bg-white rounded-[2.5rem] p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.06)] border border-slate-100 hover:border-indigo-100 hover:shadow-[0_30px_70px_-20px_rgba(79,70,229,0.12)] transition-all duration-700 relative overflow-hidden cursor-pointer"
+                                    whileHover={{ y: -10 }}
+                                    transition={{ delay: index * 0.1, duration: 0.4 }}
+                                    className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-indigo-500/10 border border-slate-100 hover:border-indigo-500/20 transition-all duration-500 flex flex-col h-full group cursor-pointer relative overflow-hidden"
                                 >
-                                    {/* Glassy Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                                    <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${gradient} opacity-5 rounded-bl-[100%] -mr-10 -mt-10 transition-transform group-hover:scale-150`} />
 
-                                    {/* 3D Icon Container */}
-                                    <div className="relative mb-8 pt-2">
-                                        <motion.div
-                                            whileHover={{ rotate: 360, scale: 1.1 }}
-                                            transition={{ duration: 0.8, ease: "anticipate" }}
-                                            className={`w-18 h-18 bg-gradient-to-br ${gradient} rounded-[1.5rem] flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500 relative z-10`}
-                                        >
-                                            <IconComponent className="w-9 h-9 text-white" strokeWidth={2.5} />
-                                        </motion.div>
-                                        <div className={`absolute -inset-2 bg-gradient-to-br ${gradient} rounded-[1.5rem] blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-700`} />
+                                    <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white mb-8 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative z-10`}>
+                                        {isImage ? (
+                                            <img src={resolveImageUrl(iconValue)} alt={service.title} className="w-full h-full object-cover rounded-3xl" />
+                                        ) : (
+                                            <IconComponent size={36} strokeWidth={2} />
+                                        )}
                                     </div>
 
-                                    <h3 className="relative text-xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{service.title}</h3>
-                                    <p className="relative text-slate-500 leading-relaxed mb-8 text-[15px] group-hover:text-slate-700 transition-colors font-medium">{service.description}</p>
+                                    <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors relative z-10">{service.title}</h3>
+                                    <p className="text-slate-500 leading-relaxed mb-8 flex-grow whitespace-pre-line text-sm font-medium relative z-10 line-clamp-3">{service.description}</p>
 
-                                    {service.features && service.features.length > 0 && (
-                                        <div className="relative space-y-3 pt-6 border-t border-slate-50 group-hover:border-indigo-50 transition-colors">
-                                            {service.features.slice(0, 3).map((feature, idx) => (
-                                                <motion.div
-                                                    key={idx}
-                                                    whileHover={{ x: 8 }}
-                                                    className="flex items-center gap-3 text-sm text-slate-400 group-hover:text-slate-600 transition-all font-semibold"
-                                                >
-                                                    <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full group-hover:scale-125 group-hover:bg-indigo-600 transition-all" />
-                                                    <span>{feature}</span>
-                                                </motion.div>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {/* Mouse-reactive Light Reflection */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none overflow-hidden transition-opacity duration-1000">
-                                        <div className="absolute top-0 -left-[100%] w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 animate-shine" />
+                                    <div className="flex items-center text-indigo-600 font-bold text-sm uppercase tracking-widest mt-auto group-hover:translate-x-2 transition-transform">
+                                        Learn More <ArrowRight size={16} className="ml-1" />
                                     </div>
                                 </motion.div>
-                            )
+                            );
                         })}
                     </div>
 
-                    {services.length > 6 && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-center mt-16"
+                    {/* View More Button */}
+                    <div className="mt-16 text-center">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate('/services')}
+                            className="inline-flex items-center gap-3 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-600/30 hover:bg-indigo-700 transition-colors group"
                         >
-                            <motion.button
-                                whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(79, 70, 229, 0.2)' }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate('/services')}
-                                className="inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 hover:from-indigo-500 hover:to-cyan-500 transition-all duration-300"
-                            >
-                                View All Services
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </motion.button>
-                        </motion.div>
-                    )}
+                            View All Services
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                    </div>
+
                 </div>
-            </section>
+            </section >
 
             {/* Mentors Section - Advanced Perspective Carousel */}
-            <MentorsSection />
+            < SectionErrorBoundary fallback={< div className="h-40 bg-slate-50 flex items-center justify-center" > Unable to load mentors.</div >}>
+                <MentorsSection />
+            </SectionErrorBoundary >
 
-            {/* Testimonials Section - Premium Light 3D Interactive Grid */}
-            <section className="py-24 bg-white overflow-hidden relative">
-                <div className="max-w-7xl mx-auto px-6 mb-12 text-center relative z-10">
+            {/* Testimonials Section - Premium Light 3D Interactive Grid Compact */}
+            < section className="py-8 bg-white overflow-hidden relative" >
+                <div className="max-w-7xl mx-auto px-6 mb-6 text-center relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-indigo-50 border border-indigo-100 mb-6"
+                        className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-indigo-50 border border-indigo-100 mb-3"
                     >
-                        <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                        <Users className="w-3.5 h-3.5 text-indigo-500" />
                         <span className="text-indigo-600 text-[10px] font-black tracking-widest uppercase">Verified Success Stories</span>
                     </motion.div>
-                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter uppercase">
-                        Student <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">Impact</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-3 tracking-tighter uppercase font-display">
+                        STUDENT <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">IMPACT.</span>
                     </h2>
                 </div>
 
-                <div className="relative max-w-full">
+                <div className="relative max-w-7xl mx-auto px-6">
                     <SectionErrorBoundary fallback={<div className="w-full h-40 rounded-3xl bg-slate-50 border border-slate-100" />}>
-                        <Simple3DTestimonial testimonials={testimonials} />
+                        <OneByOneTestimonial testimonials={testimonials} />
                     </SectionErrorBoundary>
                 </div>
-            </section>
+            </section >
 
 
-            {/* Partners Section - Premium Light 3D Dual-Scroller */}
-            <section className="py-24 bg-white overflow-hidden relative">
+            {/* Partners Section - Premium Light 3D Dual-Scroller Compact */}
+            < section className="py-8 bg-white overflow-hidden relative" >
                 {/* Ambient Subtle Glows - Refined for Light Theme */}
-                <div className="absolute inset-0 pointer-events-none opacity-40">
+                < div className="absolute inset-0 pointer-events-none opacity-40" >
                     <div className="absolute top-1/2 left-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-[120px]" />
                     <div className="absolute top-1/2 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[120px]" />
-                </div>
+                </div >
 
-                <div className="relative max-w-7xl mx-auto px-6 mb-16 text-center">
+                <div className="relative max-w-7xl mx-auto px-6 mb-8 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -638,23 +708,23 @@ const HomePage = () => {
                         transition={{ duration: 0.6 }}
                     >
                         <motion.div
-                            className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-cyan-50 border border-cyan-100 mb-6"
+                            className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full bg-cyan-50 border border-cyan-100 mb-3"
                         >
-                            <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+                            <Briefcase className="w-3.5 h-3.5 text-cyan-500" />
                             <span className="text-cyan-600 text-[10px] font-black tracking-widest uppercase">Global Network</span>
                         </motion.div>
 
-                        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter uppercase">
-                            OUR HIRING <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">PARTNERS</span>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter uppercase font-display">
+                            OUR HIRING <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">PARTNERS.</span>
                         </h2>
-                        <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+                        <p className="text-lg text-slate-500 max-w-2xl mx-auto font-medium">
                             Trusted by leading industry giants and high-growth technology ventures worldwide.
                         </p>
                     </motion.div>
                 </div>
 
                 <div
-                    className="relative space-y-12 py-10"
+                    className="relative space-y-8 py-6"
                     style={{
                         perspective: '2000px',
                         maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)',
@@ -677,17 +747,17 @@ const HomePage = () => {
                             {(dynamicPartners.length > 0 ? [...dynamicPartners, ...dynamicPartners] : [...partners, ...partners]).map((partner, index) => (
                                 <motion.div
                                     key={`top-${index}`}
-                                    whileHover={{ y: -10, scale: 1.05, translateZ: 40 }}
-                                    className="w-[216px] flex-shrink-0 bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-indigo-500/20 hover:bg-slate-50 shadow-xl flex flex-col items-center justify-center group transition-all duration-500 cursor-pointer overflow-hidden relative"
+                                    whileHover={{ y: -6, scale: 1.05, translateZ: 40 }}
+                                    className="w-[180px] flex-shrink-0 bg-white rounded-2xl p-5 border border-slate-100 hover:border-indigo-500/20 hover:bg-slate-50 shadow-xl flex flex-col items-center justify-center group transition-all duration-500 cursor-pointer overflow-hidden relative"
                                 >
                                     {/* Logo Backglow */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                                    <div className="h-20 w-full flex items-center justify-center mb-4 relative z-10">
+                                    <div className="h-14 w-full flex items-center justify-center mb-2 relative z-10">
                                         <img
                                             src={partner.logo || partner.imageUrl}
                                             alt={partner.name}
-                                            className="max-h-14 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
+                                            className="max-h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
                                         />
                                     </div>
                                     <p className="text-[10px] font-black text-slate-400 text-center uppercase tracking-[0.2em] group-hover:text-indigo-600 transition-colors relative z-10">
@@ -717,17 +787,17 @@ const HomePage = () => {
                             {(dynamicPartners.length > 0 ? [...dynamicPartners, ...dynamicPartners] : [...partners, ...partners]).map((partner, index) => (
                                 <motion.div
                                     key={`bottom-${index}`}
-                                    whileHover={{ y: 10, scale: 1.05, translateZ: 40 }}
-                                    className="w-[216px] flex-shrink-0 bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-cyan-500/20 hover:bg-slate-50 shadow-xl flex flex-col items-center justify-center group transition-all duration-500 cursor-pointer overflow-hidden relative"
+                                    whileHover={{ y: 6, scale: 1.05, translateZ: 40 }}
+                                    className="w-[180px] flex-shrink-0 bg-white rounded-2xl p-5 border border-slate-100 hover:border-cyan-500/20 hover:bg-slate-50 shadow-xl flex flex-col items-center justify-center group transition-all duration-500 cursor-pointer overflow-hidden relative"
                                 >
                                     {/* Logo Backglow */}
                                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                                    <div className="h-20 w-full flex items-center justify-center mb-4 relative z-10">
+                                    <div className="h-14 w-full flex items-center justify-center mb-2 relative z-10">
                                         <img
                                             src={partner.logo || partner.imageUrl}
                                             alt={partner.name}
-                                            className="max-h-14 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
+                                            className="max-h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
                                         />
                                     </div>
                                     <p className="text-[10px] font-black text-slate-400 text-center uppercase tracking-[0.2em] group-hover:text-cyan-600 transition-colors relative z-10">
@@ -741,44 +811,43 @@ const HomePage = () => {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
-            {/* Technologies Section - Premium Light 3D Perspective Scroller */}
-            <section className="py-32 bg-white overflow-hidden relative">
-                {/* Advanced Ambient Glows - Refined for Light Theme */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-40">
-                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[160px]" />
-                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[160px]" />
+            {/* Technologies Section - Premium Dark 3D Perspective Scroller Compact */}
+            < section className="py-10 bg-[#070b14] overflow-hidden relative" >
+                {/* Advanced Ambient Glows - Refined for Dark Theme */}
+                < div className="absolute inset-0 pointer-events-none overflow-hidden" >
+                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[160px]" />
+                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[160px]" />
 
-                    {/* Background Tech Grid - Subtle for Light Theme */}
-                    <div className="absolute inset-0 opacity-[0.03]"
-                        style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)', backgroundSize: '80px 80px' }}
+                    {/* Background Tech Grid - Subtle for Dark Theme */}
+                    <div className="absolute inset-0 opacity-[0.05]"
+                        style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '80px 80px' }}
                     />
-                </div>
+                </div >
 
-                <div className="max-w-7xl mx-auto px-6 mb-24 text-center relative z-10">
+                <div className="max-w-7xl mx-auto px-6 mb-12 text-center relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-slate-50 border border-slate-100 mb-8 shadow-sm"
+                        className="inline-flex items-center gap-3 py-1.5 px-5 rounded-full bg-white/5 border border-white/10 mb-4 shadow-[0_0_20px_rgba(99,102,241,0.1)]"
                     >
-                        <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.5)]" />
-                        <span className="text-indigo-600 text-[10px] font-black tracking-[0.4em] uppercase">Industry Standard Tech</span>
-                        <div className="w-1.5 h-1.5 bg-cyan-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(8,145,178,0.5)]" />
+                        <Target className="w-3.5 h-3.5 text-indigo-400" />
+                        <span className="text-indigo-400 text-[10px] font-black tracking-[0.4em] uppercase">Industry Standard Tech</span>
                     </motion.div>
 
-                    <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter uppercase leading-none text-slate-900">
-                        TECHNOLOGIES YOU'LL <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600">MASTER</span>
+                    <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter uppercase leading-none text-white font-display">
+                        MASTERY <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">STACK.</span>
                     </h2>
-                    <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed">
-                        Deployment-ready expertise in industry-standard tools and frameworks driving the <span className="text-slate-900">modern digital economy.</span>
+                    <p className="text-lg text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
+                        Deployment-ready expertise in industry-standard tools and frameworks driving the <span className="text-white">modern digital economy.</span>
                     </p>
                 </div>
 
                 {/* 3D Perspective Scroller Container */}
                 <div
-                    className="relative py-10"
+                    className="relative py-6"
                     style={{
                         perspective: '2000px',
                         maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
@@ -803,63 +872,65 @@ const HomePage = () => {
                                     scale: 1.1,
                                     translateZ: 60,
                                     rotateX: 10,
-                                    boxShadow: '0 30px 60px rgba(0,0,0,0.08)'
+                                    boxShadow: '0 30px 60px rgba(99,102,241,0.2)'
                                 }}
-                                className="w-[180px] h-[200px] rounded-[2.5rem] bg-white/40 backdrop-blur-3xl border border-slate-100 flex flex-col items-center justify-center relative overflow-hidden group transition-all duration-500 cursor-pointer"
+                                className="w-[150px] h-[160px] rounded-[1.5rem] bg-white border border-white/20 flex flex-col items-center justify-center relative overflow-hidden group transition-all duration-500 cursor-pointer shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]"
                                 style={{ transformStyle: 'preserve-3d' }}
                             >
-                                {/* HUD Corner Accents - Refined for Light Theme */}
-                                <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-slate-200 rounded-tl-lg group-hover:border-indigo-400 transition-colors" />
-                                <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-slate-200 rounded-br-lg group-hover:border-cyan-400 transition-colors" />
+                                {/* HUD Corner Accents - Refined for White Card */}
+                                <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-slate-100 rounded-tl-lg group-hover:border-indigo-500 transition-colors" />
+                                <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-slate-100 rounded-br-lg group-hover:border-cyan-500 transition-colors" />
 
                                 {/* Internal Ambient Core */}
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                                {/* Scanline Overlay - Subtle for Light Theme */}
+                                {/* Scanline Overlay - Subtle for White Card */}
                                 <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.05] pointer-events-none overflow-hidden transition-opacity">
-                                    <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_0%,rgba(0,0,0,0.2)_50%,transparent_100%)] bg-[length:100%_4px] animate-scan" />
+                                    <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_0%,rgba(0,0,0,0.05)_50%,transparent_100%)] bg-[length:100%_4px] animate-scan" />
                                 </div>
 
                                 {/* Floating Logo with Depth */}
                                 <div className="relative mb-6 z-10" style={{ transform: 'translateZ(30px)' }}>
                                     <motion.img
-                                        src={tech.logo}
+                                        src={tech.logo || "https://via.placeholder.com/64?text=Tech"}
                                         alt={tech.name}
-                                        className="w-16 h-16 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.05)] group-hover:drop-shadow-[0_10px_25px_rgba(79,70,229,0.2)] transition-all duration-500"
+                                        className="w-16 h-16 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] group-hover:drop-shadow-[0_10px_25px_rgba(99,102,241,0.2)] transition-all duration-500"
                                         animate={{ y: [0, -4, 0] }}
                                         transition={{ duration: 4, repeat: Infinity, delay: (index % technologies.length) * 0.15 }}
                                     />
                                 </div>
 
-                                <div className="relative z-10 text-center">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-indigo-600 transition-colors duration-300">
+                                <div className="relative z-10 text-center px-2">
+                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover:text-indigo-600 transition-colors duration-300">
                                         {tech.name}
                                     </p>
-                                    <div className="w-8 h-0.5 bg-slate-100 mx-auto mt-2 rounded-full group-hover:w-12 group-hover:bg-indigo-400 transition-all duration-500" />
+                                    <div className="w-6 h-0.5 bg-slate-100 mx-auto mt-1 rounded-full group-hover:w-10 group-hover:bg-indigo-400 transition-all duration-500" />
                                 </div>
                             </motion.div>
                         ))}
                     </motion.div>
                 </div>
 
-                {/* Perspective Glow Floor - Light Theme */}
-                <div className="h-24 w-full bg-gradient-to-b from-transparent to-white opacity-100 relative -top-12 z-0 pointer-events-none" />
-            </section>
+                {/* Perspective Glow Floor - Dark Theme */}
+                <div className="h-24 w-full bg-gradient-to-b from-transparent to-[#070b14]/50 opacity-100 relative -top-12 z-0 pointer-events-none" />
+            </section >
 
-            {/* CTA Section - Premium Light Theme Upgrade */}
-            <section className="pt-32 pb-16 bg-white relative overflow-hidden">
+
+
+            {/* CTA Section - Premium Light Theme Upgrade Compact */}
+            < section className="pt-10 pb-6 bg-white relative overflow-hidden" >
                 {/* Background Pattern & Glows - Refined for Light Theme */}
-                <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+                < div className="absolute inset-0 opacity-[0.05] pointer-events-none"
                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #000 1px, transparent 0)', backgroundSize: '40px 40px' }}
                 />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[160px] pointer-events-none" />
+                < div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[160px] pointer-events-none" />
 
                 <div className="relative max-w-6xl mx-auto px-6">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="bg-white/40 backdrop-blur-3xl rounded-[3rem] p-12 md:p-20 border border-slate-100 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden text-center group"
+                        className="bg-white/40 backdrop-blur-3xl rounded-[2.5rem] p-8 md:p-14 border border-slate-100 shadow-[0_30px_90px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden text-center group"
                     >
                         {/* Interactive Corner Brackets - Refined for Light Theme */}
                         <div className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-slate-200 rounded-tl-xl transition-all group-hover:border-indigo-500 group-hover:scale-110" />
@@ -872,17 +943,17 @@ const HomePage = () => {
                             transition={{ delay: 0.2 }}
                         >
                             <motion.div
-                                className="inline-block py-1.5 px-5 rounded-full bg-indigo-50 border border-indigo-100 mb-8"
+                                className="inline-block py-1.5 px-5 rounded-full bg-indigo-50 border border-indigo-100 mb-4"
                             >
                                 <span className="text-indigo-600 text-[10px] font-black tracking-[0.4em] uppercase">Phase: Launch</span>
                             </motion.div>
 
-                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter uppercase leading-tight">
-                                READY TO START <br />
-                                YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 animate-gradient-x">JOURNEY?</span>
+                            <h2 className="text-4xl md:text-7xl font-black text-slate-900 mb-6 tracking-tighter uppercase leading-[0.9] font-display">
+                                READY TO <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-600 animate-gradient-x">DEPART?</span>
                             </h2>
 
-                            <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto font-medium mb-12 leading-relaxed">
+                            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto font-medium mb-8 leading-relaxed">
                                 Join <span className="text-slate-900 font-bold italic underline decoration-indigo-200">thousands</span> of students who have transformed their careers with MentriQ Technologies.
                             </p>
 
@@ -918,7 +989,7 @@ const HomePage = () => {
                         <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                     </motion.div>
                 </div>
-            </section>
+            </section >
         </>
     )
 }

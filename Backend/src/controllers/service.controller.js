@@ -25,7 +25,7 @@ const getAdminServices = async (req, res) => {
 // Create a new service
 const createService = async (req, res) => {
     try {
-        const { title, description, icon } = req.body;
+        const { title, description, icon, features } = req.body;
 
         if (!title || !description || !icon) {
             return res.status(400).json({ message: "Please provide all required fields" });
@@ -35,6 +35,7 @@ const createService = async (req, res) => {
             title,
             description,
             icon,
+            features
         });
 
         res.status(201).json(service);
@@ -48,7 +49,7 @@ const createService = async (req, res) => {
 const updateService = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, icon, active } = req.body;
+        const { title, description, icon, active, features } = req.body;
 
         const service = await Service.findById(id);
 
@@ -59,6 +60,7 @@ const updateService = async (req, res) => {
         service.title = title || service.title;
         service.description = description || service.description;
         service.icon = icon || service.icon;
+        service.features = features || service.features;
         if (active !== undefined) service.active = active;
 
         const updatedService = await service.save();
@@ -100,36 +102,42 @@ const seedServices = async (req, res) => {
                 icon: 'Code',
                 title: 'Custom Software Development',
                 description: 'Tailored software solutions to address your unique business challenges. We build scalable, secure, and high-performance applications.',
+                features: ['Scalable Architecture', 'Secure Codebase', 'High-Performance Apps'],
                 active: true
             },
             {
                 icon: 'Globe',
                 title: 'Web Application Development',
                 description: 'Create powerful, responsive, and user-centric web applications. From e-commerce platforms to enterprise portals, we deliver excellence.',
+                features: ['Responsive UI/UX', 'E-commerce Solutions', 'Enterprise Portals'],
                 active: true
             },
             {
                 icon: 'Smartphone',
                 title: 'Mobile App Development',
                 description: 'Reach your audience on the go with native and cross-platform mobile apps. We design and develop for both iOS and Android.',
+                features: ['iOS & Android Apps', 'Native Experience', 'Cross-Platform Dev'],
                 active: true
             },
             {
                 icon: 'Cloud',
                 title: 'Cloud & DevOps Services',
                 description: 'Accelerate your digital transformation with our cloud and DevOps services. We help you migrate, manage, and optimize your cloud infrastructure.',
+                features: ['Cloud Migration', 'DevOps Automation', 'Infra Optimization'],
                 active: true
             },
             {
                 icon: 'Shield',
                 title: 'Cybersecurity Solutions',
                 description: 'Safeguard your digital assets with our comprehensive cybersecurity services. We offer audits, penetration testing, and risk management.',
+                features: ['Security Audits', 'Penetration Testing', 'Risk Management'],
                 active: true
             },
             {
                 icon: 'BarChart',
                 title: 'Data Analytics & AI',
                 description: 'Unlock the power of your data. We provide advanced analytics and AI solutions to help you make informed business decisions.',
+                features: ['Advanced Analytics', 'AI Integration', 'Data-Driven Insights'],
                 active: true
             }
         ];

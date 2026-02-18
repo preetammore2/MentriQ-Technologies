@@ -46,35 +46,51 @@ const TrainingPage = () => {
 
     return (
         <div className="min-h-screen pt-0 bg-white">
-            {/* Training Hero Section */}
-            <section className="relative min-h-[70vh] flex items-center bg-[#0f172a] text-white overflow-hidden pt-32 pb-20">
-                {/* Animated Background Elements */}
+            {/* Premium Dark Hero Section */}
+            <section className="relative min-h-[45vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-24 pb-12">
+                {/* Advanced Atmospheric Animations for Dark */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
-                    <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[100px] opacity-50" />
-                    <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
+                    <motion.div
+                        animate={{
+                            x: [0, 80, 0],
+                            y: [0, 40, 0],
+                            scale: [1, 1.2, 1]
+                        }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px] animate-pulse"
+                    />
+                    <motion.div
+                        animate={{
+                            x: [0, -60, 0],
+                            y: [0, 70, 0],
+                            scale: [1, 1.3, 1]
+                        }}
+                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                        className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]"
+                    />
+                    {/* High-Contrast Technical Grid */}
+                    <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-4 text-center z-10">
+                <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center space-x-2 mb-8 px-6 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
+                        initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        className="inline-flex items-center space-x-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20"
                     >
                         <Award size={16} className="text-cyan-400" />
-                        <span className="text-xs font-black uppercase tracking-[0.2em] text-cyan-300">Certifications Included</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-300">Elite Training Programs</span>
                     </motion.div>
 
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-6xl md:text-8xl font-black mb-8 tracking-tighter text-glow"
+                        transition={{ duration: 0.8, ease: "circOut" }}
+                        className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter uppercase font-display leading-[0.9]"
                     >
-                        Professional
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
-                            Training
+                        MASTERING <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+                            MODERN SYSTEMS.
                         </span>
                     </motion.h1>
 
@@ -82,40 +98,67 @@ const TrainingPage = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-xl md:text-2xl max-w-4xl mx-auto mb-12 text-gray-400 leading-relaxed font-medium"
+                        className="text-sm md:text-base max-w-3xl mx-auto mb-10 text-slate-400 leading-relaxed font-medium opacity-80"
                     >
-                        Accelerate your career with elite-level training programs. Master complex systems through
-                        <span className="text-white"> hands-on deep dives</span> and expert guidance.
+                        Accelerate your career with elite-level training programs. Master complex systems through <span className="text-white font-bold">hands-on deep dives</span> and expert guidance.
                     </motion.p>
+                </div>
+            </section>
 
+            {/* Value Props */}
+            <section className="py-20 bg-gray-50 relative z-20">
+                <div className="max-w-7xl mx-auto px-6">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="flex flex-wrap justify-center gap-6"
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
                     >
                         {[
-                            { icon: BookOpen, text: 'Live Intensity', color: 'indigo' },
-                            { icon: Award, text: 'Degree Equivalent', color: 'cyan' },
-                            { icon: Search, text: 'Global Placement', color: 'indigo' }
+                            {
+                                icon: BookOpen,
+                                text: 'Live Intensity',
+                                color: 'indigo',
+                                desc: 'Experience the pressure and pace of a real development environment.'
+                            },
+                            {
+                                icon: Award,
+                                text: 'Degree Equivalent',
+                                color: 'cyan',
+                                desc: 'Curriculum depth that matches or exceeds university standards.'
+                            },
+                            {
+                                icon: Search,
+                                text: 'Global Placement',
+                                color: 'indigo',
+                                desc: 'Connect with international opportunities through our network.'
+                            }
                         ].map((item, idx) => {
                             const Icon = item.icon
                             return (
-                                <span key={idx} className="group px-8 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl text-gray-200 flex items-center gap-3 hover:bg-white/10 hover:border-white/20 transition-all cursor-default">
-                                    <div className={`w-10 h-10 rounded-xl bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-400 group-hover:scale-110 transition-transform`}>
-                                        <Icon size={20} />
+                                <div key={idx} className="group p-8 rounded-[2rem] bg-white border border-slate-100 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05)] hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 hover:border-indigo-500/20 transition-all duration-300 relative overflow-hidden">
+                                    <div className={`absolute top-0 right-0 w-32 h-32 bg-${item.color}-500/5 rounded-bl-[100%] -mr-10 -mt-10 transition-transform group-hover:scale-150`}></div>
+
+                                    <div className={`w-16 h-16 rounded-2xl bg-${item.color}-50 flex items-center justify-center text-${item.color}-600 mb-6 group-hover:scale-110 transition-transform relative z-10 border border-${item.color}-100 shadow-sm`}>
+                                        <Icon size={28} />
                                     </div>
-                                    <span className="font-bold tracking-tight">{item.text}</span>
-                                </span>
+                                    <h3 className="text-xl font-black text-slate-900 mb-3 tracking-tight relative z-10 group-hover:text-indigo-600 transition-colors">
+                                        {item.text}
+                                    </h3>
+                                    <p className="text-slate-500 text-sm font-medium leading-relaxed relative z-10">
+                                        {item.desc}
+                                    </p>
+                                </div>
                             )
                         })}
                     </motion.div>
                 </div>
-            </section>
+            </section >
 
 
             {/* Search + Stats */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-glow">
+            < div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 text-glow" >
                 <div className="flex flex-col lg:flex-row gap-8 items-center justify-between mb-20">
                     {/* Search Bar with 3D depth */}
                     <div className="relative flex-1 max-w-2xl w-full group">
@@ -149,53 +192,57 @@ const TrainingPage = () => {
 
 
                 {/* Courses Grid */}
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[...Array(6)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="animate-pulse bg-gray-100 rounded-3xl h-96"
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredItems.map((item, index) => (
-                            <motion.div
-                                key={item._id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                            >
-                                <CourseCard course={item} baseUrl={item.baseUrl} />
-                            </motion.div>
-                        ))}
-                    </div>
-                )}
+                {
+                    loading ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {[...Array(6)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="animate-pulse bg-gray-100 rounded-3xl h-96"
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {filteredItems.map((item, index) => (
+                                <motion.div
+                                    key={item._id}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
+                                    <CourseCard course={item} baseUrl={item.baseUrl} />
+                                </motion.div>
+                            ))}
+                        </div>
+                    )
+                }
 
                 {/* No courses */}
-                {filteredItems.length === 0 && !loading && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-center py-32 col-span-full"
-                    >
-                        <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <Search className="w-10 h-10 text-gray-400" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">No training found</h3>
-                        <p className="text-gray-500 mb-8">Try different search term</p>
-                        <button
-                            onClick={() => setSearchTerm('')}
-                            className="px-8 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors"
+                {
+                    filteredItems.length === 0 && !loading && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="text-center py-32 col-span-full"
                         >
-                            Clear Search
-                        </button>
-                    </motion.div>
-                )}
-            </div>
-        </div>
+                            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Search className="w-10 h-10 text-gray-400" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">No training found</h3>
+                            <p className="text-gray-500 mb-8">Try different search term</p>
+                            <button
+                                onClick={() => setSearchTerm('')}
+                                className="px-8 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors"
+                            >
+                                Clear Search
+                            </button>
+                        </motion.div>
+                    )
+                }
+            </div >
+        </div >
     )
 }
 

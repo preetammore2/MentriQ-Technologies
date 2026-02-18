@@ -34,7 +34,7 @@ const ServicesSection = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="py-32 bg-slate-950 relative overflow-hidden">
+        <section className="py-20 bg-slate-950 relative overflow-hidden">
             {/* Ambient Background Glows */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" />
@@ -42,7 +42,7 @@ const ServicesSection = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="text-center max-w-3xl mx-auto mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ const ServicesSection = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter uppercase leading-[0.9]"
+                        className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.9]"
                     >
                         TRANSFORMING <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
@@ -71,7 +71,7 @@ const ServicesSection = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-lg text-slate-400 font-medium max-w-2xl mx-auto"
+                        className="text-base text-slate-400 font-medium max-w-2xl mx-auto"
                     >
                         From intelligence-driven web architectures to high-frequency mobile ecosystems, we deploy the technologies that scale your vision.
                     </motion.p>
@@ -91,15 +91,15 @@ const ServicesSection = () => {
                             {/* Inner Light Core (Persistent) */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity" />
 
-                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center text-white mb-8 shadow-2xl group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 relative z-10`}>
-                                <service.icon size={32} />
+                            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center text-white mb-6 shadow-2xl group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 relative z-10`}>
+                                <service.icon size={28} />
                             </div>
 
-                            <h3 className="text-2xl font-black text-white mb-4 tracking-tighter uppercase group-hover:text-indigo-400 transition-colors relative z-10">
+                            <h3 className="text-xl font-black text-white mb-3 tracking-tighter uppercase group-hover:text-indigo-400 transition-colors relative z-10">
                                 {service.title}
                             </h3>
 
-                            <p className="text-slate-400 text-sm leading-relaxed mb-10 font-medium relative z-10">
+                            <p className="text-slate-400 text-xs leading-relaxed mb-6 font-medium relative z-10">
                                 {service.description}
                             </p>
 
@@ -130,7 +130,7 @@ const ServicesSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
-                    className="text-center mt-20"
+                    className="text-center mt-12"
                 >
                     <button
                         onClick={() => navigate('/services')}

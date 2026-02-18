@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2 } from "lucide-react";
+import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2, Edit2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -11,8 +11,9 @@ const TechnologyManagement = () => {
     const [technologies, setTechnologies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [creating, setCreating] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTech, setEditingTech] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -67,9 +68,9 @@ const TechnologyManagement = () => {
         }
     };
 
-    const handleCreate = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setCreating(true);
+        setSubmitting(true);
 
         try {
             let logoUrl = formData.logo;
@@ -87,12 +88,11 @@ const TechnologyManagement = () => {
                 } catch (uploadError) {
                     console.error("Upload failed", uploadError);
                     toast.error("Image upload failed");
-                    setCreating(false);
+                    setSubmitting(false);
                     return;
                 }
             }
 
-            // 2. Create Technology
             const payload = {
                 name: formData.name,
                 logo: logoUrl,
@@ -100,20 +100,53 @@ const TechnologyManagement = () => {
                 order: parseInt(formData.order) || 0
             };
 
-            const { data } = await api.post("/technologies", payload);
-            setTechnologies((prev) => [data.data, ...prev]);
-            toast.success("Technology created");
+            if (editingTech) {
+                // Update
+                const { data } = await api.put(`/technologies/${editingTech._id}`, payload);
+                setTechnologies(prev => prev.map(t => t._id === editingTech._id ? data.data : t));
+                toast.success("Technology updated");
+            } else {
+                // Create
+                const { data } = await api.post("/technologies", payload);
+                setTechnologies((prev) => [data.data, ...prev]);
+                toast.success("Technology created");
+            }
 
             // Reset
-            setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
-            setImagePreview(null);
-            setIsCreateOpen(false);
+            closeModal();
 
         } catch (err) {
-            toast.error(err?.response?.data?.message || "Failed to create technology");
+            toast.error(err?.response?.data?.message || "Operation failed");
         } finally {
-            setCreating(false);
+            setSubmitting(false);
         }
+    };
+
+    const openCreateModal = () => {
+        setEditingTech(null);
+        setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
+        setImagePreview(null);
+        setIsModalOpen(true);
+    };
+
+    const openEditModal = (tech) => {
+        setEditingTech(tech);
+        setFormData({
+            name: tech.name,
+            logo: tech.logo,
+            logoFile: null,
+            category: tech.category,
+            order: tech.order || 0
+        });
+        setImagePreview(resolveImageUrl(tech.logo));
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingTech(null);
+        setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
+        setImagePreview(null);
     };
 
     return (
@@ -136,7 +169,7 @@ const TechnologyManagement = () => {
                         />
                     </div>
                     <button
-                        onClick={() => setIsCreateOpen(true)}
+                        onClick={openCreateModal}
                         className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
                     >
                         <Plus size={18} />
@@ -154,12 +187,20 @@ const TechnologyManagement = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                     {filteredTechnologies.map((tech) => (
                         <div key={tech._id} className="bg-[#1e293b] border border-white/5 p-6 rounded-3xl flex flex-col items-center gap-4 group hover:border-indigo-500/30 transition-all shadow-lg relative">
-                            <button
-                                onClick={() => handleDelete(tech._id)}
-                                className="absolute top-3 right-3 p-2 bg-white/5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-all"
-                            >
-                                <Trash2 size={14} />
-                            </button>
+                            <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                                <button
+                                    onClick={() => openEditModal(tech)}
+                                    className="p-2 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl"
+                                >
+                                    <Edit2 size={14} />
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(tech._id)}
+                                    className="p-2 bg-white/5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl"
+                                >
+                                    <Trash2 size={14} />
+                                </button>
+                            </div>
 
                             <div className="w-16 h-16 bg-white rounded-2xl p-3 flex items-center justify-center">
                                 <img
@@ -186,11 +227,11 @@ const TechnologyManagement = () => {
 
             {/* Create Modal */}
             <AnimatePresence>
-                {isCreateOpen && (
+                {isModalOpen && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
                         <div
                             className="absolute inset-0"
-                            onClick={() => !creating && setIsCreateOpen(false)}
+                            onClick={() => !submitting && closeModal()}
                         />
                         <MotionDiv
                             initial={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -200,19 +241,19 @@ const TechnologyManagement = () => {
                         >
                             <div className="flex items-start justify-between gap-4 mb-8">
                                 <div>
-                                    <h3 className="text-2xl font-black text-white">Add Technology</h3>
-                                    <p className="text-gray-400 text-sm mt-1">Add a new tech stack icon to the homepage.</p>
+                                    <h3 className="text-2xl font-black text-white">{editingTech ? "Update Technology" : "Add Technology"}</h3>
+                                    <p className="text-gray-400 text-sm mt-1">{editingTech ? "Update tech stack details." : "Add a new tech stack icon to the homepage."}</p>
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => !creating && setIsCreateOpen(false)}
+                                    onClick={() => !submitting && closeModal()}
                                     className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"
                                 >
                                     <X size={18} className="mx-auto" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleCreate} className="space-y-5">
+                            <form onSubmit={handleSubmit} className="space-y-5">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Tech Name</label>
                                     <input
@@ -253,7 +294,7 @@ const TechnologyManagement = () => {
                                         <select
                                             value={formData.category}
                                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 appearance-none"
+                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 appearance-none bg-[#0f172a]"
                                         >
                                             <option value="frontend" className="bg-slate-900">Frontend</option>
                                             <option value="backend" className="bg-slate-900">Backend</option>
@@ -277,18 +318,18 @@ const TechnologyManagement = () => {
                                 <div className="pt-4 flex justify-end gap-3">
                                     <button
                                         type="button"
-                                        onClick={() => !creating && setIsCreateOpen(false)}
+                                        onClick={() => !submitting && closeModal()}
                                         className="px-5 py-2.5 rounded-xl bg-white/5 text-gray-300 hover:bg-white/10 transition-all font-bold text-sm"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        disabled={creating}
+                                        disabled={submitting}
                                         className="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-500 disabled:opacity-60 transition-all text-sm flex items-center gap-2"
                                     >
-                                        {creating && <Loader2 size={14} className="animate-spin" />}
-                                        Save Technology
+                                        {submitting && <Loader2 size={14} className="animate-spin" />}
+                                        {editingTech ? "Update Technology" : "Save Technology"}
                                     </button>
                                 </div>
                             </form>

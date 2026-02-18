@@ -26,7 +26,12 @@ import InternshipManagement from './pages/Admin/InternshipManagement';
 import JourneyManagement from './pages/Admin/JourneyManagement';
 import CertificateManagement from './pages/Admin/CertificateManagement';
 import ServiceManagement from './pages/Admin/ServiceManagement';
+import CityManagement from './pages/Admin/CityManagement';
 import JobPostManagement from './pages/Admin/JobPostManagement';
+
+// ... (existing imports)
+
+
 import InquiryManagement from './pages/Admin/InquiryManagement';
 import StaffManagement from './pages/Admin/StaffManagement';
 import InternshipApplicationPage from './pages/InternshipApplicationPage';
@@ -239,6 +244,15 @@ function App() {
                 <AdminRoute>
                   <AdminLayout>
                     <ServiceManagement />
+                  </AdminLayout>
+                </AdminRoute>
+              }
+            />
+            <Route path="/admin/cities"
+              element={
+                <AdminRoute>
+                  <AdminLayout>
+                    <CityManagement />
                   </AdminLayout>
                 </AdminRoute>
               }

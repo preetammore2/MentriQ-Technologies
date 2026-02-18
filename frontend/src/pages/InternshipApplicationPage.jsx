@@ -105,7 +105,7 @@ const InternshipApplicationPage = () => {
     );
 
     return (
-        <section className="min-h-screen pb-20 px-4 flex items-center justify-center bg-[#020617]">
+        <section className="min-h-screen pb-14 px-4 flex items-center justify-center bg-[#020617]">
             {/* Background decoration */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]" />
@@ -115,10 +115,10 @@ const InternshipApplicationPage = () => {
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative bg-[#0f172a]/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden max-w-6xl w-full flex flex-col md:flex-row"
+                className="relative bg-[#0f172a]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden max-w-6xl w-full flex flex-col md:flex-row"
             >
                 {/* Left Side: Internship Info */}
-                <div className="md:w-[40%] bg-white/5 backdrop-blur-md text-white p-10 flex flex-col justify-between relative overflow-hidden border-r border-white/5">
+                <div className="md:w-[40%] bg-white/5 backdrop-blur-md text-white p-8 flex flex-col justify-between relative overflow-hidden border-r border-white/5">
                     {/* Abstract Bg */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-16 -mt-16" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-600/20 rounded-full blur-3xl -ml-16 -mb-16" />
@@ -165,7 +165,7 @@ const InternshipApplicationPage = () => {
                 </div>
 
                 {/* Right Side: Form */}
-                <div className="md:w-[60%] p-10 md:p-14">
+                <div className="md:w-[60%] p-8 md:p-10">
                     <div className="mb-12">
                         <h3 className="text-2xl font-black text-white mb-2 tracking-tight uppercase flex items-center gap-3">
                             Internship Admission Form

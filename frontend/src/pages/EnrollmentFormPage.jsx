@@ -93,7 +93,7 @@ const EnrollmentFormPage = () => {
     )
 
     return (
-        <section className="min-h-screen pb-20 px-4 flex items-center justify-center bg-[#020617]">
+        <section className="min-h-screen pb-14 px-4 flex items-center justify-center bg-[#020617]">
             {/* Background decoration */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px]" />
@@ -103,10 +103,10 @@ const EnrollmentFormPage = () => {
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="relative bg-[#0f172a]/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row"
+                className="relative bg-[#0f172a]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden max-w-5xl w-full flex flex-col md:flex-row"
             >
                 {/* Left Side: Course Info */}
-                <div className="md:w-2/5 bg-white/5 backdrop-blur-md text-white p-10 flex flex-col justify-between relative overflow-hidden border-r border-white/5">
+                <div className="md:w-2/5 bg-white/5 backdrop-blur-md text-white p-8 flex flex-col justify-between relative overflow-hidden border-r border-white/5">
                     {/* Abstract Bg */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl -mr-16 -mt-16" />
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-600/20 rounded-full blur-3xl -ml-16 -mb-16" />
@@ -152,7 +152,7 @@ const EnrollmentFormPage = () => {
                 </div>
 
                 {/* Right Side: Form */}
-                <div className="md:w-3/5 p-10 md:p-14">
+                <div className="md:w-3/5 p-8 md:p-10">
                     <div className="mb-10">
                         <h3 className="text-2xl font-black text-white mb-2 tracking-tight uppercase">Registration Form</h3>
                         <p className="text-gray-400 text-sm">Please provide the necessary details to join {course.title}.</p>
@@ -172,7 +172,7 @@ const EnrollmentFormPage = () => {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Profile Picture Upload Section */}
-                            <div className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-[2rem] border border-white/5 border-dashed mb-8 group hover:border-indigo-500/50 transition-all">
+                            <div className="flex flex-col items-center justify-center p-5 bg-white/5 rounded-[1.8rem] border border-white/5 border-dashed mb-6 group hover:border-indigo-500/50 transition-all">
                                 <div className="relative w-24 h-24 mb-4">
                                     <div className="w-full h-full rounded-2xl overflow-hidden bg-[#1e293b] border border-white/10 flex items-center justify-center relative group-hover:scale-105 transition-transform shadow-xl">
                                         {formData.image ? (
