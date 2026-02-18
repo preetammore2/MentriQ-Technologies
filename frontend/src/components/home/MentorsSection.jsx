@@ -256,10 +256,13 @@ const MentorsSection = () => {
             try {
                 const { data } = await api.get('/mentors');
                 if (Array.isArray(data) && data.length > 0) {
+                    console.log("MentorsSection: Fetched mentors from API", data);
                     setMentors(data);
+                } else {
+                    console.log("MentorsSection: No mentors found in API, using fallback");
                 }
             } catch (error) {
-                console.error("Failed to fetch mentors", error);
+                console.error("MentorsSection: Failed to fetch mentors, using fallback", error);
             }
         };
         fetchMentors();
