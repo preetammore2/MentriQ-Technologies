@@ -43,8 +43,8 @@ const Navbar = () => {
 
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${scrolled
-            ? 'bg-white/95 backdrop-blur-md border-slate-200 py-4 shadow-sm'
-            : 'bg-white border-transparent py-5'
+          ? 'bg-white/95 backdrop-blur-md border-slate-200 py-4 shadow-sm'
+          : 'bg-white border-transparent py-5'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -72,8 +72,8 @@ const Navbar = () => {
                   key={item.name}
                   to={item.path}
                   className={`text-[14px] font-medium transition-colors tracking-wide ${location.pathname === item.path
-                      ? 'text-indigo-600 font-bold'
-                      : 'text-slate-600 hover:text-indigo-600'
+                    ? 'text-indigo-600 font-bold'
+                    : 'text-slate-600 hover:text-indigo-600'
                     }`}
                 >
                   {item.name}
@@ -100,10 +100,13 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/contact"
-                  className="group flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200"
+                  className="group relative flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-slate-900/20 overflow-hidden"
                 >
-                  <span>Talk to Sales</span>
-                  <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:animate-shine" />
+                  <span className="relative z-10 flex items-center gap-2">
+                    Contact
+                    <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                  </span>
                 </Link>
               )}
             </div>
@@ -127,8 +130,8 @@ const Navbar = () => {
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
                 className={`px-4 py-3 rounded-lg text-sm font-medium ${location.pathname === item.path
-                    ? 'bg-indigo-50 text-indigo-700'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 text-indigo-700'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
               >
                 {item.name}
@@ -150,9 +153,9 @@ const Navbar = () => {
                 <Link
                   to="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="block w-full text-center px-4 py-3 bg-slate-900 text-white rounded-lg text-sm font-bold shadow-lg"
+                  className="block w-full text-center px-4 py-3 bg-slate-900 text-white rounded-lg text-sm font-bold shadow-lg active:scale-95 transition-transform"
                 >
-                  Talk to Sales
+                  Contact
                 </Link>
               )}
             </div>
