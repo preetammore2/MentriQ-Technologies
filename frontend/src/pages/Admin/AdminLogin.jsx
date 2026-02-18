@@ -149,7 +149,7 @@ const AdminLogin = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all font-medium"
-                                    placeholder="admin@mentriq.com"
+                                    placeholder="admin@mentriqtechnologies.in"
                                 />
                             </div>
                         </div>
