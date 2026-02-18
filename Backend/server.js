@@ -54,6 +54,7 @@ const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://mentriq-technologies-zeta.vercel.app",
     process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null,
     ...envOrigins
   ].filter(Boolean)
