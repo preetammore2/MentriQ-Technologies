@@ -43,7 +43,17 @@ app.use(helmet({
 }));
 // app.use(mongoSanitize()); // Disabled due to Express 5 incompatibility
 // app.use(xss()); // Disabled due to Express 5 incompatibility
+app.set('trust proxy', 1);
 app.use("/api/", limiter);
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "active",
+    message: "MentriQ API is running",
+    database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+    timestamp: new Date().toISOString()
+  });
+});
 
 const envOrigins = (process.env.CORS_ORIGINS || "")
   .split(",")
