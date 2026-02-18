@@ -100,9 +100,10 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/contact"
-                  className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-colors shadow-none"
+                  className="group relative px-6 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-indigo-600/20 overflow-hidden"
                 >
-                  Contact Us
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:animate-shine" />
+                  <span className="relative z-10">Contact Us</span>
                 </Link>
               )}
             </div>
