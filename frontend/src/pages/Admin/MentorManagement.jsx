@@ -11,6 +11,7 @@ const MentorManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingMentor, setEditingMentor] = useState(null);
     const [imageFile, setImageFile] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
     const toast = useToast();
 
     const initialFormState = {
@@ -54,8 +55,8 @@ const MentorManagement = () => {
             const { data } = await api.post('/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            // upload route returns plain string path
-            return typeof data === "string" ? data : data?.imagePath || data?.path || "";
+            // upload route returns { message: '...', imageUrl: '...' }
+            return typeof data === "string" ? data : data?.imageUrl || data?.path || "";
         } catch (error) {
             toast.error('Image upload failed');
             return null;
@@ -64,6 +65,7 @@ const MentorManagement = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
         try {
             let finalImageUrl = formData.image;
             if (imageFile) {
@@ -96,6 +98,8 @@ const MentorManagement = () => {
             fetchMentors();
         } catch (err) {
             toast.error("Operation failed");
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -329,10 +333,15 @@ const MentorManagement = () => {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
+                                        disabled={submitting}
+                                        className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3 disabled:opacity-50"
                                     >
-                                        <Check size={20} strokeWidth={3} />
-                                        <span>Deploy Mentor</span>
+                                        {submitting ? (
+                                            <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            <Check size={20} strokeWidth={3} />
+                                        )}
+                                        <span>{editingMentor ? "Sync Changes" : "Deploy Mentor"}</span>
                                     </button>
                                 </div>
                             </form>

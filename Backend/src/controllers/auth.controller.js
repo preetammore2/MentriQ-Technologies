@@ -4,7 +4,7 @@ const generateToken = require("../utils/generateToken");
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
     const normalizedEmail = String(email || "").trim().toLowerCase();
     const normalizedName = String(name || "").trim();
     const normalizedPassword = String(password || "");
@@ -29,10 +29,11 @@ const registerUser = async (req, res) => {
     });
 
     const token = generateToken(user._id);
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction
     });
 
     return res.status(201).json({
@@ -42,7 +43,7 @@ const registerUser = async (req, res) => {
         email: user.email,
         role: user.role
       },
-      token 
+      token
     });
   } catch (error) {
     return res.status(500).json({ message: "Server error" });
@@ -66,10 +67,11 @@ const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
     const token = generateToken(user._id);
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction
     });
 
     return res.json({

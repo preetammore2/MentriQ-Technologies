@@ -774,7 +774,7 @@ const HomePage = () => {
 
                                     <div className="h-14 w-full flex items-center justify-center mb-2 relative z-10">
                                         <img
-                                            src={partner.logo || partner.imageUrl}
+                                            src={resolveImageUrl(partner.logo || partner.imageUrl)}
                                             alt={partner.name}
                                             className="max-h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
                                         />
@@ -814,7 +814,7 @@ const HomePage = () => {
 
                                     <div className="h-14 w-full flex items-center justify-center mb-2 relative z-10">
                                         <img
-                                            src={partner.logo || partner.imageUrl}
+                                            src={resolveImageUrl(partner.logo || partner.imageUrl)}
                                             alt={partner.name}
                                             className="max-h-10 w-auto object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 filter drop-shadow-[0_0_8px_rgba(0,0,0,0.05)]"
                                         />
@@ -911,7 +911,7 @@ const HomePage = () => {
                                 {/* Floating Logo with Depth */}
                                 <div className="relative mb-6 z-10" style={{ transform: 'translateZ(30px)' }}>
                                     <motion.img
-                                        src={tech.logo || "https://via.placeholder.com/64?text=Tech"}
+                                        src={resolveImageUrl(tech.logo, "https://via.placeholder.com/64?text=Tech")}
                                         alt={tech.name}
                                         className="w-16 h-16 object-contain filter drop-shadow-[0_5px_15px_rgba(0,0,0,0.1)] group-hover:drop-shadow-[0_10px_25px_rgba(99,102,241,0.2)] transition-all duration-500"
                                         animate={{ y: [0, -4, 0] }}
