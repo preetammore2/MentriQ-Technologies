@@ -16,11 +16,23 @@ const Navbar = () => {
   } = useAuth()
   const location = useLocation()
 
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollY = React.useRef(0)
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+
+      setScrolled(currentScrollY > 20)
+      lastScrollY.current = currentScrollY
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -42,7 +54,8 @@ const Navbar = () => {
       />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-5 lg:py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
+          } ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-5 lg:py-6'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
