@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
-import { resolveImageUrl } from '../../utils/imageUtils';
 
 const OneByOneTestimonial = ({ testimonials }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -117,7 +116,7 @@ const OneByOneTestimonial = ({ testimonials }) => {
                                 >
                                     <div className="absolute -inset-3 bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                                     <img
-                                        src={resolveImageUrl(testimonial.image)}
+                                        src={testimonial.image}
                                         alt={testimonial.name}
                                         className="w-24 h-24 md:w-32 md:h-32 rounded-[2rem] object-cover relative z-10 border-4 border-white shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000"
                                         onError={(e) => { e.currentTarget.src = '/images/user.png' }}

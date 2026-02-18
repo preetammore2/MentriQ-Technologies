@@ -1,0 +1,107 @@
+﻿[
+    {
+        "_id":  "69933c8ba8449e490600ef87",
+        "name":  "ORGANIC FUNDIING",
+        "logo":  "https://via.placeholder.com/200x80/1e293b/6366f1?text=Partner+Logo",
+        "website":  "",
+        "createdAt":  "2026-02-16T15:49:31.422Z",
+        "updatedAt":  "2026-02-18T12:04:07.949Z",
+        "__v":  0
+    },
+    {
+        "_id":  "699302341566978d24b23f19",
+        "name":  "SkyServer",
+        "logo":  "/images/skyserver.jpg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1a",
+        "name":  "Singh Enterprises",
+        "logo":  "/images/singh2.jpeg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1b",
+        "name":  "Falcons Beyond Imagination",
+        "logo":  "/images/falcons.png",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1c",
+        "name":  "Voltzenic Motors",
+        "logo":  "/images/volt.png",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1d",
+        "name":  "Ashok Infratech",
+        "logo":  "/images/ashok.jpg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1e",
+        "name":  "Shekhawat Group of Industries",
+        "logo":  "/images/shekhawat2.jpeg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f1f",
+        "name":  "BIMPro Solutions pvt ltd",
+        "logo":  "/images/bimpro2.jpeg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f20",
+        "name":  "Milan Power",
+        "logo":  "/images/milanPower.png",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f21",
+        "name":  "PU incent",
+        "logo":  "/images/puIncent.png",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f22",
+        "name":  "UPnex",
+        "logo":  "/images/upnex2.jpeg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f23",
+        "name":  "NT Education",
+        "logo":  "/images/nt2.jpeg",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.350Z",
+        "updatedAt":  "2026-02-16T11:40:36.350Z"
+    },
+    {
+        "_id":  "699302341566978d24b23f18",
+        "name":  "HD Media Network",
+        "logo":  "/images/hdmn.png",
+        "__v":  0,
+        "createdAt":  "2026-02-16T11:40:36.348Z",
+        "updatedAt":  "2026-02-16T11:40:36.348Z"
+    }
+]

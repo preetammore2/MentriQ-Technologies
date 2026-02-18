@@ -70,7 +70,7 @@ const PartnerManagement = () => {
             const { data } = await api.post('/upload', uploadData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            setFormData((prev) => ({ ...prev, logo: data.imageUrl }));
+            setFormData((prev) => ({ ...prev, logo: data }));
             toast.success("Logo uploaded to storage");
         } catch {
             toast.error("Logo upload failed");

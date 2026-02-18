@@ -1,0 +1,258 @@
+﻿[
+    {
+        "_id":  "69933ec871a1c1d68cd6f961",
+        "name":  "Ram Swami",
+        "image":  "/images/user.png",
+        "description":  "6+ Years Experience in Cyber Security",
+        "stats":  [
+                      "@{value=6+; label=Years; _id=69933ec871a1c1d68cd6f962}",
+                      "@{value=15+; label=Projects; _id=69933ec871a1c1d68cd6f963}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/user.png",
+        "linkedinUrl":  "",
+        "bio":  "6+ Years Experience in Cyber Security"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f964",
+        "name":  "Shubham Sharma",
+        "image":  "/images/subhammentors.jpg",
+        "description":  "5+ years Experience in Full Stack Development",
+        "stats":  [
+                      "@{value=5+; label=Years; _id=69933ec871a1c1d68cd6f965}",
+                      "@{value=15+; label=Projects; _id=69933ec871a1c1d68cd6f966}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/subhammentors.jpg",
+        "linkedinUrl":  "",
+        "bio":  "5+ years Experience in Full Stack Development"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f967",
+        "name":  "Shiva Rama Krishna",
+        "image":  "/images/sivaramakrishna.jpg",
+        "description":  "8+ Years Experience in Software Engineering",
+        "stats":  [
+                      "@{value=8+; label=Years; _id=69933ec871a1c1d68cd6f968}",
+                      "@{value=20+; label=Projects; _id=69933ec871a1c1d68cd6f969}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/sivaramakrishna.jpg",
+        "linkedinUrl":  "",
+        "bio":  "8+ Years Experience in Software Engineering"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f96a",
+        "name":  "Lakhan Dadhich",
+        "image":  "/images/lakhan.jpg",
+        "description":  "3+ Years Experience in Product Management",
+        "stats":  [
+                      "@{value=3+; label=Years; _id=69933ec871a1c1d68cd6f96b}",
+                      "@{value=7+; label=Projects; _id=69933ec871a1c1d68cd6f96c}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/lakhan.jpg",
+        "linkedinUrl":  "",
+        "bio":  "3+ Years Experience in Product Management"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f96d",
+        "name":  "Venkat Sai",
+        "image":  "/images/venkatsai.jpg",
+        "description":  "5+ Years Experience in Oprations Experts",
+        "stats":  [
+                      "@{value=5+; label=Years; _id=69933ec871a1c1d68cd6f96e}",
+                      "@{value=15+; label=Projects; _id=69933ec871a1c1d68cd6f96f}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/venkatsai.jpg",
+        "linkedinUrl":  "",
+        "bio":  "5+ Years Experience in Oprations Experts"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f970",
+        "name":  "Satya Narayan Pradhan",
+        "image":  "/images/satyanarayan.jpg",
+        "description":  "5+ Years Experince in Integration Specialist",
+        "stats":  [
+                      "@{value=5+; label=Years; _id=69933ec871a1c1d68cd6f971}",
+                      "@{value=20+; label=Projects; _id=69933ec871a1c1d68cd6f972}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/satyanarayan.jpg",
+        "linkedinUrl":  "",
+        "bio":  "5+ Years Experince in Integration Specialist"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f973",
+        "name":  "Hardik Sharma",
+        "image":  "/images/hardik.jpg",
+        "description":  "2+ Years Experience in Cloud Technologies",
+        "stats":  [
+                      "@{value=2+; label=Years; _id=69933ec871a1c1d68cd6f974}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f975}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/hardik.jpg",
+        "linkedinUrl":  "",
+        "bio":  "2+ Years Experience in Cloud Technologies"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f976",
+        "name":  "Prince Jain",
+        "image":  "/images/princejain.jpg",
+        "description":  "2+ Years Experience in Cyber Security",
+        "stats":  [
+                      "@{value=2+; label=Years; _id=69933ec871a1c1d68cd6f977}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f978}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/princejain.jpg",
+        "linkedinUrl":  "",
+        "bio":  "2+ Years Experience in Cyber Security"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f979",
+        "name":  "Dharam Pal Singh",
+        "image":  "/images/dharampalsingh.jpg",
+        "description":  "2+ Years Experience in Full Stack Development",
+        "stats":  [
+                      "@{value=2+; label=Years; _id=69933ec871a1c1d68cd6f97a}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f97b}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/dharampalsingh.jpg",
+        "linkedinUrl":  "",
+        "bio":  "2+ Years Experience in Full Stack Development"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f97c",
+        "name":  "Pooja Bharia",
+        "image":  "/images/poojabharia.jpg",
+        "description":  "1+ Years Experience in Research Engineer",
+        "stats":  [
+                      "@{value=1+; label=Years; _id=69933ec871a1c1d68cd6f97d}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f97e}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/poojabharia.jpg",
+        "linkedinUrl":  "",
+        "bio":  "1+ Years Experience in Research Engineer"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f97f",
+        "name":  "Gaurav Sharma",
+        "image":  "/images/gauravsharma.jpg",
+        "description":  "1+ Years Experience in Cloud Technologies",
+        "stats":  [
+                      "@{value=1+; label=Years; _id=69933ec871a1c1d68cd6f980}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f981}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/gauravsharma.jpg",
+        "linkedinUrl":  "",
+        "bio":  "1+ Years Experience in Cloud Technologies"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f982",
+        "name":  "Pooja Yadav",
+        "image":  "/images/poojayadav.jpg",
+        "description":  "1+ Years Experience in Data Automation",
+        "stats":  [
+                      "@{value=1+; label=Years; _id=69933ec871a1c1d68cd6f983}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f984}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/poojayadav.jpg",
+        "linkedinUrl":  "",
+        "bio":  "1+ Years Experience in Data Automation"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f985",
+        "name":  "Sameer Khan",
+        "image":  "/images/sameer.jpg",
+        "description":  "1+ Years Experience in Full Stack Development",
+        "stats":  [
+                      "@{value=1+; label=Years; _id=69933ec871a1c1d68cd6f986}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f987}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.251Z",
+        "updatedAt":  "2026-02-16T15:59:04.251Z",
+        "imageUrl":  "/images/sameer.jpg",
+        "linkedinUrl":  "",
+        "bio":  "1+ Years Experience in Full Stack Development"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f95b",
+        "name":  "Jeevan Chauhan",
+        "image":  "/images/jeevan.jpg",
+        "description":  "5+ Years Experience in Hybrid Applications Development",
+        "stats":  [
+                      "@{value=5+; label=Years; _id=69933ec871a1c1d68cd6f95c}",
+                      "@{value=15+; label=Projects; _id=69933ec871a1c1d68cd6f95d}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.250Z",
+        "updatedAt":  "2026-02-16T15:59:04.250Z",
+        "imageUrl":  "/images/jeevan.jpg",
+        "linkedinUrl":  "",
+        "bio":  "5+ Years Experience in Hybrid Applications Development"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f95e",
+        "name":  "Yogesh Shekhawat",
+        "image":  "/images/yogesh.jpg",
+        "description":  "2+ Years Experience in Entrepreneurship and Product Management",
+        "stats":  [
+                      "@{value=2+; label=Years; _id=69933ec871a1c1d68cd6f95f}",
+                      "@{value=5+; label=Projects; _id=69933ec871a1c1d68cd6f960}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.250Z",
+        "updatedAt":  "2026-02-16T15:59:04.250Z",
+        "imageUrl":  "/images/yogesh.jpg",
+        "linkedinUrl":  "",
+        "bio":  "2+ Years Experience in Entrepreneurship and Product Management"
+    },
+    {
+        "_id":  "69933ec871a1c1d68cd6f958",
+        "name":  "Litesh Singh",
+        "image":  "/images/litesh.jpg",
+        "description":  "5+ Years Experience in Automation and Deveops",
+        "stats":  [
+                      "@{value=5+; label=Years; _id=69933ec871a1c1d68cd6f959}",
+                      "@{value=15+; label=Projects; _id=69933ec871a1c1d68cd6f95a}"
+                  ],
+        "__v":  0,
+        "createdAt":  "2026-02-16T15:59:04.249Z",
+        "updatedAt":  "2026-02-16T15:59:04.249Z",
+        "imageUrl":  "/images/litesh.jpg",
+        "linkedinUrl":  "",
+        "bio":  "5+ Years Experience in Automation and Deveops"
+    }
+]

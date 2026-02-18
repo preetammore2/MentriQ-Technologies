@@ -64,7 +64,7 @@ const FeedbackManagement = () => {
                 const { data } = await api.post("/upload", uploadData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
-                finalImage = typeof data === "string" ? data : data?.imageUrl || data?.path || "";
+                finalImage = typeof data === "string" ? data : data?.imagePath || data?.path || "";
             }
 
             const payload = { ...formData, image: finalImage };

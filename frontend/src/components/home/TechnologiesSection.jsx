@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { apiClient as api } from '../../utils/apiClient';
-import { resolveImageUrl } from '../../utils/imageUtils';
 
 const TechnologiesSection = () => {
     const [technologies, setTechnologies] = useState([]);
@@ -96,7 +95,7 @@ const TechnologiesSection = () => {
 
                                 <div className="relative w-12 h-12 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                                     <img
-                                        src={resolveImageUrl(tech.logo)}
+                                        src={tech.logo}
                                         alt={tech.name}
                                         className="w-full h-full object-contain filter drop-shadow-lg grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                                         onError={(e) => {

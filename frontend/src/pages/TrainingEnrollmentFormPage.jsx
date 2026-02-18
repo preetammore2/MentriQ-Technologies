@@ -52,7 +52,7 @@ const TrainingEnrollmentFormPage = () => {
             const { data } = await api.post('/upload', uploadData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
-            setFormData({ ...formData, image: data.imageUrl })
+            setFormData({ ...formData, image: data })
         } catch {
             alert("Image upload failed")
         } finally {

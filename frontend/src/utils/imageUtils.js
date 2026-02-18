@@ -21,17 +21,17 @@ export const resolveImageUrl = (path, fallback = "") => {
 export const getCourseImageUrl = (course) => {
     if (!course) return 'https://via.placeholder.com/400x300/3b82f6/ffffff?text=MentriQ';
 
-    const path = course.thumbnailUrl || course.thumbnail;
-
-    // 1. If path exists and is a full URL (e.g. from Cloudinary or external), usage it.
+    // 1. If thumbnailUrl exists and is a full URL (e.g. from Cloudinary or external), usage it.
     // Also covers the case where the backend server URL is already prepended.
-    if (path && (path.startsWith("http") || path.startsWith("data:"))) {
-        return path;
+    if (course.thumbnailUrl && course.thumbnailUrl.startsWith("http")) {
+        return course.thumbnailUrl;
     }
 
-    // 2. If it's a relative path starting with /
-    if (path && path.startsWith("/")) {
-        return resolveImageUrl(path, 'https://via.placeholder.com/400x300/3b82f6/ffffff?text=MentriQ');
+    // 2. If it's a relative path starting with /uploads (standard local upload)
+    // We assume the variable VITE_API_BASE_URL is something like 'http://localhost:5000/api'
+    // We need to strip '/api' to get the base server root 'http://localhost:5000'
+    if (course.thumbnailUrl && course.thumbnailUrl.startsWith("/")) {
+        return resolveImageUrl(course.thumbnailUrl, 'https://via.placeholder.com/400x300/3b82f6/ffffff?text=MentriQ');
     }
 
 

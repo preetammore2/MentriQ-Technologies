@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Briefcase, FileText, Check, X, Calendar, Upload, Camera } from "lucide-react";
+import { Plus, Edit2, Trash2, Briefcase, FileText, Check, X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
-import { resolveImageUrl } from "../../utils/imageUtils";
 
 const InternshipManagement = () => {
     const [activeTab, setActiveTab] = useState("postings");
@@ -12,8 +11,6 @@ const InternshipManagement = () => {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingInternship, setEditingInternship] = useState(null);
-    const [imageFile, setImageFile] = useState(null);
-    const [submitting, setSubmitting] = useState(false);
     const toast = useToast();
 
     const initialFormState = { title: "", company: "", location: "", type: "Remote", description: "", requirements: [], duration: "" };
@@ -48,39 +45,12 @@ const InternshipManagement = () => {
         }
     };
 
-    const handleImageUpload = async (file) => {
-        const formData = new FormData();
-        formData.append('image', file);
-        try {
-            const { data } = await api.post('/upload', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            // The upload route returns plain string path or { imageUrl: '...' }
-            return typeof data === "string" ? data : data?.imageUrl || data?.path || "";
-        } catch (error) {
-            console.error("Upload error:", error);
-            toast.error('Image upload failed');
-            return null;
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitting(true);
         try {
-            let finalThumbnail = formData.thumbnail || "";
-
-            if (imageFile) {
-                const uploadedPath = await handleImageUpload(imageFile);
-                if (uploadedPath) {
-                    finalThumbnail = uploadedPath;
-                }
-            }
-
             // Split requirements by new line if string
             const payload = {
                 ...formData,
-                thumbnail: finalThumbnail,
                 requirements: typeof formData.requirements === 'string'
                     ? formData.requirements.split('\n').filter(r => r.trim())
                     : formData.requirements
@@ -96,12 +66,9 @@ const InternshipManagement = () => {
             setIsModalOpen(false);
             setEditingInternship(null);
             setFormData(initialFormState);
-            setImageFile(null);
             fetchData();
         } catch (err) {
             toast.error("Operation failed");
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -130,9 +97,8 @@ const InternshipManagement = () => {
         setEditingInternship(internship);
         setFormData({
             ...internship,
-            requirements: Array.isArray(internship.requirements) ? internship.requirements.join('\n') : (internship.requirements || "")
+            requirements: internship.requirements.join('\n')
         });
-        setImageFile(null);
         setIsModalOpen(true);
     };
 
@@ -167,7 +133,6 @@ const InternshipManagement = () => {
                             onClick={() => {
                                 setEditingInternship(null);
                                 setFormData(initialFormState);
-                                setImageFile(null);
                                 setIsModalOpen(true);
                             }}
                             className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
@@ -211,19 +176,8 @@ const InternshipManagement = () => {
                                                     className="hover:bg-white/[0.02] transition-colors group"
                                                 >
                                                     <td className="px-6 py-5">
-                                                        <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-lg group-hover:border-indigo-500/30 transition-all">
-                                                            {internship.thumbnail ? (
-                                                                <img src={resolveImageUrl(internship.thumbnail)} alt={internship.title} className="w-full h-full object-cover" />
-                                                            ) : (
-                                                                <div className="w-full h-full flex items-center justify-center text-gray-600 bg-white/5">
-                                                                    <Briefcase size={20} />
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                        <div>
-                                                            <div className="font-bold text-white text-sm">{internship.title}</div>
-                                                            <div className="text-[10px] text-gray-500 font-black uppercase tracking-wider mt-0.5">{internship.company}</div>
-                                                        </div>
+                                                        <div className="font-bold text-white text-sm">{internship.title}</div>
+                                                        <div className="text-[10px] text-gray-500 font-black uppercase tracking-wider mt-0.5">{internship.company}</div>
                                                     </td>
                                                     <td className="px-6 py-5">
                                                         <div className="flex flex-col gap-1">
@@ -341,27 +295,6 @@ const InternshipManagement = () => {
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar flex-1">
-                                <div className="flex justify-center">
-                                    <div className="relative group cursor-pointer">
-                                        <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center group-hover:border-indigo-500/50 transition-all">
-                                            {imageFile ? (
-                                                <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
-                                            ) : formData.thumbnail ? (
-                                                <img src={resolveImageUrl(formData.thumbnail)} alt="Current" className="w-full h-full object-cover" />
-                                            ) : (
-                                                <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors text-center p-4">
-                                                    <Camera size={32} strokeWidth={1.5} />
-                                                    <span className="text-[8px] font-black uppercase tracking-widest">Initialize Visual</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-2xl border border-white/10">
-                                            <Upload size={16} strokeWidth={3} className="text-black" />
-                                            <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
-                                        </label>
-                                    </div>
-                                </div>
-
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="md:col-span-2 space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Mission Title</label>
@@ -415,15 +348,10 @@ const InternshipManagement = () => {
                                     </button>
                                     <button
                                         type="submit"
-                                        disabled={submitting}
-                                        className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest disabled:opacity-50"
+                                        className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest"
                                     >
-                                        {submitting ? (
-                                            <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                                        ) : (
-                                            <Plus size={20} strokeWidth={3} />
-                                        )}
-                                        <span>{editingInternship ? "Sync Changes" : "Initialize Broadcast"}</span>
+                                        <Plus size={20} strokeWidth={3} />
+                                        <span>Initialize Broadcast</span>
                                     </button>
                                 </div>
                             </form>
