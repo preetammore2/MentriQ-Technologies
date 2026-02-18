@@ -42,18 +42,22 @@ const Navbar = () => {
       />
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm py-4' : 'bg-transparent py-6'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-5 lg:py-6'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-200 overflow-hidden">
+              <div
+                className={`bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 ${scrolled ? 'w-9 h-9' : 'w-11 h-11'
+                  }`}
+              >
                 <img className='w-full h-full object-contain p-1.5' src="/images/logo.jpg" alt="MentriQ" />
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold text-slate-900 tracking-tight leading-none">
+                <span className={`font-bold text-slate-900 tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-base' : 'text-lg'
+                  }`}>
                   MentriQ
                 </span>
                 <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">
@@ -69,8 +73,8 @@ const Navbar = () => {
                   key={item.name}
                   to={item.path}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.path
-                      ? 'text-indigo-600 bg-indigo-50'
-                      : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'
+                    ? 'text-indigo-600 bg-indigo-50'
+                    : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-50'
                     }`}
                 >
                   {item.name}
@@ -123,8 +127,8 @@ const Navbar = () => {
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
                 className={`px-4 py-3 rounded-xl text-sm font-bold ${location.pathname === item.path
-                    ? 'bg-indigo-50 text-indigo-600'
-                    : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-indigo-50 text-indigo-600'
+                  : 'text-slate-600 hover:bg-slate-50'
                   }`}
               >
                 {item.name}
