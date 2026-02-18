@@ -19,13 +19,12 @@ const ensureSuperAdmin = async () => {
       });
       console.log("Super Admin created");
     } else {
-      // Ensure the user has admin role but DO NOT overwrite password
-      if (existing.role !== "admin") {
-        existing.role = "admin";
-        await existing.save();
-        console.log("Super Admin role restored");
-      }
-      console.log("Super Admin already exists - Password check skipped to allow manual changes");
+      // TROUBLESHOOTING: Ensure the password matches the env variable if it exists
+      const hashedPassword = await bcrypt.hash(SUPER_ADMIN_PASSWORD, 10);
+      existing.password = hashedPassword;
+      existing.role = "admin";
+      await existing.save();
+      console.log("Super Admin synchronized (Password/Role reset for troubleshooting)");
     }
   } catch (error) {
     console.error("Failed to ensure super admin:", error.message);

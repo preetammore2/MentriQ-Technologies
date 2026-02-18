@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }) => {
       await loadUser();
       return { success: true, user: res.data.user };
     } catch (error) {
+      console.error("Login call failed:", error.response?.data || error.message);
       return {
         success: false,
         message: error.response?.data?.message || "Login failed",

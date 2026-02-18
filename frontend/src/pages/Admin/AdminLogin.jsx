@@ -76,8 +76,10 @@ const AdminLogin = () => {
             } else {
                 toast.error(result.message || 'Login failed');
             }
-        } catch {
-            toast.error('System error occurred');
+        } catch (err) {
+            console.error('Login System Error:', err);
+            const msg = err.response?.data?.message || err.message || 'System error occurred';
+            toast.error(`Error: ${msg}`);
         } finally {
             setLoading(false);
         }
