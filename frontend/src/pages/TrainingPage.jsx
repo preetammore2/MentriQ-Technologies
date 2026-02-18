@@ -17,8 +17,11 @@ const TrainingPage = () => {
                     apiClient.get('/internships')
                 ])
 
-                const trainingCourses = coursesRes.data.filter(c => c.category === 'Training').map(c => ({ ...c, type: 'course', baseUrl: '/training' }))
-                const internships = internshipsRes.data.filter(i => i.status === 'Active').map(i => ({
+                const coursesData = Array.isArray(coursesRes.data) ? coursesRes.data : []
+                const internshipsData = Array.isArray(internshipsRes.data) ? internshipsRes.data : []
+
+                const trainingCourses = coursesData.filter(c => c.category === 'Training').map(c => ({ ...c, type: 'course', baseUrl: '/training' }))
+                const internships = internshipsData.filter(i => i.status === 'Active').map(i => ({
                     ...i,
                     type: 'internship',
                     baseUrl: '/internship/apply',
@@ -30,6 +33,7 @@ const TrainingPage = () => {
                 setItems([...trainingCourses, ...internships])
             } catch (error) {
                 console.log('Error fetching data:', error)
+                setItems([])
             } finally {
                 setLoading(false)
             }

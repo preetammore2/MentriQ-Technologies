@@ -131,7 +131,7 @@ const CitySection = () => {
         const fetchCities = async () => {
             try {
                 const { data } = await apiClient.get('/cities');
-                if (data && data.length > 0) {
+                if (Array.isArray(data) && data.length > 0) {
                     setCities(data);
                 }
             } catch (error) {

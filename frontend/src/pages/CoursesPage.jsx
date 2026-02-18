@@ -15,10 +15,12 @@ const CoursesPage = () => {
     const fetchCourses = async () => {
       try {
         const response = await apiClient.get('/courses')
-        const regularCourses = response.data.filter(c => c.category !== 'Training')
+        const data = Array.isArray(response.data) ? response.data : []
+        const regularCourses = data.filter(c => c.category !== 'Training')
         setCourses(regularCourses)
       } catch (error) {
         console.log(error);
+        setCourses([])
       } finally {
         setLoading(false)
       }

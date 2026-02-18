@@ -255,7 +255,7 @@ const MentorsSection = () => {
         const fetchMentors = async () => {
             try {
                 const { data } = await api.get('/mentors');
-                if (data && data.length > 0) {
+                if (Array.isArray(data) && data.length > 0) {
                     setMentors(data);
                 }
             } catch (error) {

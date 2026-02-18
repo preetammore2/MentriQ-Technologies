@@ -31,11 +31,13 @@ const HomePage = () => {
                     api.get('/partners')
                 ])
 
-                setServices(servicesRes.data.slice(0, 6))
-                setStatsData(statsRes.data)
-                setDynamicPartners(partnersRes.data)
+                setServices(Array.isArray(servicesRes.data) ? servicesRes.data.slice(0, 6) : [])
+                setStatsData(statsRes.data || null)
+                setDynamicPartners(Array.isArray(partnersRes.data) ? partnersRes.data : [])
             } catch (error) {
                 console.error('Failed to fetch home page data:', error)
+                setServices([])
+                setDynamicPartners([])
             } finally {
                 setLoading(false)
             }
