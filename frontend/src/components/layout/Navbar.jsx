@@ -17,6 +17,7 @@ const Navbar = () => {
         closeAuthModal
     } = useAuth()
     const location = useLocation()
+    const isDarkPage = ['/services', '/about', '/courses', '/training', '/recruit'].includes(location.pathname)
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         if (latest > 20) {
@@ -48,8 +49,10 @@ const Navbar = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? "bg-white/10 backdrop-blur-md shadow-sm border-b border-white/10"
-                        : "bg-transparent border-b border-transparent"
+                    ? isDarkPage
+                        ? "bg-[#070b14]/90 backdrop-blur-md shadow-lg border-b border-white/5"
+                        : "bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100"
+                    : "bg-transparent border-b border-transparent"
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -62,7 +65,7 @@ const Navbar = () => {
                                     <img src="/images/logo.jpg" alt="Mentriq" className="w-full h-full object-cover scale-110" />
                                 </div>
                             </div>
-                            <Link to="/" className="text-lg md:text-xl font-black tracking-tighter text-slate-900 uppercase font-display">
+                            <Link to="/" className={`text-lg md:text-xl font-black tracking-tighter uppercase font-display ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>
                                 Mentriq <span className="text-indigo-600">Technologies.</span>
                             </Link>
                         </div>
@@ -75,7 +78,9 @@ const Navbar = () => {
                                     to={item.path}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${location.pathname === item.path
                                         ? 'text-indigo-600 bg-indigo-50 font-bold'
-                                        : 'text-slate-500 hover:text-indigo-600 hover:bg-slate-50'
+                                        : isDarkPage
+                                            ? 'text-slate-300 hover:text-white hover:bg-white/10'
+                                            : 'text-slate-500 hover:text-indigo-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     {item.name}
@@ -88,12 +93,15 @@ const Navbar = () => {
                             {isAuthenticated ? (
                                 <div className="flex items-center gap-4">
                                     <div className="text-right hidden lg:block">
-                                        <div className="text-sm font-bold text-slate-900">{user?.name?.split(' ')[0]}</div>
+                                        <div className={`text-sm font-bold ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>{user?.name?.split(' ')[0]}</div>
                                         <div className="text-[10px] text-indigo-600 font-black uppercase tracking-wider">{user?.role || 'Student'}</div>
                                     </div>
                                     <button
                                         onClick={logout}
-                                        className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-full transition-colors"
+                                        className={`p-2 rounded-full transition-colors ${isDarkPage
+                                            ? 'text-slate-400 hover:text-rose-400 hover:bg-white/5'
+                                            : 'text-slate-400 hover:text-rose-500 hover:bg-rose-50'
+                                            }`}
                                         title="Logout"
                                     >
                                         <LogOut size={20} />
@@ -125,7 +133,7 @@ const Navbar = () => {
 
                         {/* Mobile Toggle */}
                         <button
-                            className="md:hidden p-2 text-slate-600 hover:text-indigo-600 transition-colors"
+                            className={`md:hidden p-2 transition-colors ${isDarkPage ? 'text-slate-200 hover:text-white' : 'text-slate-600 hover:text-indigo-600'}`}
                             onClick={() => setMobileOpen(!mobileOpen)}
                         >
                             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -140,7 +148,7 @@ const Navbar = () => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden border-t border-slate-100 bg-white overflow-hidden"
+                            className={`md:hidden border-t overflow-hidden ${isDarkPage ? 'bg-[#0b1120] border-white/10' : 'bg-white border-slate-100'}`}
                         >
                             <div className="p-4 flex flex-col space-y-2">
                                 {navItems.map((item) => (
@@ -149,21 +157,23 @@ const Navbar = () => {
                                         to={item.path}
                                         onClick={() => setMobileOpen(false)}
                                         className={`px-4 py-3 rounded-xl text-sm font-bold ${location.pathname === item.path
-                                            ? 'bg-indigo-50 text-indigo-600'
-                                            : 'text-slate-600 hover:bg-slate-50'
+                                            ? 'bg-indigo-500/10 text-indigo-500' // Universal active state
+                                            : isDarkPage
+                                                ? 'text-slate-400 hover:bg-white/5 hover:text-white'
+                                                : 'text-slate-600 hover:bg-slate-50'
                                             }`}
                                     >
                                         {item.name}
                                     </Link>
                                 ))}
-                                <div className="pt-4 mt-2 border-t border-slate-100">
+                                <div className={`pt-4 mt-2 border-t ${isDarkPage ? 'border-white/10' : 'border-slate-100'}`}>
                                     {isAuthenticated ? (
                                         <button
                                             onClick={() => {
                                                 logout();
                                                 setMobileOpen(false);
                                             }}
-                                            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-rose-50 text-rose-600 rounded-xl text-sm font-bold"
+                                            className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold ${isDarkPage ? 'bg-rose-500/10 text-rose-400' : 'bg-rose-50 text-rose-600'}`}
                                         >
                                             <LogOut size={18} />
                                             Logout
@@ -176,7 +186,7 @@ const Navbar = () => {
                                         >
                                             <motion.div
                                                 whileTap={{ scale: 0.95 }}
-                                                className="w-full text-center px-4 py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-200"
+                                                className={`w-full text-center px-4 py-3 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg ${isDarkPage ? 'shadow-indigo-500/20' : 'shadow-indigo-200'}`}
                                             >
                                                 Contact Us
                                             </motion.div>
