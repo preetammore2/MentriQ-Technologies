@@ -23,6 +23,10 @@ const serviceSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    color: {
+      type: String,
+      default: "from-blue-500 to-cyan-500",
+    }
   },
   {
     timestamps: true,

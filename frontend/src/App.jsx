@@ -36,6 +36,7 @@ const InternshipApplicationPage = lazy(() => import('./pages/InternshipApplicati
 const UserAuthPage = lazy(() => import('./pages/UserAuthPage'));
 const TrainingPage = lazy(() => import('./pages/TrainingPage'));
 const TrainingDetailPage = lazy(() => import('./pages/TrainingDetailPage'));
+const RecruitManagement = lazy(() => import('./pages/Admin/RecruitManagement'));
 const EnrollmentFormPage = lazy(() => import('./pages/EnrollmentFormPage'));
 const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const TrainingEnrollmentFormPage = lazy(() => import('./pages/TrainingEnrollmentFormPage'));
@@ -193,6 +194,16 @@ function App() {
                 <AdminRoute>
                   <AdminLayout>
                     <PartnerManagement />
+                  </AdminLayout>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/recruit"
+              element={
+                <AdminRoute>
+                  <AdminLayout>
+                    <RecruitManagement />
                   </AdminLayout>
                 </AdminRoute>
               }

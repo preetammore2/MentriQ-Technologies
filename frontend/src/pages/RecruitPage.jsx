@@ -54,10 +54,22 @@ const RecruitPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setIsSubmitting(false)
-        setSubmitted(true)
+        try {
+            await api.post('/recruit', formData)
+            setSubmitted(true)
+            setFormData({
+                company: '',
+                name: '',
+                email: '',
+                hiringNeeds: '',
+                message: ''
+            })
+        } catch (error) {
+            console.error(error)
+            // Ideally assume success for user exp or show error
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     const whyRecruit = [

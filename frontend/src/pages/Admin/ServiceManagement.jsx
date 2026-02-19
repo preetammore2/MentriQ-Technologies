@@ -20,7 +20,8 @@ const ServiceManagement = () => {
         icon: "Box", // Default icon
         iconType: "icon", // 'icon' or 'image'
         iconFile: null,
-        features: "" // New field
+        features: "", // New field
+        color: "from-blue-500 to-cyan-500" // Default gradient
     };
     const [formData, setFormData] = useState(initialFormState);
     const [imagePreview, setImagePreview] = useState(null);
@@ -96,7 +97,8 @@ const ServiceManagement = () => {
                 title: formData.title,
                 description: formData.description,
                 icon: finalIcon,
-                features: formData.features.split('\n').map(f => f.trim()).filter(f => f) // Convert newline to array
+                features: formData.features.split('\n').map(f => f.trim()).filter(f => f), // Convert newline to array
+                color: formData.color
             };
 
             if (editingService) {
@@ -127,7 +129,8 @@ const ServiceManagement = () => {
             icon: service.icon,
             iconType: isImage ? "image" : "icon",
             iconFile: null,
-            features: Array.isArray(service.features) ? service.features.join('\n') : "" // Convert array to newline string
+            features: Array.isArray(service.features) ? service.features.join('\n') : "", // Convert array to newline string
+            color: service.color || "from-blue-500 to-cyan-500"
         });
 
         if (isImage) {
@@ -171,6 +174,15 @@ const ServiceManagement = () => {
             </div>
         );
     };
+
+    const GRADIENTS = [
+        { label: 'Ocean', value: 'from-blue-500 to-cyan-500' },
+        { label: 'Purple', value: 'from-purple-500 to-pink-500' },
+        { label: 'Sunset', value: 'from-orange-500 to-red-500' },
+        { label: 'Emerald', value: 'from-green-500 to-emerald-500' },
+        { label: 'Indigo', value: 'from-indigo-500 to-purple-500' },
+        { label: 'Midnight', value: 'from-slate-700 to-slate-900' },
+    ];
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -232,7 +244,7 @@ const ServiceManagement = () => {
                                     return (
                                         <tr key={service._id} className="hover:bg-white/[0.02] transition-colors group">
                                             <td className="px-6 py-5">
-                                                <div className="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400 border border-indigo-500/10 overflow-hidden">
+                                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-lg overflow-hidden bg-gradient-to-br ${service.color || 'from-indigo-500 to-purple-500'}`}>
                                                     {isImage ? (
                                                         <img src={resolveImageUrl(service.icon)} alt={service.title} className="w-full h-full object-cover" />
                                                     ) : (
@@ -368,6 +380,23 @@ const ServiceManagement = () => {
                                         className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed font-mono text-xs"
                                         placeholder="e.g. 24/7 Support&#10;Cloud Integration&#10;Security First"
                                     />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Theme Gradient</label>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {GRADIENTS.map((gradient) => (
+                                            <button
+                                                key={gradient.value}
+                                                type="button"
+                                                onClick={() => setFormData({ ...formData, color: gradient.value })}
+                                                className={`relative p-3 rounded-xl border transition-all overflow-hidden group ${formData.color === gradient.value ? 'border-white ring-2 ring-indigo-500/50' : 'border-white/5 hover:border-white/20'}`}
+                                            >
+                                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient.value} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                                                <span className="relative z-10 text-[10px] font-bold text-white uppercase tracking-wider drop-shadow-md">{gradient.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 <div className="pt-6 flex justify-end gap-3 items-center shrink-0">

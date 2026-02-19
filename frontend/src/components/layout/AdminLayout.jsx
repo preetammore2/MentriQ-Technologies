@@ -57,6 +57,7 @@ const AdminLayout = ({ children }) => {
         { path: '/admin/mentors', icon: Users, label: 'Mentors' },
         { path: '/admin/staff', icon: UserCog, label: 'Staff' },
         { path: '/admin/inquiries', icon: Mail, label: 'Inquiries' },
+        { path: '/admin/recruit', icon: Users, label: 'Recruitment' },
         { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
         { path: '/admin/settings', icon: Settings, label: 'Settings' },
         { path: '/admin/technologies', icon: Cpu, label: 'Technologies' },
