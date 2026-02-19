@@ -43,6 +43,8 @@ const TechnologyManagement = () => {
 
     useEffect(() => {
         fetchTechnologies();
+        const interval = setInterval(fetchTechnologies, 15000);
+        return () => clearInterval(interval);
     }, [fetchTechnologies]);
 
     const filteredTechnologies = technologies.filter((tech) =>

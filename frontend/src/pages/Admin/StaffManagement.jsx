@@ -33,6 +33,8 @@ const StaffManagement = () => {
 
     useEffect(() => {
         fetchUsers();
+        const interval = setInterval(fetchUsers, 15000);
+        return () => clearInterval(interval);
     }, [fetchUsers]);
 
     const staffUsers = useMemo(() => {

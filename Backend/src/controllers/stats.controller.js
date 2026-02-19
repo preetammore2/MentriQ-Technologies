@@ -3,8 +3,33 @@ const Course = require("../models/Course");
 const Partner = require("../models/Partner");
 const SiteStats = require("../models/SiteStats");
 const Enrollment = require("../models/Enrollment");
+const Internship = require("../models/Internship");
+const InternshipApplication = require("../models/InternshipApplication");
 
-// @desc    Get global statistics for public site
+// Helper to get daily counts for the last X days
+const getDailyTrends = async (Model, dateField = "createdAt", days = 7) => {
+    const trends = [];
+    for (let i = days - 1; i >= 0; i--) {
+        const date = new Date();
+        date.setHours(0, 0, 0, 0);
+        date.setDate(date.getDate() - i);
+
+        const nextDate = new Date(date);
+        nextDate.setDate(nextDate.getDate() + 1);
+
+        const count = await Model.countDocuments({
+            [dateField]: { $gte: date, $lt: nextDate }
+        });
+
+        trends.push({
+            date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            count
+        });
+    }
+    return trends;
+};
+
+// @desc    Get global statistics for public site and dashboard
 // @route   GET /api/stats
 // @access  Public
 const getGlobalStats = async (req, res) => {
@@ -12,11 +37,44 @@ const getGlobalStats = async (req, res) => {
         const studentCount = await User.countDocuments({ role: "student" });
         const courseCount = await Course.countDocuments({ isActive: true });
         const partnerCount = await Partner.countDocuments();
+        const internshipCount = await Internship.countDocuments({ isActive: true });
         const enrolledUserIds = await Enrollment.distinct("user");
         const enrolledStudentCount = await User.countDocuments({
             _id: { $in: enrolledUserIds },
             role: "student"
         });
+
+        // Dashboard specific analytics (charts)
+        const userTrends = await getDailyTrends(User);
+        const enrollmentTrends = await getDailyTrends(Enrollment);
+
+        // Recent Activity Logging (last 5 items)
+        const [recentEnrollments, recentApplications, recentUsers] = await Promise.all([
+            Enrollment.find().sort({ createdAt: -1 }).limit(3).populate('user', 'name').populate('course', 'title'),
+            InternshipApplication.find().sort({ createdAt: -1 }).limit(3).populate('internship', 'title'),
+            User.find({ role: 'student' }).sort({ createdAt: -1 }).limit(3).select('name createdAt')
+        ]);
+
+        const recentActivity = [
+            ...recentEnrollments.map(e => ({
+                id: e._id,
+                type: 'enrollment',
+                message: `${e.user?.name || 'A student'} enrolled in ${e.course?.title || 'a course'}`,
+                time: e.createdAt
+            })),
+            ...recentApplications.map(a => ({
+                id: a._id,
+                type: 'internship',
+                message: `${a.name} applied for ${a.internship?.title || 'Internship'}`,
+                time: a.createdAt
+            })),
+            ...recentUsers.map(u => ({
+                id: u._id,
+                type: 'user',
+                message: `New student ${u.name} joined the platform`,
+                time: u.createdAt
+            }))
+        ].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
 
         const statsConfig = await SiteStats.findOne().lean();
         const defaultStudents = `${enrolledStudentCount > 2000 ? enrolledStudentCount : "2K+"}`;
@@ -30,13 +88,20 @@ const getGlobalStats = async (req, res) => {
             placements: statsConfig?.placements || defaultPlacements,
             trainers: statsConfig?.trainers || defaultTrainers,
             raw: {
-                enrolledStudents: enrolledStudentCount,
-                students: studentCount,
-                courses: courseCount,
-                partners: partnerCount
+                enrolledStudents: enrolledStudentCount || 0,
+                students: studentCount || 0,
+                courses: courseCount || 0,
+                partners: partnerCount || 0,
+                internships: internshipCount || 0
+            },
+            analytics: {
+                userTrends: userTrends || [],
+                enrollmentTrends: enrollmentTrends || [],
+                recentActivity: recentActivity || []
             }
         });
     } catch (error) {
+        console.error("Stats Error:", error);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
@@ -87,3 +152,4 @@ module.exports = {
     getGlobalStats,
     updateGlobalStats,
 };
+

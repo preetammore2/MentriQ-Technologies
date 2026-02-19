@@ -11,6 +11,7 @@ const MentorManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingMentor, setEditingMentor] = useState(null);
     const [imageFile, setImageFile] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
     const toast = useToast();
 
     const initialFormState = {
@@ -110,6 +111,12 @@ const MentorManagement = () => {
         }
     };
 
+    const filteredMentors = mentors.filter(m =>
+        (m.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (m.role || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (m.company || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const openEditModal = (mentor) => {
         setEditingMentor(mentor);
         setFormData({
@@ -128,23 +135,35 @@ const MentorManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Mentor Management</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage industry experts and their profiles.</p>
+                    <h2 className="text-3xl font-bold text-white tracking-tight">Mentor Network</h2>
+                    <p className="text-gray-400 text-sm mt-1">Manage global industry experts and their profiles.</p>
                 </div>
-                <button
-                    onClick={() => {
-                        setEditingMentor(null);
-                        setFormData(initialFormState);
-                        setIsModalOpen(true);
-                        setImageFile(null);
-                    }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
-                >
-                    <Plus size={18} />
-                    <span>Add Mentor</span>
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/50 transition-all">
+                        <Search className="text-gray-500 ml-4" size={18} />
+                        <input
+                            type="text"
+                            placeholder="Search mentors..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="bg-transparent text-white placeholder:text-gray-600 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                        />
+                    </div>
+                    <button
+                        onClick={() => {
+                            setEditingMentor(null);
+                            setFormData(initialFormState);
+                            setIsModalOpen(true);
+                            setImageFile(null);
+                        }}
+                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                    >
+                        <Plus size={18} />
+                        <span>Add Expert</span>
+                    </button>
+                </div>
             </div>
 
             {loading ? (
@@ -182,7 +201,7 @@ const MentorManagement = () => {
                             </thead>
                             <tbody className="divide-y divide-white/5">
                                 <AnimatePresence mode="popLayout">
-                                    {mentors.map((mentor) => (
+                                    {filteredMentors.map((mentor) => (
                                         <motion.tr
                                             key={mentor._id}
                                             layout

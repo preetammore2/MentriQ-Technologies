@@ -23,6 +23,12 @@ const SettingsManagement = () => {
 
     useEffect(() => {
         fetchSettings();
+
+        const interval = setInterval(() => {
+            fetchSettings();
+        }, 15000);
+
+        return () => clearInterval(interval);
     }, []);
 
     const fetchSettings = async () => {
