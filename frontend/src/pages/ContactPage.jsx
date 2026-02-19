@@ -136,13 +136,20 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen pt-0 bg-white selection:bg-indigo-500/20">
-      {/* Contact Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-32 pb-20">
+      {/* Contact Hero Section - Light */}
+      <section className="relative min-h-[50vh] flex items-center bg-white overflow-hidden pt-32 pb-20">
         {/* Advanced Atmospheric Background */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/10 rounded-full blur-[140px] animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px]" />
-          <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
+          <motion.div
+            animate={{ x: [0, 60, -20, 0], y: [0, 30, -30, 0] }}
+            transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+            className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-100/60 rounded-full blur-[140px]"
+          />
+          <motion.div
+            animate={{ x: [0, -50, 40, 0], y: [0, 40, -20, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-100/50 rounded-full blur-[120px]"
+          />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 text-center z-10 w-full">
@@ -150,10 +157,10 @@ const ContactPage = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "circOut" }}
-            className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter uppercase font-display leading-[0.9]"
+            className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter uppercase font-display leading-[0.9] text-slate-900"
           >
             LET'S INITIALIZE <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500">
               CONVERSATION.
             </span>
           </motion.h1>
@@ -162,10 +169,10 @@ const ContactPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-sm md:text-lg max-w-3xl mx-auto mb-10 text-slate-400 leading-relaxed font-medium"
+            className="text-sm md:text-lg max-w-3xl mx-auto mb-10 text-slate-500 leading-relaxed font-medium"
           >
             Our dedicated engineering team is ready to architect your vision. <br />
-            Reach out to establish a <span className="text-white font-bold">direct link</span> with our mentors.
+            Reach out to establish a <span className="text-slate-900 font-bold">direct link</span> with our mentors.
           </motion.p>
         </div>
       </section>

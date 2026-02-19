@@ -77,9 +77,9 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen pt-0 bg-white selection:bg-indigo-500/30 overflow-hidden">
-      {/* Premium Dark Hero Section */}
-      <section className="relative min-h-[45vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-24 pb-12">
-        {/* Advanced Atmospheric Animations for Dark */}
+      {/* Premium Light Hero Section */}
+      <section className="relative min-h-[45vh] flex items-center bg-white overflow-hidden pt-24 pb-12">
+        {/* Advanced Atmospheric Animations for Light */}
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
             animate={{
@@ -88,7 +88,7 @@ const AboutPage = () => {
               scale: [1, 1.2, 1]
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px] animate-pulse"
+            className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-100/60 rounded-full blur-[140px]"
           />
           <motion.div
             animate={{
@@ -97,32 +97,29 @@ const AboutPage = () => {
               scale: [1, 1.3, 1]
             }}
             transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]"
+            className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-100/50 rounded-full blur-[140px]"
           />
-          {/* High-Contrast Technical Grid */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
 
-
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="inline-flex items-center space-x-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20"
+            className="inline-flex items-center space-x-2 mb-8 px-5 py-2 rounded-full bg-indigo-50 border border-indigo-100"
           >
-            <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping"></span>
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">Global Talent Architecture</span>
+            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600">Global Talent Architecture</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "circOut" }}
-            className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter uppercase font-display leading-[0.9]"
+            className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter uppercase font-display leading-[0.9] text-slate-900"
           >
             DEFINING <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500">
               MENTRIQ PROTOCOLS.
             </span>
           </motion.h1>
@@ -131,10 +128,10 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-sm md:text-base max-w-3xl mx-auto mb-10 text-slate-400 leading-relaxed font-medium opacity-80"
+            className="text-sm md:text-base max-w-3xl mx-auto mb-10 text-slate-500 leading-relaxed font-medium"
           >
             Since 2023, MentriQ has been the structural backbone for professional evolution.
-            We transcend traditional education to <span className="text-white font-bold">deploy elite talent</span> into the global technological grid.
+            We transcend traditional education to <span className="text-slate-900 font-bold">deploy elite talent</span> into the global technological grid.
           </motion.p>
         </div>
       </section>
