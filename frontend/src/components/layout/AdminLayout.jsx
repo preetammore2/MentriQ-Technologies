@@ -21,7 +21,8 @@ import {
     Award,
     Mail,
     UserCog,
-    MessageSquare
+    MessageSquare,
+    Cpu
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
@@ -58,6 +59,7 @@ const AdminLayout = ({ children }) => {
         { path: '/admin/inquiries', icon: Mail, label: 'Inquiries' },
         { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
         { path: '/admin/settings', icon: Settings, label: 'Settings' },
+        { path: '/admin/technologies', icon: Cpu, label: 'Technologies' },
     ];
 
     const handleLogout = () => {
@@ -102,8 +104,8 @@ const AdminLayout = ({ children }) => {
                                 key={item.path}
                                 to={item.path}
                                 className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${isActive
-                                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
+                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                                     }`}
                             >
                                 <Icon size={20} className={`shrink-0 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />

@@ -47,14 +47,6 @@ const Navbar = () => {
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center">
-                        {/* Logo */}
-                        <Link to="/" className="flex items-center group">
-                            <img
-                                src="/images/logo1.png"
-                                alt="MentriQ Technologies"
-                                className="h-12 w-auto mix-blend-multiply"
-                            />
-                        </Link>
 
                         {/* Desktop Nav */}
                         <div className="hidden md:flex items-center space-x-1">

@@ -54,7 +54,7 @@ const Footer = () => {
     React.useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/settings`);
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/settings`);
                 if (response.ok) {
                     const data = await response.json();
                     setSettings(prev => ({
@@ -105,12 +105,11 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-12">
                     <div className="lg:col-span-4">
                         <Link to="/" className="inline-block mb-6">
-                            <h2 className="text-2xl font-black tracking-tighter text-white group">
-                                MENTRIQ
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 ml-1">
-                                    TECHNOLOGIES
-                                </span>
-                            </h2>
+                            <img
+                                src="/images/logo.jpg"
+                                alt="MentriQ Technologies"
+                                className="h-14 w-auto object-contain"
+                            />
                         </Link>
                         <p className="text-slate-300 text-sm font-medium leading-relaxed mb-6 max-w-sm">
                             Empowering the next generation of tech leaders through industry-expert mentorship and elite skill-architecting programs.

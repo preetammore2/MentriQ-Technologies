@@ -1,6 +1,6 @@
-import { SplineScene } from "./splite";
-import { Card } from "./card"
-import { Spotlight } from "./spotlight"
+import { SplineScene } from "./SplineScene";
+import { Card } from "./Card"
+import { Spotlight } from "./Spotlight"
 
 export function SplineSceneBasic() {
   return (

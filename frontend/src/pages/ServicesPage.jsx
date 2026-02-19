@@ -1,50 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-    ChevronRight,
-    CheckCircle2,
-    Layers,
-    Globe,
-    Smartphone,
-    Palette,
-    Megaphone,
-    Server,
-    Shield,
-    Database,
-    Code
+    ChevronRight, ArrowRight, CheckCircle2, Layers, Globe, Smartphone,
+    Palette, Megaphone, Server, Shield, Database, Code, Zap, Star,
+    TrendingUp, Users, Award, Clock
 } from 'lucide-react';
-import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { apiClient as api } from '../utils/apiClient';
 import { useNavigate } from 'react-router-dom';
 import { resolveImageUrl } from '../utils/imageUtils';
 
-// Icon mapping
 const iconMap = {
-    'Globe': Globe,
-    'Smartphone': Smartphone,
-    'Palette': Palette,
-    'Megaphone': Megaphone,
-    'Server': Server,
-    'Shield': Shield,
-    'Database': Database,
-    'Code': Code,
-    'Layers': Layers
+    'Globe': Globe, 'Smartphone': Smartphone, 'Palette': Palette,
+    'Megaphone': Megaphone, 'Server': Server, 'Shield': Shield,
+    'Database': Database, 'Code': Code, 'Layers': Layers
 };
+
+const gradientPairs = [
+    { from: 'from-violet-600', to: 'to-indigo-600', accent: 'violet', light: 'violet-50', text: 'violet-700' },
+    { from: 'from-blue-600', to: 'to-cyan-500', accent: 'blue', light: 'blue-50', text: 'blue-700' },
+    { from: 'from-emerald-600', to: 'to-teal-500', accent: 'emerald', light: 'emerald-50', text: 'emerald-700' },
+    { from: 'from-orange-500', to: 'to-rose-500', accent: 'orange', light: 'orange-50', text: 'orange-700' },
+    { from: 'from-pink-600', to: 'to-purple-600', accent: 'pink', light: 'pink-50', text: 'pink-700' },
+    { from: 'from-slate-700', to: 'to-slate-900', accent: 'slate', light: 'slate-50', text: 'slate-700' },
+];
+
+const stats = [
+    { value: '150+', label: 'Projects Delivered', icon: TrendingUp },
+    { value: '98%', label: 'Client Satisfaction', icon: Star },
+    { value: '60+', label: 'Expert Team', icon: Users },
+    { value: '5★', label: 'Avg Rating', icon: Award },
+];
+
+const whyUs = [
+    { title: 'Agile Delivery', desc: 'Rapid iterations with transparent milestones.' },
+    { title: 'Dedicated Support', desc: '24/7 post-launch assistance for your business.' },
+    { title: 'Scalable Architecture', desc: 'Future-proof solutions built to grow with you.' },
+    { title: 'Industry Expertise', desc: 'Domain specialists across multiple verticals.' },
+];
 
 const ServicesPage = () => {
     const navigate = useNavigate();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const gradients = [
-        'from-blue-500 to-cyan-500',
-        'from-purple-500 to-pink-500',
-        'from-orange-500 to-red-500',
-        'from-green-500 to-emerald-500',
-        'from-indigo-500 to-violet-500',
-        'from-red-600 to-rose-600'
-    ];
+    const [hoveredIdx, setHoveredIdx] = useState(null);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -57,151 +56,302 @@ const ServicesPage = () => {
                 setLoading(false);
             }
         };
-
         fetchServices();
     }, []);
 
-    const isLoading = loading;
-
     return (
-        <div className="bg-gray-50 min-h-screen">
-            {/* Premium Dark Hero Section */}
-            <section className="relative min-h-[45vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-24 pb-12">
-                {/* Advanced Atmospheric Animations for Dark */}
+        <div className="bg-[#f8f9fc] min-h-screen">
+
+            {/* ─── Hero ─── */}
+            <section className="relative min-h-[60vh] flex items-center bg-[#09090f] text-white overflow-hidden pt-28 pb-20">
+                {/* Background */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <motion.div
-                        animate={{
-                            x: [0, 80, 0],
-                            y: [0, 40, 0],
-                            scale: [1, 1.2, 1]
-                        }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px] animate-pulse"
-                    />
-                    <motion.div
-                        animate={{
-                            x: [0, -60, 0],
-                            y: [0, 70, 0],
-                            scale: [1, 1.3, 1]
-                        }}
-                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                        className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]"
-                    />
-                    {/* High-Contrast Technical Grid */}
-                    <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
+                    <div className="absolute top-[-20%] left-1/3 w-[700px] h-[700px] bg-indigo-700/20 rounded-full blur-[160px]" />
+                    <div className="absolute bottom-[-20%] right-1/4 w-[500px] h-[500px] bg-violet-500/15 rounded-full blur-[120px]" />
+                    <div className="absolute inset-0 opacity-[0.03]" style={{
+                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+                        backgroundSize: '50px 50px'
+                    }} />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-6 text-center z-10">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        className="inline-flex items-center space-x-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20"
-                    >
-                        <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping"></span>
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">Global Service Architecture</span>
-                    </motion.div>
+                <div className="relative max-w-7xl mx-auto px-6 z-10 w-full">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: -15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-400/20"
+                        >
+                            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                            <span className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-300">What We Build</span>
+                        </motion.div>
 
-                    <motion.h1
+                        <motion.h1
+                            initial={{ opacity: 0, y: 25 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, duration: 0.7 }}
+                            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter leading-[0.95]"
+                        >
+                            Digital Solutions
+                            <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
+                                Built to Scale.
+                            </span>
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="text-base md:text-lg max-w-2xl mx-auto text-slate-400 leading-relaxed mb-10"
+                        >
+                            From concept to deployment — we craft end-to-end digital experiences that drive real business outcomes.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="flex flex-col sm:flex-row gap-4 justify-center"
+                        >
+                            <button
+                                onClick={() => navigate('/contact')}
+                                className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-900/40"
+                            >
+                                Start a Project
+                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <button
+                                onClick={() => navigate('/about')}
+                                className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all"
+                            >
+                                Learn About Us
+                            </button>
+                        </motion.div>
+                    </div>
+
+                    {/* Stats row inside hero */}
+                    <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "circOut" }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter uppercase font-display leading-[0.9]"
+                        transition={{ delay: 0.45 }}
+                        className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto"
                     >
-                        ENGINEERING <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">
-                            DIGITAL EXCELLENCE.
-                        </span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-sm md:text-base max-w-3xl mx-auto mb-10 text-slate-400 leading-relaxed font-medium opacity-80"
-                    >
-                        We deliver end-to-end digital solutions designed to help your business grow, innovate, and <span className="text-white font-bold">lead in the digital era</span>.
-                    </motion.p>
+                        {stats.map((s, i) => {
+                            const Icon = s.icon;
+                            return (
+                                <div key={i} className="text-center p-4 rounded-2xl bg-white/5 border border-white/8 backdrop-blur-sm">
+                                    <Icon className="w-4 h-4 text-indigo-400 mx-auto mb-1" />
+                                    <div className="text-2xl font-black text-white">{s.value}</div>
+                                    <div className="text-[10px] text-slate-400 uppercase tracking-widest font-medium mt-0.5">{s.label}</div>
+                                </div>
+                            );
+                        })}
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Services Grid - Premium Architectural */}
-            <section className="py-24 max-w-7xl mx-auto px-6 -mt-20 relative z-20">
-                {isLoading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="h-96 bg-gray-200/50 rounded-[2.5rem] animate-pulse" />
+            {/* ─── Services Grid ─── */}
+            <section className="py-24 max-w-7xl mx-auto px-6">
+                <div className="text-center mb-16">
+                    <p className="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-3">Our Expertise</p>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter">
+                        Services We Offer
+                    </h2>
+                    <div className="w-16 h-1 bg-gradient-to-r from-indigo-600 to-violet-500 rounded-full mx-auto mt-4" />
+                </div>
+
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[1, 2, 3, 4, 5, 6].map(i => (
+                            <div key={i} className="h-80 bg-slate-200/60 rounded-3xl animate-pulse" />
                         ))}
                     </div>
                 ) : (Array.isArray(services) && services.length > 0) ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {services.map((service, index) => {
-                            const color = gradients[index % gradients.length];
-                            const iconValue = service.icon || "";
-                            const isImage = iconValue.startsWith("http") || iconValue.startsWith("/") || iconValue.startsWith("data:");
-
-                            let IconComponent = Layers;
-                            if (!isImage) {
-                                IconComponent = iconMap[iconValue] || Layers;
-                            }
+                            const g = gradientPairs[index % gradientPairs.length];
+                            const iconValue = service.icon || '';
+                            const isImage = iconValue.startsWith('http') || iconValue.startsWith('/') || iconValue.startsWith('data:');
+                            const IconComponent = isImage ? null : (iconMap[iconValue] || Layers);
+                            const isHovered = hoveredIdx === index;
 
                             return (
                                 <motion.div
                                     key={service._id}
                                     onClick={() => navigate('/contact')}
+                                    onMouseEnter={() => setHoveredIdx(index)}
+                                    onMouseLeave={() => setHoveredIdx(null)}
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    whileHover={{ y: -10 }}
-                                    transition={{ delay: index * 0.1, duration: 0.4 }}
-                                    className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-indigo-500/10 border border-slate-100 hover:border-indigo-500/20 transition-all duration-500 flex flex-col h-full group cursor-pointer relative overflow-hidden"
+                                    transition={{ delay: index * 0.07, duration: 0.5 }}
+                                    className="relative group cursor-pointer bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500 hover:-translate-y-2 flex flex-col"
                                 >
-                                    <div className={`absolute top-0 right-0 w-40 h-40 bg-gradient-to-br ${color} opacity-5 rounded-bl-[100%] -mr-10 -mt-10 transition-transform group-hover:scale-150`} />
+                                    {/* Top gradient bar */}
+                                    <div className={`h-1.5 w-full bg-gradient-to-r ${g.from} ${g.to}`} />
 
-                                    <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${color} flex items-center justify-center text-white mb-8 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative z-10`}>
-                                        {isImage ? (
-                                            <img src={resolveImageUrl(iconValue)} alt={service.title} className="w-full h-full object-cover rounded-3xl" />
-                                        ) : (
-                                            <IconComponent size={36} strokeWidth={2} />
-                                        )}
-                                    </div>
+                                    {/* Card body */}
+                                    <div className="p-8 flex flex-col flex-1">
+                                        {/* Icon */}
+                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${g.from} ${g.to} flex items-center justify-center text-white mb-6 shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                                            {isImage ? (
+                                                <img src={resolveImageUrl(iconValue)} alt={service.title} className="w-full h-full object-cover rounded-2xl" />
+                                            ) : (
+                                                <IconComponent size={26} strokeWidth={2} />
+                                            )}
+                                        </div>
 
-                                    <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors relative z-10">{service.title}</h3>
-                                    <p className="text-slate-500 leading-relaxed mb-8 flex-grow whitespace-pre-line text-sm font-medium relative z-10">{service.description}</p>
+                                        {/* Number badge */}
+                                        <span className="text-xs font-black text-slate-300 uppercase tracking-widest mb-2">
+                                            {String(index + 1).padStart(2, '0')}
+                                        </span>
 
-                                    <div className="flex items-center text-indigo-600 font-bold text-sm uppercase tracking-widest mt-auto group-hover:translate-x-2 transition-transform">
-                                        Learn More <ChevronRight size={16} className="ml-1" />
+                                        <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors leading-tight">
+                                            {service.title}
+                                        </h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed flex-grow whitespace-pre-line mb-6">
+                                            {service.description}
+                                        </p>
+
+                                        {/* CTA link */}
+                                        <div className="flex items-center gap-1.5 text-indigo-600 font-bold text-xs uppercase tracking-widest mt-auto group-hover:gap-2.5 transition-all">
+                                            Get Started
+                                            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                                        </div>
                                     </div>
                                 </motion.div>
                             );
                         })}
                     </div>
                 ) : (
-                    <div className="text-center py-32 bg-white rounded-[3rem] shadow-xl border border-slate-100">
-                        <Layers size={64} className="mx-auto text-slate-200 mb-6" />
-                        <h3 className="text-2xl font-black text-slate-400">No active services found</h3>
+                    <div className="text-center py-32 bg-white rounded-3xl shadow border border-slate-100">
+                        <Layers size={56} className="mx-auto text-slate-200 mb-4" />
+                        <h3 className="text-xl font-black text-slate-400">No active services yet</h3>
                     </div>
                 )}
             </section>
 
-            {/* CTA Section - Technical Dark */}
-            <section className="py-24 bg-[#070b14] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:30px_30px]" />
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px]" />
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[100px]" />
+            {/* ─── Why Choose Us ─── */}
+            <section className="py-20 bg-white border-y border-slate-100">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        {/* Left */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <p className="text-indigo-600 text-xs font-black uppercase tracking-[0.3em] mb-3">Why MentriQ</p>
+                            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-6 leading-tight">
+                                Excellence in
+                                <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500">
+                                    Every Delivery.
+                                </span>
+                            </h2>
+                            <p className="text-slate-500 text-base leading-relaxed mb-8">
+                                We combine technical depth with creative innovation to deliver solutions that are not just functional — but transformative.
+                            </p>
+                            <button
+                                onClick={() => navigate('/contact')}
+                                className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center gap-2 shadow-lg shadow-indigo-200"
+                            >
+                                Discuss Your Project
+                                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </motion.div>
 
-                <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-                    <h2 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter uppercase">
-                        READY TO <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">SCALE UP?</span>
-                    </h2>
-                    <p className="text-lg text-slate-400 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
-                        Let's collaborate to bring your vision to life. Our engineering team is ready to build something exceptional.
-                    </p>
-                    <a href="/contact" className="inline-flex items-center justify-center px-10 py-5 text-sm font-black text-white uppercase tracking-[0.2em] transition-all duration-300 bg-indigo-600 rounded-xl hover:bg-indigo-500 hover:shadow-xl hover:shadow-indigo-600/20 group">
-                        Initialize Project
-                        <ChevronRight className="ml-3 group-hover:translate-x-1 transition-transform" size={18} />
-                    </a>
+                        {/* Right: feature bullets */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {whyUs.map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all group"
+                                >
+                                    <div className="w-9 h-9 rounded-xl bg-indigo-100 flex items-center justify-center mb-4 group-hover:bg-indigo-600 transition-colors">
+                                        <CheckCircle2 size={18} className="text-indigo-600 group-hover:text-white transition-colors" />
+                                    </div>
+                                    <h4 className="text-sm font-black text-slate-900 mb-1 uppercase tracking-tight">{item.title}</h4>
+                                    <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            {/* ─── CTA ─── */}
+            <section className="py-28 relative overflow-hidden bg-[#09090f]">
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-700/15 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px]" />
+                    <div className="absolute inset-0 opacity-[0.04]" style={{
+                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
+                        backgroundSize: '40px 40px'
+                    }} />
+                </div>
+
+                <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full bg-white/5 border border-white/10"
+                    >
+                        <Zap size={12} className="text-yellow-400" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-slate-300">Ready to Build?</span>
+                    </motion.div>
+
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-[0.95]"
+                    >
+                        Let's Create Something
+                        <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                            Extraordinary.
+                        </span>
+                    </motion.h2>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="text-slate-400 mb-12 max-w-xl mx-auto text-base leading-relaxed"
+                    >
+                        Our engineering team is ready to transform your vision into powerful digital reality.
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col sm:flex-row gap-4 justify-center"
+                    >
+                        <button
+                            onClick={() => navigate('/contact')}
+                            className="group px-10 py-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/40"
+                        >
+                            Start a Project
+                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        </button>
+                        <button
+                            onClick={() => navigate('/courses')}
+                            className="px-10 py-5 rounded-xl bg-white/5 border border-white/10 text-white font-black text-sm uppercase tracking-widest hover:bg-white/10 transition-all"
+                        >
+                            Explore Courses
+                        </button>
+                    </motion.div>
+                </div>
+            </section>
+
+            <Footer />
         </div>
     );
 };
