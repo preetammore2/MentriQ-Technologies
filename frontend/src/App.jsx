@@ -45,17 +45,16 @@ const RecruitPage = lazy(() => import('./pages/RecruitPage'));
 const DemoTypewriter = lazy(() => import('./pages/DemoTypewriter'));
 const DemoSplinePage = lazy(() => import('./pages/DemoSplinePage'));
 
-import AdminRoute from './components/auth/AdminRoute';
-import ScrollToTop from './pages/ScrollToTop';
 import { useAuth } from './context/AuthContext';
-import EnrollmentSuccessWrapper from './pages/EnrollmentSuccessWrapper';
-// import Test from './pages/Test';
-
-
+import { useVisitorTracking } from './hooks/useVisitorTracking';
+import ScrollToTop from './pages/ScrollToTop';
 
 function App() {
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(true);
+
+  // Global Visitor Intel tracking
+  useVisitorTracking();
 
   useEffect(() => {
     // Simulate loading time (e.g., waiting for assets or initial checks)

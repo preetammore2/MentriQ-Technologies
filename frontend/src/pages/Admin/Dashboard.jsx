@@ -12,7 +12,10 @@ import {
     Loader2,
     CheckCircle2,
     UserPlus,
-    CreditCard
+    CreditCard,
+    Eye,
+    Zap,
+    Cpu
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -129,8 +132,8 @@ const Dashboard = () => {
     }
 
     const {
-        raw = { students: 0, courses: 0, enrolledStudents: 0, internships: 0 },
-        analytics = { enrollmentTrends: [], userTrends: [], recentActivity: [] }
+        raw = { students: 0, courses: 0, enrolledStudents: 0, internships: 0, activeVisitors: 0 },
+        analytics = { enrollmentTrends: [], userTrends: [], recentActivity: [], popularPages: [] }
     } = data || {};
 
     const getActivityIcon = (type) => {
@@ -184,12 +187,12 @@ const Dashboard = () => {
                     delay={0.3}
                 />
                 <StatCard
-                    title="Open Positions"
-                    value={raw.internships}
-                    icon={Briefcase}
-                    color="bg-emerald-500"
-                    trend={8}
-                    delay={0.4}
+                    title="Active Visitors"
+                    value={raw.activeVisitors || 0}
+                    icon={Eye}
+                    color="bg-cyan-500"
+                    trend={0}
+                    delay={0.5}
                 />
             </div>
 
@@ -309,6 +312,45 @@ const Dashboard = () => {
                     <button className="w-full mt-6 py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2">
                         View Audit Log <ArrowRight size={14} />
                     </button>
+                </motion.div>
+
+                {/* Visitor Flow */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-[#1e293b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden group"
+                >
+                    <div className="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Visitor Flow</h3>
+                            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Platform Impact & Page Popularity</p>
+                        </div>
+                        <Zap className="text-amber-400 opacity-20" size={24} />
+                    </div>
+
+                    <div className="space-y-4">
+                        {(analytics.popularPages || []).map((page, idx) => (
+                            <div key={page.path} className="space-y-1">
+                                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                                    <span className="text-gray-400 truncate max-w-[70%]">{page.path}</span>
+                                    <span className="text-white">{page.count} hits</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                    <motion.div
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${(page.count / Math.max(...analytics.popularPages.map(p => p.count))) * 100}%` }}
+                                        className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full"
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                        {(!analytics.popularPages || analytics.popularPages.length === 0) && (
+                            <div className="h-40 flex flex-col items-center justify-center text-center opacity-30 italic">
+                                <p className="text-[10px] uppercase font-black tracking-widest">Awaiting visitor metrics...</p>
+                            </div>
+                        )}
+                    </div>
                 </motion.div>
             </div>
 

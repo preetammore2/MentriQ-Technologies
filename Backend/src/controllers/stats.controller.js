@@ -5,6 +5,7 @@ const SiteStats = require("../models/SiteStats");
 const Enrollment = require("../models/Enrollment");
 const Internship = require("../models/Internship");
 const InternshipApplication = require("../models/InternshipApplication");
+const VisitorSession = require("../models/VisitorSession");
 
 // Helper to get daily counts for the last X days
 const getDailyTrends = async (Model, dateField = "createdAt", days = 7) => {
@@ -29,6 +30,29 @@ const getDailyTrends = async (Model, dateField = "createdAt", days = 7) => {
     return trends;
 };
 
+// @desc    Track visitor sessions and page visits
+// @route   POST /api/stats/track
+// @access  Public
+const trackVisit = async (req, res) => {
+    try {
+        const { sessionId, path } = req.body;
+        if (!sessionId || !path) return res.status(400).json({ message: "Missing tracking data" });
+
+        const session = await VisitorSession.findOneAndUpdate(
+            { sessionId },
+            {
+                $set: { lastPath: path, lastActivity: new Date() },
+                $addToSet: { pathsVisited: path }
+            },
+            { upsert: true, new: true }
+        );
+
+        res.json({ status: "success", session: session.sessionId });
+    } catch (error) {
+        res.status(500).json({ message: "Tracking failed" });
+    }
+};
+
 // @desc    Get global statistics for public site and dashboard
 // @route   GET /api/stats
 // @access  Public
@@ -43,6 +67,19 @@ const getGlobalStats = async (req, res) => {
             _id: { $in: enrolledUserIds },
             role: "student"
         });
+
+        // Visitor Analytics
+        const activeSessions = await VisitorSession.countDocuments({
+            lastActivity: { $gte: new Date(Date.now() - 30 * 60 * 1000) } // Active in last 30 mins
+        });
+
+        // Aggregating popular pages (top 5)
+        const popularPages = await VisitorSession.aggregate([
+            { $unwind: "$pathsVisited" },
+            { $group: { _id: "$pathsVisited", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 5 }
+        ]);
 
         // Dashboard specific analytics (charts)
         const userTrends = await getDailyTrends(User);
@@ -92,12 +129,14 @@ const getGlobalStats = async (req, res) => {
                 students: studentCount || 0,
                 courses: courseCount || 0,
                 partners: partnerCount || 0,
-                internships: internshipCount || 0
+                internships: internshipCount || 0,
+                activeVisitors: activeSessions
             },
             analytics: {
                 userTrends: userTrends || [],
                 enrollmentTrends: enrollmentTrends || [],
-                recentActivity: recentActivity || []
+                recentActivity: recentActivity || [],
+                popularPages: popularPages.map(p => ({ path: p._id, count: p.count }))
             }
         });
     } catch (error) {
@@ -151,5 +190,5 @@ const updateGlobalStats = async (req, res) => {
 module.exports = {
     getGlobalStats,
     updateGlobalStats,
+    trackVisit
 };
-

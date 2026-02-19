@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Save, Mail, Phone, MapPin, Globe, Instagram, Linkedin, Twitter, MessageCircle } from "lucide-react";
+import { Save, Mail, Phone, MapPin, Globe, Instagram, Linkedin, Twitter, MessageCircle, TrendingUp } from "lucide-react";
 import { useToast } from "../../context/ToastContext";
 
 const SettingsManagement = () => {
@@ -18,6 +18,12 @@ const SettingsManagement = () => {
             linkedin: "",
             twitter: "",
             whatsapp: ""
+        },
+        siteStats: {
+            students: "",
+            courses: "",
+            placements: "",
+            trainers: ""
         }
     });
 
@@ -33,22 +39,31 @@ const SettingsManagement = () => {
 
     const fetchSettings = async () => {
         try {
-            const { data } = await api.get("/settings");
+            const [{ data: settingsData }, { data: statsData }] = await Promise.all([
+                api.get("/settings"),
+                api.get("/stats")
+            ]);
+
             setFormData({
-                email: data.email || "",
-                phone: data.phone || "",
-                address: data.address || "",
-                mapLink: data.mapLink || "",
+                email: settingsData.email || "",
+                phone: settingsData.phone || "",
+                address: settingsData.address || "",
+                mapLink: settingsData.mapLink || "",
                 socialLinks: {
-                    instagram: data.socialLinks?.instagram || "",
-                    linkedin: data.socialLinks?.linkedin || "",
-                    twitter: data.socialLinks?.twitter || "",
-                    whatsapp: data.socialLinks?.whatsapp || ""
+                    instagram: settingsData.socialLinks?.instagram || "",
+                    linkedin: settingsData.socialLinks?.linkedin || "",
+                    twitter: settingsData.socialLinks?.twitter || "",
+                    whatsapp: settingsData.socialLinks?.whatsapp || ""
+                },
+                siteStats: {
+                    students: statsData.students || "",
+                    courses: statsData.courses || "",
+                    placements: statsData.placements || "",
+                    trainers: statsData.trainers || ""
                 }
             });
         } catch (error) {
-            console.error("Failed to fetch settings", error);
-            // toast.error("Failed to load settings"); // Optional: don't annoy on first load if empty
+            console.error("Failed to fetch settings/stats", error);
         } finally {
             setLoading(false);
         }
@@ -62,6 +77,12 @@ const SettingsManagement = () => {
                 ...prev,
                 socialLinks: { ...prev.socialLinks, [socialKey]: value }
             }));
+        } else if (name.startsWith("stat.")) {
+            const statKey = name.split(".")[1];
+            setFormData(prev => ({
+                ...prev,
+                siteStats: { ...prev.siteStats, [statKey]: value }
+            }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
@@ -71,11 +92,20 @@ const SettingsManagement = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await api.put("/settings", formData);
-            toast.success("Settings updated successfully");
+            await Promise.all([
+                api.put("/settings", {
+                    email: formData.email,
+                    phone: formData.phone,
+                    address: formData.address,
+                    mapLink: formData.mapLink,
+                    socialLinks: formData.socialLinks
+                }),
+                api.put("/stats", formData.siteStats)
+            ]);
+            toast.success("All settings and metrics updated");
         } catch (error) {
             console.error("Update failed", error);
-            toast.error("Failed to update settings");
+            toast.error("Failed to sync some settings");
         } finally {
             setSaving(false);
         }
@@ -157,32 +187,32 @@ const SettingsManagement = () => {
                     </div>
                 </div>
 
-                {/* Social Media */}
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6">
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        <Globe size={20} className="text-cyan-400" />
-                        Social Media
-                    </h3>
+                {/* Homepage Key Metrics */}
+                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6 lg:col-span-2">
+                    <div className="flex justify-between items-center">
+                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                            <TrendingUp size={20} className="text-emerald-400" />
+                            Homepage Key Metrics
+                        </h3>
+                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest hidden sm:block">Update Display Value Overrides</p>
+                    </div>
 
-                    <div className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[
-                            { key: 'instagram', icon: Instagram, color: 'text-pink-400' },
-                            { key: 'linkedin', icon: Linkedin, color: 'text-blue-400' },
-                            { key: 'twitter', icon: Twitter, color: 'text-sky-400' },
-                            { key: 'whatsapp', icon: MessageCircle, color: 'text-green-400' }
-                        ].map(({ key, icon: Icon, color }) => (
-                            <div key={key} className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">{key}</label>
-                                <div className="relative">
-                                    <Icon className={`absolute left-4 top-1/2 -translate-y-1/2 ${color}`} size={16} />
-                                    <input
-                                        name={`social.${key}`}
-                                        value={formData.socialLinks[key]}
-                                        onChange={handleChange}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
-                                        placeholder={`https://${key}.com/...`}
-                                    />
-                                </div>
+                            { key: 'students', label: 'Students Trained', placeholder: '10K+' },
+                            { key: 'courses', label: 'Live Courses', placeholder: '50+' },
+                            { key: 'placements', label: 'Placement Rate', placeholder: '98%' },
+                            { key: 'trainers', label: 'Expert Trainers', placeholder: '60+' }
+                        ].map((stat) => (
+                            <div key={stat.key} className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">{stat.label}</label>
+                                <input
+                                    name={`stat.${stat.key}`}
+                                    value={formData.siteStats[stat.key]}
+                                    onChange={handleChange}
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black text-lg focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700"
+                                    placeholder={stat.placeholder}
+                                />
                             </div>
                         ))}
                     </div>
@@ -191,10 +221,10 @@ const SettingsManagement = () => {
                         <button
                             type="submit"
                             disabled={saving}
-                            className="w-full md:w-auto px-8 py-4 rounded-[1rem] font-black bg-indigo-600 text-white hover:bg-indigo-500 shadow-xl shadow-indigo-600/20 hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:hover:scale-100"
+                            className="w-full md:w-auto px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70"
                         >
-                            <Save size={20} />
-                            <span>{saving ? "Saving Changes..." : "Update Settings"}</span>
+                            <Save size={20} strokeWidth={3} />
+                            <span>{saving ? "Deploying Intel..." : "Deploy New Metrics"}</span>
                         </button>
                     </div>
                 </div>
