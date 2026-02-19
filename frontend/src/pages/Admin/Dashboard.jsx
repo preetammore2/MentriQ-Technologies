@@ -132,7 +132,18 @@ const Dashboard = () => {
     }
 
     const {
-        raw = { students: 0, courses: 0, enrolledStudents: 0, internships: 0, activeVisitors: 0 },
+        raw = {
+            students: 0,
+            courses: 0,
+            enrolledStudents: 0,
+            internships: 0,
+            activeVisitors: 0,
+            // Homepage metrics overrides
+            homepageStudents: '10K+',
+            homepageCourses: '50+',
+            homepagePlacements: '98%',
+            homepageTrainers: '60+'
+        },
         analytics = { enrollmentTrends: [], userTrends: [], recentActivity: [], popularPages: [] }
     } = data || {};
 
@@ -194,6 +205,37 @@ const Dashboard = () => {
                     trend={0}
                     delay={0.5}
                 />
+            </div>
+
+            {/* Homepage Impact Stats (Dynamic Overrides) */}
+            <div className="bg-[#1e293b] rounded-[2.5rem] border border-white/5 p-8 relative overflow-hidden group">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 relative z-10">
+                    <div>
+                        <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Public Impact Metrics</h3>
+                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Values displayed on homepage impact section</p>
+                    </div>
+                    <button
+                        onClick={() => window.location.href = '/admin/settings'}
+                        className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
+                    >
+                        Update Metrics <ArrowRight size={14} />
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                    {[
+                        { label: 'Students Trained', value: raw.homepageStudents || '10K+', icon: GraduationCap, color: 'text-indigo-400' },
+                        { label: 'Live Courses', value: raw.homepageCourses || '50+', icon: BookOpen, color: 'text-cyan-400' },
+                        { label: 'Placement Rate', value: raw.homepagePlacements || '98%', icon: TrendingUp, color: 'text-emerald-400' },
+                        { label: 'Expert Trainers', value: raw.homepageTrainers || '60+', icon: UserPlus, color: 'text-blue-400' }
+                    ].map((m, i) => (
+                        <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex flex-col items-center text-center group/card hover:bg-white/[0.08] transition-all">
+                            <m.icon className={`${m.color} mb-3 group-hover/card:scale-110 transition-transform`} size={24} />
+                            <h4 className="text-2xl font-black text-white italic">{m.value}</h4>
+                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">{m.label}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Charts Section */}

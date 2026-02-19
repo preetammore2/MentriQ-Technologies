@@ -130,7 +130,11 @@ const getGlobalStats = async (req, res) => {
                 courses: courseCount || 0,
                 partners: partnerCount || 0,
                 internships: internshipCount || 0,
-                activeVisitors: activeSessions
+                activeVisitors: activeSessions,
+                homepageStudents: statsConfig?.students || defaultStudents,
+                homepageCourses: statsConfig?.courses || defaultCourses,
+                homepagePlacements: statsConfig?.placements || defaultPlacements,
+                homepageTrainers: statsConfig?.trainers || defaultTrainers
             },
             analytics: {
                 userTrends: userTrends || [],
