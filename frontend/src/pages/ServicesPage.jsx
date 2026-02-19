@@ -63,46 +63,52 @@ const ServicesPage = () => {
         <div className="bg-[#f8f9fc] min-h-screen">
 
             {/* ─── Hero ─── */}
-            <section className="relative min-h-[60vh] flex items-center bg-white overflow-hidden pt-28 pb-20">
-                {/* Background Animated Blobs */}
+            {/* ─── Hero ─── */}
+            <section className="relative min-h-[60vh] flex items-center bg-[#070b14] text-white overflow-hidden pt-28 pb-20">
+                {/* Advanced Atmospheric Animations for Dark */}
                 <div className="absolute inset-0 pointer-events-none">
                     <motion.div
-                        animate={{ x: [0, 50, -30, 0], y: [0, 30, -30, 0] }}
-                        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                        className="absolute -top-20 -left-20 w-[600px] h-[600px] bg-indigo-100/60 rounded-full blur-[120px]"
+                        animate={{
+                            x: [0, 80, 0],
+                            y: [0, 40, 0],
+                            scale: [1, 1.2, 1]
+                        }}
+                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                        className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px] animate-pulse"
                     />
                     <motion.div
-                        animate={{ x: [0, -40, 40, 0], y: [0, 50, -20, 0] }}
-                        transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                        className="absolute top-1/3 right-[-100px] w-[500px] h-[500px] bg-violet-100/50 rounded-full blur-[130px]"
+                        animate={{
+                            x: [0, -60, 0],
+                            y: [0, 70, 0],
+                            scale: [1, 1.3, 1]
+                        }}
+                        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                        className="absolute -bottom-[10%] right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]"
                     />
-                    <motion.div
-                        animate={{ x: [0, 30, -50, 0], y: [0, -30, 40, 0] }}
-                        transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-                        className="absolute -bottom-20 left-1/3 w-[400px] h-[400px] bg-cyan-100/40 rounded-full blur-[100px]"
-                    />
+                    {/* High-Contrast Technical Grid */}
+                    <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] bg-[length:40px_40px]" />
                 </div>
 
                 <div className="relative max-w-7xl mx-auto px-6 z-10 w-full">
                     <div className="max-w-4xl mx-auto text-center">
                         <motion.div
-                            initial={{ opacity: 0, y: -15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-indigo-50 border border-indigo-100"
+                            initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            className="inline-flex items-center gap-2 mb-6 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20"
                         >
                             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                            <span className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-600">What We Build</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-indigo-300">What We Build</span>
                         </motion.div>
 
                         <motion.h1
                             initial={{ opacity: 0, y: 25 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1, duration: 0.7 }}
-                            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter leading-[0.95] text-slate-900"
+                            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tighter leading-[0.95] text-white uppercase font-display"
                         >
                             Digital Solutions
                             <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
                                 Built to Scale.
                             </span>
                         </motion.h1>
@@ -111,7 +117,7 @@ const ServicesPage = () => {
                             initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-base md:text-lg max-w-2xl mx-auto text-slate-500 leading-relaxed mb-10"
+                            className="text-base md:text-lg max-w-2xl mx-auto text-slate-400 leading-relaxed mb-10 font-medium opacity-80"
                         >
                             From concept to deployment — we craft end-to-end digital experiences that drive real business outcomes.
                         </motion.p>
@@ -124,14 +130,14 @@ const ServicesPage = () => {
                         >
                             <button
                                 onClick={() => navigate('/contact')}
-                                className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200"
+                                className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
                             >
                                 Start a Project
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </button>
                             <button
                                 onClick={() => navigate('/about')}
-                                className="px-8 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 font-bold text-sm uppercase tracking-widest hover:bg-slate-200 transition-all"
+                                className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-sm"
                             >
                                 Learn About Us
                             </button>
