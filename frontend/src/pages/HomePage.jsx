@@ -8,7 +8,7 @@ import { resolveImageUrl } from '../utils/imageUtils'
 
 import MentorsSection from '../components/home/MentorsSection.jsx'
 import CitySection from '../components/home/CitySection';
-import { HeroSpline } from '../components/home/HeroSpline'
+import Hero3DElement from '../components/home/Hero3DElement'
 import OneByOneTestimonial from '../components/home/OneByOneTestimonial'
 import SectionErrorBoundary from '../components/common/SectionErrorBoundary'
 
@@ -287,17 +287,33 @@ const HomePage = () => {
 
             {/* ─── Hero Section ─── */}
             <section className="relative min-h-[85vh] flex items-center bg-[#09090f] text-white overflow-hidden pt-24 pb-16">
-                {/* Background glows */}
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute -top-[10%] left-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[140px]" />
-                    <div className="absolute bottom-[-10%] right-1/4 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[140px]" />
+                {/* 3D Canvas */}
+                <Hero3DElement />
+
+                {/* Extra animated glow blobs */}
+                <div className="absolute inset-0 pointer-events-none z-[1]">
+                    <motion.div
+                        animate={{ x: [0, 60, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
+                        transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                        className="absolute -top-[10%] left-1/4 w-[650px] h-[650px] bg-indigo-600/20 rounded-full blur-[150px]"
+                    />
+                    <motion.div
+                        animate={{ x: [0, -50, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
+                        transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                        className="absolute bottom-[-10%] right-1/4 w-[600px] h-[600px] bg-violet-500/15 rounded-full blur-[140px]"
+                    />
+                    <motion.div
+                        animate={{ x: [0, 30, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                        className="absolute top-1/2 right-[10%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px]"
+                    />
                     <div className="absolute inset-0 opacity-[0.03]" style={{
                         backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
                         backgroundSize: '50px 50px'
                     }} />
                 </div>
 
-                <div className="relative max-w-7xl mx-auto px-6 z-10 w-full">
+                <div className="relative max-w-7xl mx-auto px-6 z-10 w-full" style={{ zIndex: 10 }}>
                     <div className="max-w-4xl mx-auto text-center">
                         {/* Badge */}
                         <motion.div
