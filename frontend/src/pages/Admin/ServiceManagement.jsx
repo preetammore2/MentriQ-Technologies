@@ -5,12 +5,40 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
 
+const FALLBACK_SERVICES = [
+    {
+        icon: "Globe",
+        title: 'Web Development',
+        description: 'Custom, high-performance websites built with modern technologies like React, Next.js, and Node.js.',
+        color: 'from-blue-500 to-cyan-500'
+    },
+    {
+        icon: "Smartphone",
+        title: 'App Development',
+        description: 'Native and cross-platform mobile applications for iOS and Android using Flutter and React Native.',
+        color: 'from-purple-500 to-pink-500'
+    },
+    {
+        icon: "Palette",
+        title: 'UI/UX Design',
+        description: 'User-centric design solutions that enhance engagement and provide seamless digital experiences.',
+        color: 'from-orange-500 to-red-500'
+    },
+    {
+        icon: "Megaphone",
+        title: 'Digital Marketing',
+        description: 'Strategic marketing campaigns including SEO, social media, and PPC to grow your online presence.',
+        color: 'from-green-500 to-emerald-500'
+    }
+];
+
 const ServiceManagement = () => {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingService, setEditingService] = useState(null);
     const [submitting, setSubmitting] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
     const toast = useToast();
 
     // Form State
@@ -192,18 +220,30 @@ const ServiceManagement = () => {
                     <h2 className="text-3xl font-bold text-white tracking-tight">Services & Capabilities</h2>
                     <p className="text-gray-400 text-sm mt-1">Configure and manage platform service offerings.</p>
                 </div>
-                <button
-                    onClick={() => {
-                        setEditingService(null);
-                        setFormData(initialFormState);
-                        setImagePreview(null);
-                        setIsModalOpen(true);
-                    }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
-                >
-                    <Icons.Plus size={18} />
-                    <span>Add Service</span>
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    {services.length === 0 && (
+                        <button
+                            onClick={syncDefaultServices}
+                            disabled={isSyncing}
+                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600/30 transition-all whitespace-nowrap active:scale-95"
+                        >
+                            <Icons.RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Website Services"}</span>
+                        </button>
+                    )}
+                    <button
+                        onClick={() => {
+                            setEditingService(null);
+                            setFormData(initialFormState);
+                            setImagePreview(null);
+                            setIsModalOpen(true);
+                        }}
+                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                    >
+                        <Icons.Plus size={18} />
+                        <span>Add Service</span>
+                    </button>
+                </div>
             </div>
 
             {/* Table Area */}
@@ -228,12 +268,29 @@ const ServiceManagement = () => {
                                 </tr>
                             ) : services.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-16 text-center">
-                                        <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center mx-auto mb-4 border border-white/10 text-gray-600">
-                                            <Icons.Layers size={24} />
+                                    <td colSpan="4" className="px-6 py-32 text-center bg-white/5">
+                                        <div className="w-20 h-20 bg-white/5 rounded-[2.5rem] flex items-center justify-center mx-auto mb-6 border border-white/10 text-gray-600">
+                                            <Icons.Layers size={40} />
                                         </div>
-                                        <h3 className="text-white font-bold mb-1">No Services Found</h3>
-                                        <button onClick={() => setIsModalOpen(true)} className="text-indigo-400 text-xs font-bold hover:text-indigo-300">Create First Service</button>
+                                        <h3 className="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">No Services Detected</h3>
+                                        <p className="text-gray-500 mb-8 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The platform offerings are currently offline. Synchronize with website defaults or manually deploy a new service node.</p>
+                                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                            <button
+                                                onClick={syncDefaultServices}
+                                                disabled={isSyncing}
+                                                className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center shadow-xl shadow-white/5"
+                                            >
+                                                <Icons.RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} />
+                                                {isSyncing ? "Synchronizing..." : "Sync From Website"}
+                                            </button>
+                                            <button
+                                                onClick={() => setIsModalOpen(true)}
+                                                className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
+                                            >
+                                                <Icons.Plus size={16} />
+                                                Deploy Manual
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ) : (
@@ -246,7 +303,12 @@ const ServiceManagement = () => {
                                             <td className="px-6 py-5">
                                                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-lg overflow-hidden bg-gradient-to-br ${service.color || 'from-indigo-500 to-purple-500'}`}>
                                                     {isImage ? (
-                                                        <img src={resolveImageUrl(service.icon)} alt={service.title} className="w-full h-full object-cover" />
+                                                        <img
+                                                            src={resolveImageUrl(service.icon)}
+                                                            alt={service.title}
+                                                            className="w-full h-full object-cover"
+                                                            onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/40?text=Srvc"; }}
+                                                        />
                                                     ) : (
                                                         <Icon size={20} />
                                                     )}

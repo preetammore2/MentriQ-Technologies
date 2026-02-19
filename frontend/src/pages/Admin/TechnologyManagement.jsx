@@ -7,6 +7,25 @@ import { resolveImageUrl } from "../../utils/imageUtils";
 
 const MotionDiv = motion.div;
 
+const FALLBACK_TECHS = [
+    { name: "HTML", logo: "/images/html.png", category: "frontend", order: 1 },
+    { name: "CSS", logo: "/images/css.png", category: "frontend", order: 2 },
+    { name: "JavaScript", logo: "/images/js.png", category: "frontend", order: 3 },
+    { name: "React", logo: "/images/react.png", category: "frontend", order: 4 },
+    { name: "Node.js", logo: "/images/Node.js_logo.svg.png", category: "backend", order: 5 },
+    { name: "Express.js", logo: "/images/express3.webp", category: "backend", order: 6 },
+    { name: "MongoDB", logo: "/images/mongodb4.png", category: "database", order: 7 },
+    { name: "SQL", logo: "/images/sql.png", category: "database", order: 8 },
+    { name: "DevOps", logo: "/images/deveops.svg", category: "devops", order: 9 },
+    { name: "Cyber Security", logo: "/images/security.png", category: "other", order: 10 },
+    { name: "Java", logo: "/images/java2.webp", category: "backend", order: 11 },
+    { name: "Blockchain", logo: "/images/blockchain.png", category: "other", order: 12 },
+    { name: "Flutter", logo: "/images/flutter5.png", category: "mobile", order: 13 },
+    { name: "Python", logo: "/images/python.png", category: "backend", order: 14 },
+    { name: "Data Analyst", logo: "/images/bigdata.png", category: "other", order: 15 },
+    { name: "Power BI", logo: "/images/powerBI.png", category: "other", order: 16 },
+];
+
 const TechnologyManagement = () => {
     const [technologies, setTechnologies] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,6 +33,8 @@ const TechnologyManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingTech, setEditingTech] = useState(null);
     const [submitting, setSubmitting] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
+    const toast = useToast();
 
     // Form State
     const [formData, setFormData] = useState({
@@ -27,10 +48,7 @@ const TechnologyManagement = () => {
     // Preview State
     const [imagePreview, setImagePreview] = useState(null);
 
-    const toast = useToast();
-
     const fetchTechnologies = useCallback(async () => {
-        setLoading(true);
         try {
             const { data } = await api.get("/technologies");
             setTechnologies(data.data || []);
@@ -40,6 +58,20 @@ const TechnologyManagement = () => {
             setLoading(false);
         }
     }, [toast]);
+
+    const syncDefaultTechs = async () => {
+        setIsSyncing(true);
+        try {
+            const syncPromises = FALLBACK_TECHS.map(t => api.post("/technologies", t));
+            await Promise.all(syncPromises);
+            toast.success("Synchronized mastery stack to database");
+            fetchTechnologies();
+        } catch (err) {
+            toast.error("Sync failed: " + err.message);
+        } finally {
+            setIsSyncing(false);
+        }
+    };
 
     useEffect(() => {
         fetchTechnologies();
@@ -160,6 +192,16 @@ const TechnologyManagement = () => {
                     <p className="text-gray-400 text-sm mt-1">Manage the technologies displayed on the homepage.</p>
                 </div>
                 <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+                    {technologies.length === 0 && (
+                        <button
+                            onClick={syncDefaultTechs}
+                            disabled={isSyncing}
+                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600/30 transition-all active:scale-95 whitespace-nowrap"
+                        >
+                            <Loader2 size={18} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Website Techs"}</span>
+                        </button>
+                    )}
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full md:w-auto group focus-within:border-indigo-500/50 transition-all">
                         <Search className="text-gray-500 ml-4" size={18} />
                         <input
@@ -220,8 +262,29 @@ const TechnologyManagement = () => {
                     ))}
 
                     {filteredTechnologies.length === 0 && (
-                        <div className="col-span-full py-10 text-center text-gray-500">
-                            No technologies found.
+                        <div className="col-span-full py-20 text-center bg-[#1e293b] rounded-[2.5rem] border border-white/5 border-dashed group">
+                            <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-white/10 text-gray-600 transition-all group-hover:scale-110 group-hover:bg-indigo-500/10 group-hover:text-indigo-400 group-hover:border-indigo-500/20">
+                                <Cpu size={40} strokeWidth={1.5} />
+                            </div>
+                            <h3 className="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">Stack Undefined</h3>
+                            <p className="text-gray-500 mb-8 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The technology mastery stack is currently empty. Synchronize with global standards or manually initialize a new tech node.</p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <button
+                                    onClick={syncDefaultTechs}
+                                    disabled={isSyncing}
+                                    className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center shadow-xl shadow-white/5"
+                                >
+                                    <Loader2 size={16} className={isSyncing ? "animate-spin" : ""} />
+                                    {isSyncing ? "Synchronizing..." : "Sync From Website"}
+                                </button>
+                                <button
+                                    onClick={openCreateModal}
+                                    className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
+                                >
+                                    <Plus size={16} />
+                                    Manual Deploy
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>

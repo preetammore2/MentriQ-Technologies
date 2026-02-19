@@ -19,6 +19,21 @@ const getSafeWebsiteHost = (website) => {
     }
 };
 
+const FALLBACK_PARTNERS = [
+    { name: "HD Media Network", logo: "/images/hdmn.png" },
+    { name: "SkyServer", logo: "/images/skyserver.jpg" },
+    { name: "Singh Enterprises", logo: "/images/singh2.jpeg" },
+    { name: "Falcons Beyond Imagination", logo: "/images/falcons.png" },
+    { name: "Voltzenic Motors", logo: "/images/volt.png" },
+    { name: "Ashok Infratech", logo: "/images/ashok.jpg" },
+    { name: "Shekhawat Group of Industries", logo: "/images/shekhawat2.jpeg" },
+    { name: "BIMPro Solutions pvt ltd", logo: "/images/bimpro2.jpeg" },
+    { name: "Milan Power", logo: "/images/milanPower.png" },
+    { name: "PU incent", logo: "/images/puIncent.png" },
+    { name: "UPnex", logo: "/images/upnex2.jpeg" },
+    { name: "NT Education", logo: "/images/nt2.jpeg" },
+];
+
 const PartnerManagement = () => {
     const [partners, setPartners] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,6 +42,7 @@ const PartnerManagement = () => {
     const [editingPartner, setEditingPartner] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [isSyncing, setIsSyncing] = useState(false);
     const toast = useToast();
 
     const initialFormState = {
@@ -131,6 +147,20 @@ const PartnerManagement = () => {
         }
     };
 
+    const syncDefaultPartners = async () => {
+        setIsSyncing(true);
+        try {
+            const syncPromises = FALLBACK_PARTNERS.map(p => api.post("/partners", p));
+            await Promise.all(syncPromises);
+            toast.success("Synchronized default partners link to database");
+            fetchPartners();
+        } catch (err) {
+            toast.error("Sync failed: " + err.message);
+        } finally {
+            setIsSyncing(false);
+        }
+    };
+
     const filteredPartners = useMemo(() => (
         partners.filter((p) => (p.name || "").toLowerCase().includes(searchTerm.toLowerCase()))
     ), [partners, searchTerm]);
@@ -149,6 +179,16 @@ const PartnerManagement = () => {
                     <p className="text-gray-400 text-sm font-medium">Manage corporate relationships and hiring network visibility.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
+                    {partners.length === 0 && (
+                        <button
+                            onClick={syncDefaultPartners}
+                            disabled={isSyncing}
+                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-emerald-600/30 transition-all active:scale-95 whitespace-nowrap"
+                        >
+                            <Plus size={18} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Website Partners"}</span>
+                        </button>
+                    )}
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-5 flex items-center group focus-within:border-indigo-500/50 transition-all shadow-inner">
                         <Search className="text-gray-500 ml-4" size={18} />
                         <input
@@ -180,19 +220,29 @@ const PartnerManagement = () => {
                     ))}
                 </div>
             ) : filteredPartners.length === 0 ? (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10">
-                        <Building2 size={32} className="text-gray-400" />
+                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-32 text-center group">
+                    <div className="w-24 h-24 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-white/10 text-gray-600 transition-all group-hover:bg-indigo-500/10 group-hover:text-indigo-400 group-hover:border-indigo-500/20 group-hover:scale-110">
+                        <Building2 size={48} strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">No Partners Found</h3>
-                    <p className="text-gray-400 mb-6">We couldn't find any partners matching your search.</p>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors flex items-center gap-2 mx-auto"
-                    >
-                        <Plus size={18} />
-                        Add First Partner
-                    </button>
+                    <h3 className="text-3xl font-black text-white mb-3 uppercase italic tracking-tighter">Network Terminated</h3>
+                    <p className="text-gray-500 mb-10 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The hiring and corporate connection matrix is currently inactive. Please synchronize with global HQ or initiate manual entity onboarding.</p>
+                    <div className="flex flex-col sm:flex-row gap-5 justify-center">
+                        <button
+                            onClick={syncDefaultPartners}
+                            disabled={isSyncing}
+                            className="bg-white text-black px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-3 justify-center shadow-[0_20px_40px_-15px_rgba(255,255,255,0.3)]"
+                        >
+                            <Plus size={18} className={isSyncing ? "animate-spin" : ""} strokeWidth={3} />
+                            {isSyncing ? "Synchronizing..." : "Sync From Website"}
+                        </button>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="bg-white/5 text-white border border-white/10 px-12 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 justify-center"
+                        >
+                            <Building2 size={18} />
+                            Deploy Manual
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
