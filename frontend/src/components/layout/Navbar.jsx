@@ -7,8 +7,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 
 const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
-    const [hideNavbar, setHideNavbar] = useState(false)
-    const [lastScrollY, setLastScrollY] = useState(0)
+    const [isShrunk, setIsShrunk] = useState(false)
     const { scrollY } = useScroll()
     const {
         user,
@@ -21,19 +20,7 @@ const Navbar = () => {
     const isDarkPage = ['/services', '/about', '/courses', '/training', '/recruit'].includes(location.pathname)
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = lastScrollY;
-        // Determine direction: positive = down, negative = up
-        const diff = latest - previous;
-        const isScrollingDown = diff > 0;
-
-        // Hide if scrolling down and not at the very top
-        if (isScrollingDown && latest > 50) {
-            setHideNavbar(true);
-        } else {
-            // Show if scrolling up or at the top
-            setHideNavbar(false);
-        }
-        setLastScrollY(latest);
+        setIsShrunk(latest > 50);
     })
 
     const navItems = [
@@ -55,24 +42,26 @@ const Navbar = () => {
 
             <motion.nav
                 initial={{ y: 0 }}
-                animate={{ y: hideNavbar ? "-100%" : 0 }}
+                animate={{ y: 0 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isDarkPage
-                        ? "bg-[#070b14]/95 backdrop-blur-md shadow-lg border-b border-white/5" // Always solid/glass dark
-                        : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"   // Always solid/glass light
-                    }`}
+                        ? "bg-[#070b14]/95 backdrop-blur-md shadow-lg border-b border-white/5"
+                        : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
+                    } ${isShrunk ? 'py-2' : 'py-4'}`}
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4">
+                    <div className="flex justify-between items-center transition-all duration-300">
 
                         {/* Logo / Brand */}
                         <div className="flex items-center gap-3">
                             <Link to="/" className="relative group">
-                                <div className={`relative w-12 h-12 rounded-xl overflow-hidden border shadow-md transition-all duration-300 ${isDarkPage ? 'border-white/10 shadow-white/5' : 'border-slate-200 shadow-slate-200/50'}`}>
+                                <div className={`relative rounded-xl overflow-hidden border shadow-md transition-all duration-300 ${isShrunk ? 'w-10 h-10' : 'w-12 h-12'
+                                    } ${isDarkPage ? 'border-white/10 shadow-white/5' : 'border-slate-200 shadow-slate-200/50'}`}>
                                     <img src="/images/logo.jpg" alt="Mentriq" className="w-full h-full object-cover scale-110" />
                                 </div>
                             </Link>
-                            <Link to="/" className={`text-xl md:text-2xl font-black tracking-tighter uppercase font-display ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>
+                            <Link to="/" className={`font-black tracking-tighter uppercase font-display transition-all duration-300 ${isShrunk ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+                                } ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>
                                 Mentriq <span className="text-indigo-600">Technologies.</span>
                             </Link>
                         </div>
