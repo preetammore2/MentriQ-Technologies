@@ -9,6 +9,7 @@ import { resolveImageUrl } from '../utils/imageUtils'
 import MentorsSection from '../components/home/MentorsSection.jsx'
 import CitySection from '../components/home/CitySection';
 import Hero3DElement from '../components/home/Hero3DElement'
+import { ContainerScroll } from '../components/ui/ContainerScroll'
 import OneByOneTestimonial from '../components/home/OneByOneTestimonial'
 import SectionErrorBoundary from '../components/common/SectionErrorBoundary'
 
@@ -368,6 +369,35 @@ const HomePage = () => {
                         </motion.div>
                     </div>
                 </div>
+            </section>
+
+            {/* ─── Container Scroll Showcase ─── */}
+            <section className="bg-[#09090f] overflow-hidden">
+                <ContainerScroll
+                    titleComponent={
+                        <>
+                            <p className="text-indigo-400 text-xs font-black uppercase tracking-[0.3em] mb-3">
+                                Platform Preview
+                            </p>
+                            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-4">
+                                Everything You Need,<br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
+                                    All in One Place.
+                                </span>
+                            </h2>
+                            <p className="text-slate-400 text-base max-w-xl mx-auto mt-2">
+                                From structured courses to live mentorship — scroll to explore the MentriQ learning experience.
+                            </p>
+                        </>
+                    }
+                >
+                    <img
+                        src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?auto=format&fit=crop&w=1400&q=80"
+                        alt="MentriQ Platform Preview"
+                        className="mx-auto rounded-2xl object-cover w-full h-full object-top"
+                        draggable={false}
+                    />
+                </ContainerScroll>
             </section>
 
             {/* NEW Vision Section Compact */}
