@@ -287,9 +287,6 @@ const HomePage = () => {
 
             {/* ─── Hero Section ─── */}
             <section className="relative min-h-[85vh] flex items-center bg-[#09090f] text-white overflow-hidden pt-24 pb-16">
-                {/* 3D Canvas */}
-                <Hero3DElement />
-
                 {/* Extra animated glow blobs */}
                 <div className="absolute inset-0 pointer-events-none z-[1]">
                     <motion.div
