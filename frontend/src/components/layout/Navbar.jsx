@@ -60,12 +60,12 @@ const Navbar = () => {
 
                         {/* Logo / Brand */}
                         <div className="flex items-center gap-3">
-                            <div className="relative group">
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden">
+                            <Link to="/" className="relative group">
+                                <div className={`relative w-12 h-12 rounded-xl overflow-hidden border shadow-md transition-all duration-300 ${isDarkPage ? 'border-white/10 shadow-white/5' : 'border-slate-200 shadow-slate-200/50'}`}>
                                     <img src="/images/logo.jpg" alt="Mentriq" className="w-full h-full object-cover scale-110" />
                                 </div>
-                            </div>
-                            <Link to="/" className={`text-lg md:text-xl font-black tracking-tighter uppercase font-display ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>
+                            </Link>
+                            <Link to="/" className={`text-xl md:text-2xl font-black tracking-tighter uppercase font-display ${isDarkPage ? 'text-white' : 'text-slate-900'}`}>
                                 Mentriq <span className="text-indigo-600">Technologies.</span>
                             </Link>
                         </div>
