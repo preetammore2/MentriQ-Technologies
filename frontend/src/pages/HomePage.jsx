@@ -285,90 +285,9 @@ const HomePage = () => {
     return (
         <>
 
-            {/* ─── Hero Section ─── */}
-            <section className="relative min-h-[85vh] flex items-center bg-[#09090f] text-white overflow-hidden pt-24 pb-16">
-                {/* Extra animated glow blobs */}
-                <div className="absolute inset-0 pointer-events-none z-[1]">
-                    <motion.div
-                        animate={{ x: [0, 60, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
-                        transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
-                        className="absolute -top-[10%] left-1/4 w-[650px] h-[650px] bg-indigo-600/20 rounded-full blur-[150px]"
-                    />
-                    <motion.div
-                        animate={{ x: [0, -50, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
-                        transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-                        className="absolute bottom-[-10%] right-1/4 w-[600px] h-[600px] bg-violet-500/15 rounded-full blur-[140px]"
-                    />
-                    <motion.div
-                        animate={{ x: [0, 30, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-                        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-                        className="absolute top-1/2 right-[10%] w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px]"
-                    />
-                    <div className="absolute inset-0 opacity-[0.03]" style={{
-                        backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-                        backgroundSize: '50px 50px'
-                    }} />
-                </div>
+            {/* ─── Hero Section (Spline 3D) ─── */}
+            <Hero3DElement />
 
-                <div className="relative max-w-7xl mx-auto px-6 z-10 w-full" style={{ zIndex: 10 }}>
-                    <div className="max-w-4xl mx-auto text-center">
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9, y: -10 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
-                        >
-                            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">The Future of Intelligence</span>
-                        </motion.div>
-
-                        {/* Headline */}
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "circOut" }}
-                            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter uppercase leading-[0.9]"
-                        >
-                            REWIRE YOUR<br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400">
-                                POTENTIAL.
-                            </span>
-                        </motion.h1>
-
-                        {/* Subtext */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="text-base md:text-lg max-w-2xl mx-auto text-slate-400 leading-relaxed mb-10"
-                        >
-                            MentriQ is where precision meets innovation. Master the core of modern technology with industry-first curriculums and elite mentorship.
-                        </motion.p>
-
-                        {/* CTA Buttons */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.35 }}
-                            className="flex flex-col sm:flex-row gap-4 justify-center"
-                        >
-                            <button
-                                onClick={() => navigate('/courses')}
-                                className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-900/40"
-                            >
-                                Start Learning
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button
-                                onClick={() => navigate('/contact')}
-                                className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all"
-                            >
-                                Get a Consultation
-                            </button>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
 
             {/* NEW Vision Section Compact */}
             <section className="py-12 bg-slate-50 relative overflow-hidden">

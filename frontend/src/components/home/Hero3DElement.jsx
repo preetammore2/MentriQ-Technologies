@@ -1,82 +1,89 @@
-import React, { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, Float, Stars, Torus } from '@react-three/drei';
-
-function RotatingTorusKnot() {
-    const meshRef = useRef();
-    useFrame((state) => {
-        const t = state.clock.getElapsedTime();
-        meshRef.current.rotation.x = t * 0.18;
-        meshRef.current.rotation.y = t * 0.22;
-        meshRef.current.rotation.z = t * 0.08;
-    });
-    return (
-        <Float speed={1.5} rotationIntensity={0.4} floatIntensity={1.2}>
-            <mesh ref={meshRef} scale={1.8}>
-                <torusKnotGeometry args={[1, 0.32, 180, 32, 2, 3]} />
-                <MeshDistortMaterial
-                    color="#6366f1"
-                    attach="material"
-                    distort={0.35}
-                    speed={2}
-                    roughness={0.05}
-                    metalness={0.9}
-                    emissive="#4338ca"
-                    emissiveIntensity={0.4}
-                />
-            </mesh>
-        </Float>
-    );
-}
-
-function OrbitRing() {
-    const ref = useRef();
-    useFrame((state) => {
-        ref.current.rotation.x = state.clock.getElapsedTime() * 0.3;
-        ref.current.rotation.y = state.clock.getElapsedTime() * 0.15;
-    });
-    return (
-        <mesh ref={ref} scale={3.2}>
-            <Torus args={[1, 0.012, 16, 100]}>
-                <meshStandardMaterial
-                    color="#818cf8"
-                    emissive="#818cf8"
-                    emissiveIntensity={0.6}
-                    transparent
-                    opacity={0.4}
-                />
-            </Torus>
-        </mesh>
-    );
-}
+import React from 'react';
+import { SplineScene } from '@/components/ui/SplineScene';
+import { Card } from '@/components/ui/Card';
+import { Spotlight } from '@/components/ui/Spotlight';
+import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero3DElement = () => {
+    const navigate = useNavigate();
+
     return (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-            <Canvas
-                camera={{ position: [0, 0, 7], fov: 50 }}
-                gl={{ alpha: true, antialias: true }}
-                style={{ background: 'transparent' }}
-            >
-                <Suspense fallback={null}>
-                    <ambientLight intensity={0.3} />
-                    <pointLight position={[10, 10, 10]} intensity={1.2} color="#818cf8" />
-                    <pointLight position={[-10, -10, -5]} intensity={0.6} color="#06b6d4" />
-                    <spotLight position={[0, 8, 4]} angle={0.4} penumbra={1} intensity={1.5} color="#a78bfa" />
-                    <Stars
-                        radius={80}
-                        depth={50}
-                        count={3000}
-                        factor={3}
-                        saturation={0}
-                        fade
-                        speed={0.6}
+        <Card className="w-full min-h-[85vh] bg-black/[0.96] relative overflow-hidden border-0 rounded-none pt-20">
+            <Spotlight
+                className="-top-40 left-0 md:left-60 md:-top-20"
+                fill="white"
+            />
+
+            <div className="flex flex-col lg:flex-row h-full min-h-[85vh]">
+                {/* Left content */}
+                <div className="flex-1 p-8 lg:p-16 relative z-10 flex flex-col justify-center">
+                    {/* Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 w-fit"
+                    >
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-300">
+                            The Future of Intelligence
+                        </span>
+                    </motion.div>
+
+                    {/* Headline */}
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: 'circOut' }}
+                        className="text-4xl md:text-5xl xl:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-6 leading-[1.05] tracking-tighter uppercase"
+                    >
+                        REWIRE YOUR <br />
+                        POTENTIAL.
+                    </motion.h1>
+
+                    {/* Subtext */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-2 text-neutral-400 max-w-lg text-base leading-relaxed mb-8"
+                    >
+                        MentriQ is where precision meets innovation. Master the core of modern technology with industry-first curriculums and elite mentorship.
+                    </motion.p>
+
+                    {/* CTA Buttons */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35 }}
+                        className="flex flex-col sm:flex-row gap-4"
+                    >
+                        <button
+                            onClick={() => navigate('/courses')}
+                            className="group px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-900/40"
+                        >
+                            Start Learning
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                        <button
+                            onClick={() => navigate('/contact')}
+                            className="px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all"
+                        >
+                            Get a Consultation
+                        </button>
+                    </motion.div>
+                </div>
+
+                {/* Right: Spline 3D Scene */}
+                <div className="flex-1 relative min-h-[400px] lg:min-h-auto">
+                    <SplineScene
+                        scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                        className="w-full h-full"
                     />
-                    <RotatingTorusKnot />
-                    <OrbitRing />
-                </Suspense>
-            </Canvas>
-        </div>
+                </div>
+            </div>
+        </Card>
     );
 };
 
