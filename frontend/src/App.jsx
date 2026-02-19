@@ -45,6 +45,8 @@ const RecruitPage = lazy(() => import('./pages/RecruitPage'));
 const DemoTypewriter = lazy(() => import('./pages/DemoTypewriter'));
 const DemoSplinePage = lazy(() => import('./pages/DemoSplinePage'));
 
+import AdminRoute from './components/auth/AdminRoute';
+import EnrollmentSuccessWrapper from './pages/EnrollmentSuccessWrapper';
 import { useAuth } from './context/AuthContext';
 import { useVisitorTracking } from './hooks/useVisitorTracking';
 import ScrollToTop from './pages/ScrollToTop';
