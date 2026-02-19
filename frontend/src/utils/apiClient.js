@@ -18,8 +18,7 @@ export const apiClient = axios.create({
   timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 20000), // Increased to 20s for Render cold starts
   headers: {
     'Content-Type': 'application/json'
-  },
-  withCredentials: true
+  }
 })
 
 // Production Link Monitor
