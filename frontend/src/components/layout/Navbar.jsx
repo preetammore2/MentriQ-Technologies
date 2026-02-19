@@ -49,14 +49,11 @@ const Navbar = () => {
                     <div className="flex justify-between items-center">
                         {/* Logo */}
                         <Link to="/" className="flex items-center group">
-                            <div className="flex flex-col">
-                                <span className="text-xl font-black text-slate-900 tracking-tight leading-none group-hover:text-indigo-600 transition-colors">
-                                    MentriQ
-                                </span>
-                                <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-[0.2em]">
-                                    Technologies
-                                </span>
-                            </div>
+                            <img
+                                src="/images/logo1.png"
+                                alt="MentriQ Technologies"
+                                className="h-12 w-auto mix-blend-multiply"
+                            />
                         </Link>
 
                         {/* Desktop Nav */}
