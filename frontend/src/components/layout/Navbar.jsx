@@ -52,17 +52,21 @@ const Navbar = () => {
                 }}
                 animate={hidden ? "hidden" : "visible"}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-slate-100"
+                className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md shadow-sm border-b border-white/10"
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center py-4">
 
                         {/* Logo / Brand */}
-                        <div className="flex items-center gap-2">
-                            {/* Optional: Add Logo Here if needed, otherwise keeping it clean per previous instructions */}
-                            {/* <img src="/logo.png" alt="MentriQ" className="h-8" /> */}
-                            <Link to="/" className="text-xl font-black tracking-tighter text-slate-900 uppercase">
-                                MentriQ<span className="text-indigo-600">.</span>
+                        <div className="flex items-center gap-3">
+                            <div className="relative group">
+                                <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full opacity-0 group-hover:opacity-20 blur-lg transition duration-500" />
+                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-white/20 backdrop-blur-sm">
+                                    <img src="/images/logo.jpg" alt="Mentriq" className="w-full h-full object-cover scale-110" />
+                                </div>
+                            </div>
+                            <Link to="/" className="text-lg md:text-xl font-black tracking-tighter text-slate-900 uppercase font-display">
+                                Mentriq <span className="text-indigo-600">Technologies.</span>
                             </Link>
                         </div>
 
