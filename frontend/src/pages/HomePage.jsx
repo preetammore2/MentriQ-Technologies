@@ -5,7 +5,7 @@ import { ArrowRight, Play, Users, UserCog, KanbanSquare, Code, ClipboardCheck, B
 import { useNavigate } from 'react-router-dom'
 import { apiClient as api } from '../utils/apiClient'
 import { resolveImageUrl } from '../utils/imageUtils'
-import Hero3DElement from '../components/home/Hero3DElement'
+
 import MentorsSection from '../components/home/MentorsSection.jsx'
 import CitySection from '../components/home/CitySection';
 import OneByOneTestimonial from '../components/home/OneByOneTestimonial'
@@ -283,92 +283,7 @@ const HomePage = () => {
 
     return (
         <>
-            {/* Hero Section - Immersive V2 Ultra-Compact */}
-            <section className="relative min-h-[75vh] flex items-center bg-white text-slate-900 overflow-hidden pt-20 pb-8">
-                {/* Immersive Background Elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                    {/* Spotlight Effect */}
-                    <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_50%_40%,rgba(79,70,229,0.08)_0%,transparent_60%)] animate-pulse" />
 
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[160px]" />
-                    <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[140px]" />
-
-                    {/* Moving Accents */}
-                    <motion.div
-                        animate={{
-                            y: [0, -20, 0],
-                            opacity: [0.1, 0.3, 0.1]
-                        }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                        className="absolute top-1/4 right-1/4 w-1 h-20 bg-gradient-to-b from-indigo-500 to-transparent rounded-full"
-                    />
-                </div>
-
-                <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center z-10">
-                    {/* LEFT CONTENT */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="inline-flex items-center space-x-2 mb-4 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100/50 backdrop-blur-sm shadow-sm"
-                        >
-                            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600">The Future of Intelligence</span>
-                        </motion.div>
-
-                        <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-[1.05] mb-6 text-slate-900 font-display tracking-[-0.04em]">
-                            REWIRE YOUR <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500">
-                                POTENTIAL.
-                            </span>
-                        </h1>
-
-                        <p className="text-lg text-slate-500 max-w-xl leading-relaxed mb-8 font-medium">
-                            MentriQ is where precision meets innovation. Master the core of modern technology with industry-first curriculums and elite mentorship.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                            <motion.button
-                                whileHover={{ scale: 1.02, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate("/courses")}
-                                className="group px-10 py-5 rounded-2xl bg-indigo-600 text-white font-black shadow-2xl shadow-indigo-500/25 hover:bg-indigo-700 transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-widest text-sm"
-                            >
-                                Start Learning
-                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </motion.button>
-
-                            <motion.button
-                                whileHover={{ scale: 1.02, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate("/contact")}
-                                className="px-10 py-5 rounded-2xl bg-white border-2 border-slate-100 text-slate-700 font-black hover:border-indigo-100 hover:bg-slate-50 transition-all duration-300 shadow-lg shadow-slate-200/50 uppercase tracking-widest text-sm"
-                            >
-                                Get a Consultation
-                            </motion.button>
-                        </div>
-
-                    </motion.div>
-
-                    {/* RIGHT 3D Element */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
-                        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="hidden lg:flex justify-end items-center relative"
-                    >
-                        <div className="absolute -inset-4 bg-gradient-to-br from-indigo-500/5 to-cyan-500/5 rounded-[4rem] blur-3xl" />
-                        <SectionErrorBoundary fallback={<div className="w-full h-[400px] rounded-[3rem] bg-slate-50 border border-slate-100" />}>
-                            <Hero3DElement />
-                        </SectionErrorBoundary>
-                    </motion.div>
-                </div>
-            </section>
 
             {/* NEW Vision Section Compact */}
             <section className="py-12 bg-slate-50 relative overflow-hidden">
