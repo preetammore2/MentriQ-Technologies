@@ -7,7 +7,8 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 
 const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
-    const [scrolled, setScrolled] = useState(false)
+    const [hideNavbar, setHideNavbar] = useState(false)
+    const [lastScrollY, setLastScrollY] = useState(0)
     const { scrollY } = useScroll()
     const {
         user,
@@ -20,11 +21,19 @@ const Navbar = () => {
     const isDarkPage = ['/services', '/about', '/courses', '/training', '/recruit'].includes(location.pathname)
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        if (latest > 20) {
-            setScrolled(true)
+        const previous = lastScrollY;
+        // Determine direction: positive = down, negative = up
+        const diff = latest - previous;
+        const isScrollingDown = diff > 0;
+
+        // Hide if scrolling down and not at the very top
+        if (isScrollingDown && latest > 50) {
+            setHideNavbar(true);
         } else {
-            setScrolled(false)
+            // Show if scrolling up or at the top
+            setHideNavbar(false);
         }
+        setLastScrollY(latest);
     })
 
     const navItems = [
@@ -46,13 +55,11 @@ const Navbar = () => {
 
             <motion.nav
                 initial={{ y: 0 }}
-                animate={{ y: 0 }}
+                animate={{ y: hideNavbar ? "-100%" : 0 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                    ? isDarkPage
-                        ? "bg-[#070b14]/90 backdrop-blur-md shadow-lg border-b border-white/5"
-                        : "bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100"
-                    : "bg-transparent border-b border-transparent"
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isDarkPage
+                        ? "bg-[#070b14]/95 backdrop-blur-md shadow-lg border-b border-white/5" // Always solid/glass dark
+                        : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"   // Always solid/glass light
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
