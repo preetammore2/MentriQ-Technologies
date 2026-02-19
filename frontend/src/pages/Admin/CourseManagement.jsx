@@ -24,6 +24,10 @@ const CourseManagement = () => {
         discount: 0,
         duration: "",
         mode: "Online",
+        modules: [],
+        instructor: "MentriQ Team",
+        syllabusUrl: "",
+        brochureUrl: "",
         thumbnailUrl: "",
         thumbnailFile: null
     };
@@ -99,7 +103,10 @@ const CourseManagement = () => {
                 ...formData,
                 price: Number(formData.price),
                 discount: Number(formData.discount),
-                thumbnailUrl: finalThumbnailUrl
+                thumbnailUrl: finalThumbnailUrl,
+                modules: typeof formData.modules === 'string'
+                    ? formData.modules.split('\n').filter(m => m.trim())
+                    : formData.modules || []
             };
             delete payload.thumbnailFile; // Don't send file object to API
 
@@ -132,6 +139,10 @@ const CourseManagement = () => {
             discount: course.discount || 0,
             duration: course.duration,
             mode: course.mode || "Online",
+            modules: course.modules?.join('\n') || "",
+            instructor: course.instructor || "MentriQ Team",
+            syllabusUrl: course.syllabusUrl || "",
+            brochureUrl: course.brochureUrl || "",
             thumbnailUrl: course.thumbnailUrl || "",
             thumbnailFile: null
         });
@@ -345,6 +356,16 @@ const CourseManagement = () => {
                                         <textarea required rows={3} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed" placeholder="Detailed syllabus or overview..." />
                                     </div>
 
+                                    <div className="col-span-2 space-y-2">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Learning Modules (One per line)</label>
+                                        <textarea rows={5} value={formData.modules} onChange={e => setFormData({ ...formData, modules: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed" placeholder="Module 1: Introduction&#10;Module 2: Advanced Concepts" />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Instructor</label>
+                                        <input value={formData.instructor} onChange={e => setFormData({ ...formData, instructor: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600" placeholder="Lead Instructor Name" />
+                                    </div>
+
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Domain</label>
                                         <input required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600" placeholder="e.g. Technology" />
@@ -387,6 +408,16 @@ const CourseManagement = () => {
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Resource ID (Slug)</label>
                                         <input value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600" placeholder="module-id-unique" />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Syllabus URL (PDF)</label>
+                                        <input value={formData.syllabusUrl} onChange={e => setFormData({ ...formData, syllabusUrl: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600" placeholder="https://example.com/syllabus.pdf" />
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Brochure URL (PDF)</label>
+                                        <input value={formData.brochureUrl} onChange={e => setFormData({ ...formData, brochureUrl: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600" placeholder="https://example.com/brochure.pdf" />
                                     </div>
                                 </div>
 

@@ -13,7 +13,7 @@ const InternshipManagement = () => {
     const [editingInternship, setEditingInternship] = useState(null);
     const toast = useToast();
 
-    const initialFormState = { title: "", company: "", location: "", type: "Remote", description: "", requirements: [], duration: "" };
+    const initialFormState = { title: "", company: "", location: "", type: "Remote", description: "", requirements: [], questions: [], duration: "" };
     const [formData, setFormData] = useState(initialFormState);
 
     useEffect(() => {
@@ -53,7 +53,10 @@ const InternshipManagement = () => {
                 ...formData,
                 requirements: typeof formData.requirements === 'string'
                     ? formData.requirements.split('\n').filter(r => r.trim())
-                    : formData.requirements
+                    : formData.requirements,
+                questions: typeof formData.questions === 'string'
+                    ? formData.questions.split('\n').filter(q => q.trim())
+                    : formData.questions || []
             };
 
             if (editingInternship) {
@@ -97,7 +100,8 @@ const InternshipManagement = () => {
         setEditingInternship(internship);
         setFormData({
             ...internship,
-            requirements: internship.requirements.join('\n')
+            requirements: internship.requirements?.join('\n') || '',
+            questions: internship.questions?.join('\n') || ''
         });
         setIsModalOpen(true);
     };
@@ -336,6 +340,10 @@ const InternshipManagement = () => {
                                     <div className="md:col-span-2 space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Competency Stack (One per line)</label>
                                         <textarea required rows={5} value={formData.requirements} onChange={e => setFormData({ ...formData, requirements: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none font-mono text-sm placeholder:text-gray-700" placeholder="◈ Deep Learning Fundamentals&#10;◈ High-Scale System Design" />
+                                    </div>
+                                    <div className="md:col-span-2 space-y-3">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Screening Questions (One per line)</label>
+                                        <textarea rows={5} value={formData.questions} onChange={e => setFormData({ ...formData, questions: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none font-mono text-sm placeholder:text-gray-700" placeholder="? Why do you want to join MentriQ?&#10;? Describe a challenging project you worked on." />
                                     </div>
                                 </div>
                                 <div className="flex justify-end gap-6 items-center">

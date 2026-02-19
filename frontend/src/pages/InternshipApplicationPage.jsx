@@ -29,13 +29,26 @@ const InternshipApplicationPage = () => {
                 if (!data) throw new Error("No data received");
                 setInternship(data);
 
+                // Normalize questions to support both strings (from simple Admin) and objects
+                const normalizedQuestions = (data.questions || []).map((q, i) => {
+                    if (typeof q === 'string') {
+                        return {
+                            id: `q_${i}`,
+                            label: q,
+                            type: 'textarea',
+                            required: true
+                        };
+                    }
+                    return q;
+                });
+
+                setInternship({ ...data, questions: normalizedQuestions });
+
                 // Initialize responses
                 const initialResponses = {};
-                if (Array.isArray(data.questions)) {
-                    data.questions.forEach(q => {
-                        if (q && q.id) initialResponses[q.id] = "";
-                    });
-                }
+                normalizedQuestions.forEach(q => {
+                    if (q && q.id) initialResponses[q.id] = "";
+                });
                 setResponses(initialResponses);
             } catch (err) {
                 console.error("Fetch Internship Error:", err);
