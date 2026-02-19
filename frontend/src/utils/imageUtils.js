@@ -8,14 +8,17 @@ export const resolveImageUrl = (path, fallback = "") => {
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("data:image/")) return path;
 
-    const apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+    const apiBase = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").trim();
     const serverRoot = apiBase.replace(/\/api\/?$/, "");
 
     // Fix: Treat /images as frontend static assets, not backend
     if (path.startsWith("/images/")) return path;
 
-    if (path.startsWith("/")) return `${serverRoot}${path}`;
-    return `${serverRoot}/${path}`;
+    // Clean leading slashes and construct URL to avoid double slashes
+    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+    const cleanRoot = serverRoot.endsWith("/") ? serverRoot.slice(0, -1) : serverRoot;
+
+    return `${cleanRoot}/${cleanPath}`;
 };
 
 export const getCourseImageUrl = (course) => {

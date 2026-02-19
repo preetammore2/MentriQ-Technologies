@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin, Check } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin, Check, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
+
+const FALLBACK_MENTORS = [
+    { name: "Litesh Singh", image: "/images/litesh.jpg", description: "5+ Years Experience in Automation and Deveops", role: "Automation Expert", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Jeevan Chauhan", image: "/images/jeevan.jpg", description: "5+ Years Experience in Hybrid Applications Development", role: "Hybrid Dev", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Yogesh Shekhawat", image: "/images/yogesh.jpg", description: "2+ Years Experience in Entrepreneurship and Product Management", role: "Product Lead", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Ram Swami", image: "/images/user.png", description: "6+ Years Experience in Cyber Security", role: "Security Architect", company: "MentriQ", stats: [{ value: "6+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Shubham Sharma", image: "/images/subhammentors.jpg", description: "5+ years Experience in Full Stack Development", role: "Full Stack Eng", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] }
+];
 
 const MentorManagement = () => {
     const [mentors, setMentors] = useState([]);
@@ -12,13 +20,14 @@ const MentorManagement = () => {
     const [editingMentor, setEditingMentor] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isSyncing, setIsSyncing] = useState(false);
     const toast = useToast();
 
     const initialFormState = {
         name: "",
         role: "",
-        company: "", // Note: Schema might allow arbitrary fields or we use role/description
-        bio: "",
+        company: "",
+        description: "", // Renamed from bio for model alignment
         image: "",
         linkedin: "",
         yearsExperience: "",
@@ -26,7 +35,7 @@ const MentorManagement = () => {
     };
     const [formData, setFormData] = useState(initialFormState);
 
-    const fetchMentors = async () => {
+    const fetchMentors = useCallback(async () => {
         try {
             const { data } = await api.get("/mentors");
             setMentors(data);
@@ -35,18 +44,27 @@ const MentorManagement = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [toast]);
 
     useEffect(() => {
         fetchMentors();
-
-        // Auto-refresh every 15 seconds
-        const interval = setInterval(() => {
-            fetchMentors();
-        }, 15000);
-
+        const interval = setInterval(fetchMentors, 15000);
         return () => clearInterval(interval);
-    }, []);
+    }, [fetchMentors]);
+
+    const syncDefaultMentors = async () => {
+        setIsSyncing(true);
+        try {
+            const syncPromises = FALLBACK_MENTORS.map(m => api.post("/mentors", m));
+            await Promise.all(syncPromises);
+            toast.success("Synchronized default experts to database");
+            fetchMentors();
+        } catch (err) {
+            toast.error("Sync failed: " + err.message);
+        } finally {
+            setIsSyncing(false);
+        }
+    };
 
     const handleImageUpload = async (file) => {
         const formData = new FormData();
@@ -55,8 +73,7 @@ const MentorManagement = () => {
             const { data } = await api.post('/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            // upload route returns plain string path
-            return typeof data === "string" ? data : data?.imagePath || data?.path || "";
+            return typeof data === "string" ? data : data?.imageUrl || data?.imagePath || data?.path || "";
         } catch (error) {
             toast.error('Image upload failed');
             return null;
@@ -75,11 +92,9 @@ const MentorManagement = () => {
             const payload = {
                 ...formData,
                 image: finalImageUrl,
-                imageUrl: undefined,
-                linkedinUrl: formData.linkedin,
                 stats: [
-                    { value: formData.yearsExperience, label: "Years" },
-                    { value: formData.projectsCompleted, label: "Projects" }
+                    { value: formData.yearsExperience || "0+", label: "Years" },
+                    { value: formData.projectsCompleted || "0+", label: "Projects" }
                 ]
             };
 
@@ -105,7 +120,7 @@ const MentorManagement = () => {
         try {
             await api.delete(`/mentors/${id}`);
             toast.success("Mentor removed");
-            setMentors(mentors.filter(m => m._id !== id));
+            setMentors(m => m.filter(item => item._id !== id));
         } catch (err) {
             toast.error("Delete failed");
         }
@@ -120,10 +135,10 @@ const MentorManagement = () => {
     const openEditModal = (mentor) => {
         setEditingMentor(mentor);
         setFormData({
-            name: mentor.name,
-            role: mentor.role,
-            company: mentor.company,
-            bio: mentor.bio || mentor.description || "",
+            name: mentor.name || "",
+            role: mentor.role || "",
+            company: mentor.company || "",
+            description: mentor.description || mentor.bio || "",
             image: mentor.image || mentor.imageUrl || "",
             linkedin: mentor.linkedin || mentor.linkedinUrl || "",
             yearsExperience: mentor.stats?.find(s => s.label === "Years")?.value || "",
@@ -134,13 +149,23 @@ const MentorManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
+            {/* Header Section */}
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
                 <div>
                     <h2 className="text-3xl font-bold text-white tracking-tight">Mentor Network</h2>
                     <p className="text-gray-400 text-sm mt-1">Manage global industry experts and their profiles.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    {mentors.length === 0 && (
+                        <button
+                            onClick={syncDefaultMentors}
+                            disabled={isSyncing}
+                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600/30 transition-all whitespace-nowrap"
+                        >
+                            <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Website Mentors"}</span>
+                        </button>
+                    )}
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/50 transition-all">
                         <Search className="text-gray-500 ml-4" size={18} />
                         <input
@@ -169,34 +194,44 @@ const MentorManagement = () => {
             {loading ? (
                 <div className="space-y-4">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="h-16 bg-white/5 border border-white/10 rounded-xl animate-pulse" />
+                        <div key={i} className="h-20 bg-[#1e293b] border border-white/5 rounded-2xl animate-pulse" />
                     ))}
                 </div>
             ) : mentors.length === 0 ? (
                 <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10">
-                        <User size={32} className="text-gray-400" />
+                    <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-white/10">
+                        <User size={40} className="text-gray-500" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">No Mentors Found</h3>
-                    <p className="text-gray-400 mb-6">You haven't added any mentors to the network yet.</p>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors flex items-center gap-2 mx-auto"
-                    >
-                        <Plus size={18} />
-                        Add First Mentor
-                    </button>
+                    <h3 className="text-2xl font-black text-white mb-2 uppercase italic">No Mentors Detected</h3>
+                    <p className="text-gray-500 mb-8 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The expert network is currently offline. Synchronize with the website defaults or manually deploy a new mentor profile.</p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button
+                            onClick={syncDefaultMentors}
+                            disabled={isSyncing}
+                            className="bg-white text-black px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
+                        >
+                            <RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} />
+                            Sync From Website
+                        </button>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="bg-white/5 text-white border border-white/10 px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
+                        >
+                            <Plus size={16} />
+                            Deploy Manual
+                        </button>
+                    </div>
                 </div>
             ) : (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl animate-in slide-in-from-bottom-4 duration-700">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Mentor Details</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Company & Role</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Bio</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Expert Identity</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Node Location</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Operational Bio</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 text-right">Commands</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5">
@@ -210,47 +245,48 @@ const MentorManagement = () => {
                                             exit={{ opacity: 0 }}
                                             className="hover:bg-white/[0.02] transition-colors group"
                                         >
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-indigo-500/10 border border-indigo-500/20 shrink-0 shadow-lg">
-                                                        {mentor.image || mentor.imageUrl ? (
-                                                            <img src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")} alt={mentor.name} className="w-full h-full object-cover" />
-                                                        ) : (
-                                                            <div className="w-full h-full flex items-center justify-center text-indigo-400 font-bold">
-                                                                {mentor.name.charAt(0)}
-                                                            </div>
-                                                        )}
+                                            <td className="px-8 py-6">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-2xl relative">
+                                                        <img
+                                                            src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")}
+                                                            alt={mentor.name}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                            onError={(e) => { e.target.src = "/images/user.png" }}
+                                                        />
                                                     </div>
                                                     <div>
-                                                        <div className="font-bold text-white text-sm">{mentor.name}</div>
+                                                        <div className="font-black text-white text-base tracking-tight">{mentor.name}</div>
                                                         {(mentor.linkedin || mentor.linkedinUrl) && (
-                                                            <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-bold">
-                                                                <Linkedin size={10} /> LinkedIn
+                                                            <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[9px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-black uppercase tracking-widest mt-1">
+                                                                <Linkedin size={10} /> Sync Verified
                                                             </a>
                                                         )}
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <div className="text-white font-bold text-xs">{mentor.role}</div>
-                                                <div className="text-gray-500 text-[10px] uppercase font-black mt-0.5">{mentor.company}</div>
+                                            <td className="px-8 py-6">
+                                                <div className="text-white font-black text-xs italic">{mentor.role}</div>
+                                                <div className="text-indigo-500 text-[10px] uppercase font-black tracking-widest mt-1">{mentor.company}</div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <p className="text-gray-400 text-xs line-clamp-2 max-w-xs italic leading-relaxed">"{mentor.bio}"</p>
+                                            <td className="px-8 py-6">
+                                                <p className="text-gray-500 text-xs line-clamp-2 max-w-xs font-bold leading-relaxed">
+                                                    {mentor.description || mentor.bio || "No operational brief available for this node."}
+                                                </p>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => openEditModal(mentor)}
-                                                        className="p-2.5 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all"
-                                                        title="Edit Mentor"
+                                                        className="p-3 bg-white/5 text-gray-500 rounded-xl hover:bg-white/10 hover:text-white transition-all border border-transparent hover:border-white/10"
+                                                        title="Modify Node"
                                                     >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(mentor._id)}
-                                                        className="p-2.5 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all"
-                                                        title="Delete Mentor"
+                                                        className="p-3 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
+                                                        title="Terminate Node"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
@@ -290,7 +326,12 @@ const MentorManagement = () => {
                                             {imageFile ? (
                                                 <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
                                             ) : formData.image ? (
-                                                <img src={resolveImageUrl(formData.image, "/images/user.png")} alt="Current" className="w-full h-full object-cover" />
+                                                <img
+                                                    src={resolveImageUrl(formData.image, "/images/user.png")}
+                                                    alt="Current"
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => { e.target.src = "/images/user.png" }}
+                                                />
                                             ) : (
                                                 <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors">
                                                     <User size={32} strokeWidth={1.5} />
@@ -334,7 +375,7 @@ const MentorManagement = () => {
                                     </div>
                                     <div className="col-span-2 space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expert Profile Brief</label>
-                                        <textarea rows={4} value={formData.bio} onChange={e => setFormData({ ...formData, bio: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Briefly describe the expert's impact..." />
+                                        <textarea rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Briefly describe the expert's impact..." />
                                     </div>
                                 </div>
 
