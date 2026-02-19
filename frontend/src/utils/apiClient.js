@@ -15,12 +15,23 @@ const RETRY_DELAY_MS = Number(import.meta.env.VITE_API_RETRY_DELAY_MS || 700);
 
 export const apiClient = axios.create({
   baseURL: resolvedBaseURL,
-  timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 15000),
+  timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 20000), // Increased to 20s for Render cold starts
   headers: {
     'Content-Type': 'application/json'
   },
   withCredentials: true
 })
+
+// Production Link Monitor
+if (!import.meta.env.DEV) {
+  apiClient.interceptors.response.use(
+    res => res,
+    err => {
+      console.warn(`[Sync Monitor] ${err.config?.url} failed: ${err.message}`);
+      return Promise.reject(err);
+    }
+  );
+}
 
 apiClient.interceptors.request.use(
   (config) => {

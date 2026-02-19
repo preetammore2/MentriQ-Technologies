@@ -73,7 +73,18 @@ const Dashboard = () => {
             }
         } catch (err) {
             console.error("Dashboard Sync Error:", err);
-            if (!data) setError("Failed to synchronize with command center");
+            if (!data) {
+                const isTimeout = err.code === 'ECONNABORTED' || err.message.includes('timeout');
+                const isNetwork = !err.response;
+
+                if (isTimeout) {
+                    setError("Command Center is waking up... Please wait.");
+                } else if (isNetwork) {
+                    setError("Infrastructure link unreachable. Check your uplink.");
+                } else {
+                    setError("Failed to synchronize with command center");
+                }
+            }
         } finally {
             setLoading(false);
         }
@@ -98,15 +109,20 @@ const Dashboard = () => {
         return (
             <div className="flex flex-col items-center justify-center h-[70vh] gap-4">
                 <Activity className="w-12 h-12 text-rose-500 opacity-50" />
-                <p className="text-rose-400 font-bold uppercase tracking-[0.2em] text-sm text-center">
+                <p className="text-rose-400 font-bold uppercase tracking-[0.2em] text-sm text-center px-6">
                     {error}<br />
-                    <span className="text-[10px] text-gray-500">Checking for link restoration...</span>
+                    <span className="text-[10px] text-gray-500 mt-2 block italic">
+                        {error.includes('waking up')
+                            ? "Render instances typically take 30-50s to initialize on cold starts."
+                            : "Verifying secure protocols and data integrity..."
+                        }
+                    </span>
                 </p>
                 <button
                     onClick={() => { setLoading(true); fetchStats(); }}
-                    className="mt-4 px-6 py-2 bg-indigo-500 text-white rounded-xl text-xs font-black uppercase tracking-widest"
+                    className="mt-6 px-10 py-4 bg-indigo-500 text-white rounded-[1.5rem] text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-indigo-500/20"
                 >
-                    Retry Link
+                    Establish Link
                 </button>
             </div>
         );

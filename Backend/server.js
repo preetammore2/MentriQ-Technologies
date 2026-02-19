@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./src/config/db");
@@ -35,8 +36,8 @@ dotenv.config();
 // Rate limiting configuration
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again after 15 minutes",
+  max: 500, // Increased from 100 to 500 to support real-time admin polling
+  message: "Infrastructure link capacity reached. Please hold...",
 });
 const app = express();
 
