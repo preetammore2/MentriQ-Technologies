@@ -7,7 +7,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 
 const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false)
-    const [hidden, setHidden] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
     const { scrollY } = useScroll()
     const {
         user,
@@ -19,12 +19,10 @@ const Navbar = () => {
     const location = useLocation()
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = scrollY.getPrevious() ?? 0;
-        // Hide if scrolling down and past 100px. Show if scrolling up.
-        if (latest > previous && latest > 150) {
-            setHidden(true)
+        if (latest > 20) {
+            setScrolled(true)
         } else {
-            setHidden(false)
+            setScrolled(false)
         }
     })
 
@@ -46,13 +44,13 @@ const Navbar = () => {
             />
 
             <motion.nav
-                variants={{
-                    visible: { y: 0 },
-                    hidden: { y: "-100%" },
-                }}
-                animate={hidden ? "hidden" : "visible"}
+                initial={{ y: 0 }}
+                animate={{ y: 0 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md shadow-sm border-b border-white/10"
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+                        ? "bg-white/10 backdrop-blur-md shadow-sm border-b border-white/10"
+                        : "bg-transparent border-b border-transparent"
+                    }`}
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center py-4">
@@ -60,8 +58,7 @@ const Navbar = () => {
                         {/* Logo / Brand */}
                         <div className="flex items-center gap-3">
                             <div className="relative group">
-                                <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full opacity-0 group-hover:opacity-20 blur-lg transition duration-500" />
-                                <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-white/20 backdrop-blur-sm">
+                                <div className="relative w-10 h-10 rounded-xl overflow-hidden">
                                     <img src="/images/logo.jpg" alt="Mentriq" className="w-full h-full object-cover scale-110" />
                                 </div>
                             </div>
