@@ -8,7 +8,7 @@ export const resolveImageUrl = (path, fallback = "") => {
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("data:image/")) return path;
 
-    const apiBase = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api").trim();
+    const apiBase = (import.meta.env.VITE_API_BASE_URL || "https://mentriq-technologies.onrender.com/api").trim();
     const serverRoot = apiBase.replace(/\/api\/?$/, "");
 
     // Fix: Treat /images as frontend static assets, not backend

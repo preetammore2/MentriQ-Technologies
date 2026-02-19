@@ -29,9 +29,8 @@ const ContactPage = () => {
   React.useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/settings`);
-        if (response.ok) {
-          const data = await response.json();
+        const { data } = await api.get('/settings');
+        if (data) {
           setSettings(prev => ({
             ...prev,
             email: data.email || prev.email,
