@@ -129,24 +129,7 @@ const ServicesPage = () => {
                         </motion.div>
                     </div>
 
-                    {/* Stats row inside hero */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.45 }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto"
-                    >
-                        {stats.map((s, i) => {
-                            const Icon = s.icon;
-                            return (
-                                <div key={i} className="text-center p-4 rounded-2xl bg-white/5 border border-white/8 backdrop-blur-sm">
-                                    <Icon className="w-4 h-4 text-indigo-400 mx-auto mb-1" />
-                                    <div className="text-2xl font-black text-white">{s.value}</div>
-                                    <div className="text-[10px] text-slate-400 uppercase tracking-widest font-medium mt-0.5">{s.label}</div>
-                                </div>
-                            );
-                        })}
-                    </motion.div>
+
                 </div>
             </section>
 
