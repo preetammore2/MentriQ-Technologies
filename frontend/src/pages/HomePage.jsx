@@ -8,6 +8,7 @@ import { resolveImageUrl } from '../utils/imageUtils'
 
 import MentorsSection from '../components/home/MentorsSection.jsx'
 import CitySection from '../components/home/CitySection';
+import { HeroSpline } from '../components/home/HeroSpline'
 import OneByOneTestimonial from '../components/home/OneByOneTestimonial'
 import SectionErrorBoundary from '../components/common/SectionErrorBoundary'
 
