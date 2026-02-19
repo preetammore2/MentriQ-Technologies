@@ -81,9 +81,11 @@ const AdminLayout = ({ children }) => {
                 {/* Logo Section */}
                 <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
                     <div className={`flex items-center gap-3 overflow-hidden ${!isSidebarOpen && 'lg:hidden'}`}>
-                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
-                            <span className="text-white font-bold">M</span>
-                        </div>
+                        <img
+                            src="/images/logo1.jpg"
+                            alt="MentriQ"
+                            className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                        />
                         <span className="text-white font-bold text-lg whitespace-nowrap">MentriQ Admin</span>
                     </div>
                     <button
@@ -160,9 +162,11 @@ const AdminLayout = ({ children }) => {
                         <Menu size={24} />
                     </button>
                     <div className="ml-4 flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
-                            <span className="text-white font-bold">M</span>
-                        </div>
+                        <img
+                            src="/images/logo1.jpg"
+                            alt="MentriQ"
+                            className="w-10 h-10 rounded-lg object-cover border border-white/10"
+                        />
                         <span className="text-white font-bold text-lg">MentriQ Admin</span>
                     </div>
                 </header>
