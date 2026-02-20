@@ -48,15 +48,15 @@ app.use(helmet({
 
 app.set('trust proxy', 1);
 
-// Debug routes BEFORE anything else
-app.get("/api/health", (req, res) => {
+// Debug routes at root for verification
+app.get("/health", (req, res) => {
     res.json({
         status: "active",
         database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
         timestamp: new Date().toISOString()
     });
 });
-app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
+app.get("/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
 
 app.use("/api", limiter);
 
