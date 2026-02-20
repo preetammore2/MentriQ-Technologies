@@ -28,7 +28,7 @@ const CertificateManagement = lazy(() => import('./pages/Admin/CertificateManage
 const ServiceManagement = lazy(() => import('./pages/Admin/ServiceManagement'));
 const CityManagement = lazy(() => import('./pages/Admin/CityManagement'));
 const JobPostManagement = lazy(() => import('./pages/Admin/JobPostManagement'));
-const InquiryManagement = lazy(() => import('./pages/Admin/InquiryManagement'));
+const EnquiryManagement = lazy(() => import('./pages/Admin/EnquiryManagement'));
 const StaffManagement = lazy(() => import('./pages/Admin/StaffManagement'));
 const SettingsManagement = lazy(() => import('./pages/Admin/SettingsManagement'));
 const TechnologyManagement = lazy(() => import('./pages/Admin/TechnologyManagement'));
@@ -36,7 +36,6 @@ const InternshipApplicationPage = lazy(() => import('./pages/InternshipApplicati
 const UserAuthPage = lazy(() => import('./pages/UserAuthPage'));
 const TrainingPage = lazy(() => import('./pages/TrainingPage'));
 const TrainingDetailPage = lazy(() => import('./pages/TrainingDetailPage'));
-const RecruitManagement = lazy(() => import('./pages/Admin/RecruitManagement'));
 const EnrollmentFormPage = lazy(() => import('./pages/EnrollmentFormPage'));
 const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 const TrainingEnrollmentFormPage = lazy(() => import('./pages/TrainingEnrollmentFormPage'));
@@ -180,11 +179,11 @@ function App() {
               }
             />
             <Route
-              path="/admin/inquiries"
+              path="/admin/enquiries"
               element={
                 <AdminRoute>
                   <AdminLayout>
-                    <InquiryManagement />
+                    <EnquiryManagement />
                   </AdminLayout>
                 </AdminRoute>
               }
@@ -195,16 +194,6 @@ function App() {
                 <AdminRoute>
                   <AdminLayout>
                     <PartnerManagement />
-                  </AdminLayout>
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/admin/recruit"
-              element={
-                <AdminRoute>
-                  <AdminLayout>
-                    <RecruitManagement />
                   </AdminLayout>
                 </AdminRoute>
               }

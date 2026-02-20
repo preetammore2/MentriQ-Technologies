@@ -65,6 +65,20 @@ const ServiceManagement = () => {
         }
     };
 
+    const syncDefaultServices = async () => {
+        setIsSyncing(true);
+        try {
+            const syncPromises = FALLBACK_SERVICES.map(s => api.post("/services", s));
+            await Promise.all(syncPromises);
+            toast.success("Synchronized website services to database");
+            fetchServices();
+        } catch (err) {
+            toast.error("Sync failed: " + err.message);
+        } finally {
+            setIsSyncing(false);
+        }
+    };
+
     useEffect(() => {
         fetchServices();
         const interval = setInterval(fetchServices, 15000);
