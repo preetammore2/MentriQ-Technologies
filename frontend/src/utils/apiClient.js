@@ -3,8 +3,9 @@ import axios from 'axios'
 const staticProdURL = 'https://mentriq-technologies.onrender.com/api';
 
 const resolvedBaseURL =
-  import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.DEV ? 'http://localhost:5000/api' : staticProdURL);
+  (import.meta.env.VITE_API_BASE_URL && !import.meta.env.VITE_API_BASE_URL.includes('localhost')) || import.meta.env.DEV
+    ? (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api')
+    : staticProdURL;
 
 if (import.meta.env.DEV) {
   console.log('🚀 MentriQ API Base URL:', resolvedBaseURL);
@@ -15,7 +16,7 @@ const RETRY_DELAY_MS = Number(import.meta.env.VITE_API_RETRY_DELAY_MS || 700);
 
 export const apiClient = axios.create({
   baseURL: resolvedBaseURL,
-  timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 20000), // Increased to 20s for Render cold starts
+  timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 60000), // Increased to 60s for Render cold starts
   headers: {
     'Content-Type': 'application/json'
   }
