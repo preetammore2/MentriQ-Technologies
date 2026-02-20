@@ -47,7 +47,18 @@ app.use(helmet({
 }));
 
 app.set('trust proxy', 1);
-app.use("/api/", limiter);
+
+// Debug routes BEFORE anything else
+app.get("/api/health", (req, res) => {
+    res.json({
+        status: "active",
+        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+        timestamp: new Date().toISOString()
+    });
+});
+app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
+
+app.use("/api", limiter);
 
 const allowedOrigins = new Set([
     "http://localhost:5173",
@@ -72,16 +83,6 @@ app.use(cors({
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-app.get("/api/health", (req, res) => {
-    res.json({
-        status: "active",
-        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-        timestamp: new Date().toISOString()
-    });
-});
-
-app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
 
 app.get("/", (req, res) => res.json({ status: "MentriQ API running" }));
 
