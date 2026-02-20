@@ -81,6 +81,8 @@ app.get("/api/health", (req, res) => {
     });
 });
 
+app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
+
 app.get("/", (req, res) => res.json({ status: "MentriQ API running" }));
 
 app.use("/api/auth", authRoutes);
