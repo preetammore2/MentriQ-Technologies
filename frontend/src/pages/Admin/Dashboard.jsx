@@ -371,17 +371,18 @@ const Dashboard = () => {
                         <Zap className="text-amber-400 opacity-20" size={24} />
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-4 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
                         {(analytics.popularPages || []).map((page, idx) => (
-                            <div key={page.path} className="space-y-1">
+                            <div key={page.path} className="space-y-2 group/item">
                                 <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                                    <span className="text-gray-400 truncate max-w-[70%]">{page.path}</span>
-                                    <span className="text-white">{page.count} hits</span>
+                                    <span className="text-gray-400 truncate max-w-[70%] group-hover/item:text-indigo-400 transition-colors">{page.path}</span>
+                                    <span className="text-white bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/10">{page.count} unique hits</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: `${(page.count / Math.max(...analytics.popularPages.map(p => p.count))) * 100}%` }}
+                                        transition={{ duration: 1, delay: idx * 0.05 }}
                                         className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full"
                                     />
                                 </div>

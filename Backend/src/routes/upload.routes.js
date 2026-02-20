@@ -23,11 +23,11 @@ const upload = multer({
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
     fileFilter: (req, file, cb) => {
-        const filetypes = /jpeg|jpg|png|webp|gif/;
+        const filetypes = /jpeg|jpg|png|webp|gif|svg|bmp|tiff|ico/;
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        const mimetype = filetypes.test(file.mimetype);
+        const mimetype = filetypes.test(file.mimetype) || file.mimetype === 'image/svg+xml' || file.mimetype === 'image/x-icon';
         if (mimetype && extname) return cb(null, true);
-        cb(new Error('Images Only!'));
+        cb(new Error('Supported formats: JPEG, JPG, PNG, WEBP, GIF, SVG, BMP, TIFF, ICO'));
     }
 });
 

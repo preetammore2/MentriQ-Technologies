@@ -78,7 +78,7 @@ const getGlobalStats = async (req, res) => {
             { $unwind: "$pathsVisited" },
             { $group: { _id: "$pathsVisited", count: { $sum: 1 } } },
             { $sort: { count: -1 } },
-            { $limit: 5 }
+            { $limit: 15 }
         ]);
 
         // Dashboard specific analytics (charts)
