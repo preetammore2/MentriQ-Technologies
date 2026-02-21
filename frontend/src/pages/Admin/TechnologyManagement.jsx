@@ -186,38 +186,38 @@ const TechnologyManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Technology Stack</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage the technologies displayed on the homepage.</p>
+                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Mastery Stack</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Inventory of core technologies and framework protocols.</p>
                 </div>
-                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-4">
                     {technologies.length === 0 && (
                         <button
                             onClick={syncDefaultTechs}
                             disabled={isSyncing}
-                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600/30 transition-all active:scale-95 whitespace-nowrap"
+                            className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
                         >
-                            <Loader2 size={18} className={isSyncing ? "animate-spin" : ""} />
-                            <span>{isSyncing ? "Syncing..." : "Sync Website Techs"}</span>
+                            <Loader2 size={16} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Node Services"}</span>
                         </button>
                     )}
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full md:w-auto group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full md:w-auto group focus-within:border-indigo-500/30 transition-all">
+                        <Search className="text-gray-600 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Search technologies..."
+                            placeholder="Identify technology..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full md:w-64 font-black uppercase italic tracking-tighter text-sm"
                         />
                     </div>
                     <button
                         onClick={openCreateModal}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center justify-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
-                        <Plus size={18} />
-                        <span>Add Tech</span>
+                        <Plus size={18} strokeWidth={3} />
+                        <span>Deploy Node</span>
                     </button>
                 </div>
             </div>
@@ -299,105 +299,108 @@ const TechnologyManagement = () => {
                             onClick={() => !submitting && closeModal()}
                         />
                         <MotionDiv
-                            initial={{ opacity: 0, scale: 0.95, y: 24 }}
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 24 }}
-                            className="relative w-full max-w-lg bg-[#0f172a]/95 border border-white/10 rounded-3xl p-8 shadow-2xl"
+                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                            className="relative w-full max-w-lg bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
                         >
-                            <div className="flex items-start justify-between gap-4 mb-8">
+                            <div className="flex items-start justify-between gap-6 mb-10">
                                 <div>
-                                    <h3 className="text-2xl font-black text-white">{editingTech ? "Update Technology" : "Add Technology"}</h3>
-                                    <p className="text-gray-400 text-sm mt-1">{editingTech ? "Update tech stack details." : "Add a new tech stack icon to the homepage."}</p>
+                                    <h3 className="text-3xl font-black text-white italic uppercase tracking-tighter">{editingTech ? "Update Node" : "Deploy Node"}</h3>
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mt-1">Infrastructure Hub V2.1</p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => !submitting && closeModal()}
-                                    className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+                                    className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white transition-all flex items-center justify-center border border-transparent hover:border-white/10"
                                 >
-                                    <X size={18} className="mx-auto" />
+                                    <X size={24} />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Tech Name</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
-                                        placeholder="e.g. React Native"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Icon / Logo</label>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-20 h-20 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-                                            {imagePreview ? (
-                                                <img src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2" />
-                                            ) : (
-                                                <ImageIcon className="text-gray-600" size={24} />
-                                            )}
-                                        </div>
-                                        <div className="flex-1">
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleImageChange}
-                                                className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20"
-                                            />
-                                            <p className="text-xs text-gray-600 mt-2">Recommended: PNG with transparent background</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Category</label>
-                                        <div className="relative group">
-                                            <select
-                                                value={formData.category}
-                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 appearance-none bg-[#0f172a] cursor-pointer"
-                                            >
-                                                <option value="frontend" className="bg-slate-900">Frontend</option>
-                                                <option value="backend" className="bg-slate-900">Backend</option>
-                                                <option value="database" className="bg-slate-900">Database</option>
-                                                <option value="devops" className="bg-slate-900">DevOps</option>
-                                                <option value="mobile" className="bg-slate-900">Mobile</option>
-                                                <option value="other" className="bg-slate-900">Other</option>
-                                            </select>
-                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Order</label>
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Protocol Identifier</label>
+                                    <div className="relative group">
+                                        <Cpu size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
                                         <input
-                                            type="number"
-                                            value={formData.order}
-                                            onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                                            type="text"
+                                            required
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            placeholder="e.g. React Native"
                                         />
                                     </div>
                                 </div>
 
-                                <div className="pt-4 flex justify-end gap-3">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Visual Signature</label>
+                                    <div className="flex items-center gap-6">
+                                        <div className="w-24 h-24 bg-white rounded-2xl p-4 flex items-center justify-center flex-shrink-0 shadow-2xl">
+                                            {imagePreview ? (
+                                                <img src={imagePreview} alt="Preview" className="w-full h-full object-contain" />
+                                            ) : (
+                                                <ImageIcon className="text-gray-300" size={32} />
+                                            )}
+                                        </div>
+                                        <div className="flex-1 space-y-3">
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageChange}
+                                                className="w-full text-[10px] text-gray-400 file:mr-6 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-white/5 file:text-white hover:file:bg-white/10 transition-all"
+                                            />
+                                            <p className="text-[10px] text-gray-600 uppercase font-black tracking-widest">Recommended: Transparent PNG</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Ecosystem</label>
+                                        <div className="relative group">
+                                            <select
+                                                value={formData.category}
+                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 appearance-none bg-[#0f172a] cursor-pointer transition-all"
+                                            >
+                                                <option value="frontend" className="bg-slate-900 italic">Frontend</option>
+                                                <option value="backend" className="bg-slate-900 italic">Backend</option>
+                                                <option value="database" className="bg-slate-900 italic">Database</option>
+                                                <option value="devops" className="bg-slate-900 italic">DevOps</option>
+                                                <option value="mobile" className="bg-slate-900 italic">Mobile</option>
+                                                <option value="other" className="bg-slate-900 italic">Other</option>
+                                            </select>
+                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Render Order</label>
+                                        <input
+                                            type="number"
+                                            value={formData.order}
+                                            onChange={(e) => setFormData({ ...formData, order: e.target.value })}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="pt-8 flex justify-end gap-8 items-center">
                                     <button
                                         type="button"
                                         onClick={() => !submitting && closeModal()}
-                                        className="px-5 py-2.5 rounded-xl bg-white/5 text-gray-300 hover:bg-white/10 transition-all font-bold text-sm"
+                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
                                     >
-                                        Cancel
+                                        Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-500 disabled:opacity-60 transition-all text-sm flex items-center gap-2"
+                                        className="bg-white text-black px-12 py-5 rounded-2xl font-black flex items-center justify-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest disabled:opacity-60"
                                     >
-                                        {submitting && <Loader2 size={14} className="animate-spin" />}
-                                        {editingTech ? "Update Technology" : "Save Technology"}
+                                        {submitting && <Loader2 size={16} className="animate-spin" />}
+                                        <span>{editingTech ? "Commit Changes" : "Confirm Deployment"}</span>
                                     </button>
                                 </div>
                             </form>

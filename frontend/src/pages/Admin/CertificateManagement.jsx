@@ -94,28 +94,28 @@ const CertificateManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Certificates</h2>
-                    <p className="text-gray-400 text-sm mt-1">Issue and manage student certifications and credentials.</p>
+                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Credential Repository</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Authenticated ledger of student certifications and institutional endorsements.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center group focus-within:border-indigo-500/30 transition-all">
+                        <Search className="text-gray-600 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Search by student, ID..."
+                            placeholder="Identify recipient or ID..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full md:w-64 font-black uppercase italic tracking-tighter text-sm"
                         />
                     </div>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center justify-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
-                        <Award size={18} />
-                        <span>Issue Certificate</span>
+                        <Award size={18} strokeWidth={3} />
+                        <span>Issue Credential</span>
                     </button>
                 </div>
             </div>
@@ -258,17 +258,17 @@ const CertificateManagement = () => {
                                             <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
                                         </div>
                                     </div>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Aptitude Validation</label>
-                                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
                                             {['A+', 'A', 'B+', 'B', 'C', 'Pass'].map(g => (
                                                 <button
                                                     key={g}
                                                     type="button"
                                                     onClick={() => setFormData({ ...formData, grade: g })}
-                                                    className={`py-4 rounded-xl font-black transition-all border ${formData.grade === g
-                                                        ? 'bg-white text-black border-white shadow-xl scale-105'
-                                                        : 'bg-white/5 text-gray-500 border-white/10 hover:bg-white/10 hover:text-white'
+                                                    className={`py-6 rounded-2xl font-black transition-all border text-xs tracking-widest ${formData.grade === g
+                                                        ? 'bg-white text-black border-white shadow-[0_10px_30px_-5px_rgba(255,255,255,0.3)] scale-[1.08] z-10'
+                                                        : 'bg-white/5 text-gray-700 border-white/10 hover:bg-white/10 hover:text-white'
                                                         }`}
                                                 >
                                                     {g}

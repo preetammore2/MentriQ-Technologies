@@ -36,25 +36,25 @@ const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0 }) => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay }}
-        className="bg-[#1e293b] p-6 rounded-3xl border border-white/5 hover:border-indigo-500/50 transition-all group relative overflow-hidden"
+        className="bg-[#1e293b]/50 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/5 hover:border-indigo-500/30 transition-all group relative overflow-hidden shadow-2xl"
     >
-        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-white/[0.02] to-transparent rounded-bl-[4rem]" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/[0.03] to-transparent rounded-bl-[5rem]" />
 
         <div className="flex justify-between items-start relative z-10">
             <div>
-                <p className="text-gray-400 text-xs font-black uppercase tracking-widest">{title}</p>
+                <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4">{title}</p>
                 <div className="flex items-baseline gap-2 mt-2">
-                    <h3 className="text-3xl font-black text-white italic">{typeof value === 'number' ? value.toLocaleString() : value}</h3>
+                    <h3 className="text-4xl font-black text-white italic tracking-tighter">{typeof value === 'number' ? value.toLocaleString() : value}</h3>
                 </div>
                 {trend !== 0 && (
-                    <div className={`flex items-center gap-1 mt-2 ${trend > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-                        {trend > 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                        <span className="text-xs font-bold uppercase tracking-tighter">{Math.abs(trend)}% vs last week</span>
+                    <div className={`flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full w-fit bg-opacity-10 ${trend > 0 ? 'bg-emerald-500 text-emerald-400' : 'bg-rose-500 text-rose-400'} border border-white/5`}>
+                        {trend > 0 ? <TrendingUp size={12} strokeWidth={3} /> : <TrendingDown size={12} strokeWidth={3} />}
+                        <span className="text-[10px] font-black uppercase tracking-widest">{Math.abs(trend)}% Velocity</span>
                     </div>
                 )}
             </div>
-            <div className={`p-4 rounded-2xl ${color} bg-opacity-10 group-hover:bg-opacity-20 transition-all border border-white/5`}>
-                <Icon className={`w-6 h-6 ${color.replace('bg-', 'text-')}`} />
+            <div className={`p-5 rounded-2xl ${color} bg-opacity-10 group-hover:scale-110 group-hover:rotate-6 transition-all border border-white/5 shadow-2xl shadow-indigo-500/5`}>
+                <Icon className={`w-7 h-7 ${color.replace('bg-', 'text-')}`} strokeWidth={2.5} />
             </div>
         </div>
     </motion.div>
@@ -225,15 +225,15 @@ const Dashboard = () => {
                     animate={{ opacity: 1, x: 0 }}
                     className="lg:col-span-2 bg-[#1e293b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden group"
                 >
-                    <div className="flex justify-between items-center mb-8 relative z-10">
+                    <div className="flex justify-between items-center mb-10 relative z-10">
                         <div>
-                            <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Growth Vectors</h3>
-                            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Platform Expansion Metrics</p>
+                            <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter">Growth Trajectory</h3>
+                            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.3em] mt-1">Enrollment & Platform Scaling Analytics</p>
                         </div>
-                        <div className="flex gap-4">
-                            <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded-full bg-indigo-500" />
-                                <span className="text-[10px] text-gray-400 font-bold uppercase">Enrollments</span>
+                        <div className="flex gap-6">
+                            <div className="flex items-center gap-3">
+                                <div className="w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
+                                <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Active Nodes</span>
                             </div>
                         </div>
                     </div>

@@ -128,65 +128,69 @@ const StaffManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+            <div className="bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
+                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between">
                     <div>
-                        <h2 className="text-3xl font-bold text-white tracking-tight">Staff Access Control</h2>
-                        <p className="text-gray-400 text-sm mt-1">
-                            Admin and moderator users are listed here. Grant staff access from student accounts.
+                        <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Personnel Registry</h2>
+                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">
+                            System-wide access control and administrative entity management.
                         </p>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/50 transition-all">
-                            <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/30 transition-all">
+                            <Search className="text-gray-500 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
                             <input
                                 type="text"
-                                placeholder="Search staff by name/email..."
+                                placeholder="Search by name/email..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full lg:w-80 font-medium text-sm"
+                                className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full lg:w-80 font-black uppercase italic tracking-tighter text-sm"
                             />
                         </div>
                         <button
                             onClick={handleExportStaff}
-                            className="bg-emerald-600 text-white hover:bg-emerald-500 px-5 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/20"
+                            className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center justify-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest"
                         >
-                            <Download size={16} />
-                            <span>Download Excel</span>
+                            <Download size={16} strokeWidth={3} />
+                            <span>Export Registry</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-6 shadow-xl">
-                <h3 className="text-white font-bold text-lg mb-4">Grant Staff Access</h3>
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center">
+            <div className="bg-[#1e293b]/50 backdrop-blur-md border border-white/5 rounded-3xl p-10 shadow-xl">
+                <h3 className="text-gray-500 font-black text-[10px] uppercase tracking-[0.3em] mb-6 flex items-center gap-3">
+                    <ShieldCheck size={14} className="text-indigo-400" />
+                    Elevation Protocol
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-6 items-center">
                     <div className="relative group">
+                        <UserRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" />
                         <select
                             value={selectedStudentId}
                             onChange={(e) => setSelectedStudentId(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 appearance-none cursor-pointer font-bold"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all appearance-none bg-[#1e293b] cursor-pointer"
                         >
-                            <option value="" className="bg-[#1e293b]">Select student to promote...</option>
+                            <option value="" className="bg-[#1e293b]">Select Candidate to Promote...</option>
                             {students.map((u) => (
-                                <option key={u._id} value={u._id} className="bg-[#1e293b]">{u.name} ({u.email})</option>
+                                <option key={u._id} value={u._id} className="bg-[#1e293b] italic">{u.name} ({u.email})</option>
                             ))}
                         </select>
-                        <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                        <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
                     </div>
                     <button
                         onClick={() => grantFromStudent("moderator")}
                         disabled={!selectedStudentId}
-                        className="px-4 py-3 rounded-xl text-xs font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20 transition disabled:opacity-40"
+                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20 transition-all disabled:opacity-20 uppercase tracking-widest"
                     >
-                        Make Moderator
+                        Moderator Status
                     </button>
                     <button
                         onClick={() => grantFromStudent("admin")}
                         disabled={!selectedStudentId}
-                        className="px-4 py-3 rounded-xl text-xs font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20 transition disabled:opacity-40"
+                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 hover:bg-indigo-500/20 transition-all disabled:opacity-20 uppercase tracking-widest"
                     >
-                        Make Admin
+                        Admin Privilege
                     </button>
                 </div>
             </div>
@@ -264,66 +268,74 @@ const StaffManagement = () => {
                 )}
             </div>
 
-            {/* Password Reset Modal */}
             <AnimatePresence>
                 {resetModalOpen && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
                         <MotionDiv
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-[#1e293b] border border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 w-full max-w-lg shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
                         >
-                            <div className="flex justify-between items-center mb-6">
-                                <h3 className="text-xl font-bold text-white">Reset Staff Password</h3>
-                                <button onClick={() => setResetModalOpen(false)} className="text-gray-500 hover:text-white">
-                                    <X size={20} />
+                            <div className="flex justify-between items-center mb-10">
+                                <div>
+                                    <h3 className="text-2xl font-black text-white italic uppercase tracking-tight">Security Override</h3>
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mt-1">Credential Re-initialization</p>
+                                </div>
+                                <button
+                                    onClick={() => setResetModalOpen(false)}
+                                    className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white transition-all"
+                                >
+                                    <X size={24} />
                                 </button>
                             </div>
 
-                            <p className="text-gray-400 text-sm mb-6">
-                                Set a new permanent password for <strong className="text-white">{selectedUserForReset?.name}</strong>.
-                                <br />This will immediately invalidate their old password.
-                            </p>
+                            <div className="p-6 bg-rose-500/5 border border-rose-500/10 rounded-2xl mb-8">
+                                <p className="text-gray-400 text-xs leading-relaxed">
+                                    Injecting new credentials for <strong className="text-white italic">{selectedUserForReset?.name}</strong>.
+                                    This operation will immediately invalidate current session access.
+                                </p>
+                            </div>
 
-                            <form onSubmit={handlePasswordReset} className="space-y-4">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-bold uppercase text-gray-500">New Password</label>
-                                    <div className="relative">
+                            <form onSubmit={handlePasswordReset} className="space-y-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black uppercase text-gray-500 tracking-[0.2em] ml-1">New Access Key</label>
+                                    <div className="relative group">
+                                        <Lock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
-                                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50"
-                                            placeholder="Enter new secure password"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            placeholder="Min. 6 characters required"
                                             required
                                             minLength={6}
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                                            className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white transition-colors"
                                         >
-                                            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                         </button>
                                     </div>
                                 </div>
 
-                                <div className="pt-2 flex justify-end gap-3">
+                                <div className="pt-6 flex justify-end gap-8 items-center">
                                     <button
                                         type="button"
                                         onClick={() => setResetModalOpen(false)}
-                                        className="px-4 py-2 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 transition"
+                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
                                     >
-                                        Cancel
+                                        Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={resetting}
-                                        className="px-6 py-2 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 disabled:opacity-50 flex items-center gap-2"
+                                        className="px-10 py-5 rounded-2xl font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-[10px] uppercase tracking-widest flex items-center gap-3 disabled:opacity-50"
                                     >
-                                        {resetting && <Loader2 size={14} className="animate-spin" />}
-                                        Update Password
+                                        {resetting && <Loader2 size={16} className="animate-spin" />}
+                                        Update Protocol
                                     </button>
                                 </div>
                             </form>

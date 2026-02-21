@@ -170,13 +170,15 @@ const PartnerManagement = () => {
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-10 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                 <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                            <Handshake size={20} className="text-indigo-400" />
+                    <div className="flex items-center gap-4 mb-3">
+                        <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 shadow-xl">
+                            <Handshake size={28} className="text-indigo-400" />
                         </div>
-                        <h2 className="text-3xl font-black text-white tracking-tight">Partner Ecosystem</h2>
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Alliance Registry</h2>
+                            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-1">Authenticated network of corporate partners and hiring entities.</p>
+                        </div>
                     </div>
-                    <p className="text-gray-400 text-sm font-medium">Manage corporate relationships and hiring network visibility.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
                     {partners.length === 0 && (
@@ -189,14 +191,14 @@ const PartnerManagement = () => {
                             <span>{isSyncing ? "Syncing..." : "Sync Website Partners"}</span>
                         </button>
                     )}
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-5 flex items-center group focus-within:border-indigo-500/50 transition-all shadow-inner">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center group focus-within:border-indigo-500/30 transition-all shadow-inner">
+                        <Search className="text-gray-600 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
                         <input
                             type="text"
-                            placeholder="Filter partners..."
+                            placeholder="Identify partner profile..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-600 focus:outline-none py-3.5 px-4 w-full lg:w-72 font-bold text-xs uppercase tracking-widest"
+                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full lg:w-72 font-black uppercase italic tracking-tighter text-sm"
                         />
                     </div>
                     <button

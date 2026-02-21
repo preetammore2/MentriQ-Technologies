@@ -146,36 +146,36 @@ const UserManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-6 md:p-8 rounded-3xl border border-white/5 shadow-xl">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div className="w-full lg:w-auto">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Student Management</h2>
-                    <p className="text-gray-400 text-xs md:text-sm mt-1">Only student users are shown here. Admins and moderators are managed in Staff section.</p>
+                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Candidate Registry</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Authenticated database of active learners and enrollment entities.</p>
                 </div>
-                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 flex items-center w-full sm:w-auto group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4 shrink-0" size={18} />
+                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4">
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-indigo-500/30 transition-all shadow-inner">
+                        <Search className="text-gray-600 ml-4 shrink-0 transition-colors group-focus-within:text-indigo-400" size={20} />
                         <input
                             type="text"
-                            placeholder="Search students..."
+                            placeholder="Identify candidate profile..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full sm:w-64 font-black uppercase italic tracking-tighter text-sm"
                         />
                     </div>
-                    <div className="flex gap-3 overflow-x-auto pb-1 sm:pb-0">
+                    <div className="flex gap-4">
                         <button
                             onClick={handleExportStudents}
-                            className="bg-emerald-600 text-white hover:bg-emerald-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap flex-1 sm:flex-none justify-center"
+                            className="bg-white/5 text-white hover:bg-white/10 border border-white/10 px-8 py-4 rounded-xl font-black flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
                         >
-                            <Download size={18} />
+                            <Download size={16} />
                             <span>Export</span>
                         </button>
                         <button
                             onClick={openCreateModal}
-                            className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap flex-1 sm:flex-none justify-center"
+                            className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
                         >
-                            <Plus size={18} />
-                            <span>Add</span>
+                            <Plus size={18} strokeWidth={3} />
+                            <span>Deploy Profile</span>
                         </button>
                     </div>
                 </div>
@@ -265,88 +265,89 @@ const UserManagement = () => {
                             onClick={() => !submitting && closeModal()}
                         />
                         <MotionDiv
-                            initial={{ opacity: 0, scale: 0.95, y: 24 }}
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 24 }}
-                            className="relative w-full max-w-xl bg-[#0f172a]/95 border border-white/10 rounded-3xl p-8 shadow-2xl"
+                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                            className="relative w-full max-w-xl bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
                         >
-                            <div className="flex items-start justify-between gap-4 mb-8">
+                            <div className="flex items-start justify-between gap-6 mb-10">
                                 <div>
-                                    <h3 className="text-2xl font-black text-white">{editingUser ? "Edit Student" : "Create Student"}</h3>
-                                    <p className="text-gray-400 text-sm mt-1">{editingUser ? "Update student details." : "New user will be created with student role."}</p>
+                                    <h3 className="text-3xl font-black text-white italic uppercase tracking-tighter">{editingUser ? "Update Profile" : "Initialize Entity"}</h3>
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mt-1">Registry Access Level: Student</p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => !submitting && closeModal()}
-                                    className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all"
+                                    className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white transition-all flex items-center justify-center border border-transparent hover:border-white/10"
                                 >
-                                    <X size={18} className="mx-auto" />
+                                    <X size={24} />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
-                                    <div className="relative">
-                                        <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Entity Name</label>
+                                    <div className="relative group">
+                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
-                                            placeholder="Enter full name"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            placeholder="Full Identification Name"
                                         />
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Email</label>
-                                    <div className="relative">
-                                        <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Communication Link</label>
+                                    <div className="relative group">
+                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
                                         <input
                                             type="email"
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
-                                            placeholder="name@example.com"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            placeholder="network@origin.com"
                                         />
                                     </div>
                                 </div>
 
                                 {!editingUser && (
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Password</label>
-                                        <div className="relative">
-                                            <KeyRound size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Security Key</label>
+                                        <div className="relative group">
+                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
                                             <input
                                                 type="password"
                                                 required
                                                 minLength={6}
                                                 value={formData.password}
                                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                                className="w-full pl-11 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
-                                                placeholder="Min 6 characters"
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                                placeholder="Cryptographic String"
                                             />
                                         </div>
                                     </div>
                                 )}
 
-                                <div className="pt-3 flex justify-end gap-3">
+                                <div className="pt-8 flex justify-end gap-8 items-center">
                                     <button
                                         type="button"
                                         onClick={() => !submitting && closeModal()}
-                                        className="px-5 py-2.5 rounded-xl bg-white/5 text-gray-300 hover:bg-white/10 transition-all"
+                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
                                     >
-                                        Cancel
+                                        Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-500 disabled:opacity-60 transition-all"
+                                        className="bg-white text-black px-12 py-5 rounded-2xl font-black flex items-center justify-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest disabled:opacity-60"
                                     >
-                                        {submitting ? "Saving..." : (editingUser ? "Update Student" : "Create Student")}
+                                        {submitting && <Loader2 size={16} className="animate-spin" />}
+                                        <span>{editingUser ? "Commence Sync" : "Deploy Entity"}</span>
                                     </button>
                                 </div>
                             </form>

@@ -44,44 +44,44 @@ const AdminLayout = ({ children }) => {
 
     const menuGroups = [
         {
-            title: 'Analytics',
+            title: 'Operations & Metrics',
             items: [
-                { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Overview' },
+                { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Control Center' },
+                { path: '/admin/settings', icon: Settings, label: 'Core Protocol' },
             ]
         },
         {
-            title: 'Content Hub',
+            title: 'Learning Ecosystem',
             items: [
-                { path: '/admin/courses', icon: BookOpen, label: 'Courses' },
-                { path: '/admin/internships', icon: Briefcase, label: 'Internships' },
-                { path: '/admin/jobs', icon: Briefcase, label: 'Job Board' },
-                { path: '/admin/services', icon: Layers, label: 'Services' },
-                { path: '/admin/journey', icon: MapPin, label: 'Success Journey' },
+                { path: '/admin/courses', icon: BookOpen, label: 'Curriculums' },
+                { path: '/admin/internships', icon: Briefcase, label: 'Internship Ops' },
+                { path: '/admin/jobs', icon: Briefcase, label: 'Career Board' },
+                { path: '/admin/journey', icon: MapPin, label: 'Roadmaps' },
             ]
         },
         {
-            title: 'People',
+            title: 'Stakeholder Registry',
             items: [
-                { path: '/admin/users', icon: Users, label: 'Students' },
-                { path: '/admin/staff', icon: UserCog, label: 'Admin Staff' },
-                { path: '/admin/mentors', icon: Users, label: 'Mentors' },
-                { path: '/admin/partners', icon: Handshake, label: 'Partners' },
+                { path: '/admin/users', icon: Users, label: 'Candidates' },
+                { path: '/admin/staff', icon: UserCog, label: 'Personnel' },
+                { path: '/admin/mentors', icon: Users, label: 'Guidance' },
+                { path: '/admin/partners', icon: Handshake, label: 'Alliances' },
             ]
         },
         {
-            title: 'Engagement',
+            title: 'Quality & Engagement',
             items: [
-                { path: '/admin/enquiries', icon: Mail, label: 'Enquiries' },
-                { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
-                { path: '/admin/certificates', icon: Award, label: 'Certificates' },
+                { path: '/admin/enquiries', icon: Mail, label: 'Signals' },
+                { path: '/admin/feedback', icon: MessageSquare, label: 'Sentiments' },
+                { path: '/admin/certificates', icon: Award, label: 'Credentials' },
             ]
         },
         {
-            title: 'System',
+            title: 'Infrastructure Hub',
             items: [
-                { path: '/admin/settings', icon: Settings, label: 'Global Settings' },
+                { path: '/admin/services', icon: Layers, label: 'Node Services' },
                 { path: '/admin/technologies', icon: Cpu, label: 'Tech Stack' },
-                { path: '/admin/cities', icon: MapPin, label: 'City Coverage' },
+                { path: '/admin/cities', icon: MapPin, label: 'Geos' },
             ]
         }
     ];

@@ -178,25 +178,25 @@ const EnquiryManagement = () => {
             </div>
 
             {/* Filters and Search */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-2xl p-4 flex flex-col lg:flex-row gap-4 shadow-xl">
+            <div className="bg-[#1e293b]/50 backdrop-blur-md border border-white/5 rounded-3xl p-6 flex flex-col lg:flex-row gap-6 shadow-xl">
                 <div className="relative flex-1 group">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                    <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" size={20} />
                     <input
                         type="text"
-                        placeholder={activeTab === 'contact' ? "Search by user, email, or subject..." : "Search companies or agents..."}
+                        placeholder={activeTab === 'contact' ? "Identify candidate or signal..." : "Scan company or agent ID..."}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-16 pr-6 text-white placeholder:text-gray-600 focus:outline-none focus:border-indigo-500/50 transition-all font-medium"
+                        className="w-full bg-white/5 border border-white/10 rounded-[2rem] py-5 pl-20 pr-8 text-white placeholder:text-gray-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all font-black uppercase italic tracking-tighter text-sm"
                     />
                 </div>
                 {activeTab === 'contact' && (
-                    <div className="flex gap-2 p-1 bg-black/20 rounded-xl border border-white/5">
+                    <div className="flex gap-2 p-2 bg-black/30 rounded-2xl border border-white/5">
                         {['all', 'unread', 'read'].map((f) => (
                             <button
                                 key={f}
                                 onClick={() => setFilter(f)}
-                                className={`px-6 py-2 rounded-lg font-bold capitalize transition-all text-xs tracking-wider ${filter === f
-                                    ? 'bg-indigo-600 text-white shadow-lg'
+                                className={`px-8 py-3 rounded-xl font-black uppercase tracking-[0.2em] transition-all text-[10px] ${filter === f
+                                    ? 'bg-white text-black shadow-2xl scale-[1.05]'
                                     : 'text-gray-500 hover:text-white hover:bg-white/5'
                                     }`}
                             >
@@ -364,25 +364,25 @@ const EnquiryManagement = () => {
                                     </div>
 
                                     <div className="space-y-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="p-6 bg-white/5 border border-white/5 rounded-2xl">
-                                                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/50 mb-3">Resource Requirements</div>
-                                                <p className="text-white font-bold leading-relaxed">{selectedRecruitEnquiry.hiringNeeds}</p>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm">
+                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400/60 mb-4">Resource Requirements</div>
+                                                <p className="text-white font-black leading-relaxed italic">{selectedRecruitEnquiry.hiringNeeds}</p>
                                             </div>
-                                            <div className="p-6 bg-white/5 border border-white/5 rounded-2xl">
-                                                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/50 mb-3">Classification</div>
+                                            <div className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm">
+                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400/60 mb-4">Classification</div>
                                                 <div className="relative group">
                                                     <select
                                                         value={selectedRecruitEnquiry.status}
                                                         onChange={(e) => handleStatusUpdate(selectedRecruitEnquiry._id, e.target.value)}
-                                                        className="w-full bg-[#0f172a] text-white border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer appearance-none transition-all group-hover:border-white/20"
+                                                        className="w-full bg-[#0f172a] text-white border border-white/10 rounded-2xl px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 cursor-pointer appearance-none transition-all"
                                                     >
                                                         <option value="pending">Awaiting Intel</option>
                                                         <option value="viewed">Intel Accessed</option>
                                                         <option value="contacted">Link Established</option>
                                                         <option value="closed">Protocol Terminated</option>
                                                     </select>
-                                                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                                    <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
                                                 </div>
                                             </div>
                                         </div>
