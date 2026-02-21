@@ -171,19 +171,37 @@ const SettingsManagement = () => {
                             />
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Google Maps Link</label>
-                            <div className="relative">
-                                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-                                <input
-                                    name="mapLink"
-                                    value={formData.mapLink}
-                                    onChange={handleChange}
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
-                                    placeholder="https://maps.google.com/..."
-                                />
+                    </div>
+                </div>
+
+                {/* Social Media Links */}
+                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6">
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                        <Globe size={20} className="text-blue-400" />
+                        Social Media Links
+                    </h3>
+
+                    <div className="space-y-4">
+                        {[
+                            { key: 'instagram', label: 'Instagram URL', icon: Instagram, color: 'text-pink-500' },
+                            { key: 'linkedin', label: 'LinkedIn URL', icon: Linkedin, color: 'text-blue-600' },
+                            { key: 'twitter', label: 'Twitter / X URL', icon: Twitter, color: 'text-sky-400' },
+                            { key: 'whatsapp', label: 'WhatsApp Number/Link', icon: MessageCircle, color: 'text-emerald-500' }
+                        ].map((social) => (
+                            <div key={social.key} className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">{social.label}</label>
+                                <div className="relative">
+                                    <social.icon className={`absolute left-4 top-1/2 -translate-y-1/2 ${social.color}`} size={16} />
+                                    <input
+                                        name={`social.${social.key}`}
+                                        value={formData.socialLinks[social.key]}
+                                        onChange={handleChange}
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
+                                        placeholder={`Enter ${social.key} link...`}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
