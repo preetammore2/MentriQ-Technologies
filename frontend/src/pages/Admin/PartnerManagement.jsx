@@ -251,17 +251,17 @@ const PartnerManagement = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
+                    <div className="bg-white border-t border-slate-200 overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-white/5 border-b border-white/10">
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Partner Details</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Digital Presence</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                    <tr className="bg-slate-50 border-b border-slate-200">
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Partner Details</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Digital Presence</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-white/5">
+                                <tbody className="divide-y divide-slate-100">
                                     <AnimatePresence mode="popLayout">
                                         {filteredPartners.map((partner) => (
                                             <MotionTr
@@ -270,46 +270,46 @@ const PartnerManagement = () => {
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
-                                                className="hover:bg-white/[0.02] transition-colors group"
+                                                className="hover:bg-slate-50/50 transition-colors group"
                                             >
-                                                <td className="px-6 py-5">
+                                                <td className="px-8 py-6">
                                                     <div className="flex items-center gap-5">
-                                                        <div className="w-20 h-12 rounded-xl overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center p-2.5 shrink-0 group-hover:border-indigo-500/30 transition-colors">
+                                                        <div className="w-20 h-14 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-2.5 shrink-0 group-hover:border-indigo-300 transition-all shadow-sm">
                                                             <img
                                                                 src={resolveImageUrl(partner.logo)}
                                                                 alt={partner.name}
-                                                                className="w-full h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                                                                className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-all duration-500"
                                                                 onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/80?text=Logo"; }}
                                                             />
                                                         </div>
                                                         <div>
-                                                            <div className="font-bold text-white text-sm tracking-tight">{partner.name}</div>
-                                                            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">Verified Entity</div>
+                                                            <div className="font-bold text-slate-900 text-base tracking-tight">{partner.name}</div>
+                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Verified Entity Partner</div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-5">
+                                                <td className="px-8 py-6">
                                                     {partner.website ? (
-                                                        <a href={partner.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg text-indigo-400 hover:text-indigo-300 text-[10px] font-black uppercase tracking-widest transition-all hover:bg-indigo-500/20">
+                                                        <a href={partner.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-600 hover:text-indigo-700 text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-indigo-100">
                                                             <Globe size={12} />
                                                             {getSafeWebsiteHost(partner.website)}
                                                         </a>
                                                     ) : (
-                                                        <span className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Offline</span>
+                                                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Offline Presence</span>
                                                     )}
                                                 </td>
-                                                <td className="px-6 py-5 text-right">
+                                                <td className="px-8 py-6 text-right">
                                                     <div className="flex justify-end gap-3">
                                                         <button
                                                             onClick={() => handleEdit(partner)}
-                                                            className="p-2.5 bg-white/5 text-gray-400 rounded-xl hover:bg-white/10 hover:text-white transition-all border border-transparent hover:border-white/10"
+                                                            className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
                                                             title="Refine Entity"
                                                         >
                                                             <Edit2 size={16} />
                                                         </button>
                                                         <button
                                                             onClick={() => handleDelete(partner._id)}
-                                                            className="p-2.5 bg-red-500/10 text-red-500/50 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
+                                                            className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
                                                             title="Terminate Connection"
                                                         >
                                                             <Trash2 size={16} />

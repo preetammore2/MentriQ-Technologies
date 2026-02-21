@@ -425,10 +425,9 @@ const MentorManagement = () => {
                             </div>
                         )}
                     </AnimatePresence>
-                </AnimatePresence>
+                </div>
             </div>
-        </div>
-    );
+            );
 };
 
-export default MentorManagement;
+            export default MentorManagement;
