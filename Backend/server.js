@@ -77,10 +77,7 @@ const isAllowedOrigin = (origin) => {
 };
 
 const corsOptions = {
-    origin: function (origin, callback) {
-        // Fail-open for production stability. All origins allowed.
-        callback(null, true);
-    },
+    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
@@ -90,31 +87,23 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
-
 app.use(helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
 app.set('trust proxy', 1);
 
-
 app.use("/api", limiter);
-
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.get("/api/health", (req, res) => res.json({
-    status: "active",
-    database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-    version: "debug-v5",
-    timestamp: new Date().toISOString()
-}));
+app.get("/api/health", (req, res) => res.status(200).send("MentriQ Health OK - v6"));
 
 app.get("/", (req, res) => res.json({
     status: "MentriQ API running",
-    version: "debug-v5",
+    version: "debug-v6",
     activeOrigins: ["ALL (fail-open enabled)"]
 }));
 
