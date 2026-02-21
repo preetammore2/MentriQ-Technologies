@@ -91,13 +91,13 @@ const JourneyManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <Map size={28} className="text-indigo-600" />
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Journey</h2>
+                        <MapPin size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Timeline Architecture</h2>
                         <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
-                            {milestones.length} Milestones
+                            {milestones.length} Historical Nodes
                         </span>
                     </div>
-                    <p className="text-slate-500 font-medium text-sm">Manage historical milestones and company trajectory.</p>
+                    <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] mt-2">Manage historical milestones and corporate trajectory.</p>
                 </div>
                 <button
                     onClick={() => {
@@ -105,10 +105,10 @@ const JourneyManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
+                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                 >
                     <Plus size={18} />
-                    <span>Add Milestone</span>
+                    <span>Append Node</span>
                 </button>
             </div>
 
@@ -117,14 +117,14 @@ const JourneyManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/5 border-b border-white/10">
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Order</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Year</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Title & Description</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Order</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Year</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Title & Description</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-slate-100">
                             {loading ? (
                                 <tr>
                                     <td colSpan="4" className="px-6 py-16 text-center">
@@ -134,40 +134,43 @@ const JourneyManagement = () => {
                                 </tr>
                             ) : milestones.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-16 text-center">
-                                        <Calendar size={32} className="text-gray-600 mx-auto mb-4" />
-                                        <h3 className="text-white font-bold mb-1">No Milestones Found</h3>
-                                        <button onClick={() => setIsModalOpen(true)} className="text-indigo-400 text-xs font-bold hover:text-indigo-300">Create First Milestone</button>
+                                    <td colSpan="4" className="px-8 py-24 text-center">
+                                        <div className="w-20 h-20 bg-slate-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-slate-100 text-slate-200 shadow-inner">
+                                            <Calendar size={40} strokeWidth={1.5} />
+                                        </div>
+                                        <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight uppercase">Timeline Void</h3>
+                                        <p className="text-slate-500 mb-8 max-w-xs mx-auto font-medium text-[10px] uppercase tracking-widest leading-relaxed">No historical nodes detected in the trajectory data.</p>
+                                        <button onClick={() => setIsModalOpen(true)} className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95">Initiate First Node</button>
                                     </td>
                                 </tr>
                             ) : (
                                 milestones.map((milestone) => (
-                                    <tr key={milestone._id} className="hover:bg-white/[0.02] transition-colors group">
-                                        <td className="px-6 py-5">
-                                            <span className="text-indigo-400 font-bold text-sm bg-indigo-500/5 px-2.5 py-1 rounded-lg border border-indigo-500/10">
-                                                #{milestone.order}
+                                    <tr key={milestone._id} className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-8 py-6">
+                                            <span className="text-indigo-600 font-black text-[10px] uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 shadow-sm">
+                                                Node #{milestone.order}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5 font-black text-white text-lg tracking-tight italic">
+                                        <td className="px-8 py-6 font-black text-slate-900 text-2xl tracking-tighter italic">
                                             {milestone.year}
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <div className="font-bold text-white text-sm uppercase tracking-wide mb-1">{milestone.title}</div>
-                                            <p className="text-gray-500 text-xs line-clamp-2 max-w-xl">{milestone.description}</p>
+                                        <td className="px-8 py-6">
+                                            <div className="font-extrabold text-slate-900 text-base tracking-tight mb-1">{milestone.title}</div>
+                                            <p className="text-slate-500 text-xs font-medium leading-relaxed max-w-xl">{milestone.description}</p>
                                         </td>
-                                        <td className="px-6 py-5 text-right">
-                                            <div className="flex justify-end gap-2">
+                                        <td className="px-8 py-6 text-right">
+                                            <div className="flex justify-end gap-3">
                                                 <button
                                                     onClick={() => openEditModal(milestone)}
-                                                    className="p-2 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all shadow-sm outline-none"
-                                                    title="Edit Milestone"
+                                                    className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm outline-none"
+                                                    title="Refine Node"
                                                 >
                                                     <Edit2 size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(milestone._id)}
-                                                    className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm outline-none"
-                                                    title="Delete Milestone"
+                                                    className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100 shadow-sm outline-none"
+                                                    title="Terminate Node"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -189,84 +192,81 @@ const JourneyManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col"
+                            className="relative w-full max-w-xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic flex items-center gap-4">
-                                        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 border border-indigo-500/20">
-                                            {editingMilestone ? <Edit2 size={24} strokeWidth={2.5} /> : <Plus size={28} strokeWidth={2.5} />}
-                                        </div>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
                                         {editingMilestone ? "Modify Node" : "Append Node"}
-                                    </h2>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] mt-3 bg-white/5 w-fit px-3 py-1 rounded-md">CORE_SYS: JOURNEY_MGMT_V1.1</p>
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Trajectory Control</p>
                                 </div>
                                 <button
                                     onClick={() => setIsModalOpen(false)}
-                                    className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"
+                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
                                 >
-                                    <X size={28} />
+                                    <X size={24} />
                                 </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-10 space-y-8">
                                 <div className="grid grid-cols-2 gap-8">
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Temporal Year</label>
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Temporal Year</label>
                                         <input
                                             required
                                             type="number"
                                             value={formData.year}
                                             onChange={e => setFormData({ ...formData, year: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="20XX"
                                         />
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Sequence Order</label>
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Sequence Order</label>
                                         <input
                                             required
                                             type="number"
                                             value={formData.order}
                                             onChange={e => setFormData({ ...formData, order: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="0"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Milestone Designation</label>
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Milestone Designation</label>
                                     <input
                                         required
                                         value={formData.title}
                                         onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700 uppercase tracking-tight"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 uppercase tracking-tight"
                                         placeholder="Strategic Expansion..."
                                     />
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Milestone Context</label>
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Milestone Context</label>
                                     <textarea
                                         required
                                         rows={4}
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-8 text-white font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none placeholder:text-gray-700"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300"
                                         placeholder="Details of the event..."
                                     />
                                 </div>
 
-                                <div className="pt-6 flex justify-end items-center gap-8">
+                                <div className="pt-10 flex justify-end items-center gap-6 border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="text-[10px] font-black text-gray-500 hover:text-white transition-all uppercase tracking-[0.4em] italic"
+                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 transition-all uppercase tracking-[0.3em]"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
-                                        className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest"
+                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
                                     >
                                         <Check size={20} strokeWidth={3} />
                                         <span>Confirm Node</span>

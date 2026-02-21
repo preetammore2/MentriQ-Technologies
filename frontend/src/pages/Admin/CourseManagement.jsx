@@ -184,7 +184,7 @@ const CourseManagement = () => {
                             placeholder="Find a course..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
+                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full sm:w-64 font-bold text-sm tracking-tight"
                         />
                     </div>
                     <button
@@ -194,7 +194,7 @@ const CourseManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
                         <Plus size={18} />
                         <span>Add Course</span>
@@ -346,17 +346,17 @@ const CourseManagement = () => {
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Asset Identity (Card Background)</label>
                                             <div className="relative group">
                                                 <div className="w-full h-40 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 group-hover:border-indigo-400 transition-all overflow-hidden relative">
-                                                    {imageFile ? (
-                                                        <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
-                                                    ) : formData.image ? (
-                                                        <img src={resolveImageUrl(formData.image)} alt="Current" className="w-full h-full object-cover" />
+                                                    {imagePreview ? (
+                                                        <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                                                    ) : formData.thumbnailUrl ? (
+                                                        <img src={resolveImageUrl(formData.thumbnailUrl)} alt="Current" className="w-full h-full object-cover" />
                                                     ) : (
                                                         <>
                                                             <ImageIcon size={40} className="text-slate-400 group-hover:text-indigo-500 transition-colors" strokeWidth={1.5} />
                                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Inject Visual Asset</span>
                                                         </>
                                                     )}
-                                                    <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} className="absolute inset-0 opacity-0 cursor-pointer" />
+                                                    <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />
                                                 </div>
                                             </div>
                                         </div>

@@ -133,19 +133,19 @@ const JobPostManagement = () => {
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
                         <Briefcase size={28} className="text-indigo-600" />
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Job Opportunities</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Recruitment Hub</h2>
                         <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
-                            {jobs.length} External Posts
+                            {jobs.length} Active Slots
                         </span>
                     </div>
-                    <p className="text-slate-500 font-medium text-sm">Manage recruitment postings and external job links.</p>
+                    <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] mt-2">Manage industry opportunities and recruitment protocols.</p>
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-auto relative z-10">
                     <button
                         onClick={handleSeed}
                         disabled={seeding}
-                        className="bg-slate-50 hover:bg-slate-100 text-slate-600 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all border border-slate-200 text-sm"
+                        className="bg-slate-50 hover:bg-slate-100 text-slate-600 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all border border-slate-200 text-[10px] uppercase tracking-widest"
                     >
                         <Database size={18} className={seeding ? "animate-spin" : ""} />
                         <span>{seeding ? "Seeding..." : "Seed Samples"}</span>
@@ -156,7 +156,7 @@ const JobPostManagement = () => {
                             setFormData(initialFormState);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                     >
                         <Plus size={18} />
                         <span>Post New Job</span>
@@ -165,14 +165,14 @@ const JobPostManagement = () => {
             </div>
 
             {/* Content Search */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center gap-4 group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all shadow-sm">
-                <Search className="text-slate-400 ml-2" size={18} />
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center gap-4 group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all shadow-sm">
+                <Search className="text-slate-400 ml-5" size={18} />
                 <input
                     type="text"
-                    placeholder="Search by role, company, or location..."
+                    placeholder="Identify role, company, or location..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-2 w-full font-medium"
+                    className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-4 w-full font-bold text-sm tracking-tight"
                 />
             </div>
 
@@ -181,15 +181,15 @@ const JobPostManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/5 border-b border-white/10">
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Position</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Company & Location</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Type</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Status</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Position</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Company & Location</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Type</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Status</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-slate-100">
                             <AnimatePresence mode="popLayout">
                                 {loading ? (
                                     <tr>
@@ -216,49 +216,49 @@ const JobPostManagement = () => {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0 }}
-                                            className="hover:bg-white/[0.02] transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
-                                            <td className="px-6 py-5">
-                                                <div className="font-bold text-white text-sm">{job.title}</div>
+                                            <td className="px-8 py-6">
+                                                <div className="font-extrabold text-slate-900 text-base tracking-tight">{job.title}</div>
                                             </td>
-                                            <td className="px-6 py-5">
+                                            <td className="px-8 py-6">
                                                 <div className="flex flex-col">
-                                                    <span className="text-gray-300 text-xs font-medium uppercase tracking-wider">{job.company}</span>
-                                                    <span className="text-gray-500 text-[10px] mt-0.5">{job.location}</span>
+                                                    <span className="text-slate-900 text-xs font-bold uppercase tracking-wider">{job.company}</span>
+                                                    <span className="text-slate-500 text-[10px] font-medium uppercase tracking-widest mt-1">{job.location}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-indigo-400 text-[10px] font-black uppercase tracking-widest bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/10">
+                                            <td className="px-8 py-6">
+                                                <span className="text-indigo-600 text-[10px] font-black uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 shadow-sm">
                                                     {job.type}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${job.isActive ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10' : 'bg-red-500/10 text-red-400 border-red-500/10'}`}>
+                                            <td className="px-8 py-6">
+                                                <span className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border shadow-sm ${job.isActive ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-rose-50 text-rose-600 border-rose-100'}`}>
                                                     {job.isActive ? 'Active' : 'Inactive'}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex justify-end gap-3">
                                                     <a
                                                         href={job.applicationLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="p-2 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all shadow-sm"
-                                                        title="External Link"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm"
+                                                        title="Transmit Link"
                                                     >
                                                         <ExternalLink size={16} />
                                                     </a>
                                                     <button
                                                         onClick={() => handleEdit(job)}
-                                                        className="p-2 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all shadow-sm"
-                                                        title="Edit Job"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-slate-200 hover:border-indigo-100 shadow-sm"
+                                                        title="Refine Post"
                                                     >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(job._id)}
-                                                        className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                                                        title="Delete Job"
+                                                        className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100 shadow-sm"
+                                                        title="Terminate Post"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
@@ -281,23 +281,20 @@ const JobPostManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]"
+                            className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent shrink-0">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic flex items-center gap-4">
-                                        <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 border border-indigo-500/20 shadow-inner">
-                                            {editingJob ? <Edit2 size={24} strokeWidth={2.5} /> : <Plus size={28} strokeWidth={2.5} />}
-                                        </div>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
                                         {editingJob ? "Adjust Parameters" : "Initiate Protocol"}
-                                    </h2>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] mt-3 ml-18 bg-white/5 w-fit px-3 py-1 rounded-md">CORE_SYS: RECRU_MGMT_V2.0</p>
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Recruitment Node</p>
                                 </div>
                                 <button
                                     onClick={() => setIsModalOpen(false)}
-                                    className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"
+                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
                                 >
-                                    <X size={28} />
+                                    <X size={24} />
                                 </button>
                             </div>
 
@@ -306,12 +303,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Designated Role</label>
                                         <div className="relative group/field">
-                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
                                             <input
                                                 required
                                                 value={formData.title}
                                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Lead Kinetic Architect"
                                             />
                                         </div>
@@ -319,12 +316,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Affiliate Organization</label>
                                         <div className="relative group/field">
-                                            <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
                                             <input
                                                 required
                                                 value={formData.company}
                                                 onChange={e => setFormData({ ...formData, company: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="Organization ID"
                                             />
                                         </div>
@@ -335,12 +332,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Station Location</label>
                                         <div className="relative group/field">
-                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
                                             <input
                                                 required
                                                 value={formData.location}
                                                 onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Distributed Node"
                                             />
                                         </div>
@@ -348,16 +345,16 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Engagement Frequency</label>
                                         <div className="relative group/field">
-                                            <Clock size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Clock size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
                                             <select
                                                 value={formData.type}
                                                 onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a]"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none"
                                             >
-                                                <option className="bg-[#0f172a]">Full-time</option>
-                                                <option className="bg-[#0f172a]">Part-time</option>
-                                                <option className="bg-[#0f172a]">Internship</option>
-                                                <option className="bg-[#0f172a]">Contract</option>
+                                                <option>Full-time</option>
+                                                <option>Part-time</option>
+                                                <option>Internship</option>
+                                                <option>Contract</option>
                                             </select>
                                         </div>
                                     </div>
@@ -366,13 +363,13 @@ const JobPostManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Transmission Bridge (URL)</label>
                                     <div className="relative group/field">
-                                        <ExternalLink size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 transition-colors group-focus-within/field:text-indigo-500" />
+                                        <ExternalLink size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
                                         <input
                                             required
                                             type="url"
                                             value={formData.applicationLink}
                                             onChange={e => setFormData({ ...formData, applicationLink: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700 font-mono text-sm"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 font-mono text-sm"
                                             placeholder="https://hq.protocol.apply"
                                         />
                                     </div>
@@ -385,7 +382,7 @@ const JobPostManagement = () => {
                                         rows="4"
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-8 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none placeholder:text-gray-700 leading-relaxed italic"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic"
                                         placeholder="Outline the operational objectives..."
                                     />
                                 </div>
@@ -397,41 +394,48 @@ const JobPostManagement = () => {
                                         rows="4"
                                         value={formData.requirements}
                                         onChange={e => setFormData({ ...formData, requirements: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-8 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none placeholder:text-gray-700 leading-relaxed italic font-mono text-sm"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic font-mono text-sm"
                                         placeholder="List critical skills (comma separated)..."
                                     />
                                 </div>
 
-                                <div className="flex items-center gap-6 p-6 bg-white/[0.02] rounded-3xl border border-white/5">
+                                <div className="space-y-4">
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, isActive: !formData.isActive })}
-                                        className={`w-16 h-8 rounded-full transition-all relative shrink-0 ${formData.isActive ? 'bg-indigo-600 shadow-[0_0_20px_rgba(79,70,229,0.4)]' : 'bg-white/10 border border-white/10'}`}
+                                        className={`w-full p-6 rounded-3xl border transition-all flex items-center justify-between group/toggle ${formData.isActive ? 'bg-emerald-50 border-emerald-100' : 'bg-slate-50 border-slate-200'}`}
                                     >
-                                        <div className={`absolute top-1.5 w-5 h-5 rounded-full transition-all duration-300 ${formData.isActive ? 'left-9 bg-white' : 'left-2 bg-gray-600'}`} />
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${formData.isActive ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-slate-200 text-slate-400'}`}>
+                                                <Check size={20} strokeWidth={3} />
+                                            </div>
+                                            <div className="text-left">
+                                                <p className={`text-xs font-black uppercase tracking-widest ${formData.isActive ? 'text-emerald-900' : 'text-slate-600'}`}>Protocol Stance</p>
+                                                <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${formData.isActive ? 'text-emerald-600' : 'text-slate-400'}`}>{formData.isActive ? "Live Signal Activated" : "Intermittent Broadcast"}</p>
+                                            </div>
+                                        </div>
+                                        <div className={`w-14 h-7 rounded-full relative transition-all ${formData.isActive ? 'bg-emerald-500' : 'bg-slate-300'}`}>
+                                            <div className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all shadow-sm ${formData.isActive ? 'left-8' : 'left-1'}`} />
+                                        </div>
                                     </button>
-                                    <div className="flex flex-col">
-                                        <span className="text-xs font-black text-white uppercase tracking-widest">Protocol Stance</span>
-                                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">{formData.isActive ? "Live Signal Activated" : "Intermittent Broadcast"}</span>
-                                    </div>
                                 </div>
                             </form>
 
-                            <div className="p-10 border-t border-white/5 bg-gradient-to-t from-white/[0.02] to-transparent flex justify-end items-center gap-8 shrink-0">
+                            <div className="p-10 border-t border-slate-100 bg-slate-50/50 flex justify-end items-center gap-6 shrink-0">
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="text-[10px] font-black text-gray-500 hover:text-white transition-all uppercase tracking-[0.4em] italic"
+                                    className="text-[10px] font-black text-slate-400 hover:text-slate-900 transition-all uppercase tracking-[0.3em]"
                                 >
                                     Abort Session
                                 </button>
                                 <button
                                     form="jobForm"
                                     type="submit"
-                                    className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest"
+                                    className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
                                 >
                                     <Check size={20} strokeWidth={3} />
-                                    <span>{editingJob ? "Confirm Changes" : "Post Opportunity"}</span>
+                                    <span>{editingJob ? "Confirm Changes" : "Deploy Opportunity"}</span>
                                 </button>
                             </div>
                         </motion.div>

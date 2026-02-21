@@ -102,10 +102,10 @@ const AdminLayout = ({ children }) => {
                 {/* Logo Section */}
                 <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100">
                     <div className={`flex items-center gap-3 overflow-hidden ${!isSidebarOpen && 'lg:hidden'}`}>
-                        <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                            <span className="text-white font-bold text-xl">M</span>
+                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-sm overflow-hidden p-1">
+                            <img src="/images/logo.jpeg" alt="MentriQ Logo" className="w-full h-full object-contain" />
                         </div>
-                        <span className="text-slate-900 font-bold text-lg tracking-tight whitespace-nowrap">MentriQ Admin</span>
+                        <span className="text-slate-900 font-bold text-lg tracking-tight whitespace-nowrap">MentriQ</span>
                     </div>
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -200,9 +200,9 @@ const AdminLayout = ({ children }) => {
                     >
                         <Menu size={24} />
                     </button>
-                    <div className="ml-4 flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">M</span>
+                    <div className="ml-4 flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-white border border-slate-100 flex items-center justify-center p-1 shadow-sm overflow-hidden">
+                            <img src="/images/logo.jpeg" alt="MentriQ Logo" className="w-full h-full object-contain" />
                         </div>
                         <span className="text-slate-900 font-bold tracking-tight">MentriQ</span>
                     </div>

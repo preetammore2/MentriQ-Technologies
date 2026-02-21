@@ -132,72 +132,79 @@ const CertificateManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/5 border-b border-white/10">
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">ID</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Recipient</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Course</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Issued On</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Status</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Credential ID</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Recipient Identity</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Academic Program</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Authorization</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Status</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-slate-100">
                             {loading ? (
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-16 text-center">
-                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4" />
-                                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">Syncing Ledger...</p>
+                                    <td colSpan="6" className="px-8 py-16 text-center">
+                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
+                                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">Syncing Registry...</p>
                                     </td>
                                 </tr>
                             ) : filteredCerts.length === 0 ? (
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-16 text-center">
-                                        <Award size={32} className="text-gray-600 mx-auto mb-4" />
-                                        <h3 className="text-white font-bold mb-1">No Certificates Found</h3>
-                                        <button onClick={() => setIsModalOpen(true)} className="text-indigo-400 text-xs font-bold hover:text-indigo-300">Issue New Certificate</button>
+                                    <td colSpan="6" className="px-8 py-24 text-center">
+                                        <Award size={48} className="text-slate-200 mx-auto mb-4" />
+                                        <h3 className="text-slate-900 font-extrabold text-xl mb-2 tracking-tight uppercase">Ledger Empty</h3>
+                                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic mb-8">No credentials have been issued in this cycle.</p>
+                                        <button
+                                            onClick={() => setIsModalOpen(true)}
+                                            className="bg-indigo-600 text-white px-8 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                                        >
+                                            Initiate Issuance
+                                        </button>
                                     </td>
                                 </tr>
                             ) : (
                                 filteredCerts.map((cert) => (
-                                    <tr key={cert._id} className="hover:bg-white/[0.02] transition-colors group">
-                                        <td className="px-6 py-5">
-                                            <span className="font-mono text-[10px] text-indigo-400 bg-indigo-500/5 px-2 py-1 rounded-md border border-indigo-500/10">
+                                    <tr key={cert._id} className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-8 py-6">
+                                            <span className="font-mono text-[10px] text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 font-bold whitespace-nowrap">
                                                 {cert.certificateId}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <div className="font-bold text-white text-sm">{cert.studentName}</div>
-                                            <div className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-0.5">Grade: {cert.grade}</div>
+                                        <td className="px-8 py-6">
+                                            <div className="font-extrabold text-slate-900 text-base tracking-tight">{cert.studentName}</div>
+                                            <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1 italic">Performance: {cert.grade}</div>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className="text-gray-400 text-xs font-medium">{cert.courseName}</span>
+                                        <td className="px-8 py-6">
+                                            <div className="text-slate-600 text-sm font-bold tracking-tight mb-1">{cert.courseName}</div>
+                                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Mastery validation</div>
                                         </td>
-                                        <td className="px-6 py-5 text-gray-500 text-xs font-medium">
+                                        <td className="px-8 py-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                                             {new Date(cert.issueDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${cert.status === 'Revoked'
-                                                ? 'bg-red-500/10 text-red-400 border-red-500/10'
-                                                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10'
+                                        <td className="px-8 py-6">
+                                            <span className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${cert.status === 'Revoked'
+                                                ? 'bg-rose-50 text-rose-600 border-rose-100'
+                                                : 'bg-emerald-50 text-emerald-600 border-emerald-100'
                                                 }`}>
-                                                {cert.status || 'Verified'}
+                                                {cert.status || 'Authenticated'}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5 text-right">
-                                            <div className="flex items-center justify-end gap-2">
+                                        <td className="px-8 py-6 text-right">
+                                            <div className="flex items-center justify-end gap-3">
                                                 {cert.status !== 'Revoked' && (
                                                     <button
                                                         onClick={() => handleRevoke(cert._id)}
-                                                        className="p-2.5 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm outline-none"
-                                                        title="Revoke Certificate"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm outline-none active:scale-95"
+                                                        title="Revoke Credential"
                                                     >
                                                         <RotateCcw size={16} />
                                                     </button>
                                                 )}
                                                 <button
                                                     onClick={() => handleDelete(cert._id)}
-                                                    className="p-2.5 bg-white/5 text-gray-400 rounded-lg hover:bg-red-500/10 hover:text-red-400 transition-all shadow-sm outline-none"
-                                                    title="Delete Certificate"
+                                                    className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100 shadow-sm outline-none active:scale-95"
+                                                    title="Expunge Record"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -214,68 +221,78 @@ const CertificateManagement = () => {
             {/* Generation Modal */}
             <AnimatePresence>
                 {isModalOpen && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                        <MotionDiv
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                        />
                         <MotionDiv
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3.5rem] w-full max-w-2xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col"
+                            className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-[3rem] p-12 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col"
                         >
-                            <div className="p-12 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                            <div className="flex items-start justify-between gap-6 mb-12 shrink-0">
                                 <div>
-                                    <h2 className="text-4xl font-black text-white tracking-tight italic uppercase">Issue Credential</h2>
-                                    <p className="text-gray-500 mt-1 font-bold uppercase tracking-widest text-xs">Credential Generation Protocol</p>
+                                    <h3 className="text-4xl font-black text-slate-900 tracking-tight uppercase">Issue Credential</h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Status: Credential Generation Protocol</p>
                                 </div>
-                                <button onClick={() => setIsModalOpen(false)} className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="w-14 h-14 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                >
                                     <X size={28} />
                                 </button>
                             </div>
 
                             <form onSubmit={handleGenerate} className="p-12 space-y-10">
                                 <div className="space-y-8">
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Select Candidate</label>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Select Candidate Identity</label>
                                         <div className="relative group">
-                                            <Users size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                                            <Users size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-indigo-600 transition-colors" />
                                             <select
                                                 required
                                                 value={formData.userId}
                                                 onChange={e => setFormData({ ...formData, userId: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer"
                                             >
-                                                <option value="">Choose Student Account</option>
+                                                <option value="">Awaiting selection...</option>
                                                 {users.map(u => <option key={u._id} value={u._id}>{u.name} — {u.email}</option>)}
                                             </select>
-                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-indigo-600 transition-colors" />
                                         </div>
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Academic Program</label>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Academic Program Module</label>
                                         <div className="relative group">
-                                            <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                                            <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-indigo-600 transition-colors" />
                                             <select
                                                 required
                                                 value={formData.courseId}
                                                 onChange={e => setFormData({ ...formData, courseId: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer"
                                             >
-                                                <option value="">Select Target Curriculum</option>
+                                                <option value="">Select target curriculum...</option>
                                                 {courses.map(c => <option key={c._id} value={c._id}>{c.title}</option>)}
                                             </select>
-                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-indigo-600 transition-colors" />
                                         </div>
                                     </div>
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Aptitude Validation</label>
-                                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
+                                    <div className="space-y-6">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Aptitude Validation Index</label>
+                                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                                             {['A+', 'A', 'B+', 'B', 'C', 'Pass'].map(g => (
                                                 <button
                                                     key={g}
                                                     type="button"
                                                     onClick={() => setFormData({ ...formData, grade: g })}
-                                                    className={`py-6 rounded-2xl font-black transition-all border text-xs tracking-widest ${formData.grade === g
-                                                        ? 'bg-white text-black border-white shadow-[0_10px_30px_-5px_rgba(255,255,255,0.3)] scale-[1.08] z-10'
-                                                        : 'bg-white/5 text-gray-700 border-white/10 hover:bg-white/10 hover:text-white'
+                                                    className={`py-5 rounded-2xl font-black transition-all border text-[10px] tracking-widest uppercase ${formData.grade === g
+                                                        ? 'bg-slate-900 text-white border-slate-900 shadow-xl shadow-slate-900/10 scale-105 z-10'
+                                                        : 'bg-slate-50 text-slate-400 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
                                                         }`}
                                                 >
                                                     {g}
@@ -285,17 +302,17 @@ const CertificateManagement = () => {
                                     </div>
                                 </div>
 
-                                <div className="pt-6 flex justify-end gap-6 items-center">
+                                <div className="pt-10 flex justify-end gap-8 items-center border-t border-slate-100 -mx-12 px-12 -mb-12 bg-slate-50/50 mt-10">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
+                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
-                                        className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest"
+                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
                                     >
                                         <Award size={20} strokeWidth={3} />
                                         <span>Authorize & Dispatch</span>

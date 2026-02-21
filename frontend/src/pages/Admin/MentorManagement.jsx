@@ -32,6 +32,7 @@ const MentorManagement = () => {
     const [imageFile, setImageFile] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [isSyncing, setIsSyncing] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
     const toast = useToast();
 
     const initialFormState = {
@@ -123,6 +124,8 @@ const MentorManagement = () => {
             fetchMentors();
         } catch (err) {
             toast.error("Operation failed");
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -179,7 +182,7 @@ const MentorManagement = () => {
                             <button
                                 onClick={syncDefaultMentors}
                                 disabled={isSyncing}
-                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-sm whitespace-nowrap"
+                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap shadow-sm"
                             >
                                 <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
                                 <span>{isSyncing ? "Syncing..." : "Sync Mentors"}</span>
@@ -190,7 +193,7 @@ const MentorManagement = () => {
                             <input
                                 type="text"
                                 placeholder="Search experts..."
-                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -202,7 +205,7 @@ const MentorManagement = () => {
                                 setIsModalOpen(true);
                                 setImageFile(null);
                             }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                         >
                             <Plus size={18} />
                             <span>Add Mentor</span>
@@ -222,27 +225,27 @@ const MentorManagement = () => {
                                 ))}
                             </div>
                         ) : mentors.length === 0 ? (
-                            <div className="bg-white p-20 text-center">
-                                <div className="w-20 h-20 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-indigo-100 shadow-sm">
-                                    <User size={40} className="text-indigo-600" />
+                            <div className="bg-white p-32 text-center rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-indigo-300">
+                                <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 shadow-inner group-hover:scale-110 group-hover:bg-indigo-50 group-hover:text-indigo-400 transition-all">
+                                    <User size={48} strokeWidth={1.5} />
                                 </div>
-                                <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight">No Experts Registry</h3>
-                                <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The expert network is currently empty. Sync with the website defaults or manually add a new profile.</p>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight uppercase">Expert Registry Offline</h3>
+                                <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed uppercase tracking-widest text-[10px]">The expert network layer is currently void. Manual deployment required.</p>
+                                <div className="flex flex-col sm:flex-row gap-5 justify-center">
                                     <button
                                         onClick={syncDefaultMentors}
                                         disabled={isSyncing}
-                                        className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-emerald-100 transition-all active:scale-95"
+                                        className="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-indigo-600/20"
                                     >
                                         <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                                        {isSyncing ? "Syncing..." : "Sync From Website"}
+                                        {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
                                     </button>
                                     <button
                                         onClick={() => setIsModalOpen(true)}
-                                        className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/10 active:scale-95"
+                                        className="bg-slate-50 text-slate-600 border border-slate-200 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-100 active:scale-95 transition-all flex items-center gap-3 justify-center"
                                     >
                                         <Plus size={18} />
-                                        Manual Deployment
+                                        Manual Initialize
                                     </button>
                                 </div>
                             </div>
@@ -413,13 +416,13 @@ const MentorManagement = () => {
                                                 <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Brief professional synopsis..." />
                                             </div>
 
-                                            <div className="flex gap-4 pt-6 shrink-0">
-                                                <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all">
-                                                    Cancel
+                                            <div className="flex gap-4 pt-10 shrink-0 border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10">
+                                                <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-white text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-slate-900 border border-slate-200 transition-all">
+                                                    Abort Deployment
                                                 </button>
-                                                <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
-                                                    {submitting ? <RefreshCw size={16} className="animate-spin" /> : <Check size={16} />}
-                                                    {editingMentor ? "Commit Changes" : "Confirm Onboarding"}
+                                                <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-3 active:scale-95">
+                                                    {submitting ? <RefreshCw size={18} className="animate-spin" /> : <Check size={18} strokeWidth={3} />}
+                                                    <span>{editingMentor ? "Commit Sync" : "Deploy Expert"}</span>
                                                 </button>
                                             </div>
                                         </form>

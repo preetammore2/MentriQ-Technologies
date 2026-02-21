@@ -107,12 +107,12 @@ const FeedbackManagement = () => {
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
                         <MessageSquare size={28} className="text-indigo-600" />
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Testimonials</h2>
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Success Narratives</h2>
                         <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
-                            {feedbacks.length} Success Stories
+                            {feedbacks.length} Verified Briefings
                         </span>
                     </div>
-                    <p className="text-slate-500 font-medium text-sm">Manage student success stories displayed on the website.</p>
+                    <p className="text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] mt-2">Manage student success stories displayed on the website.</p>
                 </div>
                 <button
                     onClick={() => {
@@ -120,10 +120,10 @@ const FeedbackManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                 >
                     <Plus size={18} />
-                    <span>Add Testimonial</span>
+                    <span>Append Narrative</span>
                 </button>
             </div>
 
@@ -134,18 +134,18 @@ const FeedbackManagement = () => {
                     ))}
                 </div>
             ) : feedbacks.length === 0 ? (
-                <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-sm">
-                    <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-100">
-                        <MessageSquare size={32} className="text-indigo-600" />
+                <div className="bg-white border border-slate-200 border-dashed rounded-[3rem] p-24 text-center shadow-sm relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.03),transparent)]" />
+                    <div className="w-20 h-20 bg-slate-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-slate-100 text-slate-200 shadow-inner group-hover:scale-110 group-hover:rotate-3 transition-all">
+                        <MessageSquare size={40} strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">No Testimonials</h3>
-                    <p className="text-slate-500 mb-6">You haven't added any student testimonials yet.</p>
+                    <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight uppercase">Narrative Void</h3>
+                    <p className="text-slate-500 mb-8 max-w-xs mx-auto font-medium text-[10px] uppercase tracking-widest leading-relaxed">No student testimonials detected in the registry.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors flex items-center justify-center gap-2 mx-auto text-sm"
+                        className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
                     >
-                        <Plus size={18} />
-                        <span>Create First Feedback</span>
+                        Initiate First Narrative
                     </button>
                 </div>
             ) : (
@@ -153,13 +153,13 @@ const FeedbackManagement = () => {
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Student</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Message</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                <tr className="bg-slate-50 border-b border-slate-200">
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Student Profile</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Narrative Briefing</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100">
                                 <AnimatePresence mode="popLayout">
                                     {feedbacks.map((item) => (
                                         <MotionTr
@@ -170,42 +170,42 @@ const FeedbackManagement = () => {
                                             exit={{ opacity: 0 }}
                                             className="hover:bg-white/[0.02] transition-colors group"
                                         >
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
+                                            <td className="px-8 py-6">
+                                                <div className="flex items-center gap-4">
                                                     {item.image ? (
                                                         <img
                                                             src={resolveImageUrl(item.image, "/images/user.png")}
                                                             alt={item.name}
-                                                            className="w-10 h-10 rounded-xl object-cover border border-indigo-500/20"
+                                                            className="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-sm"
                                                             onError={(e) => { e.currentTarget.src = "/images/user.png"; }}
                                                         />
                                                     ) : (
-                                                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center font-bold text-indigo-400 border border-indigo-500/20">
+                                                        <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-indigo-600 border border-slate-200 text-xl">
                                                             {item.name.charAt(0)}
                                                         </div>
                                                     )}
                                                     <div>
-                                                        <div className="font-bold text-white">{item.name}</div>
-                                                        <div className="text-xs text-gray-500">{item.role}</div>
+                                                        <div className="font-extrabold text-slate-900 text-base tracking-tight">{item.name}</div>
+                                                        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">{item.role}</div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <p className="text-gray-400 text-sm line-clamp-2 max-w-md italic">"{item.message}"</p>
+                                            <td className="px-8 py-6">
+                                                <p className="text-slate-500 text-xs font-medium leading-relaxed max-w-md italic">"{item.message}"</p>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => openEditModal(item)}
-                                                        className="p-2.5 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all flex items-center gap-2"
-                                                        title="Edit"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm outline-none"
+                                                        title="Refine Narrative"
                                                     >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(item._id)}
-                                                        className="p-2.5 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all flex items-center gap-2"
-                                                        title="Delete"
+                                                        className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100 shadow-sm outline-none"
+                                                        title="Purge Narrative"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
@@ -232,45 +232,49 @@ const FeedbackManagement = () => {
                             className="absolute inset-0 bg-black/80 backdrop-blur-xl"
                         />
                         <MotionDiv
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="bg-[#0f172a] border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden shadow-2xl relative z-10"
+                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                            className="relative w-full max-w-xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight">{editingFeedback ? "Update Story" : "New Testimonial"}</h2>
-                                    <p className="text-gray-500 mt-1">Share the success of our students.</p>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
+                                        {editingFeedback ? "Refine Narrative" : "Init Narrative"}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Status: Student Success Protocols</p>
                                 </div>
-                                <button onClick={() => setIsModalOpen(false)} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                >
                                     <X size={24} />
                                 </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-10 space-y-8">
                                 <div className="space-y-6">
-                                    <div className="flex justify-center">
+                                    <div className="flex justify-center mb-4">
                                         <label className="relative group cursor-pointer">
-                                            <div className="w-28 h-28 rounded-3xl border-2 border-dashed border-white/15 bg-white/5 overflow-hidden flex items-center justify-center">
+                                            <div className="w-32 h-32 rounded-[2.5rem] border-2 border-dashed border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center transition-all group-hover:border-indigo-300 shadow-inner">
                                                 {imageFile ? (
                                                     <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
                                                 ) : formData.image ? (
                                                     <img src={resolveImageUrl(formData.image, "/images/user.png")} alt="Current" className="w-full h-full object-cover" />
                                                 ) : (
-                                                    <div className="flex flex-col items-center gap-1 text-gray-500">
-                                                        <Camera size={22} />
-                                                        <span className="text-[9px] font-bold uppercase tracking-wider">Add Photo</span>
+                                                    <div className="flex flex-col items-center gap-2 text-slate-300">
+                                                        <Camera size={28} strokeWidth={1.5} />
+                                                        <span className="text-[10px] font-black uppercase tracking-widest">Profile Identity</span>
                                                     </div>
                                                 )}
                                                 {uploading && (
-                                                    <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                                                        <div className="w-7 h-7 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                                    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+                                                        <div className="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white text-black rounded-xl px-3 py-1 text-[10px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                                                <Upload size={12} />
-                                                Upload
+                                            <div className="absolute -bottom-2 -right-2 bg-indigo-600 text-white rounded-2xl p-3 shadow-lg group-hover:scale-110 transition-all active:scale-95 border-4 border-white">
+                                                <Upload size={16} strokeWidth={3} />
                                             </div>
                                             <input
                                                 type="file"
@@ -280,56 +284,55 @@ const FeedbackManagement = () => {
                                             />
                                         </label>
                                     </div>
-                                    <div>
-                                        <label className="text-xs font-black text-indigo-400 uppercase tracking-[0.2em] block mb-3">The Experience</label>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">The Narrative Briefing</label>
                                         <textarea
                                             required
                                             rows={5}
                                             value={formData.message}
                                             onChange={e => setFormData({ ...formData, message: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-6 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all resize-none text-lg"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300"
                                             placeholder="What did the student say..."
                                         />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="text-xs font-black text-indigo-400 uppercase tracking-[0.2em] block mb-3">Student Name</label>
+                                    <div className="grid grid-cols-2 gap-8">
+                                        <div className="space-y-4">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Student Identity</label>
                                             <input
                                                 required
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Rahul Sharma"
                                             />
                                         </div>
-                                        <div>
-                                            <label className="text-xs font-black text-indigo-400 uppercase tracking-[0.2em] block mb-3">Course / Role</label>
+                                        <div className="space-y-4">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Vocation / Role</label>
                                             <input
                                                 required
                                                 value={formData.role}
                                                 onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
-                                                placeholder="e.g. MERN Stack Student"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                placeholder="e.g. MERN Developer"
                                             />
                                         </div>
                                     </div>
-                                    <div>
-                                        <label className="text-xs font-black text-indigo-400 uppercase tracking-[0.2em] block mb-3">Image URL (Optional)</label>
-                                        <input
-                                            value={formData.image}
-                                            onChange={e => setFormData({ ...formData, image: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/50 transition-all"
-                                            placeholder="https://example.com/photo.jpg"
-                                        />
-                                    </div>
                                 </div>
-                                <div className="pt-4">
+                                <div className="pt-10 flex justify-end items-center gap-6 border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 transition-all uppercase tracking-[0.3em]"
+                                    >
+                                        Abort
+                                    </button>
                                     <button
                                         type="submit"
                                         disabled={uploading}
-                                        className="w-full py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-[0_20px_40px_rgba(255,255,255,0.1)] transition-all active:scale-[0.98] text-lg uppercase tracking-widest"
+                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest disabled:opacity-50"
                                     >
-                                        {editingFeedback ? "Update Testimonial" : "Post Testimonial"}
+                                        <Plus size={20} strokeWidth={3} />
+                                        <span>Confirm Narrative</span>
                                     </button>
                                 </div>
                             </form>

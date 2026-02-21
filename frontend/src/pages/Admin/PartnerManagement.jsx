@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Link as LinkIcon, Handshake } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Link as LinkIcon, Handshake, RefreshCw, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 
@@ -189,7 +189,7 @@ const PartnerManagement = () => {
                             <button
                                 onClick={syncDefaultPartners}
                                 disabled={isSyncing}
-                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-sm whitespace-nowrap"
+                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                             >
                                 <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
                                 <span>{isSyncing ? "Syncing..." : "Sync Partners"}</span>
@@ -202,7 +202,7 @@ const PartnerManagement = () => {
                                 placeholder="Search partners..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
                             />
                         </div>
                         <button
@@ -211,7 +211,7 @@ const PartnerManagement = () => {
                                 setFormData(initialFormState);
                                 setIsModalOpen(true);
                             }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                         >
                             <Plus size={18} />
                             <span>Add Partner</span>
@@ -227,26 +227,26 @@ const PartnerManagement = () => {
                     </div>
                 ) : filteredPartners.length === 0 ? (
                     <div className="bg-white border border-slate-200 rounded-[2.5rem] p-32 text-center group shadow-sm">
-                        <div className="w-24 h-24 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-indigo-100 text-indigo-600 shadow-sm">
+                        <div className="w-24 h-24 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-indigo-100 text-indigo-600 shadow-sm">
                             <Building2 size={48} />
                         </div>
-                        <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">No Partners Found</h3>
-                        <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The hiring and corporate connection network is currently empty.</p>
+                        <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">Alliance Network Offline</h3>
+                        <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The hiring and corporate connection network is currently empty. Manual deployment required.</p>
                         <div className="flex flex-col sm:flex-row gap-5 justify-center">
                             <button
                                 onClick={syncDefaultPartners}
                                 disabled={isSyncing}
-                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-emerald-100 transition-all active:scale-95"
+                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest"
                             >
                                 <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                                {isSyncing ? "Synchronizing..." : "Sync From Website"}
+                                {isSyncing ? "Synchronizing..." : "Sync Global Entities"}
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/10 active:scale-95"
+                                className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 text-[10px] uppercase tracking-widest"
                             >
                                 <Plus size={18} />
-                                Add Manual Partner
+                                Initialize Registry
                             </button>
                         </div>
                     </div>
@@ -406,7 +406,7 @@ const PartnerManagement = () => {
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="flex-1 py-4.5 rounded-2xl bg-white text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-50 border border-slate-200 transition-all"
+                                        className="flex-1 py-4.5 rounded-2xl bg-white text-slate-600 font-bold text-[10px] uppercase tracking-widest hover:bg-slate-50 border border-slate-200 transition-all"
                                     >
                                         Dismiss
                                     </button>
@@ -414,7 +414,7 @@ const PartnerManagement = () => {
                                         form="partnerForm"
                                         type="submit"
                                         disabled={uploading || submitting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
+                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 active:scale-95"
                                     >
                                         <Check size={18} strokeWidth={3} />
                                         <span>{submitting ? "Processing..." : (editingPartner ? "Sync Changes" : "Deploy Entity")}</span>

@@ -196,7 +196,7 @@ const ServiceManagement = () => {
         const iconList = ['Globe', 'Smartphone', 'Code', 'Server', 'Shield', 'Database', 'Cloud', 'PenTool', 'Megaphone', 'Cpu', 'Layers', 'Zap'];
 
         return (
-            <div className="grid grid-cols-6 gap-2 mt-2">
+            <div className="grid grid-cols-6 gap-3 mt-3">
                 {iconList.map(iconName => {
                     const Icon = Icons[iconName] || Icons.Box;
                     return (
@@ -204,9 +204,9 @@ const ServiceManagement = () => {
                             key={iconName}
                             type="button"
                             onClick={() => setFormData({ ...formData, icon: iconName })}
-                            className={`p-3 rounded-xl flex items-center justify-center transition-all ${formData.icon === iconName && formData.iconType === 'icon'
-                                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            className={`p-4 rounded-xl flex items-center justify-center transition-all border ${formData.icon === iconName && formData.iconType === 'icon'
+                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/20'
+                                : 'bg-slate-50 text-slate-400 border-slate-100 hover:bg-slate-100 hover:text-slate-900'
                                 }`}
                         >
                             <Icon size={20} />
@@ -246,10 +246,10 @@ const ServiceManagement = () => {
                         <button
                             onClick={syncDefaultServices}
                             disabled={isSyncing}
-                            className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all whitespace-nowrap active:scale-95 text-sm"
+                            className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap shadow-sm"
                         >
-                            <Icons.RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                            <span>{isSyncing ? "Syncing..." : "Sync Services"}</span>
+                            <Icons.RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Global Services"}</span>
                         </button>
                     )}
                     <button
@@ -259,10 +259,10 @@ const ServiceManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                     >
                         <Icons.Plus size={18} />
-                        <span>Add New Service</span>
+                        <span>Deploy New Service</span>
                     </button>
                 </div>
             </div>
@@ -272,44 +272,44 @@ const ServiceManagement = () => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-white/5 border-b border-white/10">
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Icon</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Service Title</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Description</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                            <tr className="bg-slate-50 border-b border-slate-200">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Service Identifier</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Core Identity</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Functional Description</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-slate-100">
                             {loading ? (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-16 text-center">
-                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4" />
-                                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">Loading Services...</p>
+                                    <td colSpan="4" className="px-8 py-20 text-center">
+                                        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Loading Service Registry...</p>
                                     </td>
                                 </tr>
                             ) : services.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4" className="px-6 py-32 text-center bg-white/5">
-                                        <div className="w-20 h-20 bg-white/5 rounded-[2.5rem] flex items-center justify-center mx-auto mb-6 border border-white/10 text-gray-600">
-                                            <Icons.Layers size={40} />
+                                    <td colSpan="4" className="px-8 py-32 text-center bg-white">
+                                        <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 shadow-inner">
+                                            <Icons.Layers size={48} />
                                         </div>
-                                        <h3 className="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">No Services Detected</h3>
-                                        <p className="text-gray-500 mb-8 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The platform offerings are currently offline. Synchronize with website defaults or manually deploy a new service node.</p>
-                                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                        <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">Platform Offering Offline</h3>
+                                        <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The platform services layer is currently void. Initialize from defaults or deploy a manual node.</p>
+                                        <div className="flex flex-col sm:flex-row gap-5 justify-center">
                                             <button
                                                 onClick={syncDefaultServices}
                                                 disabled={isSyncing}
-                                                className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center shadow-xl shadow-white/5"
+                                                className="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-indigo-600/20"
                                             >
-                                                <Icons.RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} />
-                                                {isSyncing ? "Synchronizing..." : "Sync From Website"}
+                                                <Icons.RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
+                                                {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
                                             </button>
                                             <button
                                                 onClick={() => setIsModalOpen(true)}
-                                                className="bg-white/5 text-white border border-white/10 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
+                                                className="bg-slate-50 text-slate-600 border border-slate-200 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-100 active:scale-95 transition-all flex items-center gap-3 justify-center"
                                             >
-                                                <Icons.Plus size={16} />
-                                                Deploy Manual
+                                                <Icons.Plus size={18} />
+                                                Manual Initialize
                                             </button>
                                         </div>
                                     </td>
@@ -320,9 +320,9 @@ const ServiceManagement = () => {
                                     const Icon = !isImage ? (Icons[service.icon] || Icons.Box) : null;
 
                                     return (
-                                        <tr key={service._id} className="hover:bg-white/[0.02] transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-lg overflow-hidden bg-gradient-to-br ${service.color || 'from-indigo-500 to-purple-500'}`}>
+                                        <tr key={service._id} className="hover:bg-slate-50/50 transition-colors group">
+                                            <td className="px-8 py-6">
+                                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md overflow-hidden bg-gradient-to-br border border-white/20 p-3 group-hover:scale-110 transition-transform ${service.color || 'from-indigo-500 to-purple-500'}`}>
                                                     {isImage ? (
                                                         <img
                                                             src={resolveImageUrl(service.icon)}
@@ -331,30 +331,34 @@ const ServiceManagement = () => {
                                                             onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/40?text=Srvc"; }}
                                                         />
                                                     ) : (
-                                                        <Icon size={20} />
+                                                        <Icon size={24} />
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <div className="font-bold text-white text-sm uppercase tracking-wide italic">{service.title}</div>
-                                                <div className="text-[10px] text-gray-500 font-mono mt-0.5">{service._id.slice(-8).toUpperCase()}</div>
+                                            <td className="px-8 py-6">
+                                                <div className="font-extrabold text-slate-900 tracking-tight text-base mb-1">{service.title}</div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol ID</span>
+                                                    <div className="h-1 w-1 rounded-full bg-slate-300" />
+                                                    <span className="text-[10px] font-mono font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">{service._id.slice(-8).toUpperCase()}</span>
+                                                </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <p className="text-gray-400 text-xs line-clamp-2 max-w-lg leading-relaxed">{service.description}</p>
+                                            <td className="px-8 py-6">
+                                                <p className="text-slate-500 text-sm font-medium line-clamp-2 max-w-md leading-relaxed">{service.description}</p>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => handleEdit(service)}
-                                                        className="p-2 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all shadow-sm outline-none"
-                                                        title="Edit Service"
+                                                        className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-slate-200 hover:border-indigo-100"
+                                                        title="Refine Capability"
                                                     >
                                                         <Icons.Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(service._id)}
-                                                        className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm outline-none"
-                                                        title="Delete Service"
+                                                        className="p-3 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
+                                                        title="Terminate Capability"
                                                     >
                                                         <Icons.Trash2 size={16} />
                                                     </button>
@@ -377,32 +381,34 @@ const ServiceManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]"
+                            className="bg-white border border-slate-200 rounded-[3rem] w-full max-w-2xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
                         >
-                            <div className="p-8 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent shrink-0">
+                            <div className="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 shrink-0">
                                 <div>
-                                    <h2 className="text-2xl font-black text-white tracking-tight">{editingService ? "Update System" : "Integrate Service"}</h2>
-                                    <p className="text-gray-500 text-xs mt-1 font-bold uppercase tracking-widest">Global Offering Config</p>
+                                    <h2 className="text-3xl font-black text-slate-900 tracking-tight uppercase">{editingService ? "Configure System" : "Onboard Capability"}</h2>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Service Infrastructure Hub</p>
                                 </div>
-                                <button onClick={closeModal} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><Icons.X size={20} /></button>
+                                <button onClick={closeModal} className="w-12 h-12 bg-slate-50 rounded-2xl text-slate-400 hover:text-slate-900 transition-all border border-slate-200 flex items-center justify-center shrink-0">
+                                    <Icons.X size={24} />
+                                </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto custom-scrollbar">
+                            <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar flex-1">
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Icon Representation</label>
-                                        <div className="flex bg-white/5 rounded-lg p-1 border border-white/10">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Icon Representation</label>
+                                        <div className="flex bg-slate-50 rounded-xl p-1 border border-slate-200">
                                             <button
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, iconType: 'icon' })}
-                                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${formData.iconType === 'icon' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'icon' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
                                             >
                                                 Standard Icon
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, iconType: 'image' })}
-                                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${formData.iconType === 'image' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'image' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
                                             >
                                                 Custom Image
                                             </button>
@@ -412,92 +418,92 @@ const ServiceManagement = () => {
                                     {formData.iconType === 'icon' ? (
                                         <IconSelector />
                                     ) : (
-                                        <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-300">
-                                            <div className="w-20 h-20 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                                        <div className="flex items-center gap-6 animate-in fade-in slide-in-from-top-4 duration-500 bg-slate-50 p-6 rounded-[2rem] border border-slate-200">
+                                            <div className="w-24 h-24 bg-white rounded-2xl border border-slate-100 flex items-center justify-center overflow-hidden shrink-0 shadow-inner p-3">
                                                 {imagePreview ? (
-                                                    <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                                                    <img src={imagePreview} alt="Preview" className="w-full h-full object-contain" />
                                                 ) : (
-                                                    <Icons.Image className="text-gray-600" size={24} />
+                                                    <Icons.Image className="text-slate-200" size={32} />
                                                 )}
                                             </div>
-                                            <div className="flex-1">
+                                            <div className="flex-1 space-y-3">
                                                 <input
                                                     type="file"
                                                     accept="image/*"
                                                     onChange={handleImageChange}
-                                                    className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20"
+                                                    className="w-full text-[10px] text-slate-400 file:mr-6 file:py-3 file:px-6 file:rounded-xl file:border-slate-200 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-white file:text-slate-600 hover:file:bg-slate-50 transition-all"
                                                 />
-                                                <p className="text-xs text-gray-600 mt-2">Upload a custom SVG, PNG, or JPG icon.</p>
+                                                <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Recommended: Transparent PNG (64x64)</p>
                                             </div>
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Display Title</label>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Capability Designation</label>
                                     <input
                                         required
                                         value={formData.title}
                                         onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
-                                        placeholder="Service Title"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300"
+                                        placeholder="e.g. Neural Architecture Design"
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Explanatory Brief</label>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Functional Abstract</label>
                                     <textarea
                                         required
-                                        rows={4}
+                                        rows={3}
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed"
-                                        placeholder="Describe the service complexity..."
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
+                                        placeholder="Detailed functional brief..."
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Key Features (One per line)</label>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Module Features (New line per feature)</label>
                                     <textarea
                                         rows={4}
                                         value={formData.features}
                                         onChange={e => setFormData({ ...formData, features: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed font-mono text-xs"
-                                        placeholder="e.g. 24/7 Support&#10;Cloud Integration&#10;Security First"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-bold text-xs focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300 resize-none leading-loose uppercase tracking-widest"
+                                        placeholder="DEPLOYMENT STRATEGY 2.0&#10;QUANTUM ENCRYPTION HUB&#10;REAL-TIME ANALYTICS CLOUD"
                                     />
                                 </div>
 
                                 <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Theme Gradient</label>
-                                    <div className="grid grid-cols-3 gap-3">
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Visual Gradient Signature</label>
+                                    <div className="grid grid-cols-3 gap-4">
                                         {GRADIENTS.map((gradient) => (
                                             <button
                                                 key={gradient.value}
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, color: gradient.value })}
-                                                className={`relative p-3 rounded-xl border transition-all overflow-hidden group ${formData.color === gradient.value ? 'border-white ring-2 ring-indigo-500/50' : 'border-white/5 hover:border-white/20'}`}
+                                                className={`relative p-5 rounded-2xl border transition-all overflow-hidden group ${formData.color === gradient.value ? 'border-indigo-600 ring-4 ring-indigo-500/5 shadow-md' : 'border-slate-100 hover:border-slate-300 bg-slate-50'}`}
                                             >
-                                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient.value} opacity-80 group-hover:opacity-100 transition-opacity`} />
-                                                <span className="relative z-10 text-[10px] font-bold text-white uppercase tracking-wider drop-shadow-md">{gradient.label}</span>
+                                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient.value} opacity-90 group-hover:opacity-100 transition-opacity`} />
+                                                <span className="relative z-10 text-[9px] font-black text-white uppercase tracking-[0.2em] drop-shadow-md">{gradient.label}</span>
                                             </button>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="pt-6 flex justify-end gap-3 items-center shrink-0">
+                                <div className="pt-10 flex justify-end gap-6 items-center shrink-0 border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10">
                                     <button
                                         type="button"
                                         onClick={closeModal}
                                         disabled={submitting}
-                                        className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-6 py-3 rounded-2xl hover:bg-white/10"
+                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="px-8 py-3 rounded-[1rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3 disabled:opacity-70 disabled:hover:scale-100"
+                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
                                     >
-                                        {submitting ? <Icons.Loader2 size={20} className="animate-spin" /> : <Icons.Check size={20} strokeWidth={3} />}
-                                        <span>{submitting ? "Saving..." : "Confirm Save"}</span>
+                                        {submitting ? <Icons.Loader2 size={18} className="animate-spin" /> : <Icons.Check size={18} strokeWidth={3} />}
+                                        <span>{submitting ? "Commit Changes..." : "Confirm Deployment"}</span>
                                     </button>
                                 </div>
                             </form>

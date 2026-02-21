@@ -111,93 +111,109 @@ const SettingsManagement = () => {
         }
     };
 
-    if (loading) return <div className="p-10 text-center text-white">Loading Settings...</div>;
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+            <div className="w-12 h-12 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin" />
+            <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">Identifying System Parameters...</p>
+        </div>
+    );
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Global Settings</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage contact information and social media links.</p>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
+                    <Globe size={200} />
+                </div>
+                <div className="relative z-10">
+                    <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Global Parameters</h2>
+                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
+                        <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 shadow-sm font-black">System Wide</span>
+                        <span className="opacity-70">Manage contact information and social media entry points.</span>
+                    </p>
                 </div>
             </div>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Contact Info */}
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6">
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        <MapPin size={20} className="text-indigo-400" />
-                        Contact Information
+                <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm space-y-8 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
+
+                    <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 relative z-10">
+                        <MapPin size={14} className="text-indigo-600" />
+                        Communication Nodes
                     </h3>
 
-                    <div className="space-y-4">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Official Email</label>
-                            <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                    <div className="space-y-6 relative z-10">
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Official Uplink</label>
+                            <div className="relative group/field">
+                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-indigo-600 transition-colors" size={18} />
                                 <input
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
-                                    placeholder="support@example.com"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                    placeholder="support@mentriq.in"
                                 />
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Phone Number</label>
-                            <div className="relative">
-                                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Vocal Interface</label>
+                            <div className="relative group/field">
+                                <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-indigo-600 transition-colors" size={18} />
                                 <input
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleChange}
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                     placeholder="+91 98765 43210"
                                 />
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Physical Address</label>
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Physical Coordinates</label>
                             <textarea
                                 name="address"
                                 rows={3}
                                 value={formData.address}
                                 onChange={handleChange}
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600 resize-none leading-relaxed"
-                                placeholder="123 Tech Park..."
+                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
+                                placeholder="Headquarters details..."
                             />
                         </div>
-
                     </div>
                 </div>
 
                 {/* Social Media Links */}
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6">
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        <Globe size={20} className="text-blue-400" />
-                        Social Media Links
+                <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm space-y-8 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
+
+                    <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 relative z-10">
+                        <Globe size={14} className="text-indigo-600" />
+                        Network Integration
                     </h3>
 
-                    <div className="space-y-4">
+                    <div className="space-y-5 relative z-10">
                         {[
-                            { key: 'instagram', label: 'Instagram URL', icon: Instagram, color: 'text-pink-500' },
-                            { key: 'linkedin', label: 'LinkedIn URL', icon: Linkedin, color: 'text-blue-600' },
-                            { key: 'twitter', label: 'Twitter / X URL', icon: Twitter, color: 'text-sky-400' },
-                            { key: 'whatsapp', label: 'WhatsApp Number/Link', icon: MessageCircle, color: 'text-emerald-500' }
+                            { key: 'instagram', label: 'Meta Visual Access', icon: Instagram, color: 'text-rose-500', bg: 'bg-rose-50', border: 'border-rose-100' },
+                            { key: 'linkedin', label: 'Professional Matrix', icon: Linkedin, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' },
+                            { key: 'twitter', label: 'Micro Signal Stream', icon: Twitter, color: 'text-slate-700', bg: 'bg-slate-50', border: 'border-slate-200' },
+                            { key: 'whatsapp', label: 'Direct Sync Channel', icon: MessageCircle, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' }
                         ].map((social) => (
                             <div key={social.key} className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">{social.label}</label>
-                                <div className="relative">
-                                    <social.icon className={`absolute left-4 top-1/2 -translate-y-1/2 ${social.color}`} size={16} />
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">{social.label}</label>
+                                <div className="relative group/field">
+                                    <div className={`absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 ${social.bg} ${social.border} border rounded-lg flex items-center justify-center transition-transform group-focus-within/field:scale-110`}>
+                                        <social.icon className={`${social.color}`} size={14} strokeWidth={2.5} />
+                                    </div>
                                     <input
                                         name={`social.${social.key}`}
                                         value={formData.socialLinks[social.key]}
                                         onChange={handleChange}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pl-12 text-white font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-600"
-                                        placeholder={`Enter ${social.key} link...`}
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 pl-16 text-slate-800 font-black text-xs focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                        placeholder={`Enter ${social.key} destination...`}
                                     />
                                 </div>
                             </div>
@@ -206,43 +222,54 @@ const SettingsManagement = () => {
                 </div>
 
                 {/* Homepage Key Metrics */}
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 shadow-xl space-y-6 lg:col-span-2">
-                    <div className="flex justify-between items-center">
-                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                            <TrendingUp size={20} className="text-emerald-400" />
-                            Homepage Key Metrics
-                        </h3>
-                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest hidden sm:block">Update Display Value Overrides</p>
+                <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm space-y-8 lg:col-span-2 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-slate-50/50 rounded-full blur-3xl -mr-32 -mt-32" />
+
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
+                        <div>
+                            <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3">
+                                <TrendingUp size={14} className="text-emerald-500" />
+                                Ecosystem Output Metrics
+                            </h3>
+                            <p className="text-slate-500 font-medium text-xs mt-1">Manual overrides for homepage impact statistics.</p>
+                        </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
                         {[
-                            { key: 'students', label: 'Students Trained', placeholder: '10K+' },
-                            { key: 'courses', label: 'Live Courses', placeholder: '50+' },
-                            { key: 'placements', label: 'Placement Rate', placeholder: '98%' },
-                            { key: 'trainers', label: 'Expert Trainers', placeholder: '60+' }
+                            { key: 'students', label: 'Active Enrollees', placeholder: '10K+', icon: Users },
+                            { key: 'courses', label: 'Live Modules', placeholder: '50+', icon: BookOpen },
+                            { key: 'placements', label: 'Success Velocity', placeholder: '98%', icon: TrendingUp },
+                            { key: 'trainers', label: 'Expert Nodes', placeholder: '60+', icon: UserRound }
                         ].map((stat) => (
-                            <div key={stat.key} className="space-y-2">
-                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">{stat.label}</label>
+                            <div key={stat.key} className="space-y-3 p-6 bg-slate-50 border border-slate-100 rounded-3xl transition-all hover:bg-white hover:border-indigo-200 hover:shadow-lg group/stat">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</label>
                                 <input
                                     name={`stat.${stat.key}`}
                                     value={formData.siteStats[stat.key]}
                                     onChange={handleChange}
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black text-lg focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700"
+                                    className="w-full bg-transparent border-none p-0 text-slate-900 font-black text-2xl focus:outline-none placeholder:text-slate-200"
                                     placeholder={stat.placeholder}
                                 />
+                                <div className="h-1 w-8 bg-indigo-100 rounded-full group-hover/stat:w-full group-hover/stat:bg-indigo-500 transition-all duration-500" />
                             </div>
                         ))}
                     </div>
 
-                    <div className="pt-6 flex justify-end">
+                    <div className="pt-4 flex justify-end relative z-10">
                         <button
                             type="submit"
                             disabled={saving}
-                            className="w-full md:w-auto px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70"
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-10 py-5 rounded-2xl font-black flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-[0.2em] w-full md:w-auto justify-center"
                         >
-                            <Save size={20} strokeWidth={3} />
-                            <span>{saving ? "Deploying Intel..." : "Deploy New Metrics"}</span>
+                            {saving ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                <>
+                                    <Save size={18} strokeWidth={2.5} />
+                                    <span>Sync All Parameters</span>
+                                </>
+                            )}
                         </button>
                     </div>
                 </div>

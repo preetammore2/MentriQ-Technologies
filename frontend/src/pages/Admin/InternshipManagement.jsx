@@ -173,14 +173,14 @@ const InternshipManagement = () => {
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>
-                                        <tr className="bg-white/5 border-b border-white/10">
-                                            <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Position & Company</th>
-                                            <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Type & Location</th>
-                                            <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Duration</th>
-                                            <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                        <tr className="bg-slate-50 border-b border-slate-200">
+                                            <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Position & Corporate Identity</th>
+                                            <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Deployment Type</th>
+                                            <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Mission Clock</th>
+                                            <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-white/5">
+                                    <tbody className="divide-y divide-slate-100">
                                         <AnimatePresence mode="popLayout">
                                             {internships.map((internship) => (
                                                 <motion.tr
@@ -189,32 +189,35 @@ const InternshipManagement = () => {
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
                                                     exit={{ opacity: 0 }}
-                                                    className="hover:bg-white/[0.02] transition-colors group"
+                                                    className="hover:bg-slate-50/50 transition-colors group"
                                                 >
-                                                    <td className="px-6 py-5">
-                                                        <div className="font-bold text-white text-sm">{internship.title}</div>
-                                                        <div className="text-[10px] text-gray-500 font-black uppercase tracking-wider mt-0.5">{internship.company}</div>
+                                                    <td className="px-8 py-6">
+                                                        <div className="font-extrabold text-slate-900 text-base tracking-tight">{internship.title}</div>
+                                                        <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1 italic">{internship.company} / HQ</div>
                                                     </td>
-                                                    <td className="px-6 py-5">
-                                                        <div className="flex flex-col gap-1">
-                                                            <span className="text-xs text-gray-400">{internship.location}</span>
-                                                            <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{internship.type}</span>
+                                                    <td className="px-8 py-6">
+                                                        <div className="flex flex-col gap-1.5">
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                                <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">{internship.type}</span>
+                                                            </div>
+                                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{internship.location}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-5">
-                                                        <span className="text-gray-400 text-xs font-medium">{internship.duration}</span>
+                                                    <td className="px-8 py-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+                                                        {internship.duration}
                                                     </td>
-                                                    <td className="px-6 py-5 text-right">
-                                                        <div className="flex justify-end gap-2">
+                                                    <td className="px-8 py-6 text-right">
+                                                        <div className="flex justify-end gap-3">
                                                             <button
                                                                 onClick={() => openEditModal(internship)}
-                                                                className="p-2 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all outline-none"
+                                                                className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all border border-slate-200 shadow-sm outline-none active:scale-95"
                                                             >
                                                                 <Edit2 size={16} />
                                                             </button>
                                                             <button
                                                                 onClick={() => handleDelete(internship._id)}
-                                                                className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all outline-none"
+                                                                className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100 shadow-sm outline-none active:scale-95"
                                                             >
                                                                 <Trash2 size={16} />
                                                             </button>
@@ -232,52 +235,52 @@ const InternshipManagement = () => {
             )}
 
             {activeTab === "applications" && (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Candidate</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Role</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Applied Date</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Status</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                <tr className="bg-slate-50 border-b border-slate-200">
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Candidate Identity</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Target Role</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Submission Timestamp</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Status Index</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Protocol</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100">
                                 {applications.map(app => (
-                                    <tr key={app._id} className="hover:bg-white/[0.02] transition-colors group">
-                                        <td className="px-6 py-5">
-                                            <div className="font-bold text-white text-sm">{app.user?.name || "Candidate"}</div>
-                                            <div className="text-[10px] text-gray-500 font-bold tracking-wider mt-0.5">{app.email}</div>
+                                    <tr key={app._id} className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-8 py-6">
+                                            <div className="font-extrabold text-slate-900 text-base tracking-tight">{app.user?.name || "Candidate"}</div>
+                                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 italic">{app.email}</div>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className="text-gray-300 text-xs font-bold uppercase tracking-widest">{app.internship?.title || "N/A"}</span>
+                                        <td className="px-8 py-6">
+                                            <div className="text-slate-600 text-[10px] font-extrabold uppercase tracking-widest">{app.internship?.title || "N/A"}</div>
                                         </td>
-                                        <td className="px-6 py-5 text-gray-500 text-xs font-medium uppercase">
+                                        <td className="px-8 py-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">
                                             {new Date(app.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${app.status === 'accepted' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10' :
-                                                app.status === 'rejected' ? 'bg-red-500/10 text-red-400 border-red-500/10' :
-                                                    'bg-indigo-500/10 text-indigo-400 border-indigo-500/10'
+                                        <td className="px-8 py-6">
+                                            <span className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${app.status === 'accepted' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                                                app.status === 'rejected' ? 'bg-rose-50 text-rose-600 border-rose-100' :
+                                                    'bg-indigo-50 text-indigo-600 border-indigo-100'
                                                 }`}>
                                                 {app.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-5 text-right">
+                                        <td className="px-8 py-6 text-right">
                                             <div className="relative inline-block group">
                                                 <select
                                                     value={app.status}
                                                     onChange={(e) => handleApplicationStatus(app._id, e.target.value)}
-                                                    className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 pr-10 text-[10px] font-black uppercase text-gray-400 tracking-widest outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer hover:text-white transition-all appearance-none"
+                                                    className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 pr-10 text-[10px] font-black uppercase text-slate-500 tracking-widest outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 cursor-pointer hover:bg-slate-100 transition-all appearance-none"
                                                 >
                                                     <option value="pending">Pending</option>
                                                     <option value="reviewing">Reviewing</option>
                                                     <option value="accepted">Accepted</option>
                                                     <option value="rejected">Rejected</option>
                                                 </select>
-                                                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-slate-900 transition-colors" />
                                             </div>
                                         </td>
                                     </tr>
@@ -286,8 +289,11 @@ const InternshipManagement = () => {
                         </table>
                     </div>
                     {applications.length === 0 && (
-                        <div className="p-16 text-center text-gray-500 font-bold uppercase tracking-widest text-sm">
-                            No applications found.
+                        <div className="p-24 text-center">
+                            <FileText size={48} className="text-slate-100 mx-auto mb-4" />
+                            <p className="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors bg-slate-50 px-8 py-3 rounded-full inline-block border border-slate-100">
+                                Recruitment Feed Silent
+                            </p>
                         </div>
                     )}
                 </div>
@@ -296,87 +302,102 @@ const InternshipManagement = () => {
             {/* Modal for Posts */}
             <AnimatePresence>
                 {isModalOpen && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+                        />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]"
+                            className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent shrink-0">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight uppercase italic">{editingInternship ? "Refine Position" : "Initial Broadcast"}</h2>
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mt-1">Deployment Module V2.4</p>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
+                                        {editingInternship ? "Refine Position" : "Initial Broadcast"}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Status: Deployment Module V2.4</p>
                                 </div>
-                                <button onClick={() => setIsModalOpen(false)} className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10">
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="w-14 h-14 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                >
                                     <X size={28} />
                                 </button>
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar flex-1">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Mission Title</label>
-                                        <div className="relative">
-                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" />
+                                    <div className="md:col-span-2 space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Mission Identifier</label>
+                                        <div className="relative group">
+                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors" />
                                             <input
                                                 required
                                                 value={formData.title}
                                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
-                                                placeholder="e.g. Neural Architecture Specialist"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300"
+                                                placeholder="e.g. Fullstack Engineer Terminal"
                                             />
                                         </div>
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Base of Operations</label>
-                                        <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700" placeholder="Organization ID" />
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Base of Operations</label>
+                                        <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300" placeholder="Organization Identity" />
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Geographic Coordinates</label>
-                                        <input required value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700" placeholder="e.g. Global Distributed" />
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Geographical Domain</label>
+                                        <input required value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300" placeholder="e.g. Distributed Network" />
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Cycle Length</label>
-                                        <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all placeholder:text-gray-700" placeholder="e.g. 12 Solar Weeks" />
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Protocol Type</label>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Cycle Length</label>
                                         <div className="relative group">
-                                            <select value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer">
+                                            <Calendar size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors" />
+                                            <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300" placeholder="e.g. 12 Solar Weeks" />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Protocol execution Mode</label>
+                                        <div className="relative group">
+                                            <select value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer">
                                                 <option value="Remote">Remote Execution</option>
                                                 <option value="On-site">Physical Presence</option>
                                                 <option value="Hybrid">Hybrid Mesh</option>
                                             </select>
-                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 group-hover:text-indigo-600 transition-colors pointer-events-none" />
                                         </div>
                                     </div>
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Operational Briefing</label>
-                                        <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none placeholder:text-gray-700 leading-relaxed" placeholder="Detailed mission objectives..." />
+                                    <div className="md:col-span-2 space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Operational Briefing</label>
+                                        <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300 min-h-[120px] resize-none leading-relaxed" placeholder="Detailed mission objectives..." />
                                     </div>
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Competency Stack (One per line)</label>
-                                        <textarea required rows={5} value={formData.requirements} onChange={e => setFormData({ ...formData, requirements: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none font-mono text-sm placeholder:text-gray-700" placeholder="◈ Deep Learning Fundamentals&#10;◈ High-Scale System Design" />
+                                    <div className="md:col-span-2 space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Competency Stack (Single Entry per Line)</label>
+                                        <textarea required rows={5} value={formData.requirements} onChange={e => setFormData({ ...formData, requirements: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-bold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300 min-h-[160px] resize-none leading-loose font-mono text-xs" placeholder="◈ Deep Learning Fundamentals&#10;◈ High-Scale System Design" />
                                     </div>
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Screening Questions (One per line)</label>
-                                        <textarea rows={5} value={formData.questions} onChange={e => setFormData({ ...formData, questions: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all resize-none font-mono text-sm placeholder:text-gray-700" placeholder="? Why do you want to join MentriQ?&#10;? Describe a challenging project you worked on." />
+                                    <div className="md:col-span-2 space-y-4">
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Cognitive Screening Matrix (One per Line)</label>
+                                        <textarea rows={5} value={formData.questions} onChange={e => setFormData({ ...formData, questions: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-bold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300 min-h-[160px] resize-none leading-loose font-mono text-xs" placeholder="? Why do you want to join MentriQ?&#10;? Describe a challenging project you worked on." />
                                     </div>
                                 </div>
-                                <div className="flex justify-end gap-6 items-center">
+                                <div className="pt-10 flex justify-end gap-8 items-center border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10 shrink-0">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
+                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
-                                        className="bg-white text-black px-12 py-5 rounded-[1.5rem] font-black flex items-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-sm uppercase tracking-widest"
+                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
                                     >
-                                        <Plus size={20} strokeWidth={3} />
+                                        <Check size={20} strokeWidth={3} />
                                         <span>Initialize Broadcast</span>
                                     </button>
                                 </div>
