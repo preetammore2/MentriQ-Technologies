@@ -4,7 +4,9 @@ const envBaseURL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$
 
 const resolvedBaseURL = import.meta.env.DEV
   ? (envBaseURL || 'http://localhost:5000/api')
-  : (envBaseURL || '/api');
+  : (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+    ? '/api'
+    : (envBaseURL || '/api'));
 
 if (import.meta.env.DEV) {
   console.log('🚀 MentriQ API Base URL:', resolvedBaseURL);
