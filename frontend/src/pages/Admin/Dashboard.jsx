@@ -31,31 +31,35 @@ import {
     Cell
 } from "recharts";
 
-const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0, isVelocity = false }) => (
+const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0 }) => (
     <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 0.4 }}
-        className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-lg transition-all group relative overflow-hidden"
+        transition={{ delay, duration: 0.5, ease: "easeOut" }}
+        className="bg-white p-7 rounded-[2.5rem] border border-slate-200 hover:border-indigo-300 hover:shadow-[0_15px_40px_-15px_rgba(79,70,229,0.15)] transition-all group relative overflow-hidden"
     >
         <div className="flex justify-between items-start relative z-10">
             <div>
-                <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-wider mb-2">{title}</p>
-                <h3 className="text-3xl font-bold text-slate-900 tracking-tight">
-                    {typeof value === 'number' ? value.toLocaleString() : value}
-                </h3>
+                <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">{title}</p>
+                <div className="flex items-baseline gap-2">
+                    <h3 className="text-4xl font-extrabold text-slate-900 tracking-tighter">
+                        {typeof value === 'number' ? value.toLocaleString() : value}
+                    </h3>
+                </div>
                 {trend !== 0 && (
-                    <div className={`flex items-center gap-1.5 mt-2 transition-transform group-hover:translate-x-1 ${trend > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                        {trend > 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                        <span className="text-xs font-bold leading-none">{Math.abs(trend)}% {isVelocity ? 'Velocity' : 'Growth'}</span>
+                    <div className={`flex items-center gap-2 mt-4 transition-transform group-hover:translate-x-1 ${trend > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        <div className={`p-1 rounded-md ${trend > 0 ? 'bg-emerald-50' : 'bg-rose-50'}`}>
+                            {trend > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                        </div>
+                        <span className="text-[11px] font-bold tracking-tight">{Math.abs(trend)}% Velocity</span>
                     </div>
                 )}
             </div>
-            <div className={`p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center transition-all group-hover:scale-110 group-hover:bg-indigo-50 group-hover:border-indigo-100 relative`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Icon className="w-6 h-6 text-slate-400 group-hover:text-indigo-600 transition-colors relative z-10" strokeWidth={1.5} />
+            <div className={`p-4 rounded-[1.5rem] ${color} bg-opacity-[0.08] backdrop-blur-sm border border-slate-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ring-4 ring-transparent group-hover:ring-slate-50`}>
+                <Icon className={`w-7 h-7 ${color.replace('bg-', 'text-')}`} strokeWidth={2.5} />
             </div>
         </div>
+        <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-slate-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </motion.div>
 );
 
@@ -140,90 +144,121 @@ const Dashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard title="Student Base" value={raw.students} icon={Users} trend={12} delay={0} isVelocity />
-                <StatCard title="Course Assets" value={raw.courses} icon={BookOpen} trend={5} delay={0.1} isVelocity />
-                <StatCard title="Total Enrollment" value={raw.enrolledStudents} icon={GraduationCap} trend={18} delay={0.2} isVelocity />
-                <StatCard title="Active Visitors" value={raw.activeVisitors || 0} icon={Eye} trend={0} delay={0.3} isVelocity />
+                <StatCard title="Student Base" value={raw.students} icon={Users} color="bg-indigo-600" trend={12} delay={0} />
+                <StatCard title="Course Assets" value={raw.courses} icon={BookOpen} color="bg-indigo-600" trend={5} delay={0.1} />
+                <StatCard title="Total Enrollment" value={raw.enrolledStudents} icon={GraduationCap} color="bg-indigo-600" trend={18} delay={0.2} />
+                <StatCard title="Active Visitors" value={raw.activeVisitors || 0} icon={Eye} color="bg-slate-900" trend={0} delay={0.3} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Growth Visualization */}
-                <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm">
                     <div className="flex justify-between items-center mb-10">
                         <div>
-                            <h3 className="text-xl font-bold text-slate-900">Platform Growth</h3>
-                            <p className="text-slate-400 text-xs font-medium mt-1">Enrollment trends over the past 30 days</p>
+                            <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">Ecosystem Growth</h3>
+                            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Enrollment trends • Last 30 Cycles</p>
                         </div>
-                        <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-xl border border-slate-100">
-                            <div className="w-2 h-2 rounded-full bg-indigo-600" />
-                            <span className="text-[11px] font-bold text-slate-600">Active Students</span>
+                        <div className="flex items-center gap-3 px-6 py-3 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
+                            <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.3)]" />
+                            <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Confirmed Enrollees</span>
                         </div>
                     </div>
 
-                    <div className="h-[320px] w-full">
+                    <div className="h-[340px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={analytics.enrollmentTrends}>
                                 <defs>
                                     <linearGradient id="colorInd" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1} />
+                                        <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.15} />
+                                        <stop offset="50%" stopColor="#4f46e5" stopOpacity={0.05} />
                                         <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="4" stroke="#f1f5f9" vertical={false} />
-                                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} dy={10} fontWeight="500" />
-                                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} fontWeight="500" tickFormatter={(value) => value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value} />
-                                <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                                        backdropFilter: 'blur(8px)',
-                                        border: '1px solid #e2e8f0',
-                                        borderRadius: '16px',
-                                        boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)',
-                                        fontSize: '12px'
-                                    }}
-                                    cursor={{ stroke: '#4f46e5', strokeWidth: 2 }}
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                                <XAxis
+                                    dataKey="date"
+                                    stroke="#94a3b8"
+                                    fontSize={10}
+                                    tickLine={false}
+                                    axisLine={false}
+                                    dy={15}
+                                    fontWeight="700"
+                                    textAnchor="middle"
+                                    style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
                                 />
-                                <Area type="monotone" dataKey="count" stroke="#4f46e5" strokeWidth={3} fill="url(#colorInd)" />
+                                <YAxis
+                                    stroke="#94a3b8"
+                                    fontSize={10}
+                                    tickLine={false}
+                                    axisLine={false}
+                                    fontWeight="700"
+                                />
+                                <Tooltip
+                                    cursor={{ stroke: '#4f46e5', strokeWidth: 1, strokeDasharray: '4 4' }}
+                                    content={({ active, payload, label }) => {
+                                        if (active && payload && payload.length) {
+                                            return (
+                                                <div className="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-white/10 animate-in zoom-in-95 duration-200">
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{label}</p>
+                                                    <p className="text-xl font-extrabold tracking-tighter">
+                                                        {payload[0].value} <span className="text-[10px] text-indigo-400 uppercase tracking-widest">Enrollees</span>
+                                                    </p>
+                                                </div>
+                                            );
+                                        }
+                                        return null;
+                                    }}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="count"
+                                    stroke="#4f46e5"
+                                    strokeWidth={4}
+                                    fill="url(#colorInd)"
+                                    animationDuration={2000}
+                                />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
                 {/* Real-time Activity */}
-                <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm flex flex-col">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h3 className="text-xl font-bold text-slate-900">Recent Pulse</h3>
-                            <p className="text-slate-400 text-xs font-medium mt-1">Latest platform events</p>
+                            <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">Active Pulse</h3>
+                            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Real-time Node Events</p>
                         </div>
-                        <Activity className="text-slate-300" size={24} />
+                        <div className="p-2.5 bg-indigo-50 rounded-xl">
+                            <Activity className="text-indigo-600" size={24} />
+                        </div>
                     </div>
 
-                    <div className="flex-1 space-y-6 overflow-y-auto pr-2 custom-scrollbar max-h-[400px]">
+                    <div className="flex-1 space-y-7 overflow-y-auto pr-2 custom-scrollbar max-h-[420px]">
                         {analytics.recentActivity.map((activity, idx) => (
-                            <div key={activity.id} className="flex gap-4 group">
-                                <div className="mt-0.5">
-                                    <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-colors relative">
+                            <div key={activity.id} className="flex gap-4 group cursor-default">
+                                <div className="mt-1 relative">
+                                    <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all shadow-sm">
                                         {getActivityIcon(activity.type)}
                                     </div>
                                     {idx !== analytics.recentActivity.length - 1 && (
-                                        <div className="w-px h-10 bg-slate-100 mx-auto mt-2" />
+                                        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-100 group-hover:bg-indigo-100 transition-colors" />
                                     )}
                                 </div>
                                 <div className="flex-1">
-                                    <div className="text-[13px] font-semibold text-slate-700 leading-snug group-hover:text-slate-900">
-                                        {activity.message.replace('User', 'Node')}
+                                    <div className="text-[13px] font-bold text-slate-700 leading-relaxed group-hover:text-slate-900 transition-colors">
+                                        {activity.message.replace('User', 'Node Entity').replace('student', 'authorized node')}
                                     </div>
-                                    <div className="text-[11px] text-slate-400 font-medium mt-1 flex items-center gap-2">
-                                        <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                        {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    <div className="text-[10px] text-slate-400 font-bold mt-1.5 flex items-center gap-2 uppercase tracking-widest">
+                                        <TrendingUp size={10} className="text-indigo-500" />
+                                        {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • Live Signal
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <button className="w-full mt-6 py-3.5 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-xl border border-slate-100 text-xs font-bold transition-all">
+                    <button className="w-full mt-8 py-4 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-2xl border border-slate-200 text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
                         Access Performance Logs
                     </button>
                 </div>

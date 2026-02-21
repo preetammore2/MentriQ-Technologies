@@ -271,17 +271,17 @@ const UserManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="relative w-full max-w-xl bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
+                            className="relative w-full max-w-xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]"
                         >
                             <div className="flex items-start justify-between gap-6 mb-10">
                                 <div>
-                                    <h3 className="text-3xl font-black text-white italic uppercase tracking-tighter">{editingUser ? "Update Profile" : "Initialize Entity"}</h3>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mt-1">Registry Access Level: Student</p>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">{editingUser ? "Update Profile" : "Initialize Entity"}</h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Student</p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => !submitting && closeModal()}
-                                    className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white transition-all flex items-center justify-center border border-transparent hover:border-white/10"
+                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
                                 >
                                     <X size={24} />
                                 </button>
@@ -289,68 +289,83 @@ const UserManagement = () => {
 
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Entity Name</label>
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Entity Name</label>
                                     <div className="relative group">
-                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
-                                            placeholder="Full Identification Name"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            placeholder="Full Name"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Communication Link</label>
+                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Electronic Mail</label>
                                     <div className="relative group">
-                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                                         <input
                                             type="email"
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
-                                            placeholder="network@origin.com"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            placeholder="email@example.com"
                                         />
                                     </div>
                                 </div>
 
+                                {editingUser && (
+                                    <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-6 flex items-start gap-4">
+                                        <KeyRound className="text-indigo-600 shrink-0" size={20} />
+                                        <p className="text-xs text-indigo-700 font-medium leading-relaxed">
+                                            Password management is locked for active accounts. Administrators cannot view or override student passkeys directly.
+                                        </p>
+                                    </div>
+                                )}
+
                                 {!editingUser && (
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Security Key</label>
+                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Security Key</label>
                                         <div className="relative group">
-                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" />
+                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
                                             <input
                                                 type="password"
                                                 required
                                                 minLength={6}
                                                 value={formData.password}
                                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="Cryptographic String"
                                             />
                                         </div>
                                     </div>
                                 )}
 
-                                <div className="pt-8 flex justify-end gap-8 items-center">
+                                <div className="flex gap-4 pt-4">
                                     <button
                                         type="button"
                                         onClick={() => !submitting && closeModal()}
-                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
+                                        className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="bg-white text-black px-12 py-5 rounded-2xl font-black flex items-center justify-center gap-4 hover:bg-gray-200 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest disabled:opacity-60"
+                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
                                     >
-                                        {submitting && <Loader2 size={16} className="animate-spin" />}
-                                        <span>{editingUser ? "Commence Sync" : "Deploy Entity"}</span>
+                                        {submitting ? (
+                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                <Plus size={16} />
+                                                <span>{editingUser ? "Commit Sync" : "Deploy Entity"}</span>
+                                            </>
+                                        )}
                                     </button>
                                 </div>
                             </form>

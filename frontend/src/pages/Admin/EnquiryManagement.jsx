@@ -218,57 +218,60 @@ const EnquiryManagement = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
-                        className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm"
+                        className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700"
                     >
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-white/5 border-b border-white/10">
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Sender</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Subject & Message</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Date</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Status</th>
-                                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                    <tr className="bg-slate-50 border-b border-slate-200">
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Sender</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Subject & Message</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Date</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Status</th>
+                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-white/5">
+                                <tbody className="divide-y divide-slate-100">
                                     {filteredInquiries.length === 0 ? (
                                         <tr>
-                                            <td colSpan="5" className="px-6 py-16 text-center">
-                                                <Mail size={32} className="text-gray-600 mx-auto mb-4" />
-                                                <h3 className="text-white font-bold mb-1">No Inquiries Found</h3>
-                                                <p className="text-gray-500 text-xs">All channels are quiet.</p>
+                                            <td colSpan="5" className="px-8 py-24 text-center">
+                                                <Mail size={48} className="text-slate-200 mx-auto mb-4" />
+                                                <h3 className="text-slate-900 font-bold mb-1">No Inquiries Found</h3>
+                                                <p className="text-slate-400 text-xs italic">All channels are quiet and processed.</p>
                                             </td>
                                         </tr>
                                     ) : (
                                         filteredInquiries.map((inq) => (
                                             <tr
                                                 key={inq._id}
-                                                className={`hover:bg-white/[0.02] transition-colors group ${!inq.isRead ? 'bg-indigo-500/[0.02]' : ''}`}
+                                                className={`hover:bg-slate-50/50 transition-colors group ${!inq.isRead ? 'bg-indigo-50/30' : ''}`}
                                             >
-                                                <td className="px-6 py-5">
-                                                    <div className="font-bold text-white text-sm">{inq.name}</div>
-                                                    <div className="text-[10px] text-gray-500 font-bold tracking-wider mt-0.5">{inq.email}</div>
-                                                    <div className="text-[10px] text-indigo-400/70 mt-0.5">{inq.phone}</div>
+                                                <td className="px-8 py-6">
+                                                    <div className="font-bold text-slate-900 text-base tracking-tight">{inq.name}</div>
+                                                    <div className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-1">{inq.email}</div>
+                                                    <div className="text-[10px] text-indigo-500 font-bold mt-1">{inq.phone}</div>
                                                 </td>
-                                                <td className="px-6 py-5 max-w-md">
-                                                    <div className="font-bold text-gray-300 text-xs uppercase tracking-wider mb-1">{inq.subject}</div>
-                                                    <p className="text-gray-500 text-xs line-clamp-2 italic">"{inq.message}"</p>
+                                                <td className="px-8 py-6 max-w-md">
+                                                    <div className="font-bold text-slate-600 text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                                                        {inq.subject}
+                                                    </div>
+                                                    <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed italic">"{inq.message}"</p>
                                                 </td>
-                                                <td className="px-6 py-5 text-gray-500 text-[10px] font-bold uppercase whitespace-nowrap">
+                                                <td className="px-8 py-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
                                                     {new Date(inq.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
                                                 </td>
-                                                <td className="px-6 py-5">
-                                                    <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${inq.isRead ? 'bg-white/5 text-gray-500 border-white/5' : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/10 animate-pulse'}`}>
-                                                        {inq.isRead ? 'Processed' : 'Awaiting'}
+                                                <td className="px-8 py-6">
+                                                    <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${inq.isRead ? 'bg-slate-50 text-slate-400 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-100 animate-pulse'}`}>
+                                                        {inq.isRead ? 'Processed' : 'Awaiting Intel'}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-5 text-right">
-                                                    <div className="flex justify-end gap-2">
+                                                <td className="px-8 py-6 text-right">
+                                                    <div className="flex justify-end gap-3">
                                                         {!inq.isRead && (
                                                             <button
                                                                 onClick={() => handleMarkAsRead(inq._id)}
-                                                                className="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg hover:bg-indigo-600 hover:text-white transition-all shadow-sm outline-none"
+                                                                className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm"
                                                                 title="Mark as Processed"
                                                             >
                                                                 <CheckCircle size={16} />
@@ -276,7 +279,7 @@ const EnquiryManagement = () => {
                                                         )}
                                                         <button
                                                             onClick={() => handleDeleteContact(inq._id)}
-                                                            className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm outline-none"
+                                                            className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
                                                             title="Purge Record"
                                                         >
                                                             <Trash2 size={16} />
@@ -296,39 +299,42 @@ const EnquiryManagement = () => {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
                     >
                         {/* Recruit List */}
                         <div className="lg:col-span-1 space-y-4">
                             {filteredRecruitEnquiries.length === 0 ? (
-                                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                                    <Briefcase size={40} className="text-gray-500 mx-auto mb-4" />
-                                    <h3 className="text-xl font-bold text-white mb-2">No Leads</h3>
-                                    <p className="text-gray-400">Recruitment requests will appear here.</p>
+                                <div className="bg-white border border-slate-200 border-dashed rounded-[2.5rem] p-16 text-center shadow-sm">
+                                    <Briefcase size={40} className="text-slate-200 mx-auto mb-4" />
+                                    <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight">System Idle</h3>
+                                    <p className="text-slate-400 text-sm italic">No recruitment signals detected.</p>
                                 </div>
                             ) : (
                                 filteredRecruitEnquiries.map((enquiry) => (
                                     <div
                                         key={enquiry._id}
                                         onClick={() => setSelectedRecruitEnquiry(enquiry)}
-                                        className={`p-5 rounded-2xl border cursor-pointer transition-all ${selectedRecruitEnquiry?._id === enquiry._id
-                                            ? 'bg-indigo-600/10 border-indigo-500/50 shadow-lg shadow-indigo-500/10'
-                                            : 'bg-[#1e293b] border-white/5 hover:border-white/10 hover:bg-white/[0.02]'
+                                        className={`p-6 rounded-3xl border cursor-pointer transition-all duration-300 relative group overflow-hidden ${selectedRecruitEnquiry?._id === enquiry._id
+                                            ? 'bg-white border-indigo-400 shadow-[0_20px_40px_-15px_rgba(79,70,229,0.1)] translate-x-1'
+                                            : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/50'
                                             }`}
                                     >
-                                        <div className="flex justify-between items-start mb-2">
-                                            <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-black tracking-wider border ${getStatusColor(enquiry.status)}`}>
+                                        <div className="flex justify-between items-start mb-4 relative z-10">
+                                            <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${getStatusColor(enquiry.status).replace('bg-amber-500/10', 'bg-amber-50').replace('text-amber-400', 'text-amber-700').replace('border-amber-500/10', 'border-amber-100').replace('bg-blue-500/10', 'bg-blue-50').replace('text-blue-400', 'text-blue-700').replace('border-blue-500/10', 'border-blue-100').replace('bg-emerald-500/10', 'bg-emerald-50').replace('text-emerald-400', 'text-emerald-700').replace('border-emerald-500/10', 'border-emerald-100').replace('bg-gray-500/10', 'bg-slate-50').replace('text-gray-400', 'text-slate-500').replace('border-gray-500/10', 'border-slate-200')}`}>
                                                 {enquiry.status}
                                             </span>
-                                            <span className="text-[10px] text-gray-500 font-bold uppercase">
+                                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                                                 {new Date(enquiry.createdAt).toLocaleDateString()}
                                             </span>
                                         </div>
-                                        <h4 className="text-white font-black truncate text-lg uppercase tracking-tight">{enquiry.company}</h4>
-                                        <div className="text-sm text-gray-400 flex items-center gap-2 mt-2 font-medium">
+                                        <h4 className="text-slate-900 font-extrabold truncate text-lg tracking-tight relative z-10">{enquiry.company}</h4>
+                                        <div className="text-xs text-slate-500 flex items-center gap-2 mt-2 font-medium relative z-10">
                                             <User size={14} className="text-indigo-400" />
                                             {enquiry.name}
                                         </div>
+                                        {selectedRecruitEnquiry?._id === enquiry._id && (
+                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-indigo-600 rounded-r-full" />
+                                        )}
                                     </div>
                                 ))
                             )}
@@ -338,79 +344,90 @@ const EnquiryManagement = () => {
                         <div className="lg:col-span-2">
                             {selectedRecruitEnquiry ? (
                                 <MotionDiv
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
                                     key={selectedRecruitEnquiry._id}
-                                    className="bg-[#1e293b] border border-white/5 rounded-3xl p-8 sticky top-6 shadow-2xl"
+                                    className="bg-white border border-slate-200 rounded-[3rem] p-10 sticky top-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] overflow-hidden"
                                 >
-                                    <div className="flex justify-between items-start mb-8">
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32" />
+
+                                    <div className="flex justify-between items-start mb-10 relative z-10">
                                         <div>
-                                            <h3 className="text-3xl font-black text-white tracking-tight mb-2 italic uppercase">{selectedRecruitEnquiry.company}</h3>
-                                            <div className="flex flex-wrap gap-4 text-sm mt-4">
-                                                <span className="flex items-center gap-2 text-gray-400 bg-white/5 px-4 py-2 rounded-xl border border-white/5 font-bold uppercase tracking-widest text-[10px]">
-                                                    <User size={14} className="text-indigo-400" />
+                                            <h3 className="text-4xl font-black text-slate-900 tracking-tight mb-4 uppercase leading-none">{selectedRecruitEnquiry.company}</h3>
+                                            <div className="flex flex-wrap gap-4 mt-6">
+                                                <span className="flex items-center gap-2.5 text-slate-600 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-200 font-bold uppercase tracking-widest text-[10px] shadow-sm">
+                                                    <User size={16} className="text-indigo-500" />
                                                     {selectedRecruitEnquiry.name}
                                                 </span>
-                                                <span className="flex items-center gap-2 text-gray-400 bg-white/5 px-4 py-2 rounded-xl border border-white/5 font-bold uppercase tracking-widest text-[10px]">
-                                                    <Mail size={14} className="text-indigo-400" />
+                                                <span className="flex items-center gap-2.5 text-slate-600 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-200 font-bold uppercase tracking-widest text-[10px] shadow-sm">
+                                                    <Mail size={16} className="text-indigo-500" />
                                                     {selectedRecruitEnquiry.email}
                                                 </span>
                                             </div>
                                         </div>
                                         <button
                                             onClick={() => handleDeleteRecruit(selectedRecruitEnquiry._id)}
-                                            className="p-3 bg-red-500/10 text-red-500/50 hover:bg-red-500 hover:text-white rounded-xl transition-all"
+                                            className="p-3.5 bg-rose-50 text-rose-400 hover:bg-rose-500 hover:text-white rounded-2xl border border-rose-100 transition-all shadow-sm"
                                             title="Expunge Lead"
                                         >
-                                            <Trash2 size={18} />
+                                            <Trash2 size={20} />
                                         </button>
                                     </div>
 
-                                    <div className="space-y-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm">
-                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400/60 mb-4">Resource Requirements</div>
-                                                <p className="text-white font-black leading-relaxed italic">{selectedRecruitEnquiry.hiringNeeds}</p>
+                                    <div className="space-y-10 relative z-10">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="p-8 bg-slate-50 border border-slate-200 rounded-[2.5rem] relative group">
+                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                    Resource Requirements
+                                                </div>
+                                                <p className="text-slate-800 font-bold leading-relaxed italic text-lg tracking-tight">"{selectedRecruitEnquiry.hiringNeeds}"</p>
                                             </div>
-                                            <div className="p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-sm">
-                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400/60 mb-4">Classification</div>
+                                            <div className="p-8 bg-slate-50 border border-slate-200 rounded-[2.5rem]">
+                                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                    Classification
+                                                </div>
                                                 <div className="relative group">
                                                     <select
                                                         value={selectedRecruitEnquiry.status}
                                                         onChange={(e) => handleStatusUpdate(selectedRecruitEnquiry._id, e.target.value)}
-                                                        className="w-full bg-[#0f172a] text-white border border-white/10 rounded-2xl px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 cursor-pointer appearance-none transition-all"
+                                                        className="w-full bg-white text-slate-900 border border-slate-200 rounded-2xl px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 cursor-pointer appearance-none transition-all shadow-sm"
                                                     >
                                                         <option value="pending">Awaiting Intel</option>
                                                         <option value="viewed">Intel Accessed</option>
                                                         <option value="contacted">Link Established</option>
                                                         <option value="closed">Protocol Terminated</option>
                                                     </select>
-                                                    <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                                    <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-indigo-600 transition-colors" />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/50 mb-3 ml-1">Mission Briefing</div>
-                                            <div className="bg-black/20 border border-white/5 rounded-2xl p-6 text-gray-300 leading-relaxed font-medium italic">
+                                        <div className="bg-slate-50 border border-slate-200 rounded-[2.5rem] p-10">
+                                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                Mission Briefing
+                                            </div>
+                                            <div className="text-slate-600 leading-relaxed font-medium italic text-base">
                                                 "{selectedRecruitEnquiry.message || "No additional briefing provided."}"
                                             </div>
                                         </div>
 
-                                        <div className="pt-6 border-t border-white/5 flex flex-wrap gap-4">
+                                        <div className="pt-8 border-t border-slate-100 flex flex-wrap gap-4">
                                             <a
                                                 href={`mailto:${selectedRecruitEnquiry.email}`}
-                                                className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                                                className="px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-[1.5rem] text-xs font-black uppercase tracking-widest flex items-center gap-3 transition-all shadow-xl shadow-indigo-600/20 active:scale-95"
                                             >
-                                                <Mail size={18} />
+                                                <Mail size={20} />
                                                 Transmit Reply
                                             </a>
                                             {selectedRecruitEnquiry.status === 'pending' && (
                                                 <button
                                                     onClick={() => handleStatusUpdate(selectedRecruitEnquiry._id, 'viewed')}
-                                                    className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-all border border-white/10"
+                                                    className="px-10 py-5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-[1.5rem] text-xs font-black uppercase tracking-widest flex items-center gap-3 transition-all active:scale-95 shadow-sm"
                                                 >
-                                                    <Check size={18} />
+                                                    <Check size={20} className="text-indigo-500" />
                                                     Confirm Access
                                                 </button>
                                             )}
@@ -418,10 +435,12 @@ const EnquiryManagement = () => {
                                     </div>
                                 </MotionDiv>
                             ) : (
-                                <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-gray-500 bg-[#1e293b] border border-white/5 rounded-3xl p-8 border-dashed relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.03),transparent)]" />
-                                    <Briefcase size={48} className="mb-4 opacity-20 relative z-10" />
-                                    <p className="font-black uppercase tracking-[0.2em] text-xs relative z-10">Select target profile for briefing</p>
+                                <div className="h-full min-h-[500px] flex flex-col items-center justify-center text-slate-300 bg-slate-50 border border-slate-200 border-dashed rounded-[3rem] p-12 relative overflow-hidden group">
+                                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.03),transparent)]" />
+                                    <div className="w-24 h-24 bg-white rounded-[2rem] border border-slate-100 shadow-sm flex items-center justify-center mb-6 transition-all group-hover:scale-110 group-hover:rotate-3">
+                                        <Briefcase size={40} className="text-slate-200" />
+                                    </div>
+                                    <p className="font-black uppercase tracking-[0.3em] text-[10px] text-slate-400 relative z-10 text-center">Select target profile for complete briefing</p>
                                 </div>
                             )}
                         </div>

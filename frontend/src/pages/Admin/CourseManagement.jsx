@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, BookOpen, Search, X, Check, DollarSign, Clock, BarChart, Image as ImageIcon, Loader2, ChevronDown } from "lucide-react";
+import { Plus, Edit2, Trash2, BookOpen, Search, X, Check, DollarSign, Clock, BarChart, Image as ImageIcon, Loader2, ChevronDown, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -317,155 +317,124 @@ const CourseManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[92vh]"
+                            className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
                         >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent shrink-0">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">{editingCourse ? "Update Protocol" : "Initialize Module"}</h2>
-                                    <p className="text-gray-500 text-[10px] mt-1 font-black uppercase tracking-[0.2em]">Curriculum Deployment Interface</p>
+                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
+                                        {editingCourse ? "Configure Module" : "Manifest Curriculum"}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Academic Lead</p>
                                 </div>
                                 <button
                                     onClick={closeModal}
-                                    className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/10 transition-all border border-transparent hover:border-white/10"
+                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
                                 >
                                     <X size={24} />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto custom-scrollbar">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Curriculum Designation</label>
-                                        <div className="relative group">
-                                            <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none group-focus-within:text-indigo-400 transition-colors" />
-                                            <input
-                                                required
-                                                value={formData.title}
-                                                onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700 uppercase tracking-tight italic"
-                                                placeholder="Enter Program Title"
-                                            />
+                            <div className="flex-1 overflow-y-auto pr-4 -mr-4 custom-scrollbar">
+                                <form onSubmit={handleSubmit} className="space-y-10 pb-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="md:col-span-2 space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1 text-slate-500 uppercase tracking-[0.2em] ml-1">Identity Title</label>
+                                            <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Masterclass in Quantum Engineering" />
                                         </div>
-                                    </div>
 
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Asset Identity (Thumbnail)</label>
-                                        <div className="flex items-center gap-8 p-6 bg-white/[0.02] border border-white/5 rounded-3xl">
-                                            <div className="w-32 h-32 bg-white/5 rounded-[2rem] border border-white/10 flex items-center justify-center overflow-hidden shrink-0 relative group">
-                                                {imagePreview ? (
-                                                    <img src={imagePreview} alt="Preview" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
-                                                ) : (
-                                                    <ImageIcon className="text-gray-600" size={40} />
-                                                )}
-                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                    <Plus className="text-white" size={24} />
+                                        <div className="md:col-span-2 space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Asset Identity (Card Background)</label>
+                                            <div className="relative group">
+                                                <div className="w-full h-40 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 group-hover:border-indigo-400 transition-all overflow-hidden relative">
+                                                    {imageFile ? (
+                                                        <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
+                                                    ) : formData.image ? (
+                                                        <img src={resolveImageUrl(formData.image)} alt="Current" className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <>
+                                                            <ImageIcon size={40} className="text-slate-400 group-hover:text-indigo-500 transition-colors" strokeWidth={1.5} />
+                                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Inject Visual Asset</span>
+                                                        </>
+                                                    )}
+                                                    <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} className="absolute inset-0 opacity-0 cursor-pointer" />
                                                 </div>
                                             </div>
-                                            <div className="flex-1 space-y-4">
-                                                <div className="relative overflow-hidden cursor-pointer group inline-block">
-                                                    <button type="button" className="px-8 py-3 bg-white text-black rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-gray-200 transition-all group-hover:scale-105 active:scale-95 shadow-xl">
-                                                        Inject Stream
-                                                    </button>
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        onChange={handleImageChange}
-                                                        className="absolute inset-0 opacity-0 cursor-pointer"
-                                                    />
-                                                </div>
-                                                <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest leading-relaxed">
-                                                    Recommended: 1280x720 • HD RATIO <br /> JPG, PNG or WEBP format.
-                                                </p>
+                                        </div>
+
+                                        <div className="md:col-span-2 space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Curriculum Synopsys</label>
+                                            <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Detailed syllabus or overview..." />
+                                        </div>
+
+                                        <div className="md:col-span-2 space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Learning Nodes (One per line)</label>
+                                            <textarea rows={5} value={formData.modules} onChange={e => setFormData({ ...formData, modules: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2.5rem] p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Module 1: Introduction&#10;Module 2: Advanced Concepts" />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Lead Instructor</label>
+                                            <div className="relative group">
+                                                <Users size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                <input value={formData.instructor} onChange={e => setFormData({ ...formData, instructor: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="Lead Instructor Name" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Program Domain</label>
+                                            <div className="relative group">
+                                                <BarChart size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                <input required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Technology" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Aptitude Level</label>
+                                            <div className="relative group">
+                                                <select required value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-8 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer">
+                                                    <option value="Beginner">Beginner Tier</option>
+                                                    <option value="Intermediate">Intermediate Tier</option>
+                                                    <option value="Advanced">Elite Tier</option>
+                                                </select>
+                                                <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Temporal Duration</label>
+                                            <div className="relative group">
+                                                <Clock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. 12 Weeks" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Economic Value (₹)</label>
+                                            <div className="relative group">
+                                                <DollarSign size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                <input type="number" required value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="0.00" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Strike Price (Ref)</label>
+                                            <div className="relative group">
+                                                <X size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                                <input type="number" value={formData.oldPrice} onChange={e => setFormData({ ...formData, oldPrice: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="Original price..." />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Curriculum Synopsys</label>
-                                        <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-[2rem] p-6 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Detailed syllabus or overview..." />
+                                    <div className="flex gap-4 pt-4 shrink-0">
+                                        <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all">
+                                            Cancel
+                                        </button>
+                                        <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
+                                            {submitting ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
+                                            {editingCourse ? "Update Module" : "Confirm Manifestation"}
+                                        </button>
                                     </div>
-
-                                    <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Learning Nodes (One per line)</label>
-                                        <textarea rows={5} value={formData.modules} onChange={e => setFormData({ ...formData, modules: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-[2.5rem] p-8 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Module 1: Introduction&#10;Module 2: Advanced Concepts" />
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Lead Instructor</label>
-                                        <div className="relative group">
-                                            <Users size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" />
-                                            <input value={formData.instructor} onChange={e => setFormData({ ...formData, instructor: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-14 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-700" placeholder="Lead Instructor Name" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Program Domain</label>
-                                        <div className="relative group">
-                                            <BarChart size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" />
-                                            <input required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-14 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-700" placeholder="e.g. Technology" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Aptitude Level</label>
-                                        <div className="relative group">
-                                            <select value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all bg-[#0f172a] appearance-none cursor-pointer">
-                                                <option value="Beginner">Entry Level</option>
-                                                <option value="Intermediate">Strategic Growth</option>
-                                                <option value="Advanced">Elite Mastery</option>
-                                            </select>
-                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Tuition Fees (INR)</label>
-                                        <div className="relative group">
-                                            <DollarSign className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
-                                            <input required type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-14 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-700" placeholder="0" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Deployment Timeline</label>
-                                        <div className="relative group">
-                                            <Clock className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
-                                            <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-14 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-700" placeholder="e.g. 12 Weeks" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Execution Mode</label>
-                                        <div className="relative group">
-                                            <select value={formData.mode} onChange={e => setFormData({ ...formData, mode: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 pl-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all bg-[#0f172a] appearance-none cursor-pointer">
-                                                <option value="Online">Remote Direct</option>
-                                                <option value="Offline">Physical Mesh</option>
-                                                <option value="Hybrid">Hybrid Sync</option>
-                                            </select>
-                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="pt-10 flex justify-end gap-10 items-center shrink-0">
-                                    <button
-                                        type="button"
-                                        onClick={closeModal}
-                                        disabled={submitting}
-                                        className="text-[10px] font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors"
-                                    >
-                                        Abort
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        disabled={submitting}
-                                        className="px-16 py-5 rounded-2xl font-black bg-white text-black hover:bg-gray-200 shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)] hover:scale-[1.05] active:scale-95 transition-all text-xs uppercase tracking-[0.2em] flex items-center gap-4 disabled:opacity-70 disabled:hover:scale-100"
-                                    >
-                                        {submitting ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} strokeWidth={4} />}
-                                        <span>{submitting ? "Saving..." : "Confirm Deployment"}</span>
-                                    </button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </motion.div>
                     </div>
                 )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin, Check, RefreshCw } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, User, Briefcase, Linkedin, Check, RefreshCw, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -334,93 +334,96 @@ const MentorManagement = () => {
                                     initial={{ opacity: 0, scale: 0.95, y: 30 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                                    className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-2xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[92vh]"
+                                    className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
                                 >
-                                    <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                                    <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                         <div>
-                                            <h2 className="text-3xl font-black text-white tracking-tight">{editingMentor ? "Refine Expert" : "Deploy Mentor"}</h2>
-                                            <p className="text-gray-500 text-sm mt-1 font-bold uppercase tracking-widest">Global Mentor Configuration</p>
+                                            <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
+                                                {editingMentor ? "Update Experience" : "Onboard Expert"}
+                                            </h3>
+                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Global Mentor</p>
                                         </div>
-                                        <button onClick={() => setIsModalOpen(false)} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><X size={24} /></button>
+                                        <button
+                                            onClick={closeModal}
+                                            className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                        >
+                                            <X size={24} />
+                                        </button>
                                     </div>
 
-                                    <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar">
-                                        <div className="flex justify-center">
-                                            <div className="relative group cursor-pointer">
-                                                <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center group-hover:border-indigo-500/50 transition-all">
-                                                    {imageFile ? (
-                                                        <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
-                                                    ) : formData.image ? (
-                                                        <img
-                                                            src={resolveImageUrl(formData.image, "/images/user.png")}
-                                                            alt="Current"
-                                                            className="w-full h-full object-cover"
-                                                            onError={(e) => { e.target.src = "/images/user.png" }}
-                                                        />
-                                                    ) : (
-                                                        <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors">
-                                                            <User size={32} strokeWidth={1.5} />
-                                                            <span className="text-[8px] font-black uppercase tracking-widest">Initialize Avatar</span>
-                                                        </div>
-                                                    )}
+                                    <div className="flex-1 overflow-y-auto pr-4 -mr-4 custom-scrollbar">
+                                        <form onSubmit={handleSubmit} className="space-y-10">
+                                            <div className="flex flex-col items-center justify-center">
+                                                <div className="relative group">
+                                                    <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center group-hover:border-indigo-400 transition-all">
+                                                        {imageFile ? (
+                                                            <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
+                                                        ) : formData.image ? (
+                                                            <img
+                                                                src={resolveImageUrl(formData.image, "/images/user.png")}
+                                                                alt="Current"
+                                                                className="w-full h-full object-cover"
+                                                                onError={(e) => { e.target.src = "/images/user.png" }}
+                                                            />
+                                                        ) : (
+                                                            <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-indigo-500 transition-colors">
+                                                                <User size={32} strokeWidth={1.5} />
+                                                                <span className="text-[8px] font-black uppercase tracking-widest">Initialize Avatar</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-xl border border-slate-200">
+                                                        <Plus size={16} strokeWidth={3} className="text-indigo-600" />
+                                                        <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
+                                                    </label>
                                                 </div>
-                                                <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-2xl border border-white/10">
-                                                    <Plus size={16} strokeWidth={3} className="text-black" />
-                                                    <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
-                                                </label>
                                             </div>
-                                        </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                            <div className="col-span-2 space-y-2">
-                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
-                                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Satoshi Nakamoto" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Professional Designation</label>
-                                                <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Quantum Lead" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Parent Organization</label>
-                                                <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. OpenAI" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
-                                                <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="https://linkedin.com/in/unique-id" />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Years Experience</label>
-                                                    <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 10+" />
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                <div className="col-span-2 space-y-2">
+                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
+                                                    <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Satoshi Nakamoto" />
                                                 </div>
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Projects Done</label>
-                                                    <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 50+" />
+                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Professional Designation</label>
+                                                    <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Quantum Lead" />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Parent Organization</label>
+                                                    <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. OpenAI" />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
+                                                    <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="https://linkedin.com/in/unique-id" />
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Years Experience</label>
+                                                        <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all" placeholder="e.g. 10+" />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Projects Done</label>
+                                                        <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all" placeholder="e.g. 50+" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="col-span-2 space-y-2">
-                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expert Profile Brief</label>
-                                                <textarea rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Briefly describe the expert's impact..." />
-                                            </div>
-                                        </div>
 
-                                        <div className="pt-8 flex justify-end gap-6 items-center">
-                                            <button
-                                                type="button"
-                                                onClick={() => setIsModalOpen(false)}
-                                                className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-10 py-5 rounded-2xl hover:bg-white/10"
-                                            >
-                                                Abort
-                                            </button>
-                                            <button
-                                                type="submit"
-                                                className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
-                                            >
-                                                <Check size={20} strokeWidth={3} />
-                                                <span>{editingMentor ? "Sync Profile" : "Deploy Entity"}</span>
-                                            </button>
-                                        </div>
-                                    </form>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Expert Background / Bio</label>
+                                                <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Brief professional synopsis..." />
+                                            </div>
+
+                                            <div className="flex gap-4 pt-6 shrink-0">
+                                                <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
+                                                    {submitting ? <RefreshCw size={16} className="animate-spin" /> : <Check size={16} />}
+                                                    {editingMentor ? "Commit Changes" : "Confirm Onboarding"}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </motion.div>
                             </div>
                         )}
