@@ -4,7 +4,7 @@ const envBaseURL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$
 
 const resolvedBaseURL = import.meta.env.DEV
   ? (envBaseURL || 'http://localhost:5000/api')
-  : (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+  : (typeof window !== 'undefined' && (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('mentriqtechnologies.in'))
     ? '/api'
     : (envBaseURL || '/api'));
 

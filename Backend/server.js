@@ -78,16 +78,12 @@ const isAllowedOrigin = (origin) => {
 
 const corsOptions = {
     origin: function (origin, callback) {
-        if (isAllowedOrigin(origin)) {
-            callback(null, true);
-        } else {
-            console.warn(`CORS fallback allow for origin: ${origin}`);
-            callback(null, true);
-        }
+        // Fail-open for production stability. All origins allowed.
+        callback(null, true);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
     exposedHeaders: ["Set-Cookie"]
 };
 
@@ -112,14 +108,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get("/api/health", (req, res) => res.json({
     status: "active",
     database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-    version: "debug-v4",
+    version: "debug-v5",
     timestamp: new Date().toISOString()
 }));
 
 app.get("/", (req, res) => res.json({
     status: "MentriQ API running",
-    version: "debug-v4",
-    activeOrigins: Array.from(allowedOrigins)
+    version: "debug-v5",
+    activeOrigins: ["ALL (fail-open enabled)"]
 }));
 
 app.use("/api/auth", authRoutes);
