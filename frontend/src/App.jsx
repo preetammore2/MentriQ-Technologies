@@ -33,16 +33,6 @@ const StaffManagement = lazy(() => import('./pages/Admin/StaffManagement'));
 const SettingsManagement = lazy(() => import('./pages/Admin/SettingsManagement'));
 const TechnologyManagement = lazy(() => import('./pages/Admin/TechnologyManagement'));
 const InternshipApplicationPage = lazy(() => import('./pages/InternshipApplicationPage'));
-const UserAuthPage = lazy(() => import('./pages/UserAuthPage'));
-const TrainingPage = lazy(() => import('./pages/TrainingPage'));
-const TrainingDetailPage = lazy(() => import('./pages/TrainingDetailPage'));
-const EnrollmentFormPage = lazy(() => import('./pages/EnrollmentFormPage'));
-const ServicesPage = lazy(() => import('./pages/ServicesPage'));
-const TrainingEnrollmentFormPage = lazy(() => import('./pages/TrainingEnrollmentFormPage'));
-const VerifyCertificatePage = lazy(() => import('./pages/VerifyCertificatePage'));
-const RecruitPage = lazy(() => import('./pages/RecruitPage'));
-const DemoTypewriter = lazy(() => import('./pages/DemoTypewriter'));
-const DemoSplinePage = lazy(() => import('./pages/DemoSplinePage'));
 
 import AdminRoute from './components/auth/AdminRoute';
 import EnrollmentSuccessWrapper from './pages/EnrollmentSuccessWrapper';
@@ -274,8 +264,6 @@ function App() {
                 </AdminRoute>
               }
             />
-            <Route path="/demo-typewriter" element={<Layout><DemoTypewriter /></Layout>} />
-            <Route path="/demo-spline" element={<Layout><DemoSplinePage /></Layout>} />
             <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
           </Routes>
         </Suspense>

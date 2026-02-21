@@ -42,24 +42,48 @@ const AdminLayout = ({ children }) => {
         }
     }, [location.pathname]);
 
-    const menuItems = [
-        { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-        { path: '/admin/users', icon: Users, label: 'Users' },
-        { path: '/admin/courses', icon: BookOpen, label: 'Courses' },
-        { path: '/admin/enrollments', icon: GraduationCap, label: 'Enrollments' },
-        { path: '/admin/internships', icon: Briefcase, label: 'Internships' },
-        { path: '/admin/services', icon: Layers, label: 'Services' },
-        { path: '/admin/cities', icon: MapPin, label: 'Cities' },
-        { path: '/admin/partners', icon: Handshake, label: 'Partners' },
-        { path: '/admin/jobs', icon: Briefcase, label: 'Jobs' },
-        { path: '/admin/journey', icon: MapPin, label: 'Journey' },
-        { path: '/admin/certificates', icon: Award, label: 'Certificates' },
-        { path: '/admin/mentors', icon: Users, label: 'Mentors' },
-        { path: '/admin/staff', icon: UserCog, label: 'Staff' },
-        { path: '/admin/enquiries', icon: Mail, label: 'Enquiry Panel' },
-        { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
-        { path: '/admin/settings', icon: Settings, label: 'Settings' },
-        { path: '/admin/technologies', icon: Cpu, label: 'Technologies' },
+    const menuGroups = [
+        {
+            title: 'Analytics',
+            items: [
+                { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Overview' },
+            ]
+        },
+        {
+            title: 'Content Hub',
+            items: [
+                { path: '/admin/courses', icon: BookOpen, label: 'Courses' },
+                { path: '/admin/internships', icon: Briefcase, label: 'Internships' },
+                { path: '/admin/jobs', icon: Briefcase, label: 'Job Board' },
+                { path: '/admin/services', icon: Layers, label: 'Services' },
+                { path: '/admin/journey', icon: MapPin, label: 'Success Journey' },
+            ]
+        },
+        {
+            title: 'People',
+            items: [
+                { path: '/admin/users', icon: Users, label: 'Students' },
+                { path: '/admin/staff', icon: UserCog, label: 'Admin Staff' },
+                { path: '/admin/mentors', icon: Users, label: 'Mentors' },
+                { path: '/admin/partners', icon: Handshake, label: 'Partners' },
+            ]
+        },
+        {
+            title: 'Engagement',
+            items: [
+                { path: '/admin/enquiries', icon: Mail, label: 'Enquiries' },
+                { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
+                { path: '/admin/certificates', icon: Award, label: 'Certificates' },
+            ]
+        },
+        {
+            title: 'System',
+            items: [
+                { path: '/admin/settings', icon: Settings, label: 'Global Settings' },
+                { path: '/admin/technologies', icon: Cpu, label: 'Tech Stack' },
+                { path: '/admin/cities', icon: MapPin, label: 'City Coverage' },
+            ]
+        }
     ];
 
     const handleLogout = () => {
@@ -96,34 +120,41 @@ const AdminLayout = ({ children }) => {
                 </div>
 
                 {/* Navigation */}
-                <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
-                    {menuItems.map((item) => {
-                        const Icon = item.icon
-                        const isActive = location.pathname === item.path
+                <div className="flex-1 overflow-y-auto py-6 px-3 space-y-6 custom-scrollbar">
+                    {menuGroups.map((group, groupIdx) => (
+                        <div key={groupIdx} className="space-y-1">
+                            <h4 className={`text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 px-3 transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:h-0 overflow-hidden' : 'opacity-100'}`}>
+                                {group.title}
+                            </h4>
+                            {group.items.map((item) => {
+                                const Icon = item.icon
+                                const isActive = location.pathname === item.path
 
-                        return (
-                            <Link
-                                key={item.path}
-                                to={item.path}
-                                className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${isActive
-                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                    }`}
-                            >
-                                <Icon size={20} className={`shrink-0 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
-                                <span className={`font-medium whitespace-nowrap transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:w-0 lg:overflow-hidden' : 'opacity-100'
-                                    }`}>
-                                    {item.label}
-                                </span>
-                                {isActive && isSidebarOpen && (
-                                    <motion.div
-                                        layoutId="activeIndicator"
-                                        className="ml-auto w-1.5 h-1.5 rounded-full bg-white"
-                                    />
-                                )}
-                            </Link>
-                        )
-                    })}
+                                return (
+                                    <Link
+                                        key={item.path}
+                                        to={item.path}
+                                        className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${isActive
+                                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                            }`}
+                                    >
+                                        <Icon size={18} className={`shrink-0 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
+                                        <span className={`font-medium whitespace-nowrap text-sm transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:w-0 lg:overflow-hidden' : 'opacity-100'
+                                            }`}>
+                                            {item.label}
+                                        </span>
+                                        {isActive && isSidebarOpen && (
+                                            <motion.div
+                                                layoutId="activeIndicator"
+                                                className="ml-auto w-1.5 h-1.5 rounded-full bg-white"
+                                            />
+                                        )}
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    ))}
                 </div>
 
                 {/* Bottom Section */}
