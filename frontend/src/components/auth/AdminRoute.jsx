@@ -11,7 +11,7 @@ const AdminRoute = ({ children }) => {
     </div>
   )
 
-  return (user?.role === "admin" || user?.role === "moderator")
+  return (user?.role === "admin" || user?.role === "moderator" || user?.role === "superadmin")
     ? children
     : <Navigate to="/" replace />
 }

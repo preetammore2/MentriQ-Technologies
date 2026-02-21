@@ -45,8 +45,8 @@ const Navbar = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isDarkPage
-                        ? "bg-[#070b14]/95 backdrop-blur-md shadow-lg border-b border-white/5"
-                        : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
+                    ? "bg-[#070b14]/95 backdrop-blur-md shadow-lg border-b border-white/5"
+                    : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
                     } ${isShrunk ? 'py-2' : 'py-4'}`}
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -82,6 +82,19 @@ const Navbar = () => {
                                     {item.name}
                                 </Link>
                             ))}
+                            {(user?.role === 'admin' || user?.role === 'superadmin') && (
+                                <Link
+                                    to="/admin/dashboard"
+                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 ${location.pathname.startsWith('/admin')
+                                        ? 'text-emerald-600 bg-emerald-50'
+                                        : isDarkPage
+                                            ? 'text-emerald-400 hover:text-emerald-300 hover:bg-white/10'
+                                            : 'text-emerald-600 hover:bg-emerald-50'
+                                        }`}
+                                >
+                                    Admin Portal
+                                </Link>
+                            )}
                         </div>
 
                         {/* Auth / CTA */}
@@ -162,6 +175,20 @@ const Navbar = () => {
                                         {item.name}
                                     </Link>
                                 ))}
+                                {(user?.role === 'admin' || user?.role === 'superadmin') && (
+                                    <Link
+                                        to="/admin/dashboard"
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`px-4 py-3 rounded-xl text-sm font-bold ${location.pathname.startsWith('/admin')
+                                            ? 'bg-emerald-500/10 text-emerald-500'
+                                            : isDarkPage
+                                                ? 'text-emerald-400 hover:bg-white/5 hover:text-white'
+                                                : 'text-emerald-600 hover:bg-emerald-50'
+                                            }`}
+                                    >
+                                        Admin Portal
+                                    </Link>
+                                )}
                                 <div className={`pt-4 mt-2 border-t ${isDarkPage ? 'border-white/10' : 'border-slate-100'}`}>
                                     {isAuthenticated ? (
                                         <button

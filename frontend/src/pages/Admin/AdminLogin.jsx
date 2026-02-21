@@ -66,7 +66,7 @@ const AdminLogin = () => {
             const sanitizedEmail = email.trim().toLowerCase();
             const result = await login(sanitizedEmail, password);
             if (result.success) {
-                if (result.user.role === 'admin' || result.user.role === 'moderator') {
+                if (result.user.role === 'admin' || result.user.role === 'moderator' || result.user.role === 'superadmin') {
                     saveCredentialToBucket(sanitizedEmail, password);
                     toast.success('Staff access granted');
                     navigate(from, { replace: true });
