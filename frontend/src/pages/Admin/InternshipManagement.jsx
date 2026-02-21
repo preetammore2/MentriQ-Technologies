@@ -111,8 +111,12 @@ const InternshipManagement = () => {
             {/* Header Section - Simplified */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Internship Management</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage postings and track candidate applications.</p>
+                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Internship Management</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-3">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{internships.length} Postings</span>
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{applications.length} Candidates</span>
+                        Manage postings and track candidate applications.
+                    </p>
                 </div>
                 <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
                     <button

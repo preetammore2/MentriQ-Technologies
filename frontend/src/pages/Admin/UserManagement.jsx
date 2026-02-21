@@ -149,7 +149,10 @@ const UserManagement = () => {
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div className="w-full lg:w-auto">
                     <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Candidate Registry</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Authenticated database of active learners and enrollment entities.</p>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{students.length} Nodes</span>
+                        Authenticated database of active learners and enrollment entities.
+                    </p>
                 </div>
                 <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4">
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-indigo-500/30 transition-all shadow-inner">

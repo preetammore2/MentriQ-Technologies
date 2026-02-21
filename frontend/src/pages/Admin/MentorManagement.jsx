@@ -6,11 +6,22 @@ import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
 
 const FALLBACK_MENTORS = [
-    { name: "Litesh Singh", image: "/images/litesh.jpg", description: "5+ Years Experience in Automation and Deveops", role: "Automation Expert", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
-    { name: "Jeevan Chauhan", image: "/images/jeevan.jpg", description: "5+ Years Experience in Hybrid Applications Development", role: "Hybrid Dev", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
-    { name: "Yogesh Shekhawat", image: "/images/yogesh.jpg", description: "2+ Years Experience in Entrepreneurship and Product Management", role: "Product Lead", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
-    { name: "Ram Swami", image: "/images/user.png", description: "6+ Years Experience in Cyber Security", role: "Security Architect", company: "MentriQ", stats: [{ value: "6+", label: "Years" }, { value: "15+", label: "Projects" }] },
-    { name: "Shubham Sharma", image: "/images/subhammentors.jpg", description: "5+ years Experience in Full Stack Development", role: "Full Stack Eng", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] }
+    { name: "Litesh Singh", image: "/images/litesh.jpg", description: "5+ Years Experience in Automation and Deveops", role: "Automation & DevOps Specialist", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Jeevan Chauhan", image: "/images/jeevan.jpg", description: "5+ Years Experience in Hybrid Applications Development", role: "Hybrid App Developer", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Yogesh Shekhawat", image: "/images/yogesh.jpg", description: "2+ Years Experience in Entrepreneurship and Product Management", role: "Entrepreneurship Lead", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Ram Swami", image: "/images/user.png", description: "6+ Years Experience in Cyber Security", role: "Cyber Security Architect", company: "MentriQ", stats: [{ value: "6+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Shubham Sharma", image: "/images/subhammentors.jpg", description: "5+ years Experience in Full Stack Development", role: "Full Stack Engineer", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Shiva Rama Krishna", image: "/images/sivaramakrishna.jpg", description: "8+ Years Experience in Software Engineering", role: "Senior Software Engineer", company: "MentriQ", stats: [{ value: "8+", label: "Years" }, { value: "20+", label: "Projects" }] },
+    { name: "Lakhan Dadhich", image: "/images/lakhan.jpg", description: "3+ Years Experience in Product Management", role: "Product Manager", company: "MentriQ", stats: [{ value: "3+", label: "Years" }, { value: "7+", label: "Projects" }] },
+    { name: "Venkat Sai", image: "/images/venkatsai.jpg", description: "5+ Years Experience in Oprations Experts", role: "Operations Expert", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "15+", label: "Projects" }] },
+    { name: "Satya Narayan Pradhan", image: "/images/satyanarayan.jpg", description: "5+ Years Experince in Integration Specialist", role: "Integration Specialist", company: "MentriQ", stats: [{ value: "5+", label: "Years" }, { value: "20+", label: "Projects" }] },
+    { name: "Hardik Sharma", image: "/images/hardik.jpg", description: "2+ Years Experience in Cloud Technologies", role: "Cloud Solutions Architect", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Prince Jain", image: "/images/princejain.jpg", description: "2+ Years Experience in Cyber Security ", role: "Security Specialist", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Dharam Pal Singh", image: "/images/dharampalsingh.jpg", description: "2+ Years Experience in Full Stack Development", role: "Full Stack Developer", company: "MentriQ", stats: [{ value: "2+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Pooja Bharia", image: "/images/poojabharia.jpg", description: "1+ Years Experience in Research Engineer", role: "Research Engineer", company: "MentriQ", stats: [{ value: "1+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Gaurav Sharma", image: "/images/gauravsharma.jpg", description: "1+ Years Experience in Cloud Technologies", role: "Cloud Engineer", company: "MentriQ", stats: [{ value: "1+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Pooja Yadav", image: "/images/poojayadav.jpg", description: "1+ Years Experience in Data Automation", role: "Data Automation Engineer", company: "MentriQ", stats: [{ value: "1+", label: "Years" }, { value: "5+", label: "Projects" }] },
+    { name: "Sameer Khan", image: "/images/sameer.jpg", description: "1+ Years Experience in Full Stack Development", role: "Full Stack Developer", company: "MentriQ", stats: [{ value: "1+", label: "Years" }, { value: "5+", label: "Projects" }] }
 ];
 
 const MentorManagement = () => {
@@ -150,30 +161,33 @@ const MentorManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Mentor Network</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage global industry experts and their profiles.</p>
+                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Expert Registry</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{mentors.length} Verified Experts</span>
+                        Manage global industry veterans and strategic mentor profiles.
+                    </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
                     {mentors.length === 0 && (
                         <button
                             onClick={syncDefaultMentors}
                             disabled={isSyncing}
-                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-600/30 transition-all whitespace-nowrap"
+                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-8 py-4 rounded-xl font-black flex items-center gap-3 hover:bg-emerald-600/30 transition-all whitespace-nowrap text-[10px] uppercase tracking-widest"
                         >
-                            <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                            <span>{isSyncing ? "Syncing..." : "Sync Website Mentors"}</span>
+                            <RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} strokeWidth={3} />
+                            <span>{isSyncing ? "Syncing..." : "Sync Website Experts"}</span>
                         </button>
                     )}
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/30 transition-all shadow-inner">
+                        <Search className="text-gray-600 ml-4 transition-colors group-focus-within:text-indigo-400" size={20} />
                         <input
                             type="text"
-                            placeholder="Search mentors..."
+                            placeholder="Identify expert node..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-600 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full lg:w-64 font-black uppercase italic tracking-tighter text-sm"
                         />
                     </div>
                     <button
@@ -183,10 +197,10 @@ const MentorManagement = () => {
                             setIsModalOpen(true);
                             setImageFile(null);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
-                        <Plus size={18} />
-                        <span>Add Expert</span>
+                        <Plus size={18} strokeWidth={3} />
+                        <span>Deploy Expert</span>
                     </button>
                 </div>
             </div>
@@ -228,10 +242,10 @@ const MentorManagement = () => {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Expert Identity</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Node Location</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Operational Bio</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 text-right">Commands</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Expert Identity</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Node Location</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Operational Bio</th>
+                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 text-right">Commands</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5">
@@ -247,30 +261,34 @@ const MentorManagement = () => {
                                         >
                                             <td className="px-8 py-6">
                                                 <div className="flex items-center gap-5">
-                                                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-2xl relative">
+                                                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-2xl relative p-1 transition-all group-hover:border-indigo-500/30">
                                                         <img
                                                             src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")}
                                                             alt={mentor.name}
-                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                            className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-500 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100"
                                                             onError={(e) => { e.target.src = "/images/user.png" }}
                                                         />
                                                     </div>
                                                     <div>
-                                                        <div className="font-black text-white text-base tracking-tight">{mentor.name}</div>
+                                                        <div className="font-black text-white text-base tracking-tight italic">{mentor.name}</div>
                                                         {(mentor.linkedin || mentor.linkedinUrl) && (
                                                             <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[9px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-black uppercase tracking-widest mt-1">
                                                                 <Linkedin size={10} /> Sync Verified
                                                             </a>
                                                         )}
+                                                        <div className="text-[9px] font-black text-gray-600 uppercase tracking-widest mt-0.5">Verified Expert Entity</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <div className="text-white font-black text-xs italic">{mentor.role}</div>
-                                                <div className="text-indigo-500 text-[10px] uppercase font-black tracking-widest mt-1">{mentor.company}</div>
+                                                <div className="text-white font-black text-xs italic uppercase tracking-wider">{mentor.role}</div>
+                                                <div className="text-indigo-500 text-[10px] uppercase font-black tracking-widest mt-1.5 flex items-center gap-2">
+                                                    <Briefcase size={10} />
+                                                    {mentor.company}
+                                                </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <p className="text-gray-500 text-xs line-clamp-2 max-w-xs font-bold leading-relaxed">
+                                                <p className="text-gray-500 text-xs line-clamp-2 max-w-xs font-bold leading-relaxed uppercase tracking-tight">
                                                     {mentor.description || mentor.bio || "No operational brief available for this node."}
                                                 </p>
                                             </td>
@@ -285,7 +303,7 @@ const MentorManagement = () => {
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(mentor._id)}
-                                                        className="p-3 bg-red-500/10 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
+                                                        className="p-3 bg-red-500/10 text-red-400/50 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
                                                         title="Terminate Node"
                                                     >
                                                         <Trash2 size={16} />
@@ -392,7 +410,7 @@ const MentorManagement = () => {
                                         className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
                                     >
                                         <Check size={20} strokeWidth={3} />
-                                        <span>Deploy Mentor</span>
+                                        <span>{editingMentor ? "Sync Profile" : "Deploy Entity"}</span>
                                     </button>
                                 </div>
                             </form>

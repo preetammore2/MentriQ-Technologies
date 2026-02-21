@@ -132,7 +132,8 @@ const StaffManagement = () => {
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Personnel Registry</h2>
-                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">
+                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                            <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{staffUsers.length} Authorized Personnel</span>
                             System-wide access control and administrative entity management.
                         </p>
                     </div>

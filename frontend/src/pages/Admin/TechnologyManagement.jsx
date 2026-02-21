@@ -189,7 +189,10 @@ const TechnologyManagement = () => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
                 <div>
                     <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Mastery Stack</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Inventory of core technologies and framework protocols.</p>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{technologies.length} Tech Nodes</span>
+                        Inventory of core technologies and framework protocols.
+                    </p>
                 </div>
                 <div className="w-full md:w-auto flex flex-col sm:flex-row gap-4">
                     {technologies.length === 0 && (

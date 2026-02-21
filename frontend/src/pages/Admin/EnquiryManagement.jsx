@@ -154,7 +154,10 @@ const EnquiryManagement = () => {
                 </div>
                 <div className="relative z-10">
                     <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Enquiry Panel</h2>
-                    <p className="text-gray-400 text-sm mt-1 uppercase font-bold tracking-widest opacity-60">Central Intelligence Hub for Leads & Messages</p>
+                    <p className="text-gray-400 text-[10px] mt-1 uppercase font-black tracking-widest flex items-center gap-3">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{inquiries.length + enquiries.length} Total Signals</span>
+                        Central Intelligence Hub for Leads & Messages
+                    </p>
                 </div>
 
                 <div className="flex bg-black/20 p-1.5 rounded-2xl border border-white/5 relative z-10">

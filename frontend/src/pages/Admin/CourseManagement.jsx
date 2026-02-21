@@ -168,8 +168,11 @@ const CourseManagement = () => {
             {/* Header Section */}
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-6 md:p-8 rounded-3xl border border-white/5 shadow-xl">
                 <div className="w-full lg:w-auto">
-                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Course Management</h2>
-                    <p className="text-gray-400 text-xs md:text-sm mt-1">Manage curriculum, pricing, and course details.</p>
+                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight uppercase italic">Curriculum Registry</h2>
+                    <p className="text-gray-400 text-[10px] mt-1 font-black uppercase tracking-[0.2em] flex items-center gap-2">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{courses.length} Active Modules</span>
+                        Manage curriculum, pricing, and course details.
+                    </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 flex items-center group focus-within:border-indigo-500/50 transition-all w-full sm:w-auto">

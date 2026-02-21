@@ -105,8 +105,11 @@ const FeedbackManagement = () => {
             {/* Header section - Simplified */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1e293b] p-8 rounded-3xl border border-white/5">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Testimonials</h2>
-                    <p className="text-gray-400 text-sm mt-1">Manage student success stories displayed on the website.</p>
+                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Testimonials</h2>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-3">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{feedbacks.length} Success Stories</span>
+                        Manage student success stories displayed on the website.
+                    </p>
                 </div>
                 <button
                     onClick={() => {

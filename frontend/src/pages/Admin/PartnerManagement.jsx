@@ -176,7 +176,10 @@ const PartnerManagement = () => {
                         </div>
                         <div>
                             <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Alliance Registry</h2>
-                            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-1">Authenticated network of corporate partners and hiring entities.</p>
+                            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-1 flex items-center gap-2">
+                                <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{partners.length} Linked Entities</span>
+                                Authenticated network of corporate partners and hiring entities.
+                            </p>
                         </div>
                     </div>
                 </div>

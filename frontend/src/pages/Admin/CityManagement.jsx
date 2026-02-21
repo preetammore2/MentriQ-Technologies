@@ -132,9 +132,12 @@ const CityManagement = () => {
                         <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
                             <MapPin size={20} className="text-indigo-400" />
                         </div>
-                        <h2 className="text-3xl font-black text-white tracking-tight">City Presence</h2>
+                        <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">City Presence</h2>
                     </div>
-                    <p className="text-gray-400 text-sm font-medium">Manage locations and regional visibility.</p>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
+                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{cities.length} Distributed Nodes</span>
+                        Manage locations and regional visibility.
+                    </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-5 flex items-center group focus-within:border-indigo-500/50 transition-all shadow-inner">
