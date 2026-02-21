@@ -42,32 +42,7 @@ const limiter = rateLimit({
 
 const app = express();
 
-app.use(helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
-
-app.set('trust proxy', 1);
-
-// Debug routes at root for verification
-app.get("/health", (req, res) => {
-    res.json({
-        status: "active",
-        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-        timestamp: new Date().toISOString()
-    });
-});
-app.get("/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
-app.get("/api/health", (req, res) => {
-    res.json({
-        status: "active",
-        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-        timestamp: new Date().toISOString()
-    });
-});
-app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
-
-app.use("/api", limiter);
-
+// 1. CORS CONFIGURATION (MUST BE AT THE TOP)
 const envOrigins = String(process.env.CORS_ORIGINS || "")
     .split(",")
     .map((origin) => origin.trim().replace(/\/$/, ""))
@@ -84,22 +59,19 @@ const allowedOrigins = new Set([
 
 const isAllowedOrigin = (origin) => {
     if (!origin) return true;
-
     const normalizedOrigin = origin.trim().replace(/\/$/, "");
     if (allowedOrigins.has(normalizedOrigin)) return true;
 
     try {
         const { protocol, hostname } = new URL(normalizedOrigin);
-        const isHttp = protocol === "http:";
-        const isHttps = protocol === "https:";
-
-        if (isHttp && (hostname === "localhost" || hostname === "127.0.0.1")) return true;
-        if (isHttps && /(^|\.)mentriqtechnologies\.in$/i.test(hostname)) return true;
-        if (isHttps && /(^|\.)vercel\.app$/i.test(hostname)) return true;
+        if (protocol === "http:" && (hostname === "localhost" || hostname === "127.0.0.1")) return true;
+        if (protocol === "https:" && (
+            /(^|\.)mentriqtechnologies\.in$/i.test(hostname) ||
+            /(^|\.)vercel\.app$/i.test(hostname)
+        )) return true;
     } catch {
         return false;
     }
-
     return false;
 };
 
@@ -108,25 +80,45 @@ const corsOptions = {
         if (isAllowedOrigin(origin)) {
             callback(null, true);
         } else {
-            // Fail-open to avoid production auth outage when origin config drifts.
-            // Unknown origins are logged for audit and can be tightened later.
             console.warn(`CORS fallback allow for origin: ${origin}`);
             callback(null, true);
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
 };
 
 app.use(cors(corsOptions));
-app.options(/.*/, cors(corsOptions));
+app.options("*", cors(corsOptions));
+
+
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+app.set('trust proxy', 1);
+
+
+app.use("/api", limiter);
+
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.get("/", (req, res) => res.json({ status: "MentriQ API running", version: "debug-v2" }));
+app.get("/api/health", (req, res) => res.json({
+    status: "active",
+    database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+    version: "debug-v3",
+    timestamp: new Date().toISOString()
+}));
+
+app.get("/", (req, res) => res.json({
+    status: "MentriQ API running",
+    version: "debug-v3",
+    activeOrigins: Array.from(allowedOrigins)
+}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
