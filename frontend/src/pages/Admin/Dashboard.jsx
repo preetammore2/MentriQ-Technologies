@@ -224,14 +224,14 @@ const Dashboard = () => {
                 </div>
 
                 {/* Real-time Activity */}
-                <div className="bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-[#0f172a]/40 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white/5 shadow-2xl flex flex-col">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">Active Pulse</h3>
+                            <h3 className="text-xl font-extrabold text-white tracking-tight">Active Pulse</h3>
                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Real-time Node Events</p>
                         </div>
-                        <div className="p-2.5 bg-emerald-50 rounded-xl">
-                            <Activity className="text-emerald-600" size={24} />
+                        <div className="p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                            <Activity className="text-emerald-400" size={24} />
                         </div>
                     </div>
 
@@ -239,18 +239,18 @@ const Dashboard = () => {
                         {analytics.recentActivity.map((activity, idx) => (
                             <div key={activity.id} className="flex gap-4 group cursor-default">
                                 <div className="mt-1 relative">
-                                    <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:bg-emerald-50 group-hover:border-emerald-200 transition-all shadow-sm">
+                                    <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-emerald-500/10 group-hover:border-emerald-500/20 transition-all shadow-sm">
                                         {getActivityIcon(activity.type)}
                                     </div>
                                     {idx !== analytics.recentActivity.length - 1 && (
-                                        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-100 group-hover:bg-emerald-100 transition-colors" />
+                                        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-white/5 group-hover:bg-emerald-500/20 transition-colors" />
                                     )}
                                 </div>
                                 <div className="flex-1">
-                                    <div className="text-[13px] font-bold text-slate-700 leading-relaxed group-hover:text-slate-900 transition-colors">
+                                    <div className="text-[13px] font-bold text-slate-300 leading-relaxed group-hover:text-white transition-colors">
                                         {activity.message.replace('User', 'Node Entity').replace('student', 'authorized node')}
                                     </div>
-                                    <div className="text-[10px] text-slate-400 font-bold mt-1.5 flex items-center gap-2 uppercase tracking-widest">
+                                    <div className="text-[10px] text-slate-500 font-bold mt-1.5 flex items-center gap-2 uppercase tracking-widest">
                                         <TrendingUp size={10} className="text-emerald-500" />
                                         {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • Live Signal
                                     </div>
@@ -259,7 +259,7 @@ const Dashboard = () => {
                         ))}
                     </div>
 
-                    <button className="w-full mt-8 py-4 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-2xl border border-slate-200 text-[10px] font-black uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
+                    <button className="w-full mt-8 py-4 bg-white/5 hover:bg-white/10 text-slate-400 font-bold rounded-2xl border border-white/10 text-[10px] uppercase tracking-[0.2em] transition-all active:scale-[0.98]">
                         Access Performance Logs
                     </button>
                 </div>
@@ -267,7 +267,7 @@ const Dashboard = () => {
 
             {/* Infrastructure Linkage */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-slate-900 rounded-3xl p-8 border border-white/5 relative overflow-hidden group">
+                <div className="bg-[#0f172a]/40 backdrop-blur-xl rounded-3xl p-8 border border-white/5 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent pointer-events-none" />
                     <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
@@ -291,18 +291,19 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="bg-[#0f172a]/40 backdrop-blur-xl rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden group">
                     <div className="flex justify-between items-center relative z-10">
                         <div>
-                            <h3 className="text-lg font-bold text-slate-900">Visitor Reach</h3>
+                            <h3 className="text-lg font-bold text-white">Visitor Reach</h3>
                             <p className="text-slate-400 text-xs font-medium mt-1">Popular page segments across the portal</p>
                         </div>
-                        <button onClick={() => navigate('/admin/settings')} className="text-emerald-600 hover:text-emerald-700 transition-colors">
+                        <button onClick={() => navigate('/admin/settings')} className="text-emerald-400 hover:text-emerald-300 transition-colors">
                             <ArrowRight size={20} />
                         </button>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };

@@ -197,7 +197,7 @@ const UserManagement = () => {
                                 <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 text-right">Administrative Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100">
+                        <tbody className="divide-y divide-white/5">
                             <AnimatePresence mode="popLayout">
                                 {filteredStudents.map((user) => (
                                     <MotionTr
@@ -206,7 +206,7 @@ const UserManagement = () => {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="hover:bg-slate-50/50 transition-colors group"
+                                        className="hover:bg-white/5 transition-colors group"
                                     >
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
