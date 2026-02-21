@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "./apiClient";
+
 /**
  * Resolves the image URL for a course.
  * @param {Object} course - The course object.
@@ -8,11 +10,7 @@ export const resolveImageUrl = (path, fallback = "") => {
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("data:image/")) return path;
 
-    const staticProdURL = 'https://mentriq-technologies.onrender.com/api';
-    const apiBase = (import.meta.env.VITE_API_BASE_URL ||
-        (import.meta.env.DEV ? 'http://localhost:5000/api' : staticProdURL)).trim();
-
-    const serverRoot = apiBase.replace(/\/api\/?$/, "");
+    const serverRoot = API_BASE_URL.replace(/\/api\/?$/, "");
 
     // Fix: Treat /images as frontend static assets (public folder), not backend
     if (path.startsWith("/images/")) return path;

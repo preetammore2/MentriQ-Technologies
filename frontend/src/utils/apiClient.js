@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const staticProdURL = 'https://mentriq-technologies.onrender.com/api';
+const PROD_API_URL = 'https://mentriq-backend.onrender.com/api';
 const envBaseURL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '');
 
 const resolvedBaseURL = import.meta.env.DEV
   ? (envBaseURL || 'http://localhost:5000/api')
-  : (envBaseURL || staticProdURL);
+  : (envBaseURL || PROD_API_URL);
 
 if (import.meta.env.DEV) {
   console.log('🚀 MentriQ API Base URL:', resolvedBaseURL);
@@ -22,6 +22,8 @@ export const apiClient = axios.create({
     'Content-Type': 'application/json'
   }
 })
+
+export const API_BASE_URL = resolvedBaseURL;
 
 // Production Link Monitor
 if (!import.meta.env.DEV) {

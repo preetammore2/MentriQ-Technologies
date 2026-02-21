@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter, ArrowRight, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { apiClient as api } from '../../utils/apiClient';
 
 const Footer = () => {
     const MotionA = motion.a;
@@ -54,23 +55,20 @@ const Footer = () => {
     React.useEffect(() => {
         const fetchSettings = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'}/settings`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setSettings(prev => ({
-                        ...prev,
-                        email: data.email || prev.email,
-                        phone: data.phone || prev.phone,
-                        address: data.address || prev.address,
-                        mapLink: data.mapLink || prev.mapLink,
-                        socialLinks: {
-                            instagram: data.socialLinks?.instagram || prev.socialLinks.instagram,
-                            linkedin: data.socialLinks?.linkedin || prev.socialLinks.linkedin,
-                            twitter: data.socialLinks?.twitter || prev.socialLinks.twitter,
-                            whatsapp: data.socialLinks?.whatsapp || prev.socialLinks.whatsapp
-                        }
-                    }));
-                }
+                const { data } = await api.get('/settings');
+                setSettings(prev => ({
+                    ...prev,
+                    email: data.email || prev.email,
+                    phone: data.phone || prev.phone,
+                    address: data.address || prev.address,
+                    mapLink: data.mapLink || prev.mapLink,
+                    socialLinks: {
+                        instagram: data.socialLinks?.instagram || prev.socialLinks.instagram,
+                        linkedin: data.socialLinks?.linkedin || prev.socialLinks.linkedin,
+                        twitter: data.socialLinks?.twitter || prev.socialLinks.twitter,
+                        whatsapp: data.socialLinks?.whatsapp || prev.socialLinks.whatsapp
+                    }
+                }));
             } catch (error) {
                 console.error("Failed to fetch settings", error);
             }
