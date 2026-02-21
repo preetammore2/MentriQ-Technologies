@@ -53,6 +53,7 @@ const allowedOrigins = new Set([
     "http://127.0.0.1:5173",
     "https://www.mentriqtechnologies.in",
     "https://mentriqtechnologies.in",
+    "https://mentriq-technologies-zeta.vercel.app",
     process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null,
     ...envOrigins
 ].filter(Boolean));
@@ -86,7 +87,8 @@ const corsOptions = {
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"],
+    exposedHeaders: ["Set-Cookie"]
 };
 
 app.use(cors(corsOptions));
@@ -110,13 +112,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get("/api/health", (req, res) => res.json({
     status: "active",
     database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
-    version: "debug-v3",
+    version: "debug-v4",
     timestamp: new Date().toISOString()
 }));
 
 app.get("/", (req, res) => res.json({
     status: "MentriQ API running",
-    version: "debug-v3",
+    version: "debug-v4",
     activeOrigins: Array.from(allowedOrigins)
 }));
 
