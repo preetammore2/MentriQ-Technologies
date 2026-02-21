@@ -36,30 +36,30 @@ const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0 }) => (
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.5, ease: "easeOut" }}
-        className="bg-white p-7 rounded-[2.5rem] border border-slate-200 hover:border-emerald-300 hover:shadow-[0_15px_40px_-15px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden"
+        className="bg-[#0f172a]/40 backdrop-blur-xl p-7 rounded-[2.5rem] border border-white/5 hover:border-emerald-500/30 hover:shadow-[0_20px_50px_-12px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden"
     >
         <div className="flex justify-between items-start relative z-10">
             <div>
-                <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">{title}</p>
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">{title}</p>
                 <div className="flex items-baseline gap-2">
-                    <h3 className="text-4xl font-extrabold text-slate-900 tracking-tighter">
+                    <h3 className="text-4xl font-extrabold text-white tracking-tighter">
                         {typeof value === 'number' ? value.toLocaleString() : value}
                     </h3>
                 </div>
                 {trend !== 0 && (
-                    <div className={`flex items-center gap-2 mt-4 transition-transform group-hover:translate-x-1 ${trend > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                        <div className={`p-1 rounded-md ${trend > 0 ? 'bg-emerald-50' : 'bg-rose-50'}`}>
+                    <div className={`flex items-center gap-2 mt-4 transition-transform group-hover:translate-x-1 ${trend > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                        <div className={`p-1 rounded-md ${trend > 0 ? 'bg-emerald-500/10' : 'bg-rose-500/10'}`}>
                             {trend > 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                         </div>
                         <span className="text-[11px] font-bold tracking-tight">{Math.abs(trend)}% Velocity</span>
                     </div>
                 )}
             </div>
-            <div className={`p-4 rounded-[1.5rem] ${color} bg-opacity-[0.08] backdrop-blur-sm border border-slate-100 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ring-4 ring-transparent group-hover:ring-slate-50`}>
+            <div className={`p-4 rounded-[1.5rem] ${color} bg-opacity-[0.12] backdrop-blur-md border border-white/5 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ring-4 ring-transparent group-hover:ring-white/5`}>
                 <Icon className={`w-7 h-7 ${color.replace('bg-', 'text-')}`} strokeWidth={2.5} />
             </div>
         </div>
-        <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-slate-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white/2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </motion.div>
 );
 
@@ -128,17 +128,17 @@ const Dashboard = () => {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
             {/* Unified Header */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
-                    <Zap size={200} />
+                    <Zap size={200} className="text-emerald-500" />
                 </div>
                 <div className="relative z-10">
-                    <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Main Dashboard</h1>
-                    <p className="text-slate-500 mt-1 font-medium text-sm">Overview of MentriQ Platform operations and student engagement.</p>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Main Dashboard</h1>
+                    <p className="text-slate-400 mt-1 font-medium text-sm">Overview of MentriQ Platform operations and student engagement.</p>
                 </div>
-                <div className="flex items-center gap-3 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-100 relative z-10">
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse" />
-                    <span className="text-slate-600 font-semibold text-xs tracking-wide">Live Infrastructure Link</span>
+                <div className="flex items-center gap-3 bg-white/5 px-5 py-2.5 rounded-2xl border border-white/5 relative z-10">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse" />
+                    <span className="text-slate-300 font-bold text-xs tracking-wider uppercase">Uplink Active</span>
                 </div>
             </div>
 
@@ -152,15 +152,15 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Growth Visualization */}
-                <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm">
+                <div className="lg:col-span-2 bg-[#0f172a]/40 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white/5 shadow-2xl">
                     <div className="flex justify-between items-center mb-10">
                         <div>
-                            <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">Ecosystem Growth</h3>
+                            <h3 className="text-2xl font-extrabold text-white tracking-tight">Ecosystem Growth</h3>
                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Enrollment trends • Last 30 Cycles</p>
                         </div>
-                        <div className="flex items-center gap-3 px-6 py-3 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
-                            <div className="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
-                            <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Confirmed Enrollees</span>
+                        <div className="flex items-center gap-3 px-6 py-3 bg-white/5 rounded-2xl border border-white/5 shadow-inner">
+                            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Live Feed</span>
                         </div>
                     </div>
 
@@ -174,10 +174,10 @@ const Dashboard = () => {
                                         <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" vertical={false} />
                                 <XAxis
                                     dataKey="date"
-                                    stroke="#94a3b8"
+                                    stroke="#475569"
                                     fontSize={10}
                                     tickLine={false}
                                     axisLine={false}
@@ -198,10 +198,11 @@ const Dashboard = () => {
                                     content={({ active, payload, label }) => {
                                         if (active && payload && payload.length) {
                                             return (
-                                                <div className="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-white/10 animate-in zoom-in-95 duration-200">
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{label}</p>
-                                                    <p className="text-xl font-extrabold tracking-tighter">
-                                                        {payload[0].value} <span className="text-[10px] text-emerald-400 uppercase tracking-widest">Enrollees</span>
+                                                <div className="bg-[#020617]/90 backdrop-blur-md border border-white/10 p-4 rounded-2xl shadow-2xl">
+                                                    <p className="text-[10px] uppercase tracking-widest font-black text-slate-500 mb-2">{label}</p>
+                                                    <p className="text-lg font-bold text-white flex items-center gap-2">
+                                                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                                        {payload[0].value} Enrollees
                                                     </p>
                                                 </div>
                                             );

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2, Edit2, ChevronDown } from "lucide-react";
+import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2, Edit2, ChevronDown, RefreshCw, CheckCircle, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -36,16 +36,14 @@ const TechnologyManagement = () => {
     const [isSyncing, setIsSyncing] = useState(false);
     const toast = useToast();
 
-    // Form State
     const [formData, setFormData] = useState({
         name: "",
-        logo: "", // URL or File path
+        logo: "",
         logoFile: null,
         category: "other",
         order: 0
     });
 
-    // Preview State
     const [imagePreview, setImagePreview] = useState(null);
 
     const fetchTechnologies = useCallback(async () => {
@@ -53,7 +51,7 @@ const TechnologyManagement = () => {
             const { data } = await api.get("/technologies");
             setTechnologies(data.data || []);
         } catch (error) {
-            toast.error("Failed to load technologies");
+            toast.error("Failed to load tech registry");
         } finally {
             setLoading(false);
         }
@@ -64,10 +62,10 @@ const TechnologyManagement = () => {
         try {
             const syncPromises = FALLBACK_TECHS.map(t => api.post("/technologies", t));
             await Promise.all(syncPromises);
-            toast.success("Synchronized mastery stack to database");
+            toast.success("Mastery stack synchronized");
             fetchTechnologies();
         } catch (err) {
-            toast.error("Sync failed: " + err.message);
+            toast.error("Synchronization failed");
         } finally {
             setIsSyncing(false);
         }
@@ -80,17 +78,17 @@ const TechnologyManagement = () => {
     }, [fetchTechnologies]);
 
     const filteredTechnologies = technologies.filter((tech) =>
-        tech.name.toLowerCase().includes(searchTerm.toLowerCase())
+        (tech.name || "").toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure?")) return;
+        if (!window.confirm("Purge this tech node?")) return;
         try {
             await api.delete(`/technologies/${id}`);
             setTechnologies((prev) => prev.filter((t) => t._id !== id));
-            toast.success("Technology deleted");
+            toast.success("Component de-integrated");
         } catch {
-            toast.error("Failed to delete technology");
+            toast.error("De-integration failed");
         }
     };
 
@@ -98,319 +96,261 @@ const TechnologyManagement = () => {
         const file = e.target.files[0];
         if (file) {
             setFormData({ ...formData, logoFile: file });
-            setImagePreview(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onloadend = () => setImagePreview(reader.result);
+            reader.readAsDataURL(file);
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-
-        try {
-            let logoUrl = formData.logo;
-
-            // 1. Upload Image if selected
-            if (formData.logoFile) {
-                const uploadData = new FormData();
-                uploadData.append("image", formData.logoFile);
-
-                try {
-                    const uploadRes = await api.post("/upload", uploadData, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    logoUrl = uploadRes.data.imageUrl;
-                } catch (uploadError) {
-                    console.error("Upload failed", uploadError);
-                    toast.error("Image upload failed");
-                    setSubmitting(false);
-                    return;
-                }
-            }
-
-            const payload = {
-                name: formData.name,
-                logo: logoUrl,
-                category: formData.category,
-                order: parseInt(formData.order) || 0
-            };
-
-            if (editingTech) {
-                // Update
-                const { data } = await api.put(`/technologies/${editingTech._id}`, payload);
-                setTechnologies(prev => prev.map(t => t._id === editingTech._id ? data.data : t));
-                toast.success("Technology updated");
-            } else {
-                // Create
-                const { data } = await api.post("/technologies", payload);
-                setTechnologies((prev) => [data.data, ...prev]);
-                toast.success("Technology created");
-            }
-
-            // Reset
-            closeModal();
-
-        } catch (err) {
-            toast.error(err?.response?.data?.message || "Operation failed");
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    const openCreateModal = () => {
-        setEditingTech(null);
-        setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
-        setImagePreview(null);
-        setIsModalOpen(true);
-    };
-
-    const openEditModal = (tech) => {
+    const handleEdit = (tech) => {
         setEditingTech(tech);
         setFormData({
-            name: tech.name,
-            logo: tech.logo,
+            name: tech.name || "",
+            logo: tech.logo || "",
             logoFile: null,
-            category: tech.category,
+            category: tech.category || "other",
             order: tech.order || 0
         });
         setImagePreview(resolveImageUrl(tech.logo));
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setEditingTech(null);
-        setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
-        setImagePreview(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        try {
+            let logoUrl = formData.logo;
+
+            if (formData.logoFile) {
+                const uploadData = new FormData();
+                uploadData.append("image", formData.logoFile);
+                const { data } = await api.post("/upload", uploadData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                logoUrl = data.imageUrl;
+            }
+
+            const payload = {
+                name: formData.name,
+                logo: logoUrl,
+                category: formData.category,
+                order: parseInt(formData.order),
+            };
+
+            if (editingTech) {
+                await api.put(`/technologies/${editingTech._id}`, payload);
+                toast.success("Tech logic updated");
+            } else {
+                await api.post("/technologies", payload);
+                toast.success("New tech node deployed");
+            }
+
+            setIsModalOpen(false);
+            setEditingTech(null);
+            setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 });
+            setImagePreview(null);
+            fetchTechnologies();
+        } catch {
+            toast.error("Transmission failed");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
-                    <Cpu size={200} />
-                </div>
-                <div className="w-full lg:w-auto relative z-10">
-                    <h2 className="text-3xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Mastery Stack</h2>
-                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
-                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 shadow-sm font-black">{technologies.length} Tech Nodes</span>
-                        <span className="opacity-70">Inventory of core technologies and framework protocols.</span>
-                    </p>
-                </div>
-                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4 relative z-10">
-                    {technologies.length === 0 && (
-                        <button
-                            onClick={syncDefaultTechs}
-                            disabled={isSyncing}
-                            className="bg-emerald-50 text-emerald-600 border border-emerald-100 px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95 shadow-sm"
-                        >
-                            <Loader2 size={16} className={isSyncing ? "animate-spin" : ""} />
-                            <span>{isSyncing ? "Syncing..." : "Sync Node Services"}</span>
-                        </button>
-                    )}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={20} />
-                        <input
-                            type="text"
-                            placeholder="Identify technology..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-4 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
-                        />
+            {/* Page Header */}
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
+                    <div>
+                        <div className="flex items-center gap-3 mb-1">
+                            <Cpu size={28} className="text-emerald-400" />
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight">Mastery Stack</h2>
+                            <span className="ml-2 text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20 text-xs font-bold">
+                                {technologies.length} Core Components
+                            </span>
+                        </div>
+                        <p className="text-slate-400 font-medium text-sm">System-wide technology registry and industrial stack management.</p>
                     </div>
-                    <button
-                        onClick={openCreateModal}
-                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest whitespace-nowrap"
-                    >
-                        <Plus size={18} strokeWidth={2.5} />
-                        <span>Deploy Node</span>
-                    </button>
+
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="bg-white/5 border border-white/10 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-500/50 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
+                            <Search className="text-slate-500 ml-4 group-focus-within:text-emerald-400 transition-colors" size={18} />
+                            <input
+                                type="text"
+                                placeholder="Locate component..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="bg-transparent text-white placeholder:text-slate-600 focus:outline-none py-4 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
+                            />
+                        </div>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={syncDefaultTechs}
+                                disabled={isSyncing}
+                                className="bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 px-6 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center whitespace-nowrap"
+                            >
+                                {isSyncing ? <RefreshCw className="animate-spin" size={16} /> : <RefreshCw size={16} />}
+                                <span>Sync Stack</span>
+                            </button>
+                            <button
+                                onClick={() => { setEditingTech(null); setFormData({ name: "", logo: "", logoFile: null, category: "other", order: 0 }); setImagePreview(null); setIsModalOpen(true); }}
+                                className="bg-emerald-600 text-white hover:bg-emerald-500 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-500/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
+                            >
+                                <Plus size={18} />
+                                <span>Deploy Node</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Grid */}
-            {loading ? (
-                <div className="flex justify-center py-20">
-                    <Loader2 className="animate-spin text-emerald-500" size={40} />
+            {/* Tech Table */}
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-white/5 border-b border-white/10">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Component Identity</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Execution Category</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Operational Rank</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {filteredTechnologies.map((tech) => (
+                                <tr key={tech._id} className="hover:bg-white/5 transition-colors group">
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-5">
+                                            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 p-2 flex items-center justify-center group-hover:border-emerald-500/50 transition-all">
+                                                <img src={resolveImageUrl(tech.logo)} alt={tech.name} className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                            </div>
+                                            <div className="font-bold text-white text-[15px] tracking-tight">{tech.name}</div>
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <span className="px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                            {tech.category}
+                                        </span>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <span className="text-slate-400 text-xs font-black uppercase tracking-widest">#{tech.order}</span>
+                                    </td>
+                                    <td className="px-8 py-6 text-right">
+                                        <div className="flex justify-end gap-3">
+                                            <button onClick={() => handleEdit(tech)} className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/20 transition-all">
+                                                <Edit2 size={16} />
+                                            </button>
+                                            <button onClick={() => handleDelete(tech._id)} className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/20 transition-all">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-            ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    {filteredTechnologies.map((tech) => (
-                        <div key={tech._id} className="bg-white border border-slate-200 p-6 rounded-[2rem] flex flex-col items-center gap-4 group hover:border-emerald-300 hover:shadow-md transition-all relative">
-                            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                <button
-                                    onClick={() => openEditModal(tech)}
-                                    className="p-2.5 bg-slate-50 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-100 rounded-xl transition-all"
-                                    title="Refine Node"
-                                >
-                                    <Edit2 size={14} />
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(tech._id)}
-                                    className="p-2.5 bg-slate-50 text-slate-400 hover:text-rose-600 hover:bg-rose-50 border border-slate-200 hover:border-rose-100 rounded-xl transition-all"
-                                    title="Terminate Node"
-                                >
-                                    <Trash2 size={14} />
-                                </button>
-                            </div>
+            </div>
 
-                            <div className="w-20 h-20 bg-slate-50 rounded-[1.5rem] p-4 flex items-center justify-center border border-slate-100 shadow-sm transition-transform group-hover:scale-110">
-                                <img
-                                    src={resolveImageUrl(tech.logo)}
-                                    alt={tech.name}
-                                    className="w-full h-full object-contain"
-                                    onError={(e) => { e.target.src = "https://via.placeholder.com/64?text=Tech" }}
-                                />
-                            </div>
-                            <div className="text-center">
-                                <h3 className="text-slate-900 font-extrabold tracking-tight group-hover:text-emerald-600 transition-colors uppercase text-sm">{tech.name}</h3>
-                                <div className="mt-1.5 inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-100">
-                                    <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest">{tech.category}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-
-                    {filteredTechnologies.length === 0 && (
-                        <div className="col-span-full py-24 text-center bg-white rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-emerald-300">
-                            <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 transition-all group-hover:scale-110 group-hover:bg-emerald-50 group-hover:text-emerald-400 group-hover:border-emerald-100 shadow-inner">
-                                <Cpu size={44} strokeWidth={1.5} />
-                            </div>
-                            <h3 className="text-2xl font-extrabold text-slate-900 mb-3 tracking-tight">Stack Inventory Undefined</h3>
-                            <p className="text-slate-400 mb-10 max-w-sm mx-auto font-bold text-[10px] uppercase tracking-widest leading-loose px-6">The technology mastery stack is currently empty. Synchronize with global standards or manually initialize a new tech node hub.</p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button
-                                    onClick={syncDefaultTechs}
-                                    disabled={isSyncing}
-                                    className="bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-emerald-600/20"
-                                >
-                                    <Loader2 size={16} className={isSyncing ? "animate-spin" : ""} />
-                                    {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
-                                </button>
-                                <button
-                                    onClick={openCreateModal}
-                                    className="bg-slate-50 text-slate-600 border border-slate-200 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-100 active:scale-95 transition-all flex items-center gap-3 justify-center"
-                                >
-                                    <Plus size={16} />
-                                    Manual Initialize
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            {/* Create Modal */}
+            {/* Modal */}
             <AnimatePresence>
                 {isModalOpen && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-                        <div
-                            className="absolute inset-0"
-                            onClick={() => !submitting && closeModal()}
-                        />
                         <MotionDiv
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="relative w-full max-w-lg bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]"
+                            className="relative w-full max-w-xl bg-[#0f172a] border border-white/10 rounded-[3rem] p-10 shadow-2xl flex flex-col"
                         >
-                            <div className="flex items-start justify-between gap-6 mb-10">
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">{editingTech ? "Update Node" : "Deploy Node"}</h3>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Infrastructure Hub V2.1</p>
+                                    <h3 className="text-3xl font-black text-white tracking-tight uppercase">
+                                        {editingTech ? "Refine Node" : "Deploy Node"}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Component Logic Architecture</p>
                                 </div>
                                 <button
-                                    type="button"
-                                    onClick={() => !submitting && closeModal()}
-                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white transition-all border border-white/10"
                                 >
                                     <X size={24} />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-8">
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Protocol Identifier</label>
-                                    <div className="relative group">
-                                        <Cpu size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
-                                        <input
-                                            type="text"
-                                            required
-                                            value={formData.name}
-                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
-                                            placeholder="e.g. React Native"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Visual Signature</label>
-                                    <div className="flex items-center gap-8">
-                                        <div className="w-24 h-24 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-center flex-shrink-0 shadow-inner">
+                            <form onSubmit={handleSubmit} className="flex-1 space-y-10">
+                                <div className="flex flex-col items-center justify-center">
+                                    <label className="relative group cursor-pointer">
+                                        <div className={`w-32 h-32 rounded-3xl border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${imagePreview ? 'border-emerald-500/50 bg-white/5' : 'border-white/10 bg-white/5 hover:border-emerald-500/50'}`}>
                                             {imagePreview ? (
-                                                <img src={imagePreview} alt="Preview" className="w-full h-full object-contain" />
+                                                <img src={imagePreview} alt="Preview" className="max-w-[70%] max-h-[70%] object-contain" />
                                             ) : (
-                                                <ImageIcon className="text-slate-300" size={32} />
+                                                <ImageIcon size={32} className="text-slate-500 group-hover:text-emerald-400 transition-colors" strokeWidth={1.5} />
                                             )}
                                         </div>
-                                        <div className="flex-1 space-y-3">
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={handleImageChange}
-                                                className="w-full text-[10px] text-slate-400 file:mr-6 file:py-3 file:px-6 file:rounded-xl file:border-slate-200 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-slate-50 file:text-slate-600 hover:file:bg-slate-100 transition-all"
-                                            />
-                                            <p className="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Recommended: Transparent PNG</p>
+                                        <div className="absolute -bottom-2 -right-2 p-3 bg-emerald-600 text-white rounded-xl shadow-xl group-hover:scale-110 transition-all z-20 border border-white/10">
+                                            <Plus size={16} strokeWidth={3} />
                                         </div>
-                                    </div>
+                                        <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                    </label>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-4">Visual Component Source</p>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-8">
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Ecosystem</label>
-                                        <div className="relative group">
-                                            <select
-                                                value={formData.category}
-                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 appearance-none cursor-pointer transition-all"
-                                            >
-                                                <option value="frontend">Frontend</option>
-                                                <option value="backend">Backend</option>
-                                                <option value="database">Database</option>
-                                                <option value="devops">DevOps</option>
-                                                <option value="mobile">Mobile</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-emerald-600 transition-colors" />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Render Order</label>
+                                <div className="space-y-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Node Designation</label>
                                         <input
-                                            type="number"
-                                            value={formData.order}
-                                            onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all"
+                                            required
+                                            value={formData.name}
+                                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
+                                            placeholder="e.g. NextJS Matrix"
                                         />
                                     </div>
+
+                                    <div className="grid grid-cols-2 gap-8">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Execution Layer</label>
+                                            <select
+                                                value={formData.category}
+                                                onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
+                                            >
+                                                <option value="frontend" className="bg-slate-900">Frontend</option>
+                                                <option value="backend" className="bg-slate-900">Backend</option>
+                                                <option value="database" className="bg-slate-900">Database</option>
+                                                <option value="mobile" className="bg-slate-900">Mobile</option>
+                                                <option value="devops" className="bg-slate-900">DevOps</option>
+                                                <option value="other" className="bg-slate-900">General</option>
+                                            </select>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Operational Rank</label>
+                                            <input
+                                                type="number"
+                                                value={formData.order}
+                                                onChange={e => setFormData({ ...formData, order: e.target.value })}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="pt-8 flex justify-end gap-6 items-center">
+                                <div className="p-10 border-t border-white/5 flex justify-end items-center gap-4 shrink-0 -mx-10 -mb-10 mt-10 bg-white/5">
                                     <button
                                         type="button"
-                                        onClick={() => !submitting && closeModal()}
-                                        className="text-[10px] font-black text-slate-400 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors"
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="flex-1 py-4.5 rounded-2xl bg-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-white hover:bg-white/10 border border-white/10 transition-all"
                                     >
-                                        Abort
+                                        Dismiss
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 active:scale-95"
                                     >
-                                        {submitting && <Loader2 size={16} className="animate-spin" />}
-                                        <span>{editingTech ? "Commit Sync" : "Deploy Node"}</span>
+                                        {submitting ? <Loader2 className="animate-spin" size={18} /> : <CheckCircle size={18} strokeWidth={3} />}
+                                        <span>Deploy Node</span>
                                     </button>
                                 </div>
                             </form>

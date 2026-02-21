@@ -91,25 +91,25 @@ const AdminLayout = ({ children }) => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex overflow-hidden font-sans">
+        <div className="min-h-screen bg-[#020617] text-slate-200 flex overflow-hidden font-sans">
             {/* Sidebar */}
             <motion.aside
                 initial={false}
                 animate={{ width: isSidebarOpen ? 280 : 88 }}
-                className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'translate-x-0 shadow-xl lg:shadow-none' : '-translate-x-full lg:translate-x-0'
+                className={`fixed lg:static inset-y-0 left-0 z-40 bg-[#070b14]/80 backdrop-blur-xl border-r border-white/5 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'translate-x-0 shadow-2xl lg:shadow-none' : '-translate-x-full lg:translate-x-0'
                     }`}
             >
                 {/* Logo Section */}
-                <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100">
+                <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
                     <div className={`flex items-center gap-3 overflow-hidden ${!isSidebarOpen && 'lg:hidden'}`}>
-                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-sm overflow-hidden p-1">
+                        <div className="w-10 h-10 rounded-xl bg-white border border-white/10 flex items-center justify-center shadow-lg overflow-hidden p-1">
                             <img src="/images/logo.jpeg" alt="MentriQ Logo" className="w-full h-full object-contain" />
                         </div>
-                        <span className="text-slate-900 font-bold text-lg tracking-tight whitespace-nowrap">MentriQ</span>
+                        <span className="text-white font-bold text-lg tracking-tight whitespace-nowrap">MentriQ</span>
                     </div>
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-2 rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+                        className="p-2 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition-colors"
                     >
                         {isSidebarOpen ? <X size={20} className="lg:hidden" /> : <Menu size={20} className="hidden lg:block" />}
                         {isSidebarOpen && <ChevronLeft size={20} className="hidden lg:block" />}
@@ -121,7 +121,7 @@ const AdminLayout = ({ children }) => {
                     {menuGroups.map((group, groupIdx) => (
                         <div key={groupIdx} className="space-y-1">
                             {isSidebarOpen && (
-                                <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3 px-3">
+                                <h4 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-3 px-3">
                                     {group.title}
                                 </h4>
                             )}
@@ -135,24 +135,24 @@ const AdminLayout = ({ children }) => {
                                             key={item.path}
                                             to={item.path}
                                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group relative ${isActive
-                                                ? 'bg-emerald-50 text-emerald-700'
-                                                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                ? 'bg-emerald-500/10 text-emerald-400'
+                                                : 'text-slate-400 hover:text-white hover:bg-white/5'
                                                 }`}
                                         >
-                                            <Icon size={20} className={`shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-400 group-hover:text-slate-600'}`} />
+                                            <Icon size={20} className={`shrink-0 ${isActive ? 'text-emerald-500' : 'text-slate-500 group-hover:text-slate-300'}`} />
                                             {isSidebarOpen && (
-                                                <span className="font-medium text-[14px] whitespace-nowrap">
+                                                <span className="font-semibold text-[14px] whitespace-nowrap">
                                                     {item.label}
                                                 </span>
                                             )}
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activePill"
-                                                    className="absolute left-0 w-1 h-6 bg-emerald-600 rounded-r-full"
+                                                    className="absolute left-0 w-1 h-6 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] rounded-r-full"
                                                 />
                                             )}
                                             {!isSidebarOpen && (
-                                                <div className="absolute left-full ml-4 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-medium z-50">
+                                                <div className="absolute left-full ml-4 px-2 py-1 bg-slate-900 border border-white/10 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-medium z-50">
                                                     {item.label}
                                                 </div>
                                             )}
@@ -165,14 +165,14 @@ const AdminLayout = ({ children }) => {
                 </div>
 
                 {/* Profile/Logout */}
-                <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+                <div className="p-4 border-t border-white/5 bg-white/2">
                     <button
                         onClick={handleLogout}
-                        className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-all group ${!isSidebarOpen && 'lg:justify-center'
+                        className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all group ${!isSidebarOpen && 'lg:justify-center'
                             }`}
                     >
                         <LogOut size={20} />
-                        {isSidebarOpen && <span className="font-semibold text-sm">Logout Session</span>}
+                        {isSidebarOpen && <span className="font-bold text-sm tracking-tight uppercase">Termination</span>}
                     </button>
                 </div>
             </motion.aside>
@@ -185,7 +185,7 @@ const AdminLayout = ({ children }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsSidebarOpen(false)}
-                        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 lg:hidden"
+                        className="fixed inset-0 bg-[#020617]/60 backdrop-blur-sm z-30 lg:hidden"
                     />
                 )}
             </AnimatePresence>
@@ -193,23 +193,23 @@ const AdminLayout = ({ children }) => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col h-screen overflow-hidden">
                 {/* Header (Mobile) */}
-                <header className="h-16 lg:hidden flex items-center px-6 border-b border-slate-200 bg-white sticky top-0 z-30">
+                <header className="h-16 lg:hidden flex items-center px-6 border-b border-white/5 bg-[#070b14]/80 backdrop-blur-md sticky top-0 z-30">
                     <button
                         onClick={() => setIsSidebarOpen(true)}
-                        className="p-2 -ml-2 text-slate-500 hover:text-slate-900"
+                        className="p-2 -ml-2 text-slate-400 hover:text-white"
                     >
                         <Menu size={24} />
                     </button>
                     <div className="ml-4 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-white border border-slate-100 flex items-center justify-center p-1 shadow-sm overflow-hidden">
+                        <div className="w-9 h-9 rounded-lg bg-white border border-white/10 flex items-center justify-center p-1 shadow-sm overflow-hidden">
                             <img src="/images/logo.jpeg" alt="MentriQ Logo" className="w-full h-full object-contain" />
                         </div>
-                        <span className="text-slate-900 font-bold tracking-tight">MentriQ</span>
+                        <span className="text-white font-bold tracking-tight">MentriQ</span>
                     </div>
                 </header>
 
                 {/* Main Viewport */}
-                <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth custom-scrollbar">
                     <div className="max-w-7xl mx-auto">
                         <AnimatePresence mode="wait">
                             <motion.div

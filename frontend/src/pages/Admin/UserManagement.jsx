@@ -146,39 +146,39 @@ const UserManagement = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-white p-8 md:p-10 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden group">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#0f172a]/40 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
-                    <User size={200} />
+                    <User size={200} className="text-emerald-500" />
                 </div>
                 <div className="w-full lg:w-auto relative z-10">
-                    <h2 className="text-3xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Candidate Registry</h2>
-                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
-                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 shadow-sm font-black">{students.length} Nodes</span>
+                    <h2 className="text-3xl md:text-3xl font-extrabold text-white tracking-tight">Candidate Registry</h2>
+                    <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
+                        <span className="text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20 shadow-sm font-black">{students.length} Nodes</span>
                         <span className="opacity-70">Authenticated database of active learners and enrollment entities.</span>
                     </p>
                 </div>
                 <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4 relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 shrink-0 group-focus-within:text-emerald-500 transition-colors" size={20} />
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-emerald-500/50 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
+                        <Search className="text-slate-500 ml-4 shrink-0 group-focus-within:text-emerald-400 transition-colors" size={20} />
                         <input
                             type="text"
                             placeholder="Identify candidate profile..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-4 px-4 w-full sm:w-64 font-bold text-sm tracking-tight"
+                            className="bg-transparent text-white placeholder:text-slate-500 focus:outline-none py-4 px-4 w-full sm:w-64 font-bold text-sm tracking-tight"
                         />
                     </div>
                     <div className="flex gap-4">
                         <button
                             onClick={handleExportStudents}
-                            className="bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
+                            className="bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
                         >
                             <Download size={16} />
                             <span>Export Data</span>
                         </button>
                         <button
                             onClick={openCreateModal}
-                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
+                            className="bg-emerald-600 text-white hover:bg-emerald-500 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-500/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
                         >
                             <Plus size={18} strokeWidth={2.5} />
                             <span>Deploy Profile</span>
@@ -187,14 +187,14 @@ const UserManagement = () => {
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-200">
-                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Student Profile</th>
-                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Registration Cycle</th>
-                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 text-right">Administrative Actions</th>
+                            <tr className="bg-white/5 border-b border-white/5">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Student Profile</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Registration Cycle</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 text-right">Administrative Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
@@ -210,17 +210,17 @@ const UserManagement = () => {
                                     >
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
-                                                <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold border border-emerald-100 shadow-sm transition-transform group-hover:scale-110">
+                                                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold border border-emerald-500/20 shadow-sm transition-transform group-hover:scale-110">
                                                     {(user.name || "S").charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-slate-900 text-[15px] tracking-tight">{user.name}</div>
-                                                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{user.email}</div>
+                                                    <div className="font-bold text-white text-[15px] tracking-tight">{user.name}</div>
+                                                    <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{user.email}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">
-                                            <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold uppercase tracking-wider bg-slate-50 w-fit px-3 py-1.5 rounded-lg border border-slate-100">
+                                            <div className="flex items-center gap-2 text-slate-400 text-[11px] font-bold uppercase tracking-wider bg-white/5 w-fit px-3 py-1.5 rounded-lg border border-white/5">
                                                 <TrendingUp size={12} className="text-emerald-500" />
                                                 {new Date(user.createdAt).toLocaleDateString(undefined, {
                                                     month: 'short',
@@ -233,14 +233,14 @@ const UserManagement = () => {
                                             <div className="flex justify-end gap-3">
                                                 <button
                                                     onClick={() => openEditModal(user)}
-                                                    className="p-2.5 rounded-xl text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-100 transition-all"
+                                                    className="p-2.5 rounded-xl text-slate-500 hover:text-emerald-400 bg-white/5 hover:bg-emerald-500/10 border border-white/5 hover:border-emerald-500/20 transition-all"
                                                     title="Refine Entity"
                                                 >
                                                     <Edit2 size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(user._id)}
-                                                    className="p-2.5 rounded-xl text-slate-400 hover:text-rose-600 bg-slate-50 hover:bg-rose-50 border border-slate-200 hover:border-rose-100 transition-all"
+                                                    className="p-2.5 rounded-xl text-slate-500 hover:text-rose-400 bg-white/5 hover:bg-rose-500/10 border border-white/5 hover:border-rose-500/20 transition-all"
                                                     title="Terminate Node"
                                                 >
                                                     <Trash2 size={16} />
@@ -255,11 +255,11 @@ const UserManagement = () => {
                 </div>
                 {filteredStudents.length === 0 && (
                     <div className="py-24 text-center">
-                        <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-slate-100 shadow-inner">
-                            <User size={36} className="text-slate-300" />
+                        <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/5 shadow-inner">
+                            <User size={36} className="text-slate-600" />
                         </div>
-                        <h3 className="text-xl font-extrabold text-slate-900 mb-2 tracking-tight">No Nodes Identified</h3>
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">We couldn't locate any entities matching "{searchTerm}".</p>
+                        <h3 className="text-xl font-extrabold text-white mb-2 tracking-tight">No Nodes Identified</h3>
+                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">We couldn't locate any entities matching "{searchTerm}".</p>
                     </div>
                 )}
             </div>
@@ -275,17 +275,17 @@ const UserManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="relative w-full max-w-xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]"
+                            className="relative w-full max-w-xl bg-[#0f172a] border border-white/10 rounded-[3rem] p-10 shadow-2xl"
                         >
                             <div className="flex items-start justify-between gap-6 mb-10">
                                 <div>
-                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">{editingUser ? "Update Profile" : "Initialize Entity"}</h3>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Student</p>
+                                    <h3 className="text-3xl font-black text-white tracking-tight uppercase">{editingUser ? "Update Profile" : "Initialize Entity"}</h3>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Registry Access Level: Student</p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => !submitting && closeModal()}
-                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                    className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white transition-all flex items-center justify-center border border-white/10"
                                 >
                                     <X size={24} />
                                 </button>
@@ -293,39 +293,39 @@ const UserManagement = () => {
 
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Entity Name</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Entity Name</label>
                                     <div className="relative group">
-                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
                                             placeholder="Full Name"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Electronic Mail</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Electronic Mail</label>
                                     <div className="relative group">
-                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
                                         <input
                                             type="email"
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
                                             placeholder="email@example.com"
                                         />
                                     </div>
                                 </div>
 
                                 {editingUser && (
-                                    <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-6 flex items-start gap-4">
-                                        <KeyRound className="text-emerald-600 shrink-0" size={20} />
-                                        <p className="text-xs text-emerald-700 font-medium leading-relaxed">
+                                    <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-6 flex items-start gap-4">
+                                        <KeyRound className="text-emerald-500 shrink-0" size={20} />
+                                        <p className="text-xs text-emerald-400 font-medium leading-relaxed">
                                             Password management is locked for active accounts. Administrators cannot view or override student passkeys directly.
                                         </p>
                                     </div>
@@ -333,16 +333,16 @@ const UserManagement = () => {
 
                                 {!editingUser && (
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Security Key</label>
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Security Key</label>
                                         <div className="relative group">
-                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
                                             <input
                                                 type="password"
                                                 required
                                                 minLength={6}
                                                 value={formData.password}
                                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
                                                 placeholder="Cryptographic String"
                                             />
                                         </div>
@@ -353,14 +353,14 @@ const UserManagement = () => {
                                     <button
                                         type="button"
                                         onClick={() => !submitting && closeModal()}
-                                        className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all"
+                                        className="flex-1 py-4.5 rounded-2xl bg-white/5 text-slate-400 font-bold text-xs uppercase tracking-widest hover:bg-white/10 border border-white/10 transition-all"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2"
                                     >
                                         {submitting ? (
                                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

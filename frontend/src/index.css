@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 :root {
-    --theme-bg: #ffffff;
-    --theme-bg-soft: #f8fbff;
-    --theme-surface: rgba(255, 255, 255, 0.78);
-    --theme-surface-strong: rgba(255, 255, 255, 0.92);
-    --theme-border: rgba(148, 163, 184, 0.28);
-    --theme-text: #0f172a;
-    --theme-text-muted: #475569;
-    --theme-primary: #059669;
-    --theme-secondary: #0d9488;
+    --theme-bg: #020617;
+    --theme-bg-soft: #070b14;
+    --theme-surface: rgba(15, 23, 42, 0.75);
+    --theme-surface-strong: rgba(30, 41, 59, 0.9);
+    --theme-border: rgba(255, 255, 255, 0.08);
+    --theme-text: #f8fafc;
+    --theme-text-muted: #94a3b8;
+    --theme-primary: #10b981;
+    --theme-secondary: #06b6d4;
 }
 
 @theme {
-    --color-primary: #059669;
-    --color-secondary: #0d9488;
-    --color-background: #0f172a;
-    --color-surface: #1e293b;
+    --color-primary: #10b981;
+    --color-secondary: #06b6d4;
+    --color-background: #020617;
+    --color-surface: #0f172a;
     --font-display: "Space Grotesk", sans-serif;
 }
 
@@ -24,6 +24,14 @@
 @layer utilities {
     .text-glow {
         text-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+    }
+
+    .glass-dark {
+        @apply bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl;
+    }
+
+    .neon-emerald {
+        @apply shadow-[0_0_20px_rgba(16, 185, 129, 0.2)];
     }
 
     .glass-panel {

@@ -164,41 +164,38 @@ const CourseManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
             {/* Page Header */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 overflow-hidden relative group">
-                <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-1">
-                        <BookOpen size={28} className="text-emerald-600" />
-                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Curriculum Registry</h2>
-                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
-                            {courses.length} Active Modules
-                        </span>
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
+                    <div>
+                        <div className="flex items-center gap-3 mb-1">
+                            <BookOpen size={28} className="text-emerald-400" />
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight">Curriculum Hub</h2>
+                            <span className="ml-2 text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20 text-xs font-bold">
+                                {courses.length} Active Modules
+                            </span>
+                        </div>
+                        <p className="text-slate-400 font-medium text-sm">Educational programs and certification roadmap management.</p>
                     </div>
-                    <p className="text-slate-500 font-medium text-sm">Manage curriculum, pricing, and course details.</p>
-                </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
-                        <input
-                            type="text"
-                            placeholder="Find a course..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full sm:w-64 font-bold text-sm tracking-tight"
-                        />
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="bg-white/5 border border-white/10 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-500/50 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
+                            <Search className="text-slate-500 ml-4 group-focus-within:text-emerald-400 transition-colors" size={18} />
+                            <input
+                                type="text"
+                                placeholder="Filter curriculum..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="bg-transparent text-white placeholder:text-slate-600 focus:outline-none py-4 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
+                            />
+                        </div>
+                        <button
+                            onClick={() => { setEditingCourse(null); setFormData(initialFormState); setIsModalOpen(true); setImagePreview(null); }}
+                            className="bg-emerald-600 text-white hover:bg-emerald-500 px-8 py-4 rounded-xl font-bold shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
+                        >
+                            <Plus size={18} />
+                            <span>New Course</span>
+                        </button>
                     </div>
-                    <button
-                        onClick={() => {
-                            setEditingCourse(null);
-                            setFormData(initialFormState);
-                            setImagePreview(null);
-                            setIsModalOpen(true);
-                        }}
-                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
-                    >
-                        <Plus size={18} />
-                        <span>Add Course</span>
-                    </button>
                 </div>
             </div>
 
@@ -224,16 +221,15 @@ const CourseManagement = () => {
                     </button>
                 </div>
             ) : (
-                <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700">
+                <div className="bg-[#0f172a]/40 backdrop-blur-xl border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-slate-50 border-b border-slate-200">
-                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Curriculum Identity</th>
-                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Domain</th>
-                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Aptitude</th>
-                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Tuition</th>
-                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
+                                <tr className="bg-white/5 border-b border-white/10">
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Course Entity</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Valuation & Data</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Syllabus / Brochure</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
@@ -257,28 +253,35 @@ const CourseManagement = () => {
                                                             onError={(e) => e.target.src = "https://via.placeholder.com/64?text=Course"}
                                                         />
                                                     </div>
-                                                    <div className="min-w-0">
-                                                        <div className="font-bold text-slate-900 text-base tracking-tight">{course.title}</div>
-                                                        <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">{course.duration} • {course.mode}</div>
+                                                    <div>
+                                                        <div className="font-bold text-white text-[15px] tracking-tight">{course.title}</div>
+                                                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1 flex items-center gap-2">
+                                                            <BarChart size={12} className="text-emerald-400" />
+                                                            {course.category} • {course.level}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <span className="text-slate-600 text-sm font-medium">{course.category}</span>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="text-white font-bold text-xs flex items-center gap-2">
+                                                        <DollarSign size={14} className="text-emerald-400" />
+                                                        ₹{course.price}
+                                                        {course.discount > 0 && <span className="text-[10px] text-rose-400 ml-1">-{course.discount}%</span>}
+                                                    </div>
+                                                    <div className="text-slate-500 text-[10px] uppercase font-black tracking-widest flex items-center gap-2">
+                                                        <Clock size={12} />
+                                                        {course.duration}
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <span className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border ${course.level === 'Beginner' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
-                                                    course.level === 'Intermediate' ? 'bg-amber-50 text-amber-700 border-amber-100' :
-                                                        'bg-rose-50 text-rose-700 border-rose-100'
-                                                    }`}>
-                                                    {course.level}
-                                                </span>
-                                            </td>
-                                            <td className="px-8 py-6">
-                                                <div className="flex flex-col">
-                                                    <span className="text-slate-900 font-bold text-sm">₹{course.price.toLocaleString()}</span>
-                                                    {course.discount > 0 && (
-                                                        <span className="text-[10px] text-emerald-500 font-bold mt-0.5">-{course.discount}% OFF</span>
+                                                <div className="flex gap-2">
+                                                    {course.syllabusUrl && (
+                                                        <span className="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-black uppercase tracking-widest">Syllabus</span>
+                                                    )}
+                                                    {course.brochureUrl && (
+                                                        <span className="px-3 py-1 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[9px] font-black uppercase tracking-widest">Brochure</span>
                                                     )}
                                                 </div>
                                             </td>
@@ -286,15 +289,13 @@ const CourseManagement = () => {
                                                 <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => openEditModal(course)}
-                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
-                                                        title="Refine Course"
+                                                        className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/20 transition-all"
                                                     >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(course._id)}
-                                                        className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
-                                                        title="Terminate Course"
+                                                        className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/20 transition-all"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
@@ -317,18 +318,18 @@ const CourseManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col max-h-[90vh]"
+                            className="relative w-full max-w-2xl bg-[#0f172a] border border-white/10 rounded-[3rem] p-10 shadow-2xl flex flex-col max-h-[90vh]"
                         >
                             <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
                                 <div>
-                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">
-                                        {editingCourse ? "Configure Module" : "Manifest Curriculum"}
+                                    <h3 className="text-3xl font-black text-white tracking-tight uppercase">
+                                        {editingCourse ? "Synthesize Curriculum" : "Materialize Course"}
                                     </h3>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Registry Access Level: Academic Lead</p>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Status: Educational Architect Mode</p>
                                 </div>
                                 <button
-                                    onClick={closeModal}
-                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white transition-all border border-white/10"
                                 >
                                     <X size={24} />
                                 </button>

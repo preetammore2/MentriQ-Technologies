@@ -129,137 +129,154 @@ const StaffManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
             {/* Page Header */}
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
                     <div>
                         <div className="flex items-center gap-3 mb-1">
-                            <UserCog size={28} className="text-emerald-600" />
-                            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Personnel Registry</h2>
-                            <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
+                            <UserCog size={28} className="text-emerald-400" />
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight">Personnel Registry</h2>
+                            <span className="ml-2 text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20 text-xs font-bold">
                                 {staffUsers.length} Authorized
                             </span>
                         </div>
-                        <p className="text-slate-500 font-medium text-sm">System-wide access control and administrative entity management.</p>
+                        <p className="text-slate-400 font-medium text-sm">System-wide access control and administrative entity management.</p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
-                            <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
+                        <div className="bg-white/5 border border-white/10 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-500/50 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
+                            <Search className="text-slate-500 ml-4 group-focus-within:text-emerald-400 transition-colors" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search personnel..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                                className="bg-transparent text-white placeholder:text-slate-600 focus:outline-none py-4 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
                             />
                         </div>
                         <button
                             onClick={handleExportStaff}
-                            className="bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-sm text-sm"
+                            className="bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap justify-center"
                         >
-                            <Download size={18} />
-                            <span>Export Registry</span>
+                            <Download size={16} />
+                            <span>Export Personnel</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50/50 rounded-full blur-3xl -mr-32 -mt-32 transition-all group-hover:bg-emerald-100/50" />
-                <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] mb-8 flex items-center gap-3 relative z-10">
-                    <ShieldCheck size={14} className="text-emerald-600" />
-                    Elevation Protocol
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-6 items-center relative z-10">
-                    <div className="relative group">
-                        <UserRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
-                        <select
-                            value={selectedStudentId}
-                            onChange={(e) => setSelectedStudentId(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
-                        >
-                            <option value="">Select Candidate to Promote...</option>
-                            {students.map((u) => (
-                                <option key={u._id} value={u._id} className="text-slate-900 font-medium">{u.name} ({u.email})</option>
-                            ))}
-                        </select>
-                        <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-emerald-600 transition-colors" />
+            {/* Elevate Student Section */}
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+                <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                    <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 text-emerald-400 shadow-inner">
+                        <ShieldCheck size={32} />
                     </div>
-                    <button
-                        onClick={() => grantFromStudent("moderator")}
-                        disabled={!selectedStudentId}
-                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100 transition-all disabled:opacity-30 uppercase tracking-widest shadow-sm"
-                    >
-                        Moderator Status
-                    </button>
-                    <button
-                        onClick={() => grantFromStudent("admin")}
-                        disabled={!selectedStudentId}
-                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-emerald-600 text-white hover:bg-emerald-700 transition-all disabled:opacity-30 uppercase tracking-widest shadow-md shadow-emerald-600/10"
-                    >
-                        Admin Privilege
-                    </button>
+                    <div className="flex-1 text-center md:text-left">
+                        <h3 className="text-xl font-bold text-white tracking-tight">Privilege Escalation</h3>
+                        <p className="text-slate-400 text-sm mt-1">Select a candidate profile to grant administrative or moderator status.</p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                        <div className="relative w-full sm:w-64">
+                            <select
+                                value={selectedStudentId}
+                                onChange={(e) => setSelectedStudentId(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-5 pr-10 text-slate-300 font-bold text-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
+                            >
+                                <option value="" className="bg-[#0f172a]">Select Candidate...</option>
+                                {students.map((s) => (
+                                    <option key={s._id} value={s._id} className="bg-[#0f172a]">
+                                        {s.name} ({s.email})
+                                    </option>
+                                ))}
+                            </select>
+                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
+                        </div>
+                        <div className="flex gap-2 w-full md:w-auto">
+                            <button
+                                onClick={() => grantFromStudent('moderator')}
+                                className="flex-1 md:flex-none px-6 py-3.5 bg-emerald-600/10 hover:bg-emerald-600/20 border border-emerald-600/20 text-emerald-400 font-bold text-[10px] uppercase tracking-widest rounded-xl transition-all active:scale-95"
+                            >
+                                Moderator
+                            </button>
+                            <button
+                                onClick={() => grantFromStudent('admin')}
+                                className="flex-1 md:flex-none px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] uppercase tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-emerald-500/20"
+                            >
+                                Administrator
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700">
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl border border-white/5 rounded-3xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-slate-50 border-b border-slate-200">
+                            <tr className="bg-white/5 border-b border-white/10">
                                 <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Staff User</th>
                                 <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Current Role</th>
                                 <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100">
+                        <tbody className="divide-y divide-white/5">
                             {filteredStaff.map((user) => {
                                 const isSuperAdmin = user.email === SUPER_ADMIN_EMAIL;
                                 const isPending = updatingId === user._id;
                                 return (
-                                    <tr key={user._id} className="hover:bg-slate-50/50 transition-colors group">
+                                    <tr key={user._id} className="hover:bg-white/5 transition-colors group">
                                         <td className="px-8 py-6">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
-                                                    <UserRound size={20} />
+                                            <div className="flex items-center gap-5">
+                                                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-bold border border-emerald-500/20 shadow-sm group-hover:scale-110 transition-transform">
+                                                    {(user.name || "A").charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <div className="text-slate-900 font-bold text-sm tracking-tight">{user.name}</div>
-                                                    <div className="text-slate-400 text-xs font-medium">{user.email}</div>
+                                                    <div className="font-bold text-white text-[15px] tracking-tight">{user.name}</div>
+                                                    <div className="text-[11px] font-bold text-slate-500 tracking-wider mt-0.5">{user.email}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">
-                                            <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${user.role === "admin"
-                                                ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                                                : "bg-emerald-50 text-emerald-700 border-emerald-100"
-                                                }`}>
-                                                {user.role === "admin" ? <ShieldCheck size={10} /> : <UserCog size={10} />}
-                                                {user.role}
-                                            </span>
-                                            {isSuperAdmin && (
-                                                <div className="ml-3 text-[10px] text-amber-600 font-bold uppercase tracking-widest inline-flex items-center gap-1.5">
-                                                    <Lock size={12} className="text-amber-500" />
-                                                    Super Admin
-                                                </div>
-                                            )}
+                                            <div className="flex flex-wrap gap-2">
+                                                <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${user.role === 'admin'
+                                                    ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                                                    : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                                    }`}>
+                                                    {user.role}
+                                                </span>
+                                                {isSuperAdmin && (
+                                                    <span className="px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border bg-amber-500/10 text-amber-400 border-amber-500/20 inline-flex items-center gap-1.5">
+                                                        <Lock size={10} className="text-amber-500" />
+                                                        Super Admin
+                                                    </span>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="px-8 py-6">
                                             <div className="flex items-center justify-end gap-3">
                                                 <button
                                                     onClick={() => openResetModal(user)}
-                                                    className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
-                                                    title="Reset Password"
+                                                    className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all flex items-center gap-2"
+                                                    title="Security Reset"
                                                 >
-                                                    <Key size={16} />
+                                                    <Key size={14} />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest">Secret</span>
                                                 </button>
-                                                {!isSuperAdmin && (
+
+                                                {user.email !== SUPER_ADMIN_EMAIL && (
                                                     <button
-                                                        onClick={() => handleRoleUpdate(user._id, "student")}
-                                                        disabled={isPending}
-                                                        className="px-4 py-2.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-500 hover:text-white transition-all disabled:opacity-40"
+                                                        onClick={() => handleRoleUpdate(user._id, 'student')}
+                                                        className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all flex items-center gap-2"
+                                                        disabled={updatingId === user._id}
+                                                        title="Revoke Access"
                                                     >
-                                                        Revoke
+                                                        {updatingId === user._id ? (
+                                                            <Loader2 size={14} className="animate-spin" />
+                                                        ) : (
+                                                            <>
+                                                                <Lock size={14} />
+                                                                <span className="text-[10px] font-black uppercase tracking-widest">Revoke</span>
+                                                            </>
+                                                        )}
                                                     </button>
                                                 )}
                                             </div>
@@ -285,46 +302,40 @@ const StaffManagement = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-white border border-slate-200 rounded-[3rem] p-10 w-full max-w-lg shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col"
+                            className="bg-[#0f172a] border border-white/10 rounded-[3rem] w-full max-w-lg p-10 shadow-2xl relative overflow-hidden"
                         >
-                            <div className="flex justify-between items-center mb-10 shrink-0">
+                            <div className="flex items-start justify-between mb-10">
                                 <div>
-                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">Security Override</h3>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Credential Re-initialization</p>
+                                    <h3 className="text-2xl font-black text-white tracking-tight uppercase">Security Override</h3>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Personnel: {selectedUserForReset?.name}</p>
                                 </div>
                                 <button
-                                    onClick={() => setResetModalOpen(false)}
-                                    className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all shadow-sm"
+                                    onClick={() => !resetting && setResetModalOpen(false)}
+                                    className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white transition-all border border-white/10"
                                 >
-                                    <X size={24} />
+                                    <X size={20} />
                                 </button>
                             </div>
 
-                            <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl mb-10">
-                                <p className="text-rose-700 text-xs font-medium leading-relaxed">
-                                    Injecting new credentials for <strong className="font-bold underline italic text-rose-800">{selectedUserForReset?.name}</strong>.
-                                    This operation will immediately invalidate current session access.
-                                </p>
-                            </div>
-
-                            <form onSubmit={handlePasswordReset} className="space-y-10">
+                            <form onSubmit={handlePasswordReset} className="space-y-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] ml-1">New Access Key</label>
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">New Secret Access Key</label>
                                     <div className="relative group">
-                                        <Lock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+                                        <div className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors">
+                                            <Key size={18} />
+                                        </div>
                                         <input
+                                            required
                                             type={showPassword ? "text" : "password"}
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
-                                            placeholder="Min. 6 characters required"
-                                            required
-                                            minLength={6}
+                                            placeholder="Min. 6 alphanumeric"
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 pr-16 text-white font-bold tracking-widest focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors"
+                                            className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
                                         >
                                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                         </button>
@@ -334,18 +345,24 @@ const StaffManagement = () => {
                                 <div className="flex gap-4 pt-4">
                                     <button
                                         type="button"
-                                        onClick={() => setResetModalOpen(false)}
-                                        className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all"
+                                        onClick={() => !resetting && setResetModalOpen(false)}
+                                        className="flex-1 py-4.5 rounded-2xl bg-white/5 text-slate-400 font-bold text-xs uppercase tracking-widest hover:bg-white/10 border border-white/10 transition-all"
                                     >
                                         Abort
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={resetting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2"
                                     >
-                                        {resetting ? <Loader2 size={18} className="animate-spin" /> : <ShieldCheck size={18} />}
-                                        <span>Update Protocol</span>
+                                        {resetting ? (
+                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                <ShieldCheck size={16} />
+                                                <span>Authorize Reset</span>
+                                            </>
+                                        )}
                                     </button>
                                 </div>
                             </form>

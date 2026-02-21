@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Link as LinkIcon, Handshake, RefreshCw, Loader2 } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X, Globe, Building2, Upload, Camera, Check, Handshake, RefreshCw, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
+import { resolveImageUrl } from "../../utils/imageUtils";
 
 const MotionTr = motion.tr;
 const MotionDiv = motion.div;
-
-import { resolveImageUrl } from "../../utils/imageUtils";
 
 const getSafeWebsiteHost = (website) => {
     if (!website) return "";
@@ -95,7 +94,58 @@ const PartnerManagement = () => {
         }
     };
 
-    const handleEdit = (partner) => {
+    const syncDefaultPartners = async () => {
+        setIsSyncing(true);
+        try {
+            const syncPromises = FALLBACK_PARTNERS.map(p => api.post("/partners", p));
+            await Promise.all(syncPromises);
+            toast.success("Alliance fleet synchronized");
+            fetchPartners();
+        } catch (err) {
+            toast.error("Sync failed");
+        } finally {
+            setIsSyncing(false);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        try {
+            if (editingPartner) {
+                await api.put(`/partners/${editingPartner._id}`, formData);
+                toast.success("Alliance record updated");
+            } else {
+                await api.post("/partners", formData);
+                toast.success("New alliance deployed");
+            }
+            setIsModalOpen(false);
+            setEditingPartner(null);
+            setFormData(initialFormState);
+            fetchPartners();
+        } catch {
+            toast.error("Transmission failed");
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Terminate alliance entry?")) return;
+        try {
+            await api.delete(`/partners/${id}`);
+            toast.success("Entry removed");
+            setPartners(p => p.filter(item => item._id !== id));
+        } catch {
+            toast.error("Deletion failed");
+        }
+    };
+
+    const filteredPartners = partners.filter(p =>
+        (p.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const openEditModal = (partner) => {
         setEditingPartner(partner);
         setFormData({
             name: partner.name || "",
@@ -105,326 +155,234 @@ const PartnerManagement = () => {
         setIsModalOpen(true);
     };
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to remove this partner?")) return;
-        try {
-            await api.delete(`/partners/${id}`);
-            toast.success("Partner removed successfully");
-            setPartners((prev) => prev.filter((partner) => partner._id !== id));
-        } catch {
-            toast.error("Failed to delete partner");
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-        try {
-            const payload = {
-                ...formData,
-                website: formData.website?.trim()
-                    ? (/^https?:\/\//i.test(formData.website.trim()) ? formData.website.trim() : `https://${formData.website.trim()}`)
-                    : ""
-            };
-
-            if (editingPartner) {
-                const { data } = await api.put(`/partners/${editingPartner._id}`, payload);
-                toast.success("Partner updated successfully");
-                setPartners((prev) => prev.map((partner) => partner._id === editingPartner._id ? data : partner));
-            } else {
-                const { data } = await api.post("/partners", payload);
-                toast.success("Partner added successfully");
-                setPartners((prev) => [data, ...prev]);
-            }
-
-            setIsModalOpen(false);
-            setEditingPartner(null);
-            setFormData(initialFormState);
-        } catch (err) {
-            toast.error(err?.response?.data?.message || "Operation failed");
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    const syncDefaultPartners = async () => {
-        setIsSyncing(true);
-        try {
-            const syncPromises = FALLBACK_PARTNERS.map(p => api.post("/partners", p));
-            await Promise.all(syncPromises);
-            toast.success("Synchronized default partners link to database");
-            fetchPartners();
-        } catch (err) {
-            toast.error("Sync failed: " + err.message);
-        } finally {
-            setIsSyncing(false);
-        }
-    };
-
-    const filteredPartners = useMemo(() => (
-        partners.filter((p) => (p.name || "").toLowerCase().includes(searchTerm.toLowerCase()))
-    ), [partners, searchTerm]);
-
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
+            {/* Page Header */}
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100 shadow-sm">
-                            <Handshake size={28} className="text-emerald-600" />
+                    <div>
+                        <div className="flex items-center gap-3 mb-1">
+                            <Handshake size={28} className="text-emerald-400" />
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight">Alliance Network</h2>
+                            <span className="ml-2 text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/20 text-xs font-bold">
+                                {partners.length} Strategic Partners
+                            </span>
                         </div>
-                        <div>
-                            <div className="flex items-center gap-3 mb-1">
-                                <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Alliance Registry</h2>
-                                <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
-                                    {partners.length} Entities
-                                </span>
-                            </div>
-                            <p className="text-slate-500 font-medium text-sm">Authenticated network of corporate partners and hiring entities.</p>
-                        </div>
+                        <p className="text-slate-400 font-medium text-sm">Corporate partnerships and ecosystem alliance management.</p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
-                        {partners.length === 0 && (
-                            <button
-                                onClick={syncDefaultPartners}
-                                disabled={isSyncing}
-                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
-                            >
-                                <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                                <span>{isSyncing ? "Syncing..." : "Sync Partners"}</span>
-                            </button>
-                        )}
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all w-full lg:w-auto">
-                            <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="bg-white/5 border border-white/10 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-500/50 focus-within:ring-4 focus-within:ring-emerald-500/10 transition-all">
+                            <Search className="text-slate-500 ml-4 group-focus-within:text-emerald-400 transition-colors" size={18} />
                             <input
                                 type="text"
-                                placeholder="Search partners..."
+                                placeholder="Filter alliances..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
+                                className="bg-transparent text-white placeholder:text-slate-600 focus:outline-none py-4 px-4 w-full lg:w-64 font-bold text-sm tracking-tight"
                             />
                         </div>
-                        <button
-                            onClick={() => {
-                                setEditingPartner(null);
-                                setFormData(initialFormState);
-                                setIsModalOpen(true);
-                            }}
-                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
-                        >
-                            <Plus size={18} />
-                            <span>Add Partner</span>
-                        </button>
-                    </div>
-                </div>
-
-                {loading ? (
-                    <div className="space-y-4">
-                        {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="h-16 bg-slate-50 border border-slate-200 rounded-xl animate-pulse" />
-                        ))}
-                    </div>
-                ) : filteredPartners.length === 0 ? (
-                    <div className="bg-white border border-slate-200 rounded-[2.5rem] p-32 text-center group shadow-sm">
-                        <div className="w-24 h-24 bg-emerald-50 rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-emerald-100 text-emerald-600 shadow-sm">
-                            <Building2 size={48} />
-                        </div>
-                        <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">Alliance Network Offline</h3>
-                        <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The hiring and corporate connection network is currently empty. Manual deployment required.</p>
-                        <div className="flex flex-col sm:flex-row gap-5 justify-center">
+                        <div className="flex gap-4">
                             <button
                                 onClick={syncDefaultPartners}
                                 disabled={isSyncing}
-                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-emerald-100 transition-all active:scale-95 text-[10px] uppercase tracking-widest"
+                                className="bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10 px-6 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center whitespace-nowrap"
                             >
-                                <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
-                                {isSyncing ? "Synchronizing..." : "Sync Global Entities"}
+                                {isSyncing ? <RefreshCw className="animate-spin" size={16} /> : <RefreshCw size={16} />}
+                                <span>Sync Fleet</span>
                             </button>
                             <button
-                                onClick={() => setIsModalOpen(true)}
-                                className="bg-emerald-600 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 text-[10px] uppercase tracking-widest"
+                                onClick={() => { setEditingPartner(null); setFormData(initialFormState); setIsModalOpen(true); }}
+                                className="bg-emerald-600 text-white hover:bg-emerald-500 px-6 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-500/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center whitespace-nowrap"
                             >
                                 <Plus size={18} />
-                                Initialize Registry
+                                <span>New Alliance</span>
                             </button>
                         </div>
                     </div>
-                ) : (
-                    <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="bg-slate-50 border-b border-slate-200">
-                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Partner Details</th>
-                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Digital Presence</th>
-                                        <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100">
-                                    <AnimatePresence mode="popLayout">
-                                        {filteredPartners.map((partner) => (
-                                            <MotionTr
-                                                key={partner._id}
-                                                layout
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                className="hover:bg-slate-50/50 transition-colors group"
-                                            >
-                                                <td className="px-8 py-6">
-                                                    <div className="flex items-center gap-5">
-                                                        <div className="w-20 h-14 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-2.5 shrink-0 group-hover:border-emerald-300 transition-all shadow-sm">
-                                                            <img
-                                                                src={resolveImageUrl(partner.logo)}
-                                                                alt={partner.name}
-                                                                className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-all duration-500"
-                                                                onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/80?text=Logo"; }}
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            <div className="font-bold text-slate-900 text-base tracking-tight">{partner.name}</div>
-                                                            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Verified Entity Partner</div>
-                                                        </div>
+                </div>
+            </div>
+
+            {/* Partners Table */}
+            <div className="bg-[#0f172a]/40 backdrop-blur-xl border border-white/5 rounded-[2.5rem] overflow-hidden shadow-2xl animate-in slide-in-from-bottom-4 duration-700">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-white/5 border-b border-white/10">
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Alliance Entity</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Operational Hub</th>
+                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            <AnimatePresence mode="popLayout">
+                                {filteredPartners.map((partner) => (
+                                    <MotionTr
+                                        key={partner._id}
+                                        layout
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        className="hover:bg-white/5 transition-colors group"
+                                    >
+                                        <td className="px-8 py-6">
+                                            <div className="flex items-center gap-5">
+                                                <div className="w-16 h-16 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-sm relative p-2 group-hover:border-emerald-500/50 transition-all">
+                                                    <img
+                                                        src={resolveImageUrl(partner.logo, "/images/partner-placeholder.png")}
+                                                        alt={partner.name}
+                                                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                                        onError={(e) => { e.target.src = "/images/partner-placeholder.png" }}
+                                                    />
+                                                </div>
+                                                <div className="font-bold text-white text-[15px] tracking-tight">{partner.name}</div>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-6">
+                                            {partner.website ? (
+                                                <a
+                                                    href={partner.website}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 group/link"
+                                                >
+                                                    <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 group-hover/link:bg-emerald-500/20 group-hover/link:border-emerald-500/30 transition-all">
+                                                        <Globe size={14} />
                                                     </div>
-                                                </td>
-                                                <td className="px-8 py-6">
-                                                    {partner.website ? (
-                                                        <a href={partner.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-lg text-emerald-600 hover:text-emerald-700 text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-emerald-100">
-                                                            <Globe size={12} />
-                                                            {getSafeWebsiteHost(partner.website)}
-                                                        </a>
-                                                    ) : (
-                                                        <span className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Offline Presence</span>
-                                                    )}
-                                                </td>
-                                                <td className="px-8 py-6 text-right">
-                                                    <div className="flex justify-end gap-3">
-                                                        <button
-                                                            onClick={() => handleEdit(partner)}
-                                                            className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
-                                                            title="Refine Entity"
-                                                        >
-                                                            <Edit2 size={16} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleDelete(partner._id)}
-                                                            className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
-                                                            title="Terminate Connection"
-                                                        >
-                                                            <Trash2 size={16} />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </MotionTr>
-                                        ))}
-                                    </AnimatePresence>
-                                </tbody>
-                            </table>
-                        </div>
+                                                    <span className="text-xs font-bold text-slate-400 group-hover/link:text-emerald-400 transition-colors uppercase tracking-widest">
+                                                        {getSafeWebsiteHost(partner.website)}
+                                                    </span>
+                                                </a>
+                                            ) : (
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">No URL defined</span>
+                                            )}
+                                        </td>
+                                        <td className="px-8 py-6 text-right">
+                                            <div className="flex justify-end gap-3">
+                                                <button
+                                                    onClick={() => openEditModal(partner)}
+                                                    className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/20 transition-all"
+                                                >
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(partner._id)}
+                                                    className="p-3 rounded-xl bg-white/5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 border border-white/10 hover:border-rose-500/20 transition-all"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </MotionTr>
+                                ))}
+                            </AnimatePresence>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Modal */}
+            <AnimatePresence>
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+                        <MotionDiv
+                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                            className="relative w-full max-w-xl bg-[#0f172a] border border-white/10 rounded-[3rem] p-10 shadow-2xl flex flex-col"
+                        >
+                            <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
+                                <div>
+                                    <h3 className="text-3xl font-black text-white tracking-tight uppercase">
+                                        {editingPartner ? "Refine Entity" : "Global Onboarding"}
+                                    </h3>
+                                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mt-1">Partner Identity Protocol</p>
+                                </div>
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white transition-all border border-white/10"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <form id="partnerForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-10 custom-scrollbar">
+                                <div className="flex flex-col items-center justify-center">
+                                    <label className="relative group cursor-pointer">
+                                        <div className={`w-48 h-48 rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.logo ? 'border-emerald-500/50 bg-white/5' : 'border-white/10 bg-white/5 hover:border-emerald-500/50'}`}>
+                                            {formData.logo ? (
+                                                <img src={resolveImageUrl(formData.logo)} alt="Preview" className="w-full h-full object-contain p-6 relative z-10" />
+                                            ) : (
+                                                <div className="flex flex-col items-center gap-4 text-slate-500 group-hover:text-emerald-400 transition-colors relative z-10">
+                                                    <Camera size={32} strokeWidth={1.5} />
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">Initialize Logo</span>
+                                                </div>
+                                            )}
+                                            {uploading && (
+                                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm z-20">
+                                                    <Loader2 className="w-10 h-10 text-emerald-500 animate-spin" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-emerald-600 text-white rounded-2xl shadow-xl group-hover:-translate-y-1 transition-all flex items-center gap-3 text-xs font-black uppercase tracking-widest z-30 opacity-0 group-hover:opacity-100">
+                                            <Upload size={14} strokeWidth={3} />
+                                            <span>Inject Asset</span>
+                                        </div>
+                                        <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                                    </label>
+                                </div>
+
+                                <div className="space-y-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Entity Designation</label>
+                                        <div className="relative group">
+                                            <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
+                                            <input
+                                                required
+                                                value={formData.name}
+                                                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
+                                                placeholder="e.g. Aether Dynamics"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Digital Domain</label>
+                                        <div className="relative group">
+                                            <Globe size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
+                                            <input
+                                                value={formData.website}
+                                                onChange={e => setFormData({ ...formData, website: e.target.value })}
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500/30 transition-all placeholder:text-slate-600"
+                                                placeholder="https://aether.network"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div className="p-10 border-t border-white/5 flex justify-end items-center gap-4 shrink-0 -mx-10 -mb-10 mt-10 bg-white/5">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="flex-1 py-4.5 rounded-2xl bg-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-white hover:bg-white/10 border border-white/10 transition-all"
+                                >
+                                    Dismiss
+                                </button>
+                                <button
+                                    form="partnerForm"
+                                    type="submit"
+                                    disabled={uploading || submitting}
+                                    className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 active:scale-95"
+                                >
+                                    <Check size={18} strokeWidth={3} />
+                                    <span>{submitting ? "Processing..." : (editingPartner ? "Sync Changes" : "Deploy Entity")}</span>
+                                </button>
+                            </div>
+                        </MotionDiv>
                     </div>
                 )}
-
-                <AnimatePresence>
-                    {isModalOpen && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-                            <MotionDiv
-                                initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                                className="relative w-full max-w-xl bg-white border border-slate-200 rounded-[3rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] flex flex-col"
-                            >
-                                <div className="flex items-start justify-between gap-6 mb-10 shrink-0">
-                                    <div>
-                                        <h3 className="text-3xl font-black text-slate-900 tracking-tight uppercase">{editingPartner ? "Refine Entity" : "Global Onboarding"}</h3>
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Partner Identity Protocol</p>
-                                    </div>
-                                    <button
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="w-12 h-12 rounded-2xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all flex items-center justify-center border border-slate-200"
-                                    >
-                                        <X size={24} />
-                                    </button>
-                                </div>
-
-                                <form id="partnerForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-10 custom-scrollbar">
-                                    <div className="flex flex-col items-center justify-center">
-                                        <label className="relative group cursor-pointer">
-                                            <div className={`w-48 h-48 rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.logo ? 'border-emerald-400 bg-white' : 'border-slate-200 bg-slate-50 hover:border-emerald-400'}`}>
-                                                {formData.logo ? (
-                                                    <img src={resolveImageUrl(formData.logo)} alt="Preview" className="w-full h-full object-contain p-6 relative z-10" />
-                                                ) : (
-                                                    <div className="flex flex-col items-center gap-4 text-slate-400 group-hover:text-emerald-500 transition-colors relative z-10">
-                                                        <Camera size={32} strokeWidth={1.5} />
-                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em]">Initialize Logo</span>
-                                                    </div>
-                                                )}
-                                                {uploading && (
-                                                    <div className="absolute inset-0 bg-white/80 flex items-center justify-center backdrop-blur-sm z-20">
-                                                        <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-white text-emerald-600 border border-slate-200 rounded-2xl shadow-xl group-hover:-translate-y-1 transition-all flex items-center gap-3 text-xs font-black uppercase tracking-widest z-30 opacity-0 group-hover:opacity-100">
-                                                <Upload size={14} strokeWidth={3} />
-                                                <span>Inject Asset</span>
-                                            </div>
-                                            <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
-                                        </label>
-                                    </div>
-
-                                    <div className="space-y-8">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Entity Designation</label>
-                                            <div className="relative group">
-                                                <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
-                                                <input
-                                                    required
-                                                    value={formData.name}
-                                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
-                                                    placeholder="e.g. Aether Dynamics"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Digital Domain</label>
-                                            <div className="relative group">
-                                                <Globe size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
-                                                <input
-                                                    value={formData.website}
-                                                    onChange={e => setFormData({ ...formData, website: e.target.value })}
-                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
-                                                    placeholder="https://aether.network"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <div className="p-10 border-t border-slate-100 flex justify-end items-center gap-4 shrink-0 -mx-10 -mb-10 mt-10 bg-slate-50/50">
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="flex-1 py-4.5 rounded-2xl bg-white text-slate-600 font-bold text-[10px] uppercase tracking-widest hover:bg-slate-50 border border-slate-200 transition-all"
-                                    >
-                                        Dismiss
-                                    </button>
-                                    <button
-                                        form="partnerForm"
-                                        type="submit"
-                                        disabled={uploading || submitting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 active:scale-95"
-                                    >
-                                        <Check size={18} strokeWidth={3} />
-                                        <span>{submitting ? "Processing..." : (editingPartner ? "Sync Changes" : "Deploy Entity")}</span>
-                                    </button>
-                                </div>
-                            </MotionDiv>
-                        </div>
-                    )}
-                </AnimatePresence>
-            </div>
+            </AnimatePresence>
         </div>
     );
 };
