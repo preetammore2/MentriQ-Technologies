@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, BookOpen, Search, X, Check, DollarSign, Clock, BarChart, Image as ImageIcon, Loader2 } from "lucide-react";
+import { Plus, Edit2, Trash2, BookOpen, Search, X, Check, DollarSign, Clock, BarChart, Image as ImageIcon, Loader2, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -373,11 +373,14 @@ const CourseManagement = () => {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Complexity</label>
-                                        <select value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all bg-[#0f172a] appearance-none cursor-pointer">
-                                            <option value="Beginner">Beginner</option>
-                                            <option value="Intermediate">Intermediate</option>
-                                            <option value="Advanced">Advanced</option>
-                                        </select>
+                                        <div className="relative group">
+                                            <select value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all bg-[#0f172a] appearance-none cursor-pointer">
+                                                <option value="Beginner">Beginner</option>
+                                                <option value="Intermediate">Intermediate</option>
+                                                <option value="Advanced">Advanced</option>
+                                            </select>
+                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">
@@ -398,11 +401,14 @@ const CourseManagement = () => {
 
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Execution Mode</label>
-                                        <select value={formData.mode} onChange={e => setFormData({ ...formData, mode: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all bg-[#0f172a] appearance-none cursor-pointer">
-                                            <option value="Online">Online</option>
-                                            <option value="Offline">Offline</option>
-                                            <option value="Hybrid">Hybrid</option>
-                                        </select>
+                                        <div className="relative group">
+                                            <select value={formData.mode} onChange={e => setFormData({ ...formData, mode: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all bg-[#0f172a] appearance-none cursor-pointer">
+                                                <option value="Online">Online</option>
+                                                <option value="Offline">Offline</option>
+                                                <option value="Hybrid">Hybrid</option>
+                                            </select>
+                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                        </div>
                                     </div>
 
                                     <div className="space-y-2">

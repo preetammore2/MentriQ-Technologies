@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Plus, Edit2, Trash2, Briefcase, FileText, Check, X, Calendar } from "lucide-react";
+import { Plus, Edit2, Trash2, Briefcase, FileText, Check, X, Calendar, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 
@@ -254,16 +254,19 @@ const InternshipManagement = () => {
                                             </span>
                                         </td>
                                         <td className="px-6 py-5 text-right">
-                                            <select
-                                                value={app.status}
-                                                onChange={(e) => handleApplicationStatus(app._id, e.target.value)}
-                                                className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-[10px] font-black uppercase text-gray-400 tracking-widest outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer hover:text-white transition-all"
-                                            >
-                                                <option value="pending">Pending</option>
-                                                <option value="reviewing">Reviewing</option>
-                                                <option value="accepted">Accepted</option>
-                                                <option value="rejected">Rejected</option>
-                                            </select>
+                                            <div className="relative inline-block group">
+                                                <select
+                                                    value={app.status}
+                                                    onChange={(e) => handleApplicationStatus(app._id, e.target.value)}
+                                                    className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 pr-10 text-[10px] font-black uppercase text-gray-400 tracking-widest outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer hover:text-white transition-all appearance-none"
+                                                >
+                                                    <option value="pending">Pending</option>
+                                                    <option value="reviewing">Reviewing</option>
+                                                    <option value="accepted">Accepted</option>
+                                                    <option value="rejected">Rejected</option>
+                                                </select>
+                                                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -327,11 +330,14 @@ const InternshipManagement = () => {
                                     </div>
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Protocol Type</label>
-                                        <select value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a]">
-                                            <option value="Remote">Remote Execution</option>
-                                            <option value="On-site">Physical Presence</option>
-                                            <option value="Hybrid">Hybrid Mesh</option>
-                                        </select>
+                                        <div className="relative group">
+                                            <select value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer">
+                                                <option value="Remote">Remote Execution</option>
+                                                <option value="On-site">Physical Presence</option>
+                                                <option value="Hybrid">Hybrid Mesh</option>
+                                            </select>
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                        </div>
                                     </div>
                                     <div className="md:col-span-2 space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Operational Briefing</label>

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { ShieldCheck, Search, UserRound, UserCog, Lock, Download, Key, X, Eye, EyeOff, Loader2 } from "lucide-react";
+import { ShieldCheck, Search, UserRound, UserCog, Lock, Download, Key, X, Eye, EyeOff, Loader2, ChevronDown } from "lucide-react";
 import { useToast } from "../../context/ToastContext";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -161,16 +161,19 @@ const StaffManagement = () => {
             <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-6 shadow-xl">
                 <h3 className="text-white font-bold text-lg mb-4">Grant Staff Access</h3>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center">
-                    <select
-                        value={selectedStudentId}
-                        onChange={(e) => setSelectedStudentId(e.target.value)}
-                        className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 appearance-none"
-                    >
-                        <option value="" className="bg-[#1e293b]">Select student to promote...</option>
-                        {students.map((u) => (
-                            <option key={u._id} value={u._id} className="bg-[#1e293b]">{u.name} ({u.email})</option>
-                        ))}
-                    </select>
+                    <div className="relative group">
+                        <select
+                            value={selectedStudentId}
+                            onChange={(e) => setSelectedStudentId(e.target.value)}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 appearance-none cursor-pointer font-bold"
+                        >
+                            <option value="" className="bg-[#1e293b]">Select student to promote...</option>
+                            {students.map((u) => (
+                                <option key={u._id} value={u._id} className="bg-[#1e293b]">{u.name} ({u.email})</option>
+                            ))}
+                        </select>
+                        <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                    </div>
                     <button
                         onClick={() => grantFromStudent("moderator")}
                         disabled={!selectedStudentId}

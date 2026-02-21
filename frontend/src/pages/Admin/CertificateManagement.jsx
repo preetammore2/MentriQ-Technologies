@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Award, Search, X, RotateCcw, Users, BookOpen, Trash2 } from "lucide-react";
+import { Award, Search, X, RotateCcw, Users, BookOpen, Trash2, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 
@@ -228,32 +228,34 @@ const CertificateManagement = () => {
                                 <div className="space-y-8">
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Select Candidate</label>
-                                        <div className="relative">
+                                        <div className="relative group">
                                             <Users size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
                                             <select
                                                 required
                                                 value={formData.userId}
                                                 onChange={e => setFormData({ ...formData, userId: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a]"
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer"
                                             >
                                                 <option value="">Choose Student Account</option>
                                                 {users.map(u => <option key={u._id} value={u._id}>{u.name} — {u.email}</option>)}
                                             </select>
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
                                         </div>
                                     </div>
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Academic Program</label>
-                                        <div className="relative">
+                                        <div className="relative group">
                                             <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
                                             <select
                                                 required
                                                 value={formData.courseId}
                                                 onChange={e => setFormData({ ...formData, courseId: e.target.value })}
-                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a]"
+                                                className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 pl-16 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500/40 transition-all appearance-none bg-[#0f172a] cursor-pointer"
                                             >
                                                 <option value="">Select Target Curriculum</option>
                                                 {courses.map(c => <option key={c._id} value={c._id}>{c.title}</option>)}
                                             </select>
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
                                         </div>
                                     </div>
                                     <div className="space-y-3">

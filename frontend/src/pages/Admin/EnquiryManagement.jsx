@@ -12,6 +12,7 @@ import {
     Filter,
     Search,
     ChevronRight,
+    ChevronDown,
     ExternalLink,
     Briefcase,
     Building2,
@@ -370,16 +371,19 @@ const EnquiryManagement = () => {
                                             </div>
                                             <div className="p-6 bg-white/5 border border-white/5 rounded-2xl">
                                                 <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400/50 mb-3">Classification</div>
-                                                <select
-                                                    value={selectedRecruitEnquiry.status}
-                                                    onChange={(e) => handleStatusUpdate(selectedRecruitEnquiry._id, e.target.value)}
-                                                    className="w-full bg-[#0f172a] text-white border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
-                                                >
-                                                    <option value="pending">Awaiting Intel</option>
-                                                    <option value="viewed">Intel Accessed</option>
-                                                    <option value="contacted">Link Established</option>
-                                                    <option value="closed">Protocol Terminated</option>
-                                                </select>
+                                                <div className="relative group">
+                                                    <select
+                                                        value={selectedRecruitEnquiry.status}
+                                                        onChange={(e) => handleStatusUpdate(selectedRecruitEnquiry._id, e.target.value)}
+                                                        className="w-full bg-[#0f172a] text-white border border-white/10 rounded-xl px-4 py-3 text-xs font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer appearance-none transition-all group-hover:border-white/20"
+                                                    >
+                                                        <option value="pending">Awaiting Intel</option>
+                                                        <option value="viewed">Intel Accessed</option>
+                                                        <option value="contacted">Link Established</option>
+                                                        <option value="closed">Protocol Terminated</option>
+                                                    </select>
+                                                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                                </div>
                                             </div>
                                         </div>
 

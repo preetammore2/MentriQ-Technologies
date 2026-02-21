@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { apiClient as api } from "../../utils/apiClient";
-import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2, Edit2 } from "lucide-react";
+import { Trash2, Search, Cpu, X, Plus, Image as ImageIcon, Loader2, Edit2, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../../context/ToastContext";
 import { resolveImageUrl } from "../../utils/imageUtils";
@@ -356,18 +356,21 @@ const TechnologyManagement = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Category</label>
-                                        <select
-                                            value={formData.category}
-                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 appearance-none bg-[#0f172a]"
-                                        >
-                                            <option value="frontend" className="bg-slate-900">Frontend</option>
-                                            <option value="backend" className="bg-slate-900">Backend</option>
-                                            <option value="database" className="bg-slate-900">Database</option>
-                                            <option value="devops" className="bg-slate-900">DevOps</option>
-                                            <option value="mobile" className="bg-slate-900">Mobile</option>
-                                            <option value="other" className="bg-slate-900">Other</option>
-                                        </select>
+                                        <div className="relative group">
+                                            <select
+                                                value={formData.category}
+                                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/40 appearance-none bg-[#0f172a] cursor-pointer"
+                                            >
+                                                <option value="frontend" className="bg-slate-900">Frontend</option>
+                                                <option value="backend" className="bg-slate-900">Backend</option>
+                                                <option value="database" className="bg-slate-900">Database</option>
+                                                <option value="devops" className="bg-slate-900">DevOps</option>
+                                                <option value="mobile" className="bg-slate-900">Mobile</option>
+                                                <option value="other" className="bg-slate-900">Other</option>
+                                            </select>
+                                            <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none group-hover:text-white transition-colors" />
+                                        </div>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Order</label>
