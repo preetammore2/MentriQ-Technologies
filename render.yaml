@@ -15,4 +15,6 @@ services:
       - key: JWT_SECRET
         sync: false # Set in Render Dashboard
       - key: CLIENT_URL
-        value: https://mentriq-technologies.vercel.app # Update with your actual Vercel URL after deployment
+        value: https://www.mentriqtechnologies.in
+      - key: CORS_ORIGINS
+        value: https://www.mentriqtechnologies.in,https://mentriqtechnologies.in,https://mentriq-technologies-zeta.vercel.app

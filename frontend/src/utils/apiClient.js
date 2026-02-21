@@ -1,11 +1,11 @@
 import axios from 'axios'
 
 const staticProdURL = 'https://mentriq-technologies.onrender.com/api';
+const envBaseURL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '');
 
-const resolvedBaseURL =
-  (import.meta.env.VITE_API_BASE_URL && !import.meta.env.VITE_API_BASE_URL.includes('localhost')) || import.meta.env.DEV
-    ? (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api')
-    : staticProdURL;
+const resolvedBaseURL = import.meta.env.DEV
+  ? (envBaseURL || 'http://localhost:5000/api')
+  : (envBaseURL || staticProdURL);
 
 if (import.meta.env.DEV) {
   console.log('🚀 MentriQ API Base URL:', resolvedBaseURL);
@@ -17,6 +17,7 @@ const RETRY_DELAY_MS = Number(import.meta.env.VITE_API_RETRY_DELAY_MS || 700);
 export const apiClient = axios.create({
   baseURL: resolvedBaseURL,
   timeout: Number(import.meta.env.VITE_API_TIMEOUT_MS || 60000), // Increased to 60s for Render cold starts
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -35,8 +36,11 @@ if (!import.meta.env.DEV) {
 
 apiClient.interceptors.request.use(
   (config) => {
+    const isAuthLoginOrRegister =
+      typeof config.url === 'string' &&
+      (config.url.startsWith('/auth/login') || config.url.startsWith('/auth/register'));
     const token = sessionStorage.getItem('token')
-    if (token) {
+    if (token && !isAuthLoginOrRegister) {
       config.headers["Authorization"] = `Bearer ${token}`
     }
     return config

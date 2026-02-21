@@ -25,12 +25,13 @@ const attachConnectionListeners = () => {
 };
 
 const connectDB = async () => {
-  const primaryUri = process.env.MONGO_URI;
-  const fallbackUri = process.env.MONGO_URI_FALLBACK;
+  const primaryUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+  const fallbackUri = process.env.MONGO_URI_FALLBACK || process.env.MONGODB_URI_FALLBACK;
   const uris = [primaryUri, fallbackUri].filter(Boolean);
+  const dbName = process.env.MONGO_DB_NAME;
 
   if (uris.length === 0) {
-    throw new Error("Missing MONGO_URI in environment");
+    throw new Error("Missing MongoDB URI (set MONGO_URI or MONGODB_URI)");
   }
 
   let lastError = null;
@@ -49,6 +50,7 @@ const connectDB = async () => {
           family: 4,
           maxPoolSize: Number(process.env.MONGO_MAX_POOL_SIZE || 10),
           minPoolSize: Number(process.env.MONGO_MIN_POOL_SIZE || 1),
+          ...(dbName ? { dbName } : {}),
         });
         console.log(`MongoDB connected: ${conn.connection.host}`);
         return conn;

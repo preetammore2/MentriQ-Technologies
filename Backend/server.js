@@ -60,20 +60,37 @@ app.get("/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().
 
 app.use("/api", limiter);
 
+const envOrigins = String(process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/$/, ""))
+    .filter(Boolean);
+
 const allowedOrigins = new Set([
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://mentriq-technologies-zeta.vercel.app",
     "https://www.mentriqtechnologies.in",
     "https://mentriqtechnologies.in",
-    process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null
+    process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null,
+    ...envOrigins
 ].filter(Boolean));
+
+const isAllowedOrigin = (origin) => {
+    if (!origin) return true;
+    const normalizedOrigin = origin.trim().replace(/\/$/, "");
+    if (allowedOrigins.has(normalizedOrigin)) return true;
+    if (/^http:\/\/localhost:\d+$/.test(normalizedOrigin)) return true;
+    if (/^http:\/\/127\.0\.0\.1:\d+$/.test(normalizedOrigin)) return true;
+    if (/^https:\/\/([a-z0-9-]+\.)?mentriqtechnologies\.in$/i.test(normalizedOrigin)) return true;
+    return false;
+};
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.has(origin) || /^http:\/\/localhost:\d+$/.test(origin) || /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)) {
+        if (isAllowedOrigin(origin)) {
             callback(null, true);
         } else {
+            console.warn(`Blocked by CORS: ${origin}`);
             callback(new Error("Not allowed by CORS"));
         }
     },
