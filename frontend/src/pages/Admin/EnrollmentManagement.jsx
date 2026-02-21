@@ -90,39 +90,43 @@ const EnrollmentManagement = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Enrollments</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{enrollments.length} Registrations</span>
-                        Monitor and authorize student course access.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <GraduationCap size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Active Enrollments</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {enrollments.length} Registrations
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Monitor and authorize student course access.</p>
                 </div>
-                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-4 flex items-center group focus-within:border-indigo-500/50 transition-all">
-                        <Search className="text-gray-500 ml-4" size={18} />
+
+                <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3 relative z-10">
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4" size={18} />
                         <input
                             type="text"
-                            placeholder="Search student or course..."
+                            placeholder="Find enrollment..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
+                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
                         />
                     </div>
                     <button
                         onClick={handleExportEnrollments}
-                        className="bg-emerald-600 text-white hover:bg-emerald-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-sm text-sm"
                     >
                         <Download size={18} />
-                        <span>Download Excel</span>
+                        <span>Export Data</span>
                     </button>
                 </div>
             </div>
 
             {/* Table Area */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>

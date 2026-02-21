@@ -33,28 +33,26 @@ import {
 
 const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0 }) => (
     <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay }}
-        className="bg-[#1e293b]/50 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/5 hover:border-indigo-500/30 transition-all group relative overflow-hidden shadow-2xl"
+        transition={{ delay, duration: 0.4 }}
+        className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-indigo-200 hover:shadow-lg transition-all group relative overflow-hidden"
     >
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/[0.03] to-transparent rounded-bl-[5rem]" />
-
         <div className="flex justify-between items-start relative z-10">
             <div>
-                <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.3em] mb-4">{title}</p>
-                <div className="flex items-baseline gap-2 mt-2">
-                    <h3 className="text-4xl font-black text-white italic tracking-tighter">{typeof value === 'number' ? value.toLocaleString() : value}</h3>
-                </div>
+                <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-wider mb-2">{title}</p>
+                <h3 className="text-3xl font-bold text-slate-900 tracking-tight">
+                    {typeof value === 'number' ? value.toLocaleString() : value}
+                </h3>
                 {trend !== 0 && (
-                    <div className={`flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full w-fit bg-opacity-10 ${trend > 0 ? 'bg-emerald-500 text-emerald-400' : 'bg-rose-500 text-rose-400'} border border-white/5`}>
-                        {trend > 0 ? <TrendingUp size={12} strokeWidth={3} /> : <TrendingDown size={12} strokeWidth={3} />}
-                        <span className="text-[10px] font-black uppercase tracking-widest">{Math.abs(trend)}% Velocity</span>
+                    <div className={`flex items-center gap-1.5 mt-2 transition-transform group-hover:translate-x-1 ${trend > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {trend > 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                        <span className="text-xs font-bold leading-none">{Math.abs(trend)}% Growth</span>
                     </div>
                 )}
             </div>
-            <div className={`p-5 rounded-2xl ${color} bg-opacity-10 group-hover:scale-110 group-hover:rotate-6 transition-all border border-white/5 shadow-2xl shadow-indigo-500/5`}>
-                <Icon className={`w-7 h-7 ${color.replace('bg-', 'text-')}`} strokeWidth={2.5} />
+            <div className={`p-3.5 rounded-xl ${color} bg-opacity-10 border border-slate-100 flex items-center justify-center transition-transform group-hover:scale-110`}>
+                <Icon className={`w-6 h-6 ${color.replace('bg-', 'text-')}`} strokeWidth={2} />
             </div>
         </div>
     </motion.div>
@@ -77,16 +75,7 @@ const Dashboard = () => {
         } catch (err) {
             console.error("Dashboard Sync Error:", err);
             if (!data) {
-                const isTimeout = err.code === 'ECONNABORTED' || err.message.includes('timeout');
-                const isNetwork = !err.response;
-
-                if (isTimeout) {
-                    setError("Command Center is waking up... Please wait.");
-                } else if (isNetwork) {
-                    setError("Infrastructure link unreachable. Check your uplink.");
-                } else {
-                    setError("Failed to synchronize with command center");
-                }
+                setError("Infrastructure link unreachable. Check your uplink.");
             }
         } finally {
             setLoading(false);
@@ -101,14 +90,15 @@ const Dashboard = () => {
 
     if (loading && !data) {
         return (
-            <div className="flex flex-col items-center justify-center h-[70vh] gap-4">
-                <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
-                <p className="text-gray-500 font-bold uppercase tracking-[0.3em] text-xs">Syncing Core Analytics...</p>
+            <div className="flex flex-col items-center justify-center h-[70vh] gap-6">
+                <div className="relative">
+                    <div className="w-16 h-16 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin" />
+                    <Activity className="absolute inset-0 m-auto text-indigo-600 animate-pulse" size={24} />
+                </div>
+                <p className="text-slate-400 font-medium text-sm tracking-wide">Syncing Command Center...</p>
             </div>
         );
     }
-
-
 
     const {
         raw = {
@@ -117,311 +107,163 @@ const Dashboard = () => {
             enrolledStudents: 0,
             internships: 0,
             activeVisitors: 0,
-            // Homepage metrics overrides
-            homepageStudents: '10K+',
-            homepageCourses: '50+',
-            homepagePlacements: '98%',
-            homepageTrainers: '60+'
         },
         analytics = { enrollmentTrends: [], userTrends: [], recentActivity: [], popularPages: [] }
     } = data || {};
 
     const getActivityIcon = (type) => {
         switch (type) {
-            case 'enrollment': return <GraduationCap className="text-purple-400" size={16} />;
-            case 'internship': return <Briefcase className="text-emerald-400" size={16} />;
-            case 'user': return <UserPlus className="text-blue-400" size={16} />;
-            default: return <Activity className="text-indigo-400" size={16} />;
+            case 'enrollment': return <GraduationCap className="text-indigo-600" size={18} />;
+            case 'internship': return <Briefcase className="text-slate-600" size={18} />;
+            case 'user': return <UserPlus className="text-emerald-600" size={18} />;
+            default: return <Activity className="text-slate-400" size={18} />;
         }
     };
 
     return (
-        <div className="space-y-10 animate-in fade-in duration-700">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-gradient-to-r from-[#1e293b] to-transparent p-8 rounded-[2.5rem] border border-white/5 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.05),transparent)] pointer-events-none" />
-                <div className="relative z-10">
-                    <h1 className="text-4xl font-black text-white tracking-tight italic uppercase">Command Center</h1>
-                    <p className="text-gray-400 mt-2 font-bold uppercase tracking-[0.2em] text-xs">Real-time Operations & Intelligence</p>
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            {/* Unified Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
+                    <Zap size={200} />
                 </div>
-                <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 relative z-10 backdrop-blur-md">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-gray-300 font-black uppercase tracking-widest text-[10px]">Live Data Sync active</span>
+                <div className="relative z-10">
+                    <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Main Dashboard</h1>
+                    <p className="text-slate-500 mt-1 font-medium text-sm">Overview of MentriQ Platform operations and student engagement.</p>
+                </div>
+                <div className="flex items-center gap-3 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-100 relative z-10">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse" />
+                    <span className="text-slate-600 font-semibold text-xs tracking-wide">Live Infrastructure Link</span>
                 </div>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard
-                    title="Student Base"
-                    value={raw.students}
-                    icon={Users}
-                    color="bg-blue-500"
-                    trend={12}
-                    delay={0.1}
-                />
-                <StatCard
-                    title="Course Assets"
-                    value={raw.courses}
-                    icon={BookOpen}
-                    color="bg-indigo-500"
-                    trend={5}
-                    delay={0.2}
-                />
-                <StatCard
-                    title="Total Enrollment"
-                    value={raw.enrolledStudents}
-                    icon={GraduationCap}
-                    color="bg-purple-500"
-                    trend={18}
-                    delay={0.3}
-                />
-                <StatCard
-                    title="Active Visitors"
-                    value={raw.activeVisitors || 0}
-                    icon={Eye}
-                    color="bg-cyan-500"
-                    trend={0}
-                    delay={0.5}
-                />
+                <StatCard title="Student Base" value={raw.students} icon={Users} color="bg-blue-600" trend={12} delay={0} />
+                <StatCard title="Course Assets" value={raw.courses} icon={BookOpen} color="bg-indigo-600" trend={5} delay={0.1} />
+                <StatCard title="Enrolled Access" value={raw.enrolledStudents} icon={GraduationCap} color="bg-emerald-600" trend={17} delay={0.2} />
+                <StatCard title="Live Visitors" value={raw.activeVisitors || 0} icon={Eye} color="bg-slate-900" trend={0} delay={0.3} />
             </div>
 
-            {/* Homepage Impact Stats (Dynamic Overrides) */}
-            <div className="bg-[#1e293b] rounded-[2.5rem] border border-white/5 p-8 relative overflow-hidden group">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 relative z-10">
-                    <div>
-                        <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Public Impact Metrics</h3>
-                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Values displayed on homepage impact section</p>
-                    </div>
-                    <button
-                        onClick={() => window.location.href = '/admin/settings'}
-                        className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
-                    >
-                        Update Metrics <ArrowRight size={14} />
-                    </button>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-                    {[
-                        { label: 'Students Trained', value: raw.homepageStudents || '10K+', icon: GraduationCap, color: 'text-indigo-400' },
-                        { label: 'Live Courses', value: raw.homepageCourses || '50+', icon: BookOpen, color: 'text-cyan-400' },
-                        { label: 'Placement Rate', value: raw.homepagePlacements || '98%', icon: TrendingUp, color: 'text-emerald-400' },
-                        { label: 'Expert Trainers', value: raw.homepageTrainers || '60+', icon: UserPlus, color: 'text-blue-400' }
-                    ].map((m, i) => (
-                        <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex flex-col items-center text-center group/card hover:bg-white/[0.08] transition-all">
-                            <m.icon className={`${m.color} mb-3 group-hover/card:scale-110 transition-transform`} size={24} />
-                            <h4 className="text-2xl font-black text-white italic">{m.value}</h4>
-                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">{m.label}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Growth Chart */}
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="lg:col-span-2 bg-[#1e293b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden group"
-                >
-                    <div className="flex justify-between items-center mb-10 relative z-10">
+                {/* Growth Visualization */}
+                <div className="lg:col-span-2 bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                    <div className="flex justify-between items-center mb-10">
                         <div>
-                            <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter">Growth Trajectory</h3>
-                            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.3em] mt-1">Enrollment & Platform Scaling Analytics</p>
+                            <h3 className="text-xl font-bold text-slate-900">Platform Growth</h3>
+                            <p className="text-slate-400 text-xs font-medium mt-1">Enrollment trends over the past 30 days</p>
                         </div>
-                        <div className="flex gap-6">
-                            <div className="flex items-center gap-3">
-                                <div className="w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
-                                <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Active Nodes</span>
-                            </div>
+                        <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-xl border border-slate-100">
+                            <div className="w-2 h-2 rounded-full bg-indigo-600" />
+                            <span className="text-[11px] font-bold text-slate-600">Active Students</span>
                         </div>
                     </div>
 
-                    <div className="h-[300px] w-full relative z-10">
+                    <div className="h-[320px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={analytics.enrollmentTrends}>
                                 <defs>
-                                    <linearGradient id="colorTrend" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                                    <linearGradient id="colorInd" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1} />
+                                        <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
-                                <XAxis
-                                    dataKey="date"
-                                    stroke="#475569"
-                                    fontSize={10}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    dy={10}
-                                    fontWeight="bold"
-                                />
-                                <YAxis
-                                    stroke="#475569"
-                                    fontSize={10}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    fontWeight="bold"
-                                />
+                                <CartesianGrid strokeDasharray="4" stroke="#f1f5f9" vertical={false} />
+                                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} dy={10} fontWeight="500" />
+                                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} fontWeight="500" />
                                 <Tooltip
-                                    contentStyle={{
-                                        backgroundColor: '#0f172a',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                        borderRadius: '16px',
-                                        fontSize: '12px',
-                                        fontWeight: 'bold'
-                                    }}
-                                    itemStyle={{ color: '#fff' }}
+                                    contentStyle={{ backgroundColor: '#fff', border: 'none', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '12px' }}
+                                    cursor={{ stroke: '#4f46e5', strokeWidth: 2 }}
                                 />
-                                <Area
-                                    type="monotone"
-                                    dataKey="count"
-                                    stroke="#6366f1"
-                                    strokeWidth={4}
-                                    fillOpacity={1}
-                                    fill="url(#colorTrend)"
-                                />
+                                <Area type="monotone" dataKey="count" stroke="#4f46e5" strokeWidth={3} fill="url(#colorInd)" />
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </motion.div>
+                </div>
 
-                {/* Recent Activity */}
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="bg-[#1e293b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl flex flex-col"
-                >
-                    <div className="flex justify-between items-center mb-8">
+                {/* Real-time Activity */}
+                <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
+                    <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Live Intel</h3>
-                            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Real-time Activity Stream</p>
+                            <h3 className="text-xl font-bold text-slate-900">Recent Pulse</h3>
+                            <p className="text-slate-400 text-xs font-medium mt-1">Latest platform events</p>
                         </div>
-                        <Activity className="text-indigo-500 opacity-20" size={24} />
+                        <Activity className="text-slate-300" size={24} />
                     </div>
 
-                    <div className="flex-1 space-y-6">
+                    <div className="flex-1 space-y-6 overflow-y-auto pr-2 custom-scrollbar max-h-[400px]">
                         {analytics.recentActivity.map((activity, idx) => (
                             <div key={activity.id} className="flex gap-4 group">
-                                <div className="mt-1">
-                                    <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-indigo-500/10 group-hover:border-indigo-500/20 transition-all">
+                                <div className="mt-0.5">
+                                    <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-colors">
                                         {getActivityIcon(activity.type)}
                                     </div>
                                     {idx !== analytics.recentActivity.length - 1 && (
-                                        <div className="w-px h-10 bg-white/5 mx-auto mt-2" />
+                                        <div className="w-px h-10 bg-slate-100 mx-auto mt-2" />
                                     )}
                                 </div>
                                 <div className="flex-1">
-                                    <div className="text-sm font-bold text-gray-200 group-hover:text-white transition-colors leading-snug">
+                                    <div className="text-[13px] font-semibold text-slate-700 leading-snug group-hover:text-slate-900">
                                         {activity.message}
                                     </div>
-                                    <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
+                                    <div className="text-[11px] text-slate-400 font-medium mt-1 flex items-center gap-2">
+                                        <div className="w-1 h-1 rounded-full bg-slate-300" />
                                         {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        {analytics.recentActivity.length === 0 && (
-                            <div className="h-full flex flex-col items-center justify-center text-center opacity-30 italic py-10">
-                                <Activity size={40} className="mb-4" />
-                                <p className="text-xs uppercase font-black tracking-widest">Awaiting Pulse...</p>
-                            </div>
-                        )}
                     </div>
 
-                    <button className="w-full mt-6 py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl border border-white/10 text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2">
-                        View Audit Log <ArrowRight size={14} />
+                    <button className="w-full mt-6 py-3.5 bg-slate-50 hover:bg-slate-100 text-slate-600 rounded-xl border border-slate-100 text-xs font-bold transition-all">
+                        Access Performance Logs
                     </button>
-                </motion.div>
-
-                {/* Visitor Flow */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="bg-[#1e293b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden group"
-                >
-                    <div className="flex justify-between items-center mb-6">
-                        <div>
-                            <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Visitor Flow</h3>
-                            <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Platform Impact & Page Popularity</p>
-                        </div>
-                        <Zap className="text-amber-400 opacity-20" size={24} />
-                    </div>
-
-                    <div className="space-y-4 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
-                        {(analytics.popularPages || []).map((page, idx) => (
-                            <div key={page.path} className="space-y-2 group/item">
-                                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                                    <span className="text-gray-400 truncate max-w-[70%] group-hover/item:text-indigo-400 transition-colors">{page.path}</span>
-                                    <span className="text-white bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/10">{page.count} unique hits</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${(page.count / Math.max(...analytics.popularPages.map(p => p.count))) * 100}%` }}
-                                        transition={{ duration: 1, delay: idx * 0.05 }}
-                                        className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full"
-                                    />
-                                </div>
-                            </div>
-                        ))}
-                        {(!analytics.popularPages || analytics.popularPages.length === 0) && (
-                            <div className="h-40 flex flex-col items-center justify-center text-center opacity-30 italic">
-                                <p className="text-[10px] uppercase font-black tracking-widest">Awaiting visitor metrics...</p>
-                            </div>
-                        )}
-                    </div>
-                </motion.div>
+                </div>
             </div>
 
-            {/* System Status */}
-            <div className="bg-[#1e293b] rounded-[2.5rem] border border-white/5 p-8 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
-                    <Cpu size={120} />
-                </div>
-                <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-8 relative z-10">
-                    <div>
-                        <h3 className="text-xl font-black text-white uppercase italic tracking-wider">Infrastructure Status</h3>
-                        <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mt-1">Current Node Configuration: v2.4.0-Indigo</p>
+            {/* Infrastructure Linkage */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="bg-slate-900 rounded-3xl p-8 border border-white/5 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent pointer-events-none" />
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div>
+                            <h3 className="text-lg font-bold text-white">Cloud Infrastructure</h3>
+                            <p className="text-slate-400 text-xs mt-1 font-medium">Core engine and database cluster status</p>
+                        </div>
+                        <div className="flex gap-8">
+                            {[
+                                { label: 'API Gateway', status: 'Operational', color: 'bg-emerald-500' },
+                                { label: 'Compute Unit', status: 'Primary', color: 'bg-indigo-500' }
+                            ].map((s, i) => (
+                                <div key={i} className="space-y-1">
+                                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">{s.label}</span>
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-2 h-2 rounded-full ${s.color}`} />
+                                        <span className="text-xs font-bold text-white tracking-wide">{s.status}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="space-y-1">
-                            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest block">API Engine</span>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                                <span className="text-xs font-bold text-white uppercase">Operational</span>
-                            </div>
+                <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-center relative z-10">
+                        <div>
+                            <h3 className="text-lg font-bold text-slate-900">Visitor Reach</h3>
+                            <p className="text-slate-400 text-xs font-medium mt-1">Popular page segments across the portal</p>
                         </div>
-                        <div className="space-y-1">
-                            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest block">Database Cluster</span>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                                <span className="text-xs font-bold text-white uppercase">Primary Link</span>
-                            </div>
-                        </div>
-                        <div className="space-y-1">
-                            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest block">Storage Grid</span>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                                <span className="text-xs font-bold text-white uppercase">Encrypted</span>
-                            </div>
-                        </div>
-                        <div className="space-y-1">
-                            <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest block">Latent Sync</span>
-                            <div className="flex items-center gap-2">
-                                <ArrowRight className="text-indigo-400 rotate-180" size={14} />
-                                <span className="text-xs font-bold text-white uppercase">42ms Range</span>
-                            </div>
-                        </div>
+                        <button onClick={() => navigate('/admin/settings')} className="text-indigo-600 hover:text-indigo-700 transition-colors">
+                            <ArrowRight size={20} />
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+
+export default Dashboard;
 
 export default Dashboard;
 

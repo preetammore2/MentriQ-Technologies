@@ -86,15 +86,18 @@ const JourneyManagement = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Our Journey</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{milestones.length} Milestones</span>
-                        Manage historical milestones and company trajectory.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <Map size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Journey</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {milestones.length} Milestones
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Manage historical milestones and company trajectory.</p>
                 </div>
                 <button
                     onClick={() => {
@@ -102,7 +105,7 @@ const JourneyManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
                 >
                     <Plus size={18} />
                     <span>Add Milestone</span>
@@ -110,7 +113,7 @@ const JourneyManagement = () => {
             </div>
 
             {/* Table Area */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>

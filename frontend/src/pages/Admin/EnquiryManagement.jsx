@@ -146,34 +146,34 @@ const EnquiryManagement = () => {
     );
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
-                    <MessageSquare size={120} />
-                </div>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Enquiry Panel</h2>
-                    <p className="text-gray-400 text-[10px] mt-1 uppercase font-black tracking-widest flex items-center gap-3">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{inquiries.length + enquiries.length} Total Signals</span>
-                        Central Intelligence Hub for Leads & Messages
-                    </p>
+                    <div className="flex items-center gap-3 mb-1">
+                        <MessageSquare size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Intelligence Hub</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {inquiries.length + enquiries.length} signals
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Central hub for general leads and recruitment queries.</p>
                 </div>
 
-                <div className="flex bg-black/20 p-1.5 rounded-2xl border border-white/5 relative z-10">
+                <div className="flex bg-slate-50 p-1.5 rounded-2xl border border-slate-200 relative z-10">
                     <button
                         onClick={() => { setActiveTab('contact'); setSearchTerm(''); setFilter('all'); }}
-                        className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'contact'
-                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                            : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'contact'
+                            ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
+                            : 'text-slate-500 hover:text-indigo-600 hover:bg-white'}`}
                     >
-                        General Inquiries
+                        General inquiries
                     </button>
                     <button
                         onClick={() => { setActiveTab('recruit'); setSearchTerm(''); setFilter('all'); }}
-                        className={`px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'recruit'
-                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                            : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'recruit'
+                            ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
+                            : 'text-slate-500 hover:text-indigo-600 hover:bg-white'}`}
                     >
                         Recruitment
                     </button>
@@ -181,26 +181,26 @@ const EnquiryManagement = () => {
             </div>
 
             {/* Filters and Search */}
-            <div className="bg-[#1e293b]/50 backdrop-blur-md border border-white/5 rounded-3xl p-6 flex flex-col lg:flex-row gap-6 shadow-xl">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 flex flex-col lg:flex-row gap-6 shadow-sm">
                 <div className="relative flex-1 group">
-                    <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" size={18} />
                     <input
                         type="text"
-                        placeholder={activeTab === 'contact' ? "Identify candidate or signal..." : "Scan company or agent ID..."}
+                        placeholder={activeTab === 'contact' ? "Find inquiry..." : "Search recruitment leads..."}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-[2rem] py-5 pl-20 pr-8 text-white placeholder:text-gray-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/40 transition-all font-black uppercase italic tracking-tighter text-sm"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-14 pr-6 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-300 transition-all font-medium text-sm"
                     />
                 </div>
                 {activeTab === 'contact' && (
-                    <div className="flex gap-2 p-2 bg-black/30 rounded-2xl border border-white/5">
+                    <div className="flex gap-1 p-1 bg-slate-50 rounded-xl border border-slate-200">
                         {['all', 'unread', 'read'].map((f) => (
                             <button
                                 key={f}
                                 onClick={() => setFilter(f)}
-                                className={`px-8 py-3 rounded-xl font-black uppercase tracking-[0.2em] transition-all text-[10px] ${filter === f
-                                    ? 'bg-white text-black shadow-2xl scale-[1.05]'
-                                    : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                className={`px-6 py-2 rounded-lg font-semibold transition-all text-xs capitalize ${filter === f
+                                    ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
+                                    : 'text-slate-500 hover:text-slate-700'
                                     }`}
                             >
                                 {f}
@@ -218,7 +218,7 @@ const EnquiryManagement = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
-                        className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl"
+                        className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm"
                     >
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">

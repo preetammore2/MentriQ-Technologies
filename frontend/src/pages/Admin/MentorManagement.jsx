@@ -161,263 +161,272 @@ const MentorManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
-                <div>
-                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Expert Registry</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{mentors.length} Verified Experts</span>
-                        Manage global industry veterans and strategic mentor profiles.
-                    </p>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                    {mentors.length === 0 && (
-                        <button
-                            onClick={syncDefaultMentors}
-                            disabled={isSyncing}
-                            className="bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 px-8 py-4 rounded-xl font-black flex items-center gap-3 hover:bg-emerald-600/30 transition-all whitespace-nowrap text-[10px] uppercase tracking-widest"
-                        >
-                            <RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} strokeWidth={3} />
-                            <span>{isSyncing ? "Syncing..." : "Sync Website Experts"}</span>
-                        </button>
-                    )}
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/30 transition-all shadow-inner">
-                        <Search className="text-gray-600 ml-4 transition-colors group-focus-within:text-indigo-400" size={20} />
-                        <input
-                            type="text"
-                            placeholder="Identify expert node..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full lg:w-64 font-black uppercase italic tracking-tighter text-sm"
-                        />
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
+                    <div>
+                        <div className="flex items-center gap-3 mb-1">
+                            <Users size={28} className="text-indigo-600" />
+                            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Expert Registry</h2>
+                            <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                                {mentors.length} Verified
+                            </span>
+                        </div>
+                        <p className="text-slate-500 font-medium text-sm">Manage global industry veterans and strategic mentor profiles.</p>
                     </div>
-                    <button
-                        onClick={() => {
-                            setEditingMentor(null);
-                            setFormData(initialFormState);
-                            setIsModalOpen(true);
-                            setImageFile(null);
-                        }}
-                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest whitespace-nowrap"
-                    >
-                        <Plus size={18} strokeWidth={3} />
-                        <span>Deploy Expert</span>
-                    </button>
+
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
+                        {mentors.length === 0 && (
+                            <button
+                                onClick={syncDefaultMentors}
+                                disabled={isSyncing}
+                                className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-emerald-100 transition-all active:scale-95 text-sm whitespace-nowrap"
+                            >
+                                <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
+                                <span>{isSyncing ? "Syncing..." : "Sync Mentors"}</span>
+                            </button>
+                        )}
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                            <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                            <input
+                                type="text"
+                                placeholder="Search experts..."
+                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        <button
+                            onClick={() => {
+                                setEditingMentor(null);
+                                setFormData(initialFormState);
+                                setIsModalOpen(true);
+                                setImageFile(null);
+                            }}
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                        >
+                            <Plus size={18} />
+                            <span>Add Mentor</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {loading ? (
-                <div className="space-y-4">
-                    {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="h-20 bg-[#1e293b] border border-white/5 rounded-2xl animate-pulse" />
-                    ))}
-                </div>
-            ) : mentors.length === 0 ? (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                    <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-white/10">
-                        <User size={40} className="text-gray-500" />
-                    </div>
-                    <h3 className="text-2xl font-black text-white mb-2 uppercase italic">No Mentors Detected</h3>
-                    <p className="text-gray-500 mb-8 max-w-sm mx-auto font-bold text-xs uppercase tracking-widest leading-loose">The expert network is currently offline. Synchronize with the website defaults or manually deploy a new mentor profile.</p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button
-                            onClick={syncDefaultMentors}
-                            disabled={isSyncing}
-                            className="bg-white text-black px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
-                        >
-                            <RefreshCw size={16} className={isSyncing ? "animate-spin" : ""} />
-                            Sync From Website
-                        </button>
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className="bg-white/5 text-white border border-white/10 px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 justify-center"
-                        >
-                            <Plus size={16} />
-                            Deploy Manual
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl animate-in slide-in-from-bottom-4 duration-700">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Expert Identity</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Node Location</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Operational Bio</th>
-                                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 text-right">Commands</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                                <AnimatePresence mode="popLayout">
-                                    {filteredMentors.map((mentor) => (
-                                        <motion.tr
-                                            key={mentor._id}
-                                            layout
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            className="hover:bg-white/[0.02] transition-colors group"
-                                        >
-                                            <td className="px-8 py-6">
-                                                <div className="flex items-center gap-5">
-                                                    <div className="w-16 h-16 rounded-2xl overflow-hidden bg-white/5 border border-white/10 shrink-0 shadow-2xl relative p-1 transition-all group-hover:border-indigo-500/30">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700">
+                <div className="overflow-x-auto">
+
+                    {
+                        loading ? (
+                            <div className="p-8 space-y-4">
+                                {[1, 2, 3, 4].map(i => (
+                                    <div key={i} className="h-16 bg-slate-50 border border-slate-200 rounded-xl animate-pulse" />
+                                ))}
+                            </div>
+                        ) : mentors.length === 0 ? (
+                            <div className="bg-white p-20 text-center">
+                                <div className="w-20 h-20 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-indigo-100 shadow-sm">
+                                    <User size={40} className="text-indigo-600" />
+                                </div>
+                                <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight">No Experts Registry</h3>
+                                <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The expert network is currently empty. Sync with the website defaults or manually add a new profile.</p>
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <button
+                                        onClick={syncDefaultMentors}
+                                        disabled={isSyncing}
+                                        className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-emerald-100 transition-all active:scale-95"
+                                    >
+                                        <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
+                                        {isSyncing ? "Syncing..." : "Sync From Website"}
+                                    </button>
+                                    <button
+                                        onClick={() => setIsModalOpen(true)}
+                                        className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/10 active:scale-95"
+                                    >
+                                        <Plus size={18} />
+                                        Manual Deployment
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="bg-white border-t border-slate-200 overflow-hidden animate-in slide-in-from-bottom-4 duration-700">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr className="bg-slate-50 border-b border-slate-200">
+                                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Expert Identity</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Node Location</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Operational Bio</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-slate-100">
+                                            <AnimatePresence mode="popLayout">
+                                                {filteredMentors.map((mentor) => (
+                                                    <motion.tr
+                                                        key={mentor._id}
+                                                        layout
+                                                        initial={{ opacity: 0 }}
+                                                        animate={{ opacity: 1 }}
+                                                        exit={{ opacity: 0 }}
+                                                        className="hover:bg-slate-50/50 transition-colors group"
+                                                    >
+                                                        <td className="px-8 py-6">
+                                                            <div className="flex items-center gap-5">
+                                                                <div className="w-16 h-16 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 shrink-0 shadow-sm relative p-1 group-hover:border-indigo-300 transition-all">
+                                                                    <img
+                                                                        src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")}
+                                                                        alt={mentor.name}
+                                                                        className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                                                                        onError={(e) => { e.target.src = "/images/user.png" }}
+                                                                    />
+                                                                </div>
+                                                                <div>
+                                                                    <div className="font-bold text-slate-900 text-base tracking-tight">{mentor.name}</div>
+                                                                    {(mentor.linkedin || mentor.linkedinUrl) && (
+                                                                        <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-500 hover:text-indigo-600 flex items-center gap-1 font-semibold mt-1">
+                                                                            <Linkedin size={12} /> LinkedIn Profile
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-8 py-6">
+                                                            <div className="text-slate-900 font-semibold text-xs uppercase tracking-wider">{mentor.role}</div>
+                                                            <div className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mt-1.5 flex items-center gap-2">
+                                                                <Briefcase size={12} className="text-indigo-500" />
+                                                                {mentor.company}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-8 py-6">
+                                                            <p className="text-slate-500 text-xs line-clamp-2 max-w-xs font-medium leading-relaxed">
+                                                                {mentor.description || mentor.bio || "No brief available."}
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-8 py-6 text-right">
+                                                            <div className="flex justify-end gap-3">
+                                                                <button
+                                                                    onClick={() => openEditModal(mentor)}
+                                                                    className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
+                                                                >
+                                                                    <Edit2 size={16} />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDelete(mentor._id)}
+                                                                    className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
+                                                                >
+                                                                    <Trash2 size={16} />
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </motion.tr>
+                                                ))}
+                                            </AnimatePresence>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+                    {/* Modal */}
+                    <AnimatePresence>
+                        {isModalOpen && (
+                            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                                    className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-2xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[92vh]"
+                                >
+                                    <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
+                                        <div>
+                                            <h2 className="text-3xl font-black text-white tracking-tight">{editingMentor ? "Refine Expert" : "Deploy Mentor"}</h2>
+                                            <p className="text-gray-500 text-sm mt-1 font-bold uppercase tracking-widest">Global Mentor Configuration</p>
+                                        </div>
+                                        <button onClick={() => setIsModalOpen(false)} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><X size={24} /></button>
+                                    </div>
+
+                                    <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar">
+                                        <div className="flex justify-center">
+                                            <div className="relative group cursor-pointer">
+                                                <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center group-hover:border-indigo-500/50 transition-all">
+                                                    {imageFile ? (
+                                                        <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
+                                                    ) : formData.image ? (
                                                         <img
-                                                            src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")}
-                                                            alt={mentor.name}
-                                                            className="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-500 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100"
+                                                            src={resolveImageUrl(formData.image, "/images/user.png")}
+                                                            alt="Current"
+                                                            className="w-full h-full object-cover"
                                                             onError={(e) => { e.target.src = "/images/user.png" }}
                                                         />
-                                                    </div>
-                                                    <div>
-                                                        <div className="font-black text-white text-base tracking-tight italic">{mentor.name}</div>
-                                                        {(mentor.linkedin || mentor.linkedinUrl) && (
-                                                            <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-[9px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-black uppercase tracking-widest mt-1">
-                                                                <Linkedin size={10} /> Sync Verified
-                                                            </a>
-                                                        )}
-                                                        <div className="text-[9px] font-black text-gray-600 uppercase tracking-widest mt-0.5">Verified Expert Entity</div>
-                                                    </div>
+                                                    ) : (
+                                                        <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors">
+                                                            <User size={32} strokeWidth={1.5} />
+                                                            <span className="text-[8px] font-black uppercase tracking-widest">Initialize Avatar</span>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            </td>
-                                            <td className="px-8 py-6">
-                                                <div className="text-white font-black text-xs italic uppercase tracking-wider">{mentor.role}</div>
-                                                <div className="text-indigo-500 text-[10px] uppercase font-black tracking-widest mt-1.5 flex items-center gap-2">
-                                                    <Briefcase size={10} />
-                                                    {mentor.company}
-                                                </div>
-                                            </td>
-                                            <td className="px-8 py-6">
-                                                <p className="text-gray-500 text-xs line-clamp-2 max-w-xs font-bold leading-relaxed uppercase tracking-tight">
-                                                    {mentor.description || mentor.bio || "No operational brief available for this node."}
-                                                </p>
-                                            </td>
-                                            <td className="px-8 py-6 text-right">
-                                                <div className="flex justify-end gap-3">
-                                                    <button
-                                                        onClick={() => openEditModal(mentor)}
-                                                        className="p-3 bg-white/5 text-gray-500 rounded-xl hover:bg-white/10 hover:text-white transition-all border border-transparent hover:border-white/10"
-                                                        title="Modify Node"
-                                                    >
-                                                        <Edit2 size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(mentor._id)}
-                                                        className="p-3 bg-red-500/10 text-red-400/50 rounded-xl hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
-                                                        title="Terminate Node"
-                                                    >
-                                                        <Trash2 size={16} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </motion.tr>
-                                    ))}
-                                </AnimatePresence>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
+                                                <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-2xl border border-white/10">
+                                                    <Plus size={16} strokeWidth={3} className="text-black" />
+                                                    <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
+                                                </label>
+                                            </div>
+                                        </div>
 
-            {/* Modal */}
-            <AnimatePresence>
-                {isModalOpen && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 30 }}
-                            className="bg-[#0f172a]/95 backdrop-blur-3xl border border-white/10 rounded-[3rem] w-full max-w-2xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] flex flex-col max-h-[92vh]"
-                        >
-                            <div className="p-10 border-b border-white/5 flex justify-between items-center bg-gradient-to-r from-white/[0.02] to-transparent">
-                                <div>
-                                    <h2 className="text-3xl font-black text-white tracking-tight">{editingMentor ? "Refine Expert" : "Deploy Mentor"}</h2>
-                                    <p className="text-gray-500 text-sm mt-1 font-bold uppercase tracking-widest">Global Mentor Configuration</p>
-                                </div>
-                                <button onClick={() => setIsModalOpen(false)} className="p-3 bg-white/5 rounded-2xl text-gray-500 hover:text-white transition-all border border-transparent hover:border-white/10"><X size={24} /></button>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="col-span-2 space-y-2">
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
+                                                <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Satoshi Nakamoto" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Professional Designation</label>
+                                                <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Quantum Lead" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Parent Organization</label>
+                                                <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. OpenAI" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
+                                                <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="https://linkedin.com/in/unique-id" />
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Years Experience</label>
+                                                    <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 10+" />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Projects Done</label>
+                                                    <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 50+" />
+                                                </div>
+                                            </div>
+                                            <div className="col-span-2 space-y-2">
+                                                <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expert Profile Brief</label>
+                                                <textarea rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Briefly describe the expert's impact..." />
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-8 flex justify-end gap-6 items-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsModalOpen(false)}
+                                                className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-10 py-5 rounded-2xl hover:bg-white/10"
+                                            >
+                                                Abort
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
+                                            >
+                                                <Check size={20} strokeWidth={3} />
+                                                <span>{editingMentor ? "Sync Profile" : "Deploy Entity"}</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </motion.div>
                             </div>
-
-                            <form onSubmit={handleSubmit} className="p-10 space-y-10 overflow-y-auto custom-scrollbar">
-                                <div className="flex justify-center">
-                                    <div className="relative group cursor-pointer">
-                                        <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center group-hover:border-indigo-500/50 transition-all">
-                                            {imageFile ? (
-                                                <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
-                                            ) : formData.image ? (
-                                                <img
-                                                    src={resolveImageUrl(formData.image, "/images/user.png")}
-                                                    alt="Current"
-                                                    className="w-full h-full object-cover"
-                                                    onError={(e) => { e.target.src = "/images/user.png" }}
-                                                />
-                                            ) : (
-                                                <div className="flex flex-col items-center gap-2 text-gray-600 group-hover:text-indigo-400 transition-colors">
-                                                    <User size={32} strokeWidth={1.5} />
-                                                    <span className="text-[8px] font-black uppercase tracking-widest">Initialize Avatar</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-2xl border border-white/10">
-                                            <Plus size={16} strokeWidth={3} className="text-black" />
-                                            <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="col-span-2 space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
-                                        <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Satoshi Nakamoto" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Professional Designation</label>
-                                        <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. Quantum Lead" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Parent Organization</label>
-                                        <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="e.g. OpenAI" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
-                                        <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700" placeholder="https://linkedin.com/in/unique-id" />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Years Experience</label>
-                                            <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 10+" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Projects Done</label>
-                                            <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all" placeholder="e.g. 50+" />
-                                        </div>
-                                    </div>
-                                    <div className="col-span-2 space-y-2">
-                                        <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Expert Profile Brief</label>
-                                        <textarea rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-gray-700 resize-none leading-relaxed" placeholder="Briefly describe the expert's impact..." />
-                                    </div>
-                                </div>
-
-                                <div className="pt-8 flex justify-end gap-6 items-center">
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="text-xs font-black text-gray-500 hover:text-white uppercase tracking-[0.3em] transition-colors bg-white/5 px-10 py-5 rounded-2xl hover:bg-white/10"
-                                    >
-                                        Abort
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="px-12 py-5 rounded-[1.5rem] font-black bg-white text-black hover:bg-gray-200 shadow-2xl hover:scale-[1.05] active:scale-95 transition-all text-sm uppercase tracking-widest flex items-center gap-3"
-                                    >
-                                        <Check size={20} strokeWidth={3} />
-                                        <span>{editingMentor ? "Sync Profile" : "Deploy Entity"}</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </motion.div>
-                    </div>
-                )}
-            </AnimatePresence>
+                        )}
+                    </AnimatePresence>
+                </AnimatePresence>
+            </div>
         </div>
     );
 };

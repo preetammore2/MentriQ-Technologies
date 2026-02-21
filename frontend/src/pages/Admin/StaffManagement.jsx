@@ -127,32 +127,37 @@ const StaffManagement = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
-                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between">
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
+                <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Personnel Registry</h2>
-                        <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                            <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{staffUsers.length} Authorized Personnel</span>
-                            System-wide access control and administrative entity management.
-                        </p>
+                        <div className="flex items-center gap-3 mb-1">
+                            <UserCog size={28} className="text-indigo-600" />
+                            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Personnel Registry</h2>
+                            <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                                {staffUsers.length} Authorized
+                            </span>
+                        </div>
+                        <p className="text-slate-500 font-medium text-sm">System-wide access control and administrative entity management.</p>
                     </div>
+
                     <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-500/30 transition-all">
-                            <Search className="text-gray-500 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                            <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
                             <input
                                 type="text"
-                                placeholder="Search by name/email..."
+                                placeholder="Search personnel..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full lg:w-80 font-black uppercase italic tracking-tighter text-sm"
+                                className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-64 font-medium text-sm"
                             />
                         </div>
                         <button
                             onClick={handleExportStaff}
-                            className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center justify-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest"
+                            className="bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-sm text-sm"
                         >
-                            <Download size={16} strokeWidth={3} />
+                            <Download size={18} />
                             <span>Export Registry</span>
                         </button>
                     </div>

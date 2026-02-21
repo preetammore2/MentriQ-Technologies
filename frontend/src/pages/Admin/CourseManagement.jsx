@@ -161,28 +161,30 @@ const CourseManagement = () => {
         c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         c.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section */}
-            {/* Header Section */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-[#1e293b] p-6 md:p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div className="w-full lg:w-auto">
-                    <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight uppercase italic">Curriculum Registry</h2>
-                    <p className="text-gray-400 text-[10px] mt-1 font-black uppercase tracking-[0.2em] flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{courses.length} Active Modules</span>
-                        Manage curriculum, pricing, and course details.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <BookOpen size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Curriculum Registry</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {courses.length} Active Modules
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Manage curriculum, pricing, and course details.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 flex items-center group focus-within:border-indigo-500/50 transition-all w-full sm:w-auto">
-                        <Search className="text-gray-500 ml-4 shrink-0" size={18} />
+
+                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
                         <input
                             type="text"
-                            placeholder="Search courses..."
+                            placeholder="Find a course..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-500 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
+                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full sm:w-64 font-medium text-sm"
                         />
                     </div>
                     <button
@@ -192,7 +194,7 @@ const CourseManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap w-full sm:w-auto"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                     >
                         <Plus size={18} />
                         <span>Add Course</span>
@@ -201,40 +203,40 @@ const CourseManagement = () => {
             </div>
 
             {loading ? (
-                <div className="space-y-4">
+                <div className="p-8 space-y-4">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="h-16 bg-white/5 border border-white/10 rounded-xl animate-pulse" />
+                        <div key={i} className="h-16 bg-slate-50 border border-slate-200 rounded-xl animate-pulse" />
                     ))}
                 </div>
             ) : filteredCourses.length === 0 ? (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10">
-                        <BookOpen size={32} className="text-gray-400" />
+                <div className="bg-white border border-slate-200 rounded-[2.5rem] p-32 text-center group shadow-sm">
+                    <div className="w-24 h-24 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-indigo-100 text-indigo-600 shadow-sm">
+                        <BookOpen size={48} />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">No Courses Found</h3>
-                    <p className="text-gray-400 mb-6">We couldn't find any courses matching your search.</p>
+                    <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">No Courses Protocol</h3>
+                    <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The curriculum registry is currently offline. Manual deployment required.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors flex items-center gap-2 mx-auto"
+                        className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/10 active:scale-95 mx-auto"
                     >
-                        <Plus size={18} />
-                        Create First Course
+                        <Plus size={20} />
+                        Initialize Curriculum
                     </button>
                 </div>
             ) : (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-700">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-white/5 border-b border-white/10">
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Course info</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Category</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Level</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Pricing</th>
-                                    <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Actions</th>
+                                <tr className="bg-slate-50 border-b border-slate-200">
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Curriculum Identity</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Domain</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Aptitude</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500">Tuition</th>
+                                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-slate-500 text-right">Commands</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100">
                                 <AnimatePresence mode="popLayout">
                                     {filteredCourses.map((course) => (
                                         <motion.tr
@@ -243,56 +245,56 @@ const CourseManagement = () => {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0 }}
-                                            className="hover:bg-white/[0.02] transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 shrink-0">
+                                            <td className="px-8 py-6">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-1 group-hover:border-indigo-300 transition-all">
                                                         <img
                                                             src={resolveImageUrl(course.thumbnailUrl)}
                                                             alt={course.title}
-                                                            className="w-full h-full object-cover"
+                                                            className="w-full h-full object-cover rounded-xl transition-transform group-hover:scale-110"
                                                             onError={(e) => e.target.src = "https://via.placeholder.com/64?text=Course"}
                                                         />
                                                     </div>
                                                     <div className="min-w-0">
-                                                        <div className="font-bold text-white truncate max-w-[200px]">{course.title}</div>
-                                                        <div className="text-[10px] text-gray-500 uppercase tracking-wider font-bold">{course.duration} • {course.mode}</div>
+                                                        <div className="font-bold text-slate-900 text-base tracking-tight">{course.title}</div>
+                                                        <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">{course.duration} • {course.mode}</div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <span className="text-gray-400 text-sm">{course.category}</span>
+                                            <td className="px-8 py-6">
+                                                <span className="text-slate-600 text-sm font-medium">{course.category}</span>
                                             </td>
-                                            <td className="px-6 py-5">
-                                                <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border ${course.level === 'Beginner' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10' :
-                                                    course.level === 'Intermediate' ? 'bg-amber-500/10 text-amber-400 border-amber-500/10' :
-                                                        'bg-rose-500/10 text-rose-400 border-rose-500/10'
+                                            <td className="px-8 py-6">
+                                                <span className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border ${course.level === 'Beginner' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' :
+                                                    course.level === 'Intermediate' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                                                        'bg-rose-50 text-rose-700 border-rose-100'
                                                     }`}>
                                                     {course.level}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-5">
+                                            <td className="px-8 py-6">
                                                 <div className="flex flex-col">
-                                                    <span className="text-white font-bold text-sm">₹{course.price.toLocaleString()}</span>
+                                                    <span className="text-slate-900 font-bold text-sm">₹{course.price.toLocaleString()}</span>
                                                     {course.discount > 0 && (
-                                                        <span className="text-[10px] text-emerald-500 font-bold">-{course.discount}% OFF</span>
+                                                        <span className="text-[10px] text-emerald-500 font-bold mt-0.5">-{course.discount}% OFF</span>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => openEditModal(course)}
-                                                        className="p-2.5 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 hover:text-white transition-all"
-                                                        title="Edit Course"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-200"
+                                                        title="Refine Course"
                                                     >
                                                         <Edit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(course._id)}
-                                                        className="p-2.5 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all"
-                                                        title="Delete Course"
+                                                        className="p-2.5 bg-rose-50 text-rose-400 rounded-xl hover:bg-rose-500 hover:text-white transition-all border border-rose-100"
+                                                        title="Terminate Course"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>

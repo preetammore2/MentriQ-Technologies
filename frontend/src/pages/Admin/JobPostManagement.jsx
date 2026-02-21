@@ -128,21 +128,26 @@ const JobPostManagement = () => {
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Job Opportunities</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{jobs.length} External Posts</span>
-                        Manage recruitment postings and external job links.
-                    </p>
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <Briefcase size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Job Opportunities</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {jobs.length} External Posts
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Manage recruitment postings and external job links.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+
+                <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-auto relative z-10">
                     <button
                         onClick={handleSeed}
                         disabled={seeding}
-                        className="bg-white/5 hover:bg-white/10 text-gray-500 hover:text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all border border-white/10 text-xs uppercase tracking-widest"
+                        className="bg-slate-50 hover:bg-slate-100 text-slate-600 px-6 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all border border-slate-200 text-sm"
                     >
-                        <Database size={16} className={seeding ? "animate-spin" : ""} />
+                        <Database size={18} className={seeding ? "animate-spin" : ""} />
                         <span>{seeding ? "Seeding..." : "Seed Samples"}</span>
                     </button>
                     <button
@@ -151,28 +156,28 @@ const JobPostManagement = () => {
                             setFormData(initialFormState);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
                     >
                         <Plus size={18} />
-                        <span>Add Job Post</span>
+                        <span>Post New Job</span>
                     </button>
                 </div>
             </div>
 
-            {/* Search Bar - Simplified */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-2xl p-4 flex items-center gap-4 group focus-within:border-indigo-500/50 transition-all shadow-xl">
-                <Search className="text-gray-500 ml-2" size={20} />
+            {/* Content Search */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center gap-4 group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all shadow-sm">
+                <Search className="text-slate-400 ml-2" size={18} />
                 <input
                     type="text"
                     placeholder="Search by role, company, or location..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="bg-transparent text-white placeholder:text-gray-600 focus:outline-none py-2 w-full font-medium"
+                    className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-2 w-full font-medium"
                 />
             </div>
 
-            {/* Jobs Table - Clean Admin Style */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+            {/* Table Area */}
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>

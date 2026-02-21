@@ -124,30 +124,29 @@ const CityManagement = () => {
     ), [cities, searchTerm]);
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 bg-[#1e293b] p-10 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                            <MapPin size={20} className="text-indigo-400" />
-                        </div>
-                        <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">City Presence</h2>
+                    <div className="flex items-center gap-3 mb-1">
+                        <MapPin size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">City Presence</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {cities.length} Distributed Nodes
+                        </span>
                     </div>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{cities.length} Distributed Nodes</span>
-                        Manage locations and regional visibility.
-                    </p>
+                    <p className="text-slate-500 font-medium text-sm">Manage locations and regional visibility.</p>
                 </div>
+
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-5 flex items-center group focus-within:border-indigo-500/50 transition-all shadow-inner">
-                        <Search className="text-gray-500 ml-4" size={18} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Filter cities..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-600 focus:outline-none py-3.5 px-4 w-full lg:w-72 font-bold text-xs uppercase tracking-widest"
+                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full lg:w-72 font-medium text-sm"
                         />
                     </div>
                     <button
@@ -156,9 +155,9 @@ const CityManagement = () => {
                             setFormData(initialFormState);
                             setIsModalOpen(true);
                         }}
-                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all shadow-[0_20px_40px_-15px_rgba(255,255,255,0.2)] active:scale-95 whitespace-nowrap"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                     >
-                        <Plus size={18} strokeWidth={3} />
+                        <Plus size={18} />
                         <span>Add City</span>
                     </button>
                 </div>
@@ -186,7 +185,7 @@ const CityManagement = () => {
                     </button>
                 </div>
             ) : (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>

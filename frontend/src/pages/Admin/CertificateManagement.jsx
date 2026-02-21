@@ -92,39 +92,43 @@ const CertificateManagement = () => {
     );
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-[#1e293b] p-8 md:p-10 rounded-3xl border border-white/5 shadow-xl bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
-                <div>
-                    <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight italic uppercase">Credential Repository</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{certificates.length} Issued Assets</span>
-                        Authenticated ledger of student certifications and institutional endorsements.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <Award size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Credential Registry</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {certificates.length} Issued Assets
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Authenticated ledger of student certifications and institutional endorsements.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-1 pr-6 flex items-center group focus-within:border-indigo-500/30 transition-all">
-                        <Search className="text-gray-600 ml-4 group-focus-within:text-indigo-400 transition-colors" size={20} />
+
+                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto relative z-10">
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
                         <input
                             type="text"
-                            placeholder="Identify recipient or ID..."
+                            placeholder="Search recipient or ID..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="bg-transparent text-white placeholder:text-gray-700 focus:outline-none py-4 px-4 w-full md:w-64 font-black uppercase italic tracking-tighter text-sm"
+                            className="bg-transparent text-slate-900 placeholder:text-slate-400 focus:outline-none py-3 px-4 w-full md:w-64 font-medium text-sm"
                         />
                     </div>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-xl font-black flex items-center justify-center gap-3 transition-all hover:scale-[1.05] active:scale-95 shadow-2xl text-[10px] uppercase tracking-widest whitespace-nowrap"
+                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                     >
-                        <Award size={18} strokeWidth={3} />
+                        <Award size={18} />
                         <span>Issue Credential</span>
                     </button>
                 </div>
             </div>
 
             {/* Table Area */}
-            <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+            <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>

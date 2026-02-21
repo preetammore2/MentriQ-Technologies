@@ -107,27 +107,35 @@ const InternshipManagement = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header Section - Simplified */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-[#1e293b] p-8 rounded-3xl border border-white/5 shadow-xl">
-                <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Internship Management</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-3">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{internships.length} Postings</span>
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{applications.length} Candidates</span>
-                        Manage postings and track candidate applications.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <Briefcase size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Internship Management</h2>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                            <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                                {internships.length} Postings
+                            </span>
+                            <span className="text-slate-600 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100 text-xs font-bold">
+                                {applications.length} Candidates
+                            </span>
+                        </div>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm mt-2">Manage postings and track candidate applications.</p>
                 </div>
-                <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
+
+                <div className="flex bg-slate-50 p-1.5 rounded-2xl border border-slate-200">
                     <button
                         onClick={() => setActiveTab("postings")}
-                        className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'postings' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'postings' ? 'bg-white text-indigo-600 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'}`}
                     >
                         Listings
                     </button>
                     <button
                         onClick={() => setActiveTab("applications")}
-                        className={`px-6 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'applications' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                        className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'applications' ? 'bg-white text-indigo-600 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-white/50'}`}
                     >
                         Applications
                     </button>
@@ -143,7 +151,7 @@ const InternshipManagement = () => {
                                 setFormData(initialFormState);
                                 setIsModalOpen(true);
                             }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all shadow-md shadow-indigo-600/10 active:scale-95 whitespace-nowrap text-sm"
                         >
                             <Plus size={18} />
                             <span>Add Internship</span>
@@ -152,16 +160,16 @@ const InternshipManagement = () => {
 
                     {loading ? (
                         <div className="space-y-4">
-                            {[1, 2, 3].map(i => <div key={i} className="h-16 bg-white/5 border border-white/10 rounded-xl animate-pulse" />)}
+                            {[1, 2, 3].map(i => <div key={i} className="h-16 bg-slate-50 border border-slate-200 rounded-xl animate-pulse" />)}
                         </div>
                     ) : internships.length === 0 ? (
-                        <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                            <Briefcase size={40} className="text-gray-500 mx-auto mb-4" />
-                            <h3 className="text-xl font-bold text-white mb-2">No Postings Yet</h3>
-                            <button onClick={() => setIsModalOpen(true)} className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors">Create First Listing</button>
+                        <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-sm">
+                            <Briefcase size={40} className="text-slate-300 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-slate-900 mb-2">No Postings Yet</h3>
+                            <button onClick={() => setIsModalOpen(true)} className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">Create First Listing</button>
                         </div>
                     ) : (
-                        <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                        <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>

@@ -29,14 +29,12 @@ import { useToast } from '../../context/ToastContext'
 
 const AdminLayout = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-    const [scrolled, setScrolled] = useState(false)
     const location = useLocation()
     const navigate = useNavigate()
     const { logout } = useAuth()
     const toast = useToast()
 
     useEffect(() => {
-        // Auto-close sidebar on mobile when navigating
         if (window.innerWidth < 1024) {
             setIsSidebarOpen(false);
         }
@@ -44,44 +42,44 @@ const AdminLayout = ({ children }) => {
 
     const menuGroups = [
         {
-            title: 'Operations & Metrics',
+            title: 'Operations',
             items: [
-                { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Control Center' },
-                { path: '/admin/settings', icon: Settings, label: 'Core Protocol' },
+                { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+                { path: '/admin/settings', icon: Settings, label: 'Settings' },
             ]
         },
         {
-            title: 'Learning Ecosystem',
+            title: 'Learning',
             items: [
-                { path: '/admin/courses', icon: BookOpen, label: 'Curriculums' },
-                { path: '/admin/internships', icon: Briefcase, label: 'Internship Ops' },
-                { path: '/admin/jobs', icon: Briefcase, label: 'Career Board' },
-                { path: '/admin/journey', icon: MapPin, label: 'Roadmaps' },
+                { path: '/admin/courses', icon: BookOpen, label: 'Courses' },
+                { path: '/admin/internships', icon: Briefcase, label: 'Internships' },
+                { path: '/admin/jobs', icon: Briefcase, label: 'Job Board' },
+                { path: '/admin/journey', icon: MapPin, label: 'Milestones' },
             ]
         },
         {
-            title: 'Stakeholder Registry',
+            title: 'Stakeholders',
             items: [
                 { path: '/admin/users', icon: Users, label: 'Candidates' },
-                { path: '/admin/staff', icon: UserCog, label: 'Personnel' },
-                { path: '/admin/mentors', icon: Users, label: 'Guidance' },
-                { path: '/admin/partners', icon: Handshake, label: 'Alliances' },
+                { path: '/admin/staff', icon: UserCog, label: 'Staff' },
+                { path: '/admin/mentors', icon: Users, label: 'Mentors' },
+                { path: '/admin/partners', icon: Handshake, label: 'Partners' },
             ]
         },
         {
-            title: 'Quality & Engagement',
+            title: 'Engagement',
             items: [
-                { path: '/admin/enquiries', icon: Mail, label: 'Signals' },
-                { path: '/admin/feedback', icon: MessageSquare, label: 'Sentiments' },
-                { path: '/admin/certificates', icon: Award, label: 'Credentials' },
+                { path: '/admin/enquiries', icon: Mail, label: 'Enquiries' },
+                { path: '/admin/feedback', icon: MessageSquare, label: 'Feedback' },
+                { path: '/admin/certificates', icon: Award, label: 'Certificates' },
             ]
         },
         {
-            title: 'Infrastructure Hub',
+            title: 'Infrastructure',
             items: [
-                { path: '/admin/services', icon: Layers, label: 'Node Services' },
-                { path: '/admin/technologies', icon: Cpu, label: 'Tech Stack' },
-                { path: '/admin/cities', icon: MapPin, label: 'Geos' },
+                { path: '/admin/services', icon: Layers, label: 'Services' },
+                { path: '/admin/technologies', icon: Cpu, label: 'Technologies' },
+                { path: '/admin/cities', icon: MapPin, label: 'Cities' },
             ]
         }
     ];
@@ -93,123 +91,131 @@ const AdminLayout = ({ children }) => {
     }
 
     return (
-        <div className="min-h-screen bg-[#0f172a] flex overflow-hidden">
+        <div className="min-h-screen bg-slate-50 flex overflow-hidden font-sans">
             {/* Sidebar */}
             <motion.aside
                 initial={false}
-                animate={{ width: isSidebarOpen ? 280 : 80 }}
-                className={`fixed lg:static inset-y-0 left-0 z-40 bg-[#1e293b] border-r border-white/5 flex flex-col transition-all duration-300 ${!isSidebarOpen && 'lg:w-20'
-                    } ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+                animate={{ width: isSidebarOpen ? 280 : 88 }}
+                className={`fixed lg:static inset-y-0 left-0 z-40 bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'translate-x-0 shadow-xl lg:shadow-none' : '-translate-x-full lg:translate-x-0'
+                    }`}
             >
                 {/* Logo Section */}
-                <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
+                <div className="h-20 flex items-center justify-between px-6 border-b border-slate-100">
                     <div className={`flex items-center gap-3 overflow-hidden ${!isSidebarOpen && 'lg:hidden'}`}>
-                        <img
-                            src="/images/logo1.jpg"
-                            alt="MentriQ"
-                            className="w-10 h-10 rounded-lg object-cover border border-white/10"
-                        />
-                        <span className="text-white font-bold text-lg whitespace-nowrap">MentriQ Admin</span>
+                        <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+                            <span className="text-white font-bold text-xl">M</span>
+                        </div>
+                        <span className="text-slate-900 font-bold text-lg tracking-tight whitespace-nowrap">MentriQ Admin</span>
                     </div>
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="text-gray-400 hover:text-white lg:hidden"
+                        className="p-2 rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                     >
-                        <X size={20} />
+                        {isSidebarOpen ? <X size={20} className="lg:hidden" /> : <Menu size={20} className="hidden lg:block" />}
+                        {isSidebarOpen && <ChevronLeft size={20} className="hidden lg:block" />}
                     </button>
                 </div>
 
                 {/* Navigation */}
-                <div className="flex-1 overflow-y-auto py-6 px-3 space-y-6 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto py-6 px-4 space-y-8 custom-scrollbar">
                     {menuGroups.map((group, groupIdx) => (
                         <div key={groupIdx} className="space-y-1">
-                            <h4 className={`text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 px-3 transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:h-0 overflow-hidden' : 'opacity-100'}`}>
-                                {group.title}
-                            </h4>
-                            {group.items.map((item) => {
-                                const Icon = item.icon
-                                const isActive = location.pathname === item.path
+                            {isSidebarOpen && (
+                                <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-3 px-3">
+                                    {group.title}
+                                </h4>
+                            )}
+                            <div className="space-y-1">
+                                {group.items.map((item) => {
+                                    const Icon = item.icon
+                                    const isActive = location.pathname === item.path
 
-                                return (
-                                    <Link
-                                        key={item.path}
-                                        to={item.path}
-                                        className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all group ${isActive
-                                            ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            }`}
-                                    >
-                                        <Icon size={18} className={`shrink-0 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
-                                        <span className={`font-medium whitespace-nowrap text-sm transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:w-0 lg:overflow-hidden' : 'opacity-100'
-                                            }`}>
-                                            {item.label}
-                                        </span>
-                                        {isActive && isSidebarOpen && (
-                                            <motion.div
-                                                layoutId="activeIndicator"
-                                                className="ml-auto w-1.5 h-1.5 rounded-full bg-white"
-                                            />
-                                        )}
-                                    </Link>
-                                )
-                            })}
+                                    return (
+                                        <Link
+                                            key={item.path}
+                                            to={item.path}
+                                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group relative ${isActive
+                                                ? 'bg-indigo-50 text-indigo-700'
+                                                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                                }`}
+                                        >
+                                            <Icon size={20} className={`shrink-0 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'}`} />
+                                            {isSidebarOpen && (
+                                                <span className="font-medium text-[14px] whitespace-nowrap">
+                                                    {item.label}
+                                                </span>
+                                            )}
+                                            {isActive && (
+                                                <motion.div
+                                                    layoutId="activePill"
+                                                    className="absolute left-0 w-1 h-6 bg-indigo-600 rounded-r-full"
+                                                />
+                                            )}
+                                            {!isSidebarOpen && (
+                                                <div className="absolute left-full ml-4 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity font-medium z-50">
+                                                    {item.label}
+                                                </div>
+                                            )}
+                                        </Link>
+                                    )
+                                })}
+                            </div>
                         </div>
                     ))}
                 </div>
 
-                {/* Bottom Section */}
-                <div className="p-4 border-t border-white/5">
+                {/* Profile/Logout */}
+                <div className="p-4 border-t border-slate-100 bg-slate-50/50">
                     <button
                         onClick={handleLogout}
-                        className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl text-rose-400 hover:bg-rose-500/10 transition-all group ${!isSidebarOpen && 'lg:justify-center'
+                        className={`flex items-center gap-3 w-full px-3 py-3 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-all group ${!isSidebarOpen && 'lg:justify-center'
                             }`}
                     >
                         <LogOut size={20} />
-                        <span className={`font-medium whitespace-nowrap transition-opacity duration-200 ${!isSidebarOpen ? 'lg:opacity-0 lg:w-0 lg:overflow-hidden' : 'opacity-100'
-                            }`}>
-                            Logout
-                        </span>
+                        {isSidebarOpen && <span className="font-semibold text-sm">Logout Session</span>}
                     </button>
                 </div>
             </motion.aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col h-screen overflow-hidden relative">
-                {/* Mobile Overlay */}
-                {isSidebarOpen && (
-                    <div
-                        className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-                        onClick={() => setIsSidebarOpen(false)}
-                    />
-                )}
-
-                {/* Header */}
-                <header className="h-20 lg:hidden flex items-center px-6 border-b border-white/5 bg-[#1e293b] sticky top-0 z-30">
+            <div className="flex-1 flex flex-col h-screen overflow-hidden">
+                {/* Header (Mobile) */}
+                <header className="h-16 lg:hidden flex items-center px-6 border-b border-slate-200 bg-white sticky top-0 z-30">
                     <button
                         onClick={() => setIsSidebarOpen(true)}
-                        className="p-3 -ml-3 text-gray-400 hover:text-white bg-white/5 rounded-2xl transition-all"
+                        className="p-2 -ml-2 text-slate-500 hover:text-slate-900"
                     >
                         <Menu size={24} />
                     </button>
-                    <div className="ml-4 flex items-center gap-3">
-                        <img
-                            src="/images/logo1.jpg"
-                            alt="MentriQ"
-                            className="w-10 h-10 rounded-lg object-cover border border-white/10"
-                        />
-                        <span className="text-white font-bold text-lg">MentriQ Admin</span>
+                    <div className="ml-4 flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">M</span>
+                        </div>
+                        <span className="text-slate-900 font-bold tracking-tight">MentriQ</span>
                     </div>
                 </header>
 
-                {/* Page Content */}
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#0f172a] p-6 custom-scrollbar">
-                    <div className="max-w-7xl mx-auto space-y-6">
-                        {children}
+                {/* Main Viewport */}
+                <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth">
+                    <div className="max-w-7xl mx-auto">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={location.pathname}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                {children}
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
                 </main>
             </div>
         </div>
     )
 }
+
+export default AdminLayout
 
 export default AdminLayout

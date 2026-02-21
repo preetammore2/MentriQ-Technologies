@@ -101,15 +101,18 @@ const FeedbackManagement = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            {/* Header section - Simplified */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1e293b] p-8 rounded-3xl border border-white/5">
-                <div>
-                    <h2 className="text-3xl font-black text-white tracking-tight italic uppercase">Testimonials</h2>
-                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-3">
-                        <span className="text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-md border border-indigo-400/20">{feedbacks.length} Success Stories</span>
-                        Manage student success stories displayed on the website.
-                    </p>
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            {/* Page Header */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative group">
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-1">
+                        <MessageSquare size={28} className="text-indigo-600" />
+                        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Testimonials</h2>
+                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            {feedbacks.length} Success Stories
+                        </span>
+                    </div>
+                    <p className="text-slate-500 font-medium text-sm">Manage student success stories displayed on the website.</p>
                 </div>
                 <button
                     onClick={() => {
@@ -117,7 +120,7 @@ const FeedbackManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-500 px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap"
+                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                 >
                     <Plus size={18} />
                     <span>Add Testimonial</span>
@@ -127,26 +130,26 @@ const FeedbackManagement = () => {
             {loading ? (
                 <div className="space-y-4">
                     {[1, 2, 3, 4].map(i => (
-                        <div key={i} className="h-16 bg-white/5 border border-white/10 rounded-xl animate-pulse" />
+                        <div key={i} className="h-16 bg-slate-50 border border-slate-200 rounded-xl animate-pulse" />
                     ))}
                 </div>
             ) : feedbacks.length === 0 ? (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl p-16 text-center">
-                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10">
-                        <MessageSquare size={32} className="text-gray-400" />
+                <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-sm">
+                    <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-100">
+                        <MessageSquare size={32} className="text-indigo-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">No Testimonials</h3>
-                    <p className="text-gray-400 mb-6">You haven't added any student testimonials yet.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">No Testimonials</h3>
+                    <p className="text-slate-500 mb-6">You haven't added any student testimonials yet.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors flex items-center gap-2 mx-auto"
+                        className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors flex items-center justify-center gap-2 mx-auto text-sm"
                     >
                         <Plus size={18} />
-                        Create First Feedback
+                        <span>Create First Feedback</span>
                     </button>
                 </div>
             ) : (
-                <div className="bg-[#1e293b] border border-white/5 rounded-3xl overflow-hidden shadow-xl">
+                <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
