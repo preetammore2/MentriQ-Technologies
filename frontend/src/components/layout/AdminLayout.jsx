@@ -177,6 +177,19 @@ const AdminLayout = ({ children }) => {
                 </div>
             </motion.aside>
 
+            {/* Mobile Overlay */}
+            <AnimatePresence>
+                {isSidebarOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 lg:hidden"
+                    />
+                )}
+            </AnimatePresence>
+
             {/* Main Content */}
             <div className="flex-1 flex flex-col h-screen overflow-hidden">
                 {/* Header (Mobile) */}
@@ -215,7 +228,5 @@ const AdminLayout = ({ children }) => {
         </div>
     )
 }
-
-export default AdminLayout
 
 export default AdminLayout
