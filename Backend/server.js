@@ -76,7 +76,6 @@ const envOrigins = String(process.env.CORS_ORIGINS || "")
 const allowedOrigins = new Set([
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://mentriq-technologies-zeta.vercel.app",
     "https://www.mentriqtechnologies.in",
     "https://mentriqtechnologies.in",
     process.env.CLIENT_URL ? process.env.CLIENT_URL.trim().replace(/\/$/, "") : null,
@@ -85,15 +84,26 @@ const allowedOrigins = new Set([
 
 const isAllowedOrigin = (origin) => {
     if (!origin) return true;
+
     const normalizedOrigin = origin.trim().replace(/\/$/, "");
     if (allowedOrigins.has(normalizedOrigin)) return true;
-    if (/^http:\/\/localhost:\d+$/.test(normalizedOrigin)) return true;
-    if (/^http:\/\/127\.0\.0\.1:\d+$/.test(normalizedOrigin)) return true;
-    if (/^https:\/\/([a-z0-9-]+\.)?mentriqtechnologies\.in$/i.test(normalizedOrigin)) return true;
+
+    try {
+        const { protocol, hostname } = new URL(normalizedOrigin);
+        const isHttp = protocol === "http:";
+        const isHttps = protocol === "https:";
+
+        if (isHttp && (hostname === "localhost" || hostname === "127.0.0.1")) return true;
+        if (isHttps && /(^|\.)mentriqtechnologies\.in$/i.test(hostname)) return true;
+        if (isHttps && /(^|\.)vercel\.app$/i.test(hostname)) return true;
+    } catch {
+        return false;
+    }
+
     return false;
 };
 
-app.use(cors({
+const corsOptions = {
     origin: function (origin, callback) {
         if (isAllowedOrigin(origin)) {
             callback(null, true);
@@ -104,8 +114,11 @@ app.use(cors({
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
