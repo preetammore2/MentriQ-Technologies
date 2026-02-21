@@ -57,6 +57,14 @@ app.get("/health", (req, res) => {
     });
 });
 app.get("/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
+app.get("/api/health", (req, res) => {
+    res.json({
+        status: "active",
+        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+        timestamp: new Date().toISOString()
+    });
+});
+app.get("/api/ping", (req, res) => res.json({ status: "pong", timestamp: new Date().toISOString() }));
 
 app.use("/api", limiter);
 

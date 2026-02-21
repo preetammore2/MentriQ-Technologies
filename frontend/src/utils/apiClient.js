@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-const PROD_API_URL = 'https://mentriq-backend.onrender.com/api';
 const envBaseURL = (import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/$/, '');
 
 const resolvedBaseURL = import.meta.env.DEV
   ? (envBaseURL || 'http://localhost:5000/api')
-  : (envBaseURL || PROD_API_URL);
+  : (envBaseURL || '/api');
 
 if (import.meta.env.DEV) {
   console.log('🚀 MentriQ API Base URL:', resolvedBaseURL);
