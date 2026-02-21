@@ -141,7 +141,7 @@ const EnquiryManagement = () => {
 
     if (loading && inquiries.length === 0 && enquiries.length === 0) return (
         <div className="flex items-center justify-center min-h-[400px]">
-            <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
         </div>
     );
 
@@ -151,9 +151,9 @@ const EnquiryManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <MessageSquare size={28} className="text-indigo-600" />
+                        <MessageSquare size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Intelligence Hub</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {inquiries.length + enquiries.length} signals
                         </span>
                     </div>
@@ -164,16 +164,16 @@ const EnquiryManagement = () => {
                     <button
                         onClick={() => { setActiveTab('contact'); setSearchTerm(''); setFilter('all'); }}
                         className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'contact'
-                            ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
-                            : 'text-slate-500 hover:text-indigo-600 hover:bg-white'}`}
+                            ? 'bg-white text-emerald-600 shadow-sm border border-slate-200'
+                            : 'text-slate-500 hover:text-emerald-600 hover:bg-white'}`}
                     >
                         General inquiries
                     </button>
                     <button
                         onClick={() => { setActiveTab('recruit'); setSearchTerm(''); setFilter('all'); }}
                         className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'recruit'
-                            ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
-                            : 'text-slate-500 hover:text-indigo-600 hover:bg-white'}`}
+                            ? 'bg-white text-emerald-600 shadow-sm border border-slate-200'
+                            : 'text-slate-500 hover:text-emerald-600 hover:bg-white'}`}
                     >
                         Recruitment
                     </button>
@@ -183,13 +183,13 @@ const EnquiryManagement = () => {
             {/* Filters and Search */}
             <div className="bg-white border border-slate-200 rounded-3xl p-6 flex flex-col lg:flex-row gap-6 shadow-sm">
                 <div className="relative flex-1 group">
-                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                    <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors" size={18} />
                     <input
                         type="text"
                         placeholder={activeTab === 'contact' ? "Find inquiry..." : "Search recruitment leads..."}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-14 pr-6 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-300 transition-all font-medium text-sm"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-3 pl-14 pr-6 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-300 transition-all font-medium text-sm"
                     />
                 </div>
                 {activeTab === 'contact' && (
@@ -199,7 +199,7 @@ const EnquiryManagement = () => {
                                 key={f}
                                 onClick={() => setFilter(f)}
                                 className={`px-6 py-2 rounded-lg font-semibold transition-all text-xs capitalize ${filter === f
-                                    ? 'bg-white text-indigo-600 shadow-sm border border-slate-200'
+                                    ? 'bg-white text-emerald-600 shadow-sm border border-slate-200'
                                     : 'text-slate-500 hover:text-slate-700'
                                     }`}
                             >
@@ -244,16 +244,16 @@ const EnquiryManagement = () => {
                                         filteredInquiries.map((inq) => (
                                             <tr
                                                 key={inq._id}
-                                                className={`hover:bg-slate-50/50 transition-colors group ${!inq.isRead ? 'bg-indigo-50/30' : ''}`}
+                                                className={`hover:bg-slate-50/50 transition-colors group ${!inq.isRead ? 'bg-emerald-50/30' : ''}`}
                                             >
                                                 <td className="px-8 py-6">
                                                     <div className="font-bold text-slate-900 text-base tracking-tight">{inq.name}</div>
                                                     <div className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-1">{inq.email}</div>
-                                                    <div className="text-[10px] text-indigo-500 font-bold mt-1">{inq.phone}</div>
+                                                    <div className="text-[10px] text-emerald-500 font-bold mt-1">{inq.phone}</div>
                                                 </td>
                                                 <td className="px-8 py-6 max-w-md">
                                                     <div className="font-bold text-slate-600 text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                                                         {inq.subject}
                                                     </div>
                                                     <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed italic">"{inq.message}"</p>
@@ -262,7 +262,7 @@ const EnquiryManagement = () => {
                                                     {new Date(inq.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
                                                 </td>
                                                 <td className="px-8 py-6">
-                                                    <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${inq.isRead ? 'bg-slate-50 text-slate-400 border-slate-200' : 'bg-indigo-50 text-indigo-600 border-indigo-100 animate-pulse'}`}>
+                                                    <span className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${inq.isRead ? 'bg-slate-50 text-slate-400 border-slate-200' : 'bg-emerald-50 text-emerald-600 border-emerald-100 animate-pulse'}`}>
                                                         {inq.isRead ? 'Processed' : 'Awaiting Intel'}
                                                     </span>
                                                 </td>
@@ -271,7 +271,7 @@ const EnquiryManagement = () => {
                                                         {!inq.isRead && (
                                                             <button
                                                                 onClick={() => handleMarkAsRead(inq._id)}
-                                                                className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all border border-indigo-100 shadow-sm"
+                                                                className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-600 hover:text-white transition-all border border-emerald-100 shadow-sm"
                                                                 title="Mark as Processed"
                                                             >
                                                                 <CheckCircle size={16} />
@@ -315,7 +315,7 @@ const EnquiryManagement = () => {
                                         key={enquiry._id}
                                         onClick={() => setSelectedRecruitEnquiry(enquiry)}
                                         className={`p-6 rounded-3xl border cursor-pointer transition-all duration-300 relative group overflow-hidden ${selectedRecruitEnquiry?._id === enquiry._id
-                                            ? 'bg-white border-indigo-400 shadow-[0_20px_40px_-15px_rgba(79,70,229,0.1)] translate-x-1'
+                                            ? 'bg-white border-emerald-400 shadow-[0_20px_40px_-15px_rgba(79,70,229,0.1)] translate-x-1'
                                             : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/50'
                                             }`}
                                     >
@@ -329,11 +329,11 @@ const EnquiryManagement = () => {
                                         </div>
                                         <h4 className="text-slate-900 font-extrabold truncate text-lg tracking-tight relative z-10">{enquiry.company}</h4>
                                         <div className="text-xs text-slate-500 flex items-center gap-2 mt-2 font-medium relative z-10">
-                                            <User size={14} className="text-indigo-400" />
+                                            <User size={14} className="text-emerald-400" />
                                             {enquiry.name}
                                         </div>
                                         {selectedRecruitEnquiry?._id === enquiry._id && (
-                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-indigo-600 rounded-r-full" />
+                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-emerald-600 rounded-r-full" />
                                         )}
                                     </div>
                                 ))
@@ -349,18 +349,18 @@ const EnquiryManagement = () => {
                                     key={selectedRecruitEnquiry._id}
                                     className="bg-white border border-slate-200 rounded-[3rem] p-10 sticky top-6 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] overflow-hidden"
                                 >
-                                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32" />
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50/50 rounded-full blur-3xl -mr-32 -mt-32" />
 
                                     <div className="flex justify-between items-start mb-10 relative z-10">
                                         <div>
                                             <h3 className="text-4xl font-black text-slate-900 tracking-tight mb-4 uppercase leading-none">{selectedRecruitEnquiry.company}</h3>
                                             <div className="flex flex-wrap gap-4 mt-6">
                                                 <span className="flex items-center gap-2.5 text-slate-600 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-200 font-bold uppercase tracking-widest text-[10px] shadow-sm">
-                                                    <User size={16} className="text-indigo-500" />
+                                                    <User size={16} className="text-emerald-500" />
                                                     {selectedRecruitEnquiry.name}
                                                 </span>
                                                 <span className="flex items-center gap-2.5 text-slate-600 bg-slate-50 px-5 py-2.5 rounded-2xl border border-slate-200 font-bold uppercase tracking-widest text-[10px] shadow-sm">
-                                                    <Mail size={16} className="text-indigo-500" />
+                                                    <Mail size={16} className="text-emerald-500" />
                                                     {selectedRecruitEnquiry.email}
                                                 </span>
                                             </div>
@@ -378,35 +378,35 @@ const EnquiryManagement = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             <div className="p-8 bg-slate-50 border border-slate-200 rounded-[2.5rem] relative group">
                                                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                                     Resource Requirements
                                                 </div>
                                                 <p className="text-slate-800 font-bold leading-relaxed italic text-lg tracking-tight">"{selectedRecruitEnquiry.hiringNeeds}"</p>
                                             </div>
                                             <div className="p-8 bg-slate-50 border border-slate-200 rounded-[2.5rem]">
                                                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                                     Classification
                                                 </div>
                                                 <div className="relative group">
                                                     <select
                                                         value={selectedRecruitEnquiry.status}
                                                         onChange={(e) => handleStatusUpdate(selectedRecruitEnquiry._id, e.target.value)}
-                                                        className="w-full bg-white text-slate-900 border border-slate-200 rounded-2xl px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 cursor-pointer appearance-none transition-all shadow-sm"
+                                                        className="w-full bg-white text-slate-900 border border-slate-200 rounded-2xl px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 cursor-pointer appearance-none transition-all shadow-sm"
                                                     >
                                                         <option value="pending">Awaiting Intel</option>
                                                         <option value="viewed">Intel Accessed</option>
                                                         <option value="contacted">Link Established</option>
                                                         <option value="closed">Protocol Terminated</option>
                                                     </select>
-                                                    <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-indigo-600 transition-colors" />
+                                                    <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-emerald-600 transition-colors" />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="bg-slate-50 border border-slate-200 rounded-[2.5rem] p-10">
                                             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                                                 Mission Briefing
                                             </div>
                                             <div className="text-slate-600 leading-relaxed font-medium italic text-base">
@@ -417,7 +417,7 @@ const EnquiryManagement = () => {
                                         <div className="pt-8 border-t border-slate-100 flex flex-wrap gap-4">
                                             <a
                                                 href={`mailto:${selectedRecruitEnquiry.email}`}
-                                                className="px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-[1.5rem] text-xs font-black uppercase tracking-widest flex items-center gap-3 transition-all shadow-xl shadow-indigo-600/20 active:scale-95"
+                                                className="px-10 py-5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-[1.5rem] text-xs font-black uppercase tracking-widest flex items-center gap-3 transition-all shadow-xl shadow-emerald-600/20 active:scale-95"
                                             >
                                                 <Mail size={20} />
                                                 Transmit Reply
@@ -427,7 +427,7 @@ const EnquiryManagement = () => {
                                                     onClick={() => handleStatusUpdate(selectedRecruitEnquiry._id, 'viewed')}
                                                     className="px-10 py-5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-[1.5rem] text-xs font-black uppercase tracking-widest flex items-center gap-3 transition-all active:scale-95 shadow-sm"
                                                 >
-                                                    <Check size={20} className="text-indigo-500" />
+                                                    <Check size={20} className="text-emerald-500" />
                                                     Confirm Access
                                                 </button>
                                             )}

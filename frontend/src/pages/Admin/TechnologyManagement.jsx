@@ -193,7 +193,7 @@ const TechnologyManagement = () => {
                 <div className="w-full lg:w-auto relative z-10">
                     <h2 className="text-3xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Mastery Stack</h2>
                     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
-                        <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 shadow-sm font-black">{technologies.length} Tech Nodes</span>
+                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 shadow-sm font-black">{technologies.length} Tech Nodes</span>
                         <span className="opacity-70">Inventory of core technologies and framework protocols.</span>
                     </p>
                 </div>
@@ -208,8 +208,8 @@ const TechnologyManagement = () => {
                             <span>{isSyncing ? "Syncing..." : "Sync Node Services"}</span>
                         </button>
                     )}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={20} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={20} />
                         <input
                             type="text"
                             placeholder="Identify technology..."
@@ -220,7 +220,7 @@ const TechnologyManagement = () => {
                     </div>
                     <button
                         onClick={openCreateModal}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest whitespace-nowrap"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
                         <Plus size={18} strokeWidth={2.5} />
                         <span>Deploy Node</span>
@@ -231,16 +231,16 @@ const TechnologyManagement = () => {
             {/* Grid */}
             {loading ? (
                 <div className="flex justify-center py-20">
-                    <Loader2 className="animate-spin text-indigo-500" size={40} />
+                    <Loader2 className="animate-spin text-emerald-500" size={40} />
                 </div>
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                     {filteredTechnologies.map((tech) => (
-                        <div key={tech._id} className="bg-white border border-slate-200 p-6 rounded-[2rem] flex flex-col items-center gap-4 group hover:border-indigo-300 hover:shadow-md transition-all relative">
+                        <div key={tech._id} className="bg-white border border-slate-200 p-6 rounded-[2rem] flex flex-col items-center gap-4 group hover:border-emerald-300 hover:shadow-md transition-all relative">
                             <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
                                 <button
                                     onClick={() => openEditModal(tech)}
-                                    className="p-2.5 bg-slate-50 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-100 rounded-xl transition-all"
+                                    className="p-2.5 bg-slate-50 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-100 rounded-xl transition-all"
                                     title="Refine Node"
                                 >
                                     <Edit2 size={14} />
@@ -263,7 +263,7 @@ const TechnologyManagement = () => {
                                 />
                             </div>
                             <div className="text-center">
-                                <h3 className="text-slate-900 font-extrabold tracking-tight group-hover:text-indigo-600 transition-colors uppercase text-sm">{tech.name}</h3>
+                                <h3 className="text-slate-900 font-extrabold tracking-tight group-hover:text-emerald-600 transition-colors uppercase text-sm">{tech.name}</h3>
                                 <div className="mt-1.5 inline-flex items-center gap-2 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-100">
                                     <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest">{tech.category}</span>
                                 </div>
@@ -272,8 +272,8 @@ const TechnologyManagement = () => {
                     ))}
 
                     {filteredTechnologies.length === 0 && (
-                        <div className="col-span-full py-24 text-center bg-white rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-indigo-300">
-                            <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 transition-all group-hover:scale-110 group-hover:bg-indigo-50 group-hover:text-indigo-400 group-hover:border-indigo-100 shadow-inner">
+                        <div className="col-span-full py-24 text-center bg-white rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-emerald-300">
+                            <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 transition-all group-hover:scale-110 group-hover:bg-emerald-50 group-hover:text-emerald-400 group-hover:border-emerald-100 shadow-inner">
                                 <Cpu size={44} strokeWidth={1.5} />
                             </div>
                             <h3 className="text-2xl font-extrabold text-slate-900 mb-3 tracking-tight">Stack Inventory Undefined</h3>
@@ -282,7 +282,7 @@ const TechnologyManagement = () => {
                                 <button
                                     onClick={syncDefaultTechs}
                                     disabled={isSyncing}
-                                    className="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-indigo-600/20"
+                                    className="bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-emerald-600/20"
                                 >
                                     <Loader2 size={16} className={isSyncing ? "animate-spin" : ""} />
                                     {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
@@ -332,13 +332,13 @@ const TechnologyManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Protocol Identifier</label>
                                     <div className="relative group">
-                                        <Cpu size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                        <Cpu size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="e.g. React Native"
                                         />
                                     </div>
@@ -373,7 +373,7 @@ const TechnologyManagement = () => {
                                             <select
                                                 value={formData.category}
                                                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 appearance-none cursor-pointer transition-all"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 appearance-none cursor-pointer transition-all"
                                             >
                                                 <option value="frontend">Frontend</option>
                                                 <option value="backend">Backend</option>
@@ -382,7 +382,7 @@ const TechnologyManagement = () => {
                                                 <option value="mobile">Mobile</option>
                                                 <option value="other">Other</option>
                                             </select>
-                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-indigo-600 transition-colors" />
+                                            <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-emerald-600 transition-colors" />
                                         </div>
                                     </div>
                                     <div className="space-y-3">
@@ -391,7 +391,7 @@ const TechnologyManagement = () => {
                                             type="number"
                                             value={formData.order}
                                             onChange={(e) => setFormData({ ...formData, order: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all"
                                         />
                                     </div>
                                 </div>
@@ -407,7 +407,7 @@ const TechnologyManagement = () => {
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
+                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
                                     >
                                         {submitting && <Loader2 size={16} className="animate-spin" />}
                                         <span>{editingTech ? "Commit Sync" : "Deploy Node"}</span>

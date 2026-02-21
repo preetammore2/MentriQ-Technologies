@@ -88,7 +88,7 @@ const AdminLogin = () => {
     return (
         <div className="min-h-screen bg-[#020617] text-white flex items-center justify-center p-4 relative overflow-hidden font-inter">
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[100px] animate-pulse" />
+                <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[100px] animate-pulse" />
                 <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
             </div>
@@ -99,9 +99,9 @@ const AdminLogin = () => {
                 transition={{ duration: 0.6, ease: 'out' }}
                 className="w-full max-w-md relative z-10"
             >
-                <div className="bg-[#0f172a]/60 backdrop-blur-xl border border-white/10 p-8 rounded-[2rem] shadow-2xl shadow-indigo-950/50">
+                <div className="bg-[#0f172a]/60 backdrop-blur-xl border border-white/10 p-8 rounded-[2rem] shadow-2xl shadow-emerald-950/50">
                     <div className="text-center mb-10">
-                        <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-500/30 ring-1 ring-white/30 overflow-hidden">
+                        <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30 ring-1 ring-white/30 overflow-hidden">
                             <img
                                 src="/images/logo1.jpg"
                                 alt="MentriQ Logo"
@@ -124,7 +124,7 @@ const AdminLogin = () => {
                                                 onClick={() => applyBucketCredential(item)}
                                                 className="flex items-center gap-2 text-left text-xs text-white/90 hover:text-white transition-colors"
                                             >
-                                                <UserRound size={14} className="text-indigo-300" />
+                                                <UserRound size={14} className="text-emerald-300" />
                                                 <span className="font-semibold">{item.email}</span>
                                             </button>
                                             <button
@@ -142,7 +142,7 @@ const AdminLogin = () => {
                         )}
 
                         <div className="space-y-1">
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 ml-1">Admin Email</label>
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 ml-1">Admin Email</label>
                             <div className="relative group">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                                 <input
@@ -150,14 +150,14 @@ const AdminLogin = () => {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all font-medium"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:bg-white/10 focus:border-emerald-500/50 transition-all font-medium"
                                     placeholder="admin@mentriqtechnologies.in"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-1">
-                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 ml-1">Passkey</label>
+                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 ml-1">Passkey</label>
                             <div className="relative group">
                                 <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={18} />
                                 <input
@@ -165,7 +165,7 @@ const AdminLogin = () => {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-gray-600 focus:outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all font-medium"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-gray-600 focus:outline-none focus:bg-white/10 focus:border-emerald-500/50 transition-all font-medium"
                                     placeholder="Enter your passkey"
                                 />
                                 <button
@@ -182,7 +182,7 @@ const AdminLogin = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2 group mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-2 group mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {loading ? (
                                 <Loader2 size={20} className="animate-spin" />

@@ -97,9 +97,9 @@ const CertificateManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <Award size={28} className="text-indigo-600" />
+                        <Award size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Credential Registry</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {certificates.length} Issued Assets
                         </span>
                     </div>
@@ -107,8 +107,8 @@ const CertificateManagement = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Search recipient or ID..."
@@ -119,7 +119,7 @@ const CertificateManagement = () => {
                     </div>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-emerald-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                     >
                         <Award size={18} />
                         <span>Issue Credential</span>
@@ -145,7 +145,7 @@ const CertificateManagement = () => {
                             {loading ? (
                                 <tr>
                                     <td colSpan="6" className="px-8 py-16 text-center">
-                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4" />
+                                        <div className="w-8 h-8 border-2 border-emerald-500/20 border-t-emerald-600 rounded-full animate-spin mx-auto mb-4" />
                                         <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic">Syncing Registry...</p>
                                     </td>
                                 </tr>
@@ -157,7 +157,7 @@ const CertificateManagement = () => {
                                         <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest italic mb-8">No credentials have been issued in this cycle.</p>
                                         <button
                                             onClick={() => setIsModalOpen(true)}
-                                            className="bg-indigo-600 text-white px-8 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                                            className="bg-emerald-600 text-white px-8 py-3.5 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
                                         >
                                             Initiate Issuance
                                         </button>
@@ -167,7 +167,7 @@ const CertificateManagement = () => {
                                 filteredCerts.map((cert) => (
                                     <tr key={cert._id} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-8 py-6">
-                                            <span className="font-mono text-[10px] text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 font-bold whitespace-nowrap">
+                                            <span className="font-mono text-[10px] text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 font-bold whitespace-nowrap">
                                                 {cert.certificateId}
                                             </span>
                                         </td>
@@ -253,33 +253,33 @@ const CertificateManagement = () => {
                                     <div className="space-y-4">
                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Select Candidate Identity</label>
                                         <div className="relative group">
-                                            <Users size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-indigo-600 transition-colors" />
+                                            <Users size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-emerald-600 transition-colors" />
                                             <select
                                                 required
                                                 value={formData.userId}
                                                 onChange={e => setFormData({ ...formData, userId: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
                                             >
                                                 <option value="">Awaiting selection...</option>
                                                 {users.map(u => <option key={u._id} value={u._id}>{u.name} — {u.email}</option>)}
                                             </select>
-                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-indigo-600 transition-colors" />
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-emerald-600 transition-colors" />
                                         </div>
                                     </div>
                                     <div className="space-y-4">
                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">Academic Program Module</label>
                                         <div className="relative group">
-                                            <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-indigo-600 transition-colors" />
+                                            <BookOpen size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-focus-within:text-emerald-600 transition-colors" />
                                             <select
                                                 required
                                                 value={formData.courseId}
                                                 onChange={e => setFormData({ ...formData, courseId: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
                                             >
                                                 <option value="">Select target curriculum...</option>
                                                 {courses.map(c => <option key={c._id} value={c._id}>{c.title}</option>)}
                                             </select>
-                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-indigo-600 transition-colors" />
+                                            <ChevronDown size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none group-hover:text-emerald-600 transition-colors" />
                                         </div>
                                     </div>
                                     <div className="space-y-6">
@@ -312,7 +312,7 @@ const CertificateManagement = () => {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
+                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-emerald-700 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-emerald-600/20 text-[10px] uppercase tracking-widest"
                                     >
                                         <Award size={20} strokeWidth={3} />
                                         <span>Authorize & Dispatch</span>

@@ -135,11 +135,11 @@ const AdminLayout = ({ children }) => {
                                             key={item.path}
                                             to={item.path}
                                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group relative ${isActive
-                                                ? 'bg-indigo-50 text-indigo-700'
+                                                ? 'bg-emerald-50 text-emerald-700'
                                                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                                 }`}
                                         >
-                                            <Icon size={20} className={`shrink-0 ${isActive ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600'}`} />
+                                            <Icon size={20} className={`shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-400 group-hover:text-slate-600'}`} />
                                             {isSidebarOpen && (
                                                 <span className="font-medium text-[14px] whitespace-nowrap">
                                                     {item.label}
@@ -148,7 +148,7 @@ const AdminLayout = ({ children }) => {
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activePill"
-                                                    className="absolute left-0 w-1 h-6 bg-indigo-600 rounded-r-full"
+                                                    className="absolute left-0 w-1 h-6 bg-emerald-600 rounded-r-full"
                                                 />
                                             )}
                                             {!isSidebarOpen && (

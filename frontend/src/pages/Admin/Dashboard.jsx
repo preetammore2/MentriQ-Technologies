@@ -36,7 +36,7 @@ const StatCard = ({ title, value, icon: Icon, color, delay, trend = 0 }) => (
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.5, ease: "easeOut" }}
-        className="bg-white p-7 rounded-[2.5rem] border border-slate-200 hover:border-indigo-300 hover:shadow-[0_15px_40px_-15px_rgba(79,70,229,0.15)] transition-all group relative overflow-hidden"
+        className="bg-white p-7 rounded-[2.5rem] border border-slate-200 hover:border-emerald-300 hover:shadow-[0_15px_40px_-15px_rgba(16,185,129,0.15)] transition-all group relative overflow-hidden"
     >
         <div className="flex justify-between items-start relative z-10">
             <div>
@@ -97,8 +97,8 @@ const Dashboard = () => {
         return (
             <div className="flex flex-col items-center justify-center h-[70vh] gap-6">
                 <div className="relative">
-                    <div className="w-16 h-16 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin" />
-                    <Activity className="absolute inset-0 m-auto text-indigo-600 animate-pulse" size={24} />
+                    <div className="w-16 h-16 border-4 border-slate-100 border-t-emerald-600 rounded-full animate-spin" />
+                    <Activity className="absolute inset-0 m-auto text-emerald-600 animate-pulse" size={24} />
                 </div>
                 <p className="text-slate-400 font-medium text-sm tracking-wide">Syncing Command Center...</p>
             </div>
@@ -118,7 +118,7 @@ const Dashboard = () => {
 
     const getActivityIcon = (type) => {
         switch (type) {
-            case 'enrollment': return <GraduationCap className="text-indigo-600" size={18} />;
+            case 'enrollment': return <GraduationCap className="text-emerald-600" size={18} />;
             case 'internship': return <Briefcase className="text-slate-600" size={18} />;
             case 'user': return <UserPlus className="text-emerald-600" size={18} />;
             default: return <Activity className="text-slate-400" size={18} />;
@@ -144,9 +144,9 @@ const Dashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <StatCard title="Student Base" value={raw.students} icon={Users} color="bg-indigo-600" trend={12} delay={0} />
-                <StatCard title="Course Assets" value={raw.courses} icon={BookOpen} color="bg-indigo-600" trend={5} delay={0.1} />
-                <StatCard title="Total Enrollment" value={raw.enrolledStudents} icon={GraduationCap} color="bg-indigo-600" trend={18} delay={0.2} />
+                <StatCard title="Student Base" value={raw.students} icon={Users} color="bg-emerald-600" trend={12} delay={0} />
+                <StatCard title="Course Assets" value={raw.courses} icon={BookOpen} color="bg-emerald-600" trend={5} delay={0.1} />
+                <StatCard title="Total Enrollment" value={raw.enrolledStudents} icon={GraduationCap} color="bg-emerald-600" trend={18} delay={0.2} />
                 <StatCard title="Active Visitors" value={raw.activeVisitors || 0} icon={Eye} color="bg-slate-900" trend={0} delay={0.3} />
             </div>
 
@@ -159,7 +159,7 @@ const Dashboard = () => {
                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Enrollment trends • Last 30 Cycles</p>
                         </div>
                         <div className="flex items-center gap-3 px-6 py-3 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
-                            <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-[0_0_10px_rgba(79,70,229,0.3)]" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
                             <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Confirmed Enrollees</span>
                         </div>
                     </div>
@@ -169,9 +169,9 @@ const Dashboard = () => {
                             <AreaChart data={analytics.enrollmentTrends}>
                                 <defs>
                                     <linearGradient id="colorInd" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.15} />
-                                        <stop offset="50%" stopColor="#4f46e5" stopOpacity={0.05} />
-                                        <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.15} />
+                                        <stop offset="50%" stopColor="#10b981" stopOpacity={0.05} />
+                                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -194,14 +194,14 @@ const Dashboard = () => {
                                     fontWeight="700"
                                 />
                                 <Tooltip
-                                    cursor={{ stroke: '#4f46e5', strokeWidth: 1, strokeDasharray: '4 4' }}
+                                    cursor={{ stroke: '#10b981', strokeWidth: 1, strokeDasharray: '4 4' }}
                                     content={({ active, payload, label }) => {
                                         if (active && payload && payload.length) {
                                             return (
                                                 <div className="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-white/10 animate-in zoom-in-95 duration-200">
                                                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{label}</p>
                                                     <p className="text-xl font-extrabold tracking-tighter">
-                                                        {payload[0].value} <span className="text-[10px] text-indigo-400 uppercase tracking-widest">Enrollees</span>
+                                                        {payload[0].value} <span className="text-[10px] text-emerald-400 uppercase tracking-widest">Enrollees</span>
                                                     </p>
                                                 </div>
                                             );
@@ -212,7 +212,7 @@ const Dashboard = () => {
                                 <Area
                                     type="monotone"
                                     dataKey="count"
-                                    stroke="#4f46e5"
+                                    stroke="#10b981"
                                     strokeWidth={4}
                                     fill="url(#colorInd)"
                                     animationDuration={2000}
@@ -229,8 +229,8 @@ const Dashboard = () => {
                             <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">Active Pulse</h3>
                             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Real-time Node Events</p>
                         </div>
-                        <div className="p-2.5 bg-indigo-50 rounded-xl">
-                            <Activity className="text-indigo-600" size={24} />
+                        <div className="p-2.5 bg-emerald-50 rounded-xl">
+                            <Activity className="text-emerald-600" size={24} />
                         </div>
                     </div>
 
@@ -238,11 +238,11 @@ const Dashboard = () => {
                         {analytics.recentActivity.map((activity, idx) => (
                             <div key={activity.id} className="flex gap-4 group cursor-default">
                                 <div className="mt-1 relative">
-                                    <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:bg-indigo-50 group-hover:border-indigo-200 transition-all shadow-sm">
+                                    <div className="w-11 h-11 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:bg-emerald-50 group-hover:border-emerald-200 transition-all shadow-sm">
                                         {getActivityIcon(activity.type)}
                                     </div>
                                     {idx !== analytics.recentActivity.length - 1 && (
-                                        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-100 group-hover:bg-indigo-100 transition-colors" />
+                                        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-100 group-hover:bg-emerald-100 transition-colors" />
                                     )}
                                 </div>
                                 <div className="flex-1">
@@ -250,7 +250,7 @@ const Dashboard = () => {
                                         {activity.message.replace('User', 'Node Entity').replace('student', 'authorized node')}
                                     </div>
                                     <div className="text-[10px] text-slate-400 font-bold mt-1.5 flex items-center gap-2 uppercase tracking-widest">
-                                        <TrendingUp size={10} className="text-indigo-500" />
+                                        <TrendingUp size={10} className="text-emerald-500" />
                                         {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • Live Signal
                                     </div>
                                 </div>
@@ -267,7 +267,7 @@ const Dashboard = () => {
             {/* Infrastructure Linkage */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-slate-900 rounded-3xl p-8 border border-white/5 relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent pointer-events-none" />
                     <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div>
                             <h3 className="text-lg font-bold text-white">Cloud Infrastructure</h3>
@@ -276,7 +276,7 @@ const Dashboard = () => {
                         <div className="flex gap-8">
                             {[
                                 { label: 'API Gateway', status: 'Operational', color: 'bg-emerald-500' },
-                                { label: 'Compute Unit', status: 'Primary', color: 'bg-indigo-500' }
+                                { label: 'Compute Unit', status: 'Primary', color: 'bg-emerald-500' }
                             ].map((s, i) => (
                                 <div key={i} className="space-y-1">
                                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">{s.label}</span>
@@ -296,7 +296,7 @@ const Dashboard = () => {
                             <h3 className="text-lg font-bold text-slate-900">Visitor Reach</h3>
                             <p className="text-slate-400 text-xs font-medium mt-1">Popular page segments across the portal</p>
                         </div>
-                        <button onClick={() => navigate('/admin/settings')} className="text-indigo-600 hover:text-indigo-700 transition-colors">
+                        <button onClick={() => navigate('/admin/settings')} className="text-emerald-600 hover:text-emerald-700 transition-colors">
                             <ArrowRight size={20} />
                         </button>
                     </div>

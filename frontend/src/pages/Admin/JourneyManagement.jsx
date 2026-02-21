@@ -91,9 +91,9 @@ const JourneyManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <MapPin size={28} className="text-indigo-600" />
+                        <MapPin size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Timeline Architecture</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {milestones.length} Historical Nodes
                         </span>
                     </div>
@@ -105,7 +105,7 @@ const JourneyManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
+                    className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                 >
                     <Plus size={18} />
                     <span>Append Node</span>
@@ -128,7 +128,7 @@ const JourneyManagement = () => {
                             {loading ? (
                                 <tr>
                                     <td colSpan="4" className="px-6 py-16 text-center">
-                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4" />
+                                        <div className="w-8 h-8 border-2 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4" />
                                         <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">Syncing Timeline...</p>
                                     </td>
                                 </tr>
@@ -140,14 +140,14 @@ const JourneyManagement = () => {
                                         </div>
                                         <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight uppercase">Timeline Void</h3>
                                         <p className="text-slate-500 mb-8 max-w-xs mx-auto font-medium text-[10px] uppercase tracking-widest leading-relaxed">No historical nodes detected in the trajectory data.</p>
-                                        <button onClick={() => setIsModalOpen(true)} className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95">Initiate First Node</button>
+                                        <button onClick={() => setIsModalOpen(true)} className="bg-emerald-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95">Initiate First Node</button>
                                     </td>
                                 </tr>
                             ) : (
                                 milestones.map((milestone) => (
                                     <tr key={milestone._id} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-8 py-6">
-                                            <span className="text-indigo-600 font-black text-[10px] uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 shadow-sm">
+                                            <span className="text-emerald-600 font-black text-[10px] uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 shadow-sm">
                                                 Node #{milestone.order}
                                             </span>
                                         </td>
@@ -218,7 +218,7 @@ const JourneyManagement = () => {
                                             type="number"
                                             value={formData.year}
                                             onChange={e => setFormData({ ...formData, year: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="20XX"
                                         />
                                     </div>
@@ -229,7 +229,7 @@ const JourneyManagement = () => {
                                             type="number"
                                             value={formData.order}
                                             onChange={e => setFormData({ ...formData, order: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black text-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="0"
                                         />
                                     </div>
@@ -240,7 +240,7 @@ const JourneyManagement = () => {
                                         required
                                         value={formData.title}
                                         onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 uppercase tracking-tight"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 uppercase tracking-tight"
                                         placeholder="Strategic Expansion..."
                                     />
                                 </div>
@@ -251,7 +251,7 @@ const JourneyManagement = () => {
                                         rows={4}
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all resize-none placeholder:text-slate-300"
                                         placeholder="Details of the event..."
                                     />
                                 </div>
@@ -266,7 +266,7 @@ const JourneyManagement = () => {
                                     </button>
                                     <button
                                         type="submit"
-                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
+                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest"
                                     >
                                         <Check size={20} strokeWidth={3} />
                                         <span>Confirm Node</span>

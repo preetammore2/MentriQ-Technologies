@@ -113,7 +113,7 @@ const SettingsManagement = () => {
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-            <div className="w-12 h-12 border-4 border-slate-100 border-t-indigo-600 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-slate-100 border-t-emerald-600 rounded-full animate-spin" />
             <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">Identifying System Parameters...</p>
         </div>
     );
@@ -127,7 +127,7 @@ const SettingsManagement = () => {
                 <div className="relative z-10">
                     <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Global Parameters</h2>
                     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
-                        <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 shadow-sm font-black">System Wide</span>
+                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 shadow-sm font-black">System Wide</span>
                         <span className="opacity-70">Manage contact information and social media entry points.</span>
                     </p>
                 </div>
@@ -139,7 +139,7 @@ const SettingsManagement = () => {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
 
                     <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 relative z-10">
-                        <MapPin size={14} className="text-indigo-600" />
+                        <MapPin size={14} className="text-emerald-600" />
                         Communication Nodes
                     </h3>
 
@@ -147,12 +147,12 @@ const SettingsManagement = () => {
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Official Uplink</label>
                             <div className="relative group/field">
-                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-indigo-600 transition-colors" size={18} />
+                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-emerald-600 transition-colors" size={18} />
                                 <input
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                     placeholder="support@mentriq.in"
                                 />
                             </div>
@@ -161,12 +161,12 @@ const SettingsManagement = () => {
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Vocal Interface</label>
                             <div className="relative group/field">
-                                <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-indigo-600 transition-colors" size={18} />
+                                <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within/field:text-emerald-600 transition-colors" size={18} />
                                 <input
                                     name="phone"
                                     value={formData.phone}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                     placeholder="+91 98765 43210"
                                 />
                             </div>
@@ -179,7 +179,7 @@ const SettingsManagement = () => {
                                 rows={3}
                                 value={formData.address}
                                 onChange={handleChange}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
                                 placeholder="Headquarters details..."
                             />
                         </div>
@@ -191,14 +191,14 @@ const SettingsManagement = () => {
                     <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
 
                     <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-3 relative z-10">
-                        <Globe size={14} className="text-indigo-600" />
+                        <Globe size={14} className="text-emerald-600" />
                         Network Integration
                     </h3>
 
                     <div className="space-y-5 relative z-10">
                         {[
                             { key: 'instagram', label: 'Meta Visual Access', icon: Instagram, color: 'text-rose-500', bg: 'bg-rose-50', border: 'border-rose-100' },
-                            { key: 'linkedin', label: 'Professional Matrix', icon: Linkedin, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' },
+                            { key: 'linkedin', label: 'Professional Matrix', icon: Linkedin, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
                             { key: 'twitter', label: 'Micro Signal Stream', icon: Twitter, color: 'text-slate-700', bg: 'bg-slate-50', border: 'border-slate-200' },
                             { key: 'whatsapp', label: 'Direct Sync Channel', icon: MessageCircle, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' }
                         ].map((social) => (
@@ -212,7 +212,7 @@ const SettingsManagement = () => {
                                         name={`social.${social.key}`}
                                         value={formData.socialLinks[social.key]}
                                         onChange={handleChange}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 pl-16 text-slate-800 font-black text-xs focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 pl-16 text-slate-800 font-black text-xs focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                         placeholder={`Enter ${social.key} destination...`}
                                     />
                                 </div>
@@ -242,7 +242,7 @@ const SettingsManagement = () => {
                             { key: 'placements', label: 'Success Velocity', placeholder: '98%', icon: TrendingUp },
                             { key: 'trainers', label: 'Expert Nodes', placeholder: '60+', icon: UserRound }
                         ].map((stat) => (
-                            <div key={stat.key} className="space-y-3 p-6 bg-slate-50 border border-slate-100 rounded-3xl transition-all hover:bg-white hover:border-indigo-200 hover:shadow-lg group/stat">
+                            <div key={stat.key} className="space-y-3 p-6 bg-slate-50 border border-slate-100 rounded-3xl transition-all hover:bg-white hover:border-emerald-200 hover:shadow-lg group/stat">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</label>
                                 <input
                                     name={`stat.${stat.key}`}
@@ -251,7 +251,7 @@ const SettingsManagement = () => {
                                     className="w-full bg-transparent border-none p-0 text-slate-900 font-black text-2xl focus:outline-none placeholder:text-slate-200"
                                     placeholder={stat.placeholder}
                                 />
-                                <div className="h-1 w-8 bg-indigo-100 rounded-full group-hover/stat:w-full group-hover/stat:bg-indigo-500 transition-all duration-500" />
+                                <div className="h-1 w-8 bg-emerald-100 rounded-full group-hover/stat:w-full group-hover/stat:bg-emerald-500 transition-all duration-500" />
                             </div>
                         ))}
                     </div>
@@ -260,7 +260,7 @@ const SettingsManagement = () => {
                         <button
                             type="submit"
                             disabled={saving}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-10 py-5 rounded-2xl font-black flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-[0.2em] w-full md:w-auto justify-center"
+                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-10 py-5 rounded-2xl font-black flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-[0.2em] w-full md:w-auto justify-center"
                         >
                             {saving ? (
                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

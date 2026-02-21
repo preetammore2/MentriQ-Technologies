@@ -205,7 +205,7 @@ const ServiceManagement = () => {
                             type="button"
                             onClick={() => setFormData({ ...formData, icon: iconName })}
                             className={`p-4 rounded-xl flex items-center justify-center transition-all border ${formData.icon === iconName && formData.iconType === 'icon'
-                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/20'
+                                ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-600/20'
                                 : 'bg-slate-50 text-slate-400 border-slate-100 hover:bg-slate-100 hover:text-slate-900'
                                 }`}
                         >
@@ -222,7 +222,7 @@ const ServiceManagement = () => {
         { label: 'Purple', value: 'from-purple-500 to-pink-500' },
         { label: 'Sunset', value: 'from-orange-500 to-red-500' },
         { label: 'Emerald', value: 'from-green-500 to-emerald-500' },
-        { label: 'Indigo', value: 'from-indigo-500 to-purple-500' },
+        { label: 'Indigo', value: 'from-emerald-500 to-purple-500' },
         { label: 'Midnight', value: 'from-slate-700 to-slate-900' },
     ];
 
@@ -232,9 +232,9 @@ const ServiceManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <Layers size={28} className="text-indigo-600" />
+                        <Layers size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Services & Capabilities</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {services.length} Active
                         </span>
                     </div>
@@ -259,7 +259,7 @@ const ServiceManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                     >
                         <Icons.Plus size={18} />
                         <span>Deploy New Service</span>
@@ -283,7 +283,7 @@ const ServiceManagement = () => {
                             {loading ? (
                                 <tr>
                                     <td colSpan="4" className="px-8 py-20 text-center">
-                                        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                                        <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                                         <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Loading Service Registry...</p>
                                     </td>
                                 </tr>
@@ -299,7 +299,7 @@ const ServiceManagement = () => {
                                             <button
                                                 onClick={syncDefaultServices}
                                                 disabled={isSyncing}
-                                                className="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-indigo-600/20"
+                                                className="bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-emerald-600/20"
                                             >
                                                 <Icons.RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
                                                 {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
@@ -322,7 +322,7 @@ const ServiceManagement = () => {
                                     return (
                                         <tr key={service._id} className="hover:bg-slate-50/50 transition-colors group">
                                             <td className="px-8 py-6">
-                                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md overflow-hidden bg-gradient-to-br border border-white/20 p-3 group-hover:scale-110 transition-transform ${service.color || 'from-indigo-500 to-purple-500'}`}>
+                                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-md overflow-hidden bg-gradient-to-br border border-white/20 p-3 group-hover:scale-110 transition-transform ${service.color || 'from-emerald-500 to-purple-500'}`}>
                                                     {isImage ? (
                                                         <img
                                                             src={resolveImageUrl(service.icon)}
@@ -340,7 +340,7 @@ const ServiceManagement = () => {
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol ID</span>
                                                     <div className="h-1 w-1 rounded-full bg-slate-300" />
-                                                    <span className="text-[10px] font-mono font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">{service._id.slice(-8).toUpperCase()}</span>
+                                                    <span className="text-[10px] font-mono font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">{service._id.slice(-8).toUpperCase()}</span>
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
@@ -350,7 +350,7 @@ const ServiceManagement = () => {
                                                 <div className="flex justify-end gap-3">
                                                     <button
                                                         onClick={() => handleEdit(service)}
-                                                        className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-slate-200 hover:border-indigo-100"
+                                                        className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-slate-200 hover:border-emerald-100"
                                                         title="Refine Capability"
                                                     >
                                                         <Icons.Edit2 size={16} />
@@ -401,14 +401,14 @@ const ServiceManagement = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, iconType: 'icon' })}
-                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'icon' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
+                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'icon' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
                                             >
                                                 Standard Icon
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, iconType: 'image' })}
-                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'image' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
+                                                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${formData.iconType === 'image' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-900'}`}
                                             >
                                                 Custom Image
                                             </button>
@@ -445,7 +445,7 @@ const ServiceManagement = () => {
                                         required
                                         value={formData.title}
                                         onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 transition-all placeholder:text-slate-300"
                                         placeholder="e.g. Neural Architecture Design"
                                     />
                                 </div>
@@ -456,7 +456,7 @@ const ServiceManagement = () => {
                                         rows={3}
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 transition-all placeholder:text-slate-300 resize-none leading-relaxed"
                                         placeholder="Detailed functional brief..."
                                     />
                                 </div>
@@ -466,7 +466,7 @@ const ServiceManagement = () => {
                                         rows={4}
                                         value={formData.features}
                                         onChange={e => setFormData({ ...formData, features: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-bold text-xs focus:outline-none focus:ring-4 focus:ring-indigo-500/5 transition-all placeholder:text-slate-300 resize-none leading-loose uppercase tracking-widest"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-bold text-xs focus:outline-none focus:ring-4 focus:ring-emerald-500/5 transition-all placeholder:text-slate-300 resize-none leading-loose uppercase tracking-widest"
                                         placeholder="DEPLOYMENT STRATEGY 2.0&#10;QUANTUM ENCRYPTION HUB&#10;REAL-TIME ANALYTICS CLOUD"
                                     />
                                 </div>
@@ -479,7 +479,7 @@ const ServiceManagement = () => {
                                                 key={gradient.value}
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, color: gradient.value })}
-                                                className={`relative p-5 rounded-2xl border transition-all overflow-hidden group ${formData.color === gradient.value ? 'border-indigo-600 ring-4 ring-indigo-500/5 shadow-md' : 'border-slate-100 hover:border-slate-300 bg-slate-50'}`}
+                                                className={`relative p-5 rounded-2xl border transition-all overflow-hidden group ${formData.color === gradient.value ? 'border-emerald-600 ring-4 ring-emerald-500/5 shadow-md' : 'border-slate-100 hover:border-slate-300 bg-slate-50'}`}
                                             >
                                                 <div className={`absolute inset-0 bg-gradient-to-br ${gradient.value} opacity-90 group-hover:opacity-100 transition-opacity`} />
                                                 <span className="relative z-10 text-[9px] font-black text-white uppercase tracking-[0.2em] drop-shadow-md">{gradient.label}</span>
@@ -500,7 +500,7 @@ const ServiceManagement = () => {
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
+                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-bold flex items-center justify-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest disabled:opacity-60"
                                     >
                                         {submitting ? <Icons.Loader2 size={18} className="animate-spin" /> : <Icons.Check size={18} strokeWidth={3} />}
                                         <span>{submitting ? "Commit Changes..." : "Confirm Deployment"}</span>

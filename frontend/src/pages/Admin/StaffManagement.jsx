@@ -133,9 +133,9 @@ const StaffManagement = () => {
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
                     <div>
                         <div className="flex items-center gap-3 mb-1">
-                            <UserCog size={28} className="text-indigo-600" />
+                            <UserCog size={28} className="text-emerald-600" />
                             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Personnel Registry</h2>
-                            <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                                 {staffUsers.length} Authorized
                             </span>
                         </div>
@@ -143,8 +143,8 @@ const StaffManagement = () => {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                            <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                            <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search personnel..."
@@ -165,25 +165,25 @@ const StaffManagement = () => {
             </div>
 
             <div className="bg-white p-10 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32 transition-all group-hover:bg-indigo-100/50" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50/50 rounded-full blur-3xl -mr-32 -mt-32 transition-all group-hover:bg-emerald-100/50" />
                 <h3 className="text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] mb-8 flex items-center gap-3 relative z-10">
-                    <ShieldCheck size={14} className="text-indigo-600" />
+                    <ShieldCheck size={14} className="text-emerald-600" />
                     Elevation Protocol
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-6 items-center relative z-10">
                     <div className="relative group">
-                        <UserRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                        <UserRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                         <select
                             value={selectedStudentId}
                             onChange={(e) => setSelectedStudentId(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer"
                         >
                             <option value="">Select Candidate to Promote...</option>
                             {students.map((u) => (
                                 <option key={u._id} value={u._id} className="text-slate-900 font-medium">{u.name} ({u.email})</option>
                             ))}
                         </select>
-                        <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-indigo-600 transition-colors" />
+                        <ChevronDown size={18} className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-emerald-600 transition-colors" />
                     </div>
                     <button
                         onClick={() => grantFromStudent("moderator")}
@@ -195,7 +195,7 @@ const StaffManagement = () => {
                     <button
                         onClick={() => grantFromStudent("admin")}
                         disabled={!selectedStudentId}
-                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-indigo-600 text-white hover:bg-indigo-700 transition-all disabled:opacity-30 uppercase tracking-widest shadow-md shadow-indigo-600/10"
+                        className="px-8 py-6 rounded-2xl text-[10px] font-black bg-emerald-600 text-white hover:bg-emerald-700 transition-all disabled:opacity-30 uppercase tracking-widest shadow-md shadow-emerald-600/10"
                     >
                         Admin Privilege
                     </button>
@@ -220,7 +220,7 @@ const StaffManagement = () => {
                                     <tr key={user._id} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shadow-sm">
+                                                <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">
                                                     <UserRound size={20} />
                                                 </div>
                                                 <div>
@@ -231,7 +231,7 @@ const StaffManagement = () => {
                                         </td>
                                         <td className="px-8 py-6">
                                             <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${user.role === "admin"
-                                                ? "bg-indigo-50 text-indigo-700 border-indigo-100"
+                                                ? "bg-emerald-50 text-emerald-700 border-emerald-100"
                                                 : "bg-emerald-50 text-emerald-700 border-emerald-100"
                                                 }`}>
                                                 {user.role === "admin" ? <ShieldCheck size={10} /> : <UserCog size={10} />}
@@ -311,12 +311,12 @@ const StaffManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] ml-1">New Access Key</label>
                                     <div className="relative group">
-                                        <Lock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                        <Lock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="Min. 6 characters required"
                                             required
                                             minLength={6}
@@ -342,7 +342,7 @@ const StaffManagement = () => {
                                     <button
                                         type="submit"
                                         disabled={resetting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                                     >
                                         {resetting ? <Loader2 size={18} className="animate-spin" /> : <ShieldCheck size={18} />}
                                         <span>Update Protocol</span>

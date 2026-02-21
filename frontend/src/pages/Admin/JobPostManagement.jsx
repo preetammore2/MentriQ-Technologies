@@ -132,9 +132,9 @@ const JobPostManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <Briefcase size={28} className="text-indigo-600" />
+                        <Briefcase size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Recruitment Hub</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {jobs.length} Active Slots
                         </span>
                     </div>
@@ -156,7 +156,7 @@ const JobPostManagement = () => {
                             setFormData(initialFormState);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                     >
                         <Plus size={18} />
                         <span>Post New Job</span>
@@ -165,7 +165,7 @@ const JobPostManagement = () => {
             </div>
 
             {/* Content Search */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center gap-4 group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all shadow-sm">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center gap-4 group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all shadow-sm">
                 <Search className="text-slate-400 ml-5" size={18} />
                 <input
                     type="text"
@@ -194,7 +194,7 @@ const JobPostManagement = () => {
                                 {loading ? (
                                     <tr>
                                         <td colSpan="5" className="px-6 py-16 text-center">
-                                            <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4" />
+                                            <div className="w-8 h-8 border-2 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4" />
                                             <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">Loading data...</p>
                                         </td>
                                     </tr>
@@ -228,7 +228,7 @@ const JobPostManagement = () => {
                                                 </div>
                                             </td>
                                             <td className="px-8 py-6">
-                                                <span className="text-indigo-600 text-[10px] font-black uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 shadow-sm">
+                                                <span className="text-emerald-600 text-[10px] font-black uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 shadow-sm">
                                                     {job.type}
                                                 </span>
                                             </td>
@@ -250,7 +250,7 @@ const JobPostManagement = () => {
                                                     </a>
                                                     <button
                                                         onClick={() => handleEdit(job)}
-                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-slate-200 hover:border-indigo-100 shadow-sm"
+                                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all border border-slate-200 hover:border-emerald-100 shadow-sm"
                                                         title="Refine Post"
                                                     >
                                                         <Edit2 size={16} />
@@ -303,12 +303,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Designated Role</label>
                                         <div className="relative group/field">
-                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Briefcase size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-emerald-500" />
                                             <input
                                                 required
                                                 value={formData.title}
                                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Lead Kinetic Architect"
                                             />
                                         </div>
@@ -316,12 +316,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Affiliate Organization</label>
                                         <div className="relative group/field">
-                                            <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-emerald-500" />
                                             <input
                                                 required
                                                 value={formData.company}
                                                 onChange={e => setFormData({ ...formData, company: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="Organization ID"
                                             />
                                         </div>
@@ -332,12 +332,12 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Station Location</label>
                                         <div className="relative group/field">
-                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-emerald-500" />
                                             <input
                                                 required
                                                 value={formData.location}
                                                 onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Distributed Node"
                                             />
                                         </div>
@@ -345,11 +345,11 @@ const JobPostManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Engagement Frequency</label>
                                         <div className="relative group/field">
-                                            <Clock size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
+                                            <Clock size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-emerald-500" />
                                             <select
                                                 value={formData.type}
                                                 onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none"
                                             >
                                                 <option>Full-time</option>
                                                 <option>Part-time</option>
@@ -363,13 +363,13 @@ const JobPostManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] ml-1">Transmission Bridge (URL)</label>
                                     <div className="relative group/field">
-                                        <ExternalLink size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-indigo-500" />
+                                        <ExternalLink size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within/field:text-emerald-500" />
                                         <input
                                             required
                                             type="url"
                                             value={formData.applicationLink}
                                             onChange={e => setFormData({ ...formData, applicationLink: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 font-mono text-sm"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 font-mono text-sm"
                                             placeholder="https://hq.protocol.apply"
                                         />
                                     </div>
@@ -382,7 +382,7 @@ const JobPostManagement = () => {
                                         rows="4"
                                         value={formData.description}
                                         onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic"
                                         placeholder="Outline the operational objectives..."
                                     />
                                 </div>
@@ -394,7 +394,7 @@ const JobPostManagement = () => {
                                         rows="4"
                                         value={formData.requirements}
                                         onChange={e => setFormData({ ...formData, requirements: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic font-mono text-sm"
+                                        className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all resize-none placeholder:text-slate-300 leading-relaxed italic font-mono text-sm"
                                         placeholder="List critical skills (comma separated)..."
                                     />
                                 </div>
@@ -432,7 +432,7 @@ const JobPostManagement = () => {
                                 <button
                                     form="jobForm"
                                     type="submit"
-                                    className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest"
+                                    className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest"
                                 >
                                     <Check size={20} strokeWidth={3} />
                                     <span>{editingJob ? "Confirm Changes" : "Deploy Opportunity"}</span>

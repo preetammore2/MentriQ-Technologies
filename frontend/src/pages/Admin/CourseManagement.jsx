@@ -167,9 +167,9 @@ const CourseManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <BookOpen size={28} className="text-indigo-600" />
+                        <BookOpen size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Curriculum Registry</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {courses.length} Active Modules
                         </span>
                     </div>
@@ -177,8 +177,8 @@ const CourseManagement = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Find a course..."
@@ -194,7 +194,7 @@ const CourseManagement = () => {
                             setImagePreview(null);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                     >
                         <Plus size={18} />
                         <span>Add Course</span>
@@ -210,14 +210,14 @@ const CourseManagement = () => {
                 </div>
             ) : filteredCourses.length === 0 ? (
                 <div className="bg-white border border-slate-200 rounded-[2.5rem] p-32 text-center group shadow-sm">
-                    <div className="w-24 h-24 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-indigo-100 text-indigo-600 shadow-sm">
+                    <div className="w-24 h-24 bg-emerald-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-emerald-100 text-emerald-600 shadow-sm">
                         <BookOpen size={48} />
                     </div>
                     <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">No Courses Protocol</h3>
                     <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium text-sm leading-relaxed">The curriculum registry is currently offline. Manual deployment required.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/10 active:scale-95 mx-auto"
+                        className="bg-emerald-600 text-white px-10 py-4 rounded-xl font-semibold flex items-center gap-3 justify-center hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10 active:scale-95 mx-auto"
                     >
                         <Plus size={20} />
                         Initialize Curriculum
@@ -249,7 +249,7 @@ const CourseManagement = () => {
                                         >
                                             <td className="px-8 py-6">
                                                 <div className="flex items-center gap-5">
-                                                    <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-1 group-hover:border-indigo-300 transition-all">
+                                                    <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0 shadow-sm p-1 group-hover:border-emerald-300 transition-all">
                                                         <img
                                                             src={resolveImageUrl(course.thumbnailUrl)}
                                                             alt={course.title}
@@ -339,20 +339,20 @@ const CourseManagement = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div className="md:col-span-2 space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1 text-slate-500 uppercase tracking-[0.2em] ml-1">Identity Title</label>
-                                            <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Masterclass in Quantum Engineering" />
+                                            <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Masterclass in Quantum Engineering" />
                                         </div>
 
                                         <div className="md:col-span-2 space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Asset Identity (Card Background)</label>
                                             <div className="relative group">
-                                                <div className="w-full h-40 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 group-hover:border-indigo-400 transition-all overflow-hidden relative">
+                                                <div className="w-full h-40 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center gap-4 group-hover:border-emerald-400 transition-all overflow-hidden relative">
                                                     {imagePreview ? (
                                                         <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                                                     ) : formData.thumbnailUrl ? (
                                                         <img src={resolveImageUrl(formData.thumbnailUrl)} alt="Current" className="w-full h-full object-cover" />
                                                     ) : (
                                                         <>
-                                                            <ImageIcon size={40} className="text-slate-400 group-hover:text-indigo-500 transition-colors" strokeWidth={1.5} />
+                                                            <ImageIcon size={40} className="text-slate-400 group-hover:text-emerald-500 transition-colors" strokeWidth={1.5} />
                                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Inject Visual Asset</span>
                                                         </>
                                                     )}
@@ -363,19 +363,19 @@ const CourseManagement = () => {
 
                                         <div className="md:col-span-2 space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Curriculum Synopsys</label>
-                                            <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Detailed syllabus or overview..." />
+                                            <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Detailed syllabus or overview..." />
                                         </div>
 
                                         <div className="md:col-span-2 space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Learning Nodes (One per line)</label>
-                                            <textarea rows={5} value={formData.modules} onChange={e => setFormData({ ...formData, modules: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2.5rem] p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Module 1: Introduction&#10;Module 2: Advanced Concepts" />
+                                            <textarea rows={5} value={formData.modules} onChange={e => setFormData({ ...formData, modules: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2.5rem] p-8 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Module 1: Introduction&#10;Module 2: Advanced Concepts" />
                                         </div>
 
                                         <div className="space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Lead Instructor</label>
                                             <div className="relative group">
                                                 <Users size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                                <input value={formData.instructor} onChange={e => setFormData({ ...formData, instructor: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="Lead Instructor Name" />
+                                                <input value={formData.instructor} onChange={e => setFormData({ ...formData, instructor: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="Lead Instructor Name" />
                                             </div>
                                         </div>
 
@@ -383,14 +383,14 @@ const CourseManagement = () => {
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Program Domain</label>
                                             <div className="relative group">
                                                 <BarChart size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                                <input required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Technology" />
+                                                <input required value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Technology" />
                                             </div>
                                         </div>
 
                                         <div className="space-y-3">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Aptitude Level</label>
                                             <div className="relative group">
-                                                <select required value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-8 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all appearance-none cursor-pointer">
+                                                <select required value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-8 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all appearance-none cursor-pointer">
                                                     <option value="Beginner">Beginner Tier</option>
                                                     <option value="Intermediate">Intermediate Tier</option>
                                                     <option value="Advanced">Elite Tier</option>
@@ -403,7 +403,7 @@ const CourseManagement = () => {
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Temporal Duration</label>
                                             <div className="relative group">
                                                 <Clock size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                                <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. 12 Weeks" />
+                                                <input required value={formData.duration} onChange={e => setFormData({ ...formData, duration: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. 12 Weeks" />
                                             </div>
                                         </div>
 
@@ -411,7 +411,7 @@ const CourseManagement = () => {
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Economic Value (₹)</label>
                                             <div className="relative group">
                                                 <DollarSign size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                                <input type="number" required value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="0.00" />
+                                                <input type="number" required value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="0.00" />
                                             </div>
                                         </div>
 
@@ -419,7 +419,7 @@ const CourseManagement = () => {
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Strike Price (Ref)</label>
                                             <div className="relative group">
                                                 <X size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                                <input type="number" value={formData.oldPrice} onChange={e => setFormData({ ...formData, oldPrice: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="Original price..." />
+                                                <input type="number" value={formData.oldPrice} onChange={e => setFormData({ ...formData, oldPrice: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 pl-14 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="Original price..." />
                                             </div>
                                         </div>
                                     </div>
@@ -428,7 +428,7 @@ const CourseManagement = () => {
                                         <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-widest hover:bg-slate-100 border border-slate-200 transition-all">
                                             Cancel
                                         </button>
-                                        <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2">
+                                        <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
                                             {submitting ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
                                             {editingCourse ? "Update Module" : "Confirm Manifestation"}
                                         </button>

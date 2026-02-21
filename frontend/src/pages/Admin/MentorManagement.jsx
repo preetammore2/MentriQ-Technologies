@@ -168,9 +168,9 @@ const MentorManagement = () => {
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
                     <div>
                         <div className="flex items-center gap-3 mb-1">
-                            <Users size={28} className="text-indigo-600" />
+                            <Users size={28} className="text-emerald-600" />
                             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Expert Registry</h2>
-                            <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                            <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                                 {mentors.length} Verified
                             </span>
                         </div>
@@ -188,8 +188,8 @@ const MentorManagement = () => {
                                 <span>{isSyncing ? "Syncing..." : "Sync Mentors"}</span>
                             </button>
                         )}
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                            <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center w-full lg:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                            <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search experts..."
@@ -205,7 +205,7 @@ const MentorManagement = () => {
                                 setIsModalOpen(true);
                                 setImageFile(null);
                             }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
+                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                         >
                             <Plus size={18} />
                             <span>Add Mentor</span>
@@ -225,8 +225,8 @@ const MentorManagement = () => {
                                 ))}
                             </div>
                         ) : mentors.length === 0 ? (
-                            <div className="bg-white p-32 text-center rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-indigo-300">
-                                <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 shadow-inner group-hover:scale-110 group-hover:bg-indigo-50 group-hover:text-indigo-400 transition-all">
+                            <div className="bg-white p-32 text-center rounded-[3rem] border border-slate-200 border-dashed group shadow-sm transition-all hover:border-emerald-300">
+                                <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 border border-slate-100 text-slate-200 shadow-inner group-hover:scale-110 group-hover:bg-emerald-50 group-hover:text-emerald-400 transition-all">
                                     <User size={48} strokeWidth={1.5} />
                                 </div>
                                 <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight uppercase">Expert Registry Offline</h3>
@@ -235,7 +235,7 @@ const MentorManagement = () => {
                                     <button
                                         onClick={syncDefaultMentors}
                                         disabled={isSyncing}
-                                        className="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-indigo-600/20"
+                                        className="bg-emerald-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] active:scale-95 transition-all flex items-center gap-3 justify-center shadow-lg shadow-emerald-600/20"
                                     >
                                         <RefreshCw size={18} className={isSyncing ? "animate-spin" : ""} />
                                         {isSyncing ? "Synchronizing Hub..." : "Sync Global Nodes"}
@@ -274,7 +274,7 @@ const MentorManagement = () => {
                                                     >
                                                         <td className="px-8 py-6">
                                                             <div className="flex items-center gap-5">
-                                                                <div className="w-16 h-16 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 shrink-0 shadow-sm relative p-1 group-hover:border-indigo-300 transition-all">
+                                                                <div className="w-16 h-16 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 shrink-0 shadow-sm relative p-1 group-hover:border-emerald-300 transition-all">
                                                                     <img
                                                                         src={resolveImageUrl(mentor.image || mentor.imageUrl, "/images/user.png")}
                                                                         alt={mentor.name}
@@ -285,7 +285,7 @@ const MentorManagement = () => {
                                                                 <div>
                                                                     <div className="font-bold text-slate-900 text-base tracking-tight">{mentor.name}</div>
                                                                     {(mentor.linkedin || mentor.linkedinUrl) && (
-                                                                        <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-indigo-500 hover:text-indigo-600 flex items-center gap-1 font-semibold mt-1">
+                                                                        <a href={mentor.linkedin || mentor.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-500 hover:text-emerald-600 flex items-center gap-1 font-semibold mt-1">
                                                                             <Linkedin size={12} /> LinkedIn Profile
                                                                         </a>
                                                                     )}
@@ -295,7 +295,7 @@ const MentorManagement = () => {
                                                         <td className="px-8 py-6">
                                                             <div className="text-slate-900 font-semibold text-xs uppercase tracking-wider">{mentor.role}</div>
                                                             <div className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mt-1.5 flex items-center gap-2">
-                                                                <Briefcase size={12} className="text-indigo-500" />
+                                                                <Briefcase size={12} className="text-emerald-500" />
                                                                 {mentor.company}
                                                             </div>
                                                         </td>
@@ -358,7 +358,7 @@ const MentorManagement = () => {
                                         <form onSubmit={handleSubmit} className="space-y-10">
                                             <div className="flex flex-col items-center justify-center">
                                                 <div className="relative group">
-                                                    <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center group-hover:border-indigo-400 transition-all">
+                                                    <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center group-hover:border-emerald-400 transition-all">
                                                         {imageFile ? (
                                                             <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
                                                         ) : formData.image ? (
@@ -369,14 +369,14 @@ const MentorManagement = () => {
                                                                 onError={(e) => { e.target.src = "/images/user.png" }}
                                                             />
                                                         ) : (
-                                                            <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-indigo-500 transition-colors">
+                                                            <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-emerald-500 transition-colors">
                                                                 <User size={32} strokeWidth={1.5} />
                                                                 <span className="text-[8px] font-black uppercase tracking-widest">Initialize Avatar</span>
                                                             </div>
                                                         )}
                                                     </div>
                                                     <label className="absolute bottom-[-10px] right-[-10px] bg-white p-3 rounded-2xl cursor-pointer hover:scale-110 transition-all shadow-xl border border-slate-200">
-                                                        <Plus size={16} strokeWidth={3} className="text-indigo-600" />
+                                                        <Plus size={16} strokeWidth={3} className="text-emerald-600" />
                                                         <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files[0])} className="hidden" />
                                                     </label>
                                                 </div>
@@ -385,42 +385,42 @@ const MentorManagement = () => {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 <div className="col-span-2 space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
-                                                    <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Satoshi Nakamoto" />
+                                                    <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Satoshi Nakamoto" />
                                                 </div>
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Professional Designation</label>
-                                                    <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Quantum Lead" />
+                                                    <input required value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. Quantum Lead" />
                                                 </div>
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Parent Organization</label>
-                                                    <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. OpenAI" />
+                                                    <input required value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="e.g. OpenAI" />
                                                 </div>
                                                 <div className="space-y-2">
                                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Expertise Link (LinkedIn)</label>
-                                                    <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300" placeholder="https://linkedin.com/in/unique-id" />
+                                                    <input value={formData.linkedin} onChange={e => setFormData({ ...formData, linkedin: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300" placeholder="https://linkedin.com/in/unique-id" />
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div className="space-y-2">
                                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Years Experience</label>
-                                                        <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all" placeholder="e.g. 10+" />
+                                                        <input value={formData.yearsExperience} onChange={e => setFormData({ ...formData, yearsExperience: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all" placeholder="e.g. 10+" />
                                                     </div>
                                                     <div className="space-y-2">
                                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Projects Done</label>
-                                                        <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all" placeholder="e.g. 50+" />
+                                                        <input value={formData.projectsCompleted} onChange={e => setFormData({ ...formData, projectsCompleted: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-5 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all" placeholder="e.g. 50+" />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Expert Background / Bio</label>
-                                                <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Brief professional synopsis..." />
+                                                <textarea required rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-700 font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300 resize-none leading-relaxed" placeholder="Brief professional synopsis..." />
                                             </div>
 
                                             <div className="flex gap-4 pt-10 shrink-0 border-t border-slate-100 -mx-10 px-10 -mb-10 bg-slate-50/50 mt-10">
                                                 <button type="button" onClick={closeModal} className="flex-1 py-4.5 rounded-2xl bg-white text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-slate-900 border border-slate-200 transition-all">
                                                     Abort Deployment
                                                 </button>
-                                                <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-3 active:scale-95">
+                                                <button type="submit" disabled={submitting} className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-3 active:scale-95">
                                                     {submitting ? <RefreshCw size={18} className="animate-spin" /> : <Check size={18} strokeWidth={3} />}
                                                     <span>{editingMentor ? "Commit Sync" : "Deploy Expert"}</span>
                                                 </button>

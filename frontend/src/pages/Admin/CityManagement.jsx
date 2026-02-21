@@ -129,9 +129,9 @@ const CityManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <MapPin size={28} className="text-indigo-600" />
+                        <MapPin size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">City Presence</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {cities.length} Distributed Nodes
                         </span>
                     </div>
@@ -139,8 +139,8 @@ const CityManagement = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                         <input
                             type="text"
                             placeholder="Filter cities..."
@@ -155,7 +155,7 @@ const CityManagement = () => {
                             setFormData(initialFormState);
                             setIsModalOpen(true);
                         }}
-                        className="bg-indigo-600 text-white hover:bg-indigo-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-indigo-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
+                        className="bg-emerald-600 text-white hover:bg-emerald-700 px-6 py-3 rounded-xl font-semibold shadow-md shadow-emerald-600/10 flex items-center justify-center gap-2 transition-all active:scale-95 text-sm whitespace-nowrap"
                     >
                         <Plus size={18} />
                         <span>Add City</span>
@@ -179,7 +179,7 @@ const CityManagement = () => {
                     <p className="text-slate-500 mb-8 max-w-xs mx-auto font-medium text-[10px] uppercase tracking-widest leading-relaxed">No regional nodes detected in the current sector.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                        className="bg-emerald-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
                     >
                         Establish First Terminal
                     </button>
@@ -209,7 +209,7 @@ const CityManagement = () => {
                                         >
                                             <td className="px-8 py-6">
                                                 <div className="flex items-center gap-6">
-                                                    <div className="w-24 h-14 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center p-1 shrink-0 group-hover:border-indigo-500/30 transition-all shadow-sm">
+                                                    <div className="w-24 h-14 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center p-1 shrink-0 group-hover:border-emerald-500/30 transition-all shadow-sm">
                                                         <img
                                                             src={resolveImageUrl(city.image)}
                                                             alt={city.name}
@@ -293,11 +293,11 @@ const CityManagement = () => {
                             <form id="cityForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-10 space-y-10 custom-scrollbar">
                                 <div className="flex flex-col items-center justify-center mb-4">
                                     <label className="relative group cursor-pointer w-full">
-                                        <div className={`w-full aspect-video rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.image ? 'border-indigo-500/30' : 'border-slate-200 bg-slate-50 group-hover:border-indigo-300'} shadow-inner`}>
+                                        <div className={`w-full aspect-video rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.image ? 'border-emerald-500/30' : 'border-slate-200 bg-slate-50 group-hover:border-emerald-300'} shadow-inner`}>
                                             {formData.image ? (
                                                 <img src={resolveImageUrl(formData.image)} alt="Preview" className="w-full h-full object-cover relative z-10" />
                                             ) : (
-                                                <div className="flex flex-col items-center gap-4 text-slate-300 group-hover:text-indigo-400 transition-colors relative z-10 p-10">
+                                                <div className="flex flex-col items-center gap-4 text-slate-300 group-hover:text-emerald-400 transition-colors relative z-10 p-10">
                                                     <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center border border-slate-100 shadow-sm">
                                                         <Camera size={38} strokeWidth={1.5} />
                                                     </div>
@@ -306,11 +306,11 @@ const CityManagement = () => {
                                             )}
                                             {uploading && (
                                                 <div className="absolute inset-0 bg-white/80 backdrop-blur-md flex items-center justify-center z-20">
-                                                    <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                                                    <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="absolute -bottom-3 right-6 px-8 py-4 bg-indigo-600 text-white rounded-[1.5rem] shadow-xl group-hover:scale-110 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest z-30 active:scale-95 border-4 border-white">
+                                        <div className="absolute -bottom-3 right-6 px-8 py-4 bg-emerald-600 text-white rounded-[1.5rem] shadow-xl group-hover:scale-110 transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-widest z-30 active:scale-95 border-4 border-white">
                                             <Upload size={16} strokeWidth={3} />
                                             <span>Inject Visual</span>
                                         </div>
@@ -322,12 +322,12 @@ const CityManagement = () => {
                                     <div className="space-y-4">
                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-1">City Designation</label>
                                         <div className="relative group">
-                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-600 transition-colors" />
+                                            <MapPin size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-600 transition-colors" />
                                             <input
                                                 required
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-extrabold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 outline-none transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. New York Terminal"
                                             />
                                         </div>
@@ -338,7 +338,7 @@ const CityManagement = () => {
                                         <textarea
                                             value={formData.description}
                                             onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300 min-h-[120px] resize-none leading-relaxed"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 outline-none transition-all placeholder:text-slate-300 min-h-[120px] resize-none leading-relaxed"
                                             placeholder="Primary technological hub and learning sanctuary..."
                                         />
                                     </div>
@@ -350,7 +350,7 @@ const CityManagement = () => {
                                                 type="number"
                                                 value={formData.order}
                                                 onChange={e => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-extrabold focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-extrabold focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 outline-none transition-all placeholder:text-slate-300"
                                                 placeholder="0"
                                             />
                                         </div>
@@ -384,7 +384,7 @@ const CityManagement = () => {
                                     form="cityForm"
                                     type="submit"
                                     disabled={uploading || submitting}
-                                    className="px-12 py-5 rounded-2xl font-black bg-indigo-600 text-white hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95 transition-all text-[10px] uppercase tracking-widest flex items-center gap-4 disabled:opacity-50"
+                                    className="px-12 py-5 rounded-2xl font-black bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-600/20 hover:scale-105 active:scale-95 transition-all text-[10px] uppercase tracking-widest flex items-center gap-4 disabled:opacity-50"
                                 >
                                     <Check size={20} strokeWidth={3} />
                                     <span>{submitting ? "Syncing..." : (editingCity ? "Commit Changes" : "Deploy Node")}</span>

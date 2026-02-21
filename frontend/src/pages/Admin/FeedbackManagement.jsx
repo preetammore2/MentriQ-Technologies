@@ -106,9 +106,9 @@ const FeedbackManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <MessageSquare size={28} className="text-indigo-600" />
+                        <MessageSquare size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Success Narratives</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {feedbacks.length} Verified Briefings
                         </span>
                     </div>
@@ -120,7 +120,7 @@ const FeedbackManagement = () => {
                         setFormData(initialFormState);
                         setIsModalOpen(true);
                     }}
-                    className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
+                    className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 whitespace-nowrap text-[10px] uppercase tracking-widest"
                 >
                     <Plus size={18} />
                     <span>Append Narrative</span>
@@ -143,7 +143,7 @@ const FeedbackManagement = () => {
                     <p className="text-slate-500 mb-8 max-w-xs mx-auto font-medium text-[10px] uppercase tracking-widest leading-relaxed">No student testimonials detected in the registry.</p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95"
+                        className="bg-emerald-600 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95"
                     >
                         Initiate First Narrative
                     </button>
@@ -180,7 +180,7 @@ const FeedbackManagement = () => {
                                                             onError={(e) => { e.currentTarget.src = "/images/user.png"; }}
                                                         />
                                                     ) : (
-                                                        <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-indigo-600 border border-slate-200 text-xl">
+                                                        <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-emerald-600 border border-slate-200 text-xl">
                                                             {item.name.charAt(0)}
                                                         </div>
                                                     )}
@@ -256,7 +256,7 @@ const FeedbackManagement = () => {
                                 <div className="space-y-6">
                                     <div className="flex justify-center mb-4">
                                         <label className="relative group cursor-pointer">
-                                            <div className="w-32 h-32 rounded-[2.5rem] border-2 border-dashed border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center transition-all group-hover:border-indigo-300 shadow-inner">
+                                            <div className="w-32 h-32 rounded-[2.5rem] border-2 border-dashed border-slate-200 bg-slate-50 overflow-hidden flex items-center justify-center transition-all group-hover:border-emerald-300 shadow-inner">
                                                 {imageFile ? (
                                                     <img src={URL.createObjectURL(imageFile)} alt="Preview" className="w-full h-full object-cover" />
                                                 ) : formData.image ? (
@@ -269,11 +269,11 @@ const FeedbackManagement = () => {
                                                 )}
                                                 {uploading && (
                                                     <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center">
-                                                        <div className="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                                                        <div className="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="absolute -bottom-2 -right-2 bg-indigo-600 text-white rounded-2xl p-3 shadow-lg group-hover:scale-110 transition-all active:scale-95 border-4 border-white">
+                                            <div className="absolute -bottom-2 -right-2 bg-emerald-600 text-white rounded-2xl p-3 shadow-lg group-hover:scale-110 transition-all active:scale-95 border-4 border-white">
                                                 <Upload size={16} strokeWidth={3} />
                                             </div>
                                             <input
@@ -291,7 +291,7 @@ const FeedbackManagement = () => {
                                             rows={5}
                                             value={formData.message}
                                             onChange={e => setFormData({ ...formData, message: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all resize-none placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-3xl p-8 text-slate-700 font-medium italic leading-relaxed focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all resize-none placeholder:text-slate-300"
                                             placeholder="What did the student say..."
                                         />
                                     </div>
@@ -302,7 +302,7 @@ const FeedbackManagement = () => {
                                                 required
                                                 value={formData.name}
                                                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. Rahul Sharma"
                                             />
                                         </div>
@@ -312,7 +312,7 @@ const FeedbackManagement = () => {
                                                 required
                                                 value={formData.role}
                                                 onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 text-slate-900 font-black focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="e.g. MERN Developer"
                                             />
                                         </div>
@@ -329,7 +329,7 @@ const FeedbackManagement = () => {
                                     <button
                                         type="submit"
                                         disabled={uploading}
-                                        className="bg-indigo-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest disabled:opacity-50"
+                                        className="bg-emerald-600 text-white px-12 py-5 rounded-2xl font-black flex items-center gap-4 hover:bg-emerald-700 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest disabled:opacity-50"
                                     >
                                         <Plus size={20} strokeWidth={3} />
                                         <span>Confirm Narrative</span>

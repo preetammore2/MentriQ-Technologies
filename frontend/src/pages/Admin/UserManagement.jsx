@@ -153,13 +153,13 @@ const UserManagement = () => {
                 <div className="w-full lg:w-auto relative z-10">
                     <h2 className="text-3xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Candidate Registry</h2>
                     <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
-                        <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 shadow-sm font-black">{students.length} Nodes</span>
+                        <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 shadow-sm font-black">{students.length} Nodes</span>
                         <span className="opacity-70">Authenticated database of active learners and enrollment entities.</span>
                     </p>
                 </div>
                 <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-4 relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
-                        <Search className="text-slate-400 ml-4 shrink-0 group-focus-within:text-indigo-500 transition-colors" size={20} />
+                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-1 pr-6 flex items-center w-full sm:w-auto group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
+                        <Search className="text-slate-400 ml-4 shrink-0 group-focus-within:text-emerald-500 transition-colors" size={20} />
                         <input
                             type="text"
                             placeholder="Identify candidate profile..."
@@ -178,7 +178,7 @@ const UserManagement = () => {
                         </button>
                         <button
                             onClick={openCreateModal}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-indigo-600/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
+                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-4 rounded-xl font-bold flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-emerald-600/20 text-[10px] uppercase tracking-widest flex-1 sm:flex-none justify-center"
                         >
                             <Plus size={18} strokeWidth={2.5} />
                             <span>Deploy Profile</span>
@@ -210,7 +210,7 @@ const UserManagement = () => {
                                     >
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-5">
-                                                <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold border border-indigo-100 shadow-sm transition-transform group-hover:scale-110">
+                                                <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-bold border border-emerald-100 shadow-sm transition-transform group-hover:scale-110">
                                                     {(user.name || "S").charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
@@ -221,7 +221,7 @@ const UserManagement = () => {
                                         </td>
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold uppercase tracking-wider bg-slate-50 w-fit px-3 py-1.5 rounded-lg border border-slate-100">
-                                                <TrendingUp size={12} className="text-indigo-500" />
+                                                <TrendingUp size={12} className="text-emerald-500" />
                                                 {new Date(user.createdAt).toLocaleDateString(undefined, {
                                                     month: 'short',
                                                     day: 'numeric',
@@ -233,7 +233,7 @@ const UserManagement = () => {
                                             <div className="flex justify-end gap-3">
                                                 <button
                                                     onClick={() => openEditModal(user)}
-                                                    className="p-2.5 rounded-xl text-slate-400 hover:text-indigo-600 bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-100 transition-all"
+                                                    className="p-2.5 rounded-xl text-slate-400 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-100 transition-all"
                                                     title="Refine Entity"
                                                 >
                                                     <Edit2 size={16} />
@@ -295,13 +295,13 @@ const UserManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Entity Name</label>
                                     <div className="relative group">
-                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                        <User size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="Full Name"
                                         />
                                     </div>
@@ -310,22 +310,22 @@ const UserManagement = () => {
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Electronic Mail</label>
                                     <div className="relative group">
-                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                         <input
                                             type="email"
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                             placeholder="email@example.com"
                                         />
                                     </div>
                                 </div>
 
                                 {editingUser && (
-                                    <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-6 flex items-start gap-4">
-                                        <KeyRound className="text-indigo-600 shrink-0" size={20} />
-                                        <p className="text-xs text-indigo-700 font-medium leading-relaxed">
+                                    <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-6 flex items-start gap-4">
+                                        <KeyRound className="text-emerald-600 shrink-0" size={20} />
+                                        <p className="text-xs text-emerald-700 font-medium leading-relaxed">
                                             Password management is locked for active accounts. Administrators cannot view or override student passkeys directly.
                                         </p>
                                     </div>
@@ -335,14 +335,14 @@ const UserManagement = () => {
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Security Key</label>
                                         <div className="relative group">
-                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                            <KeyRound size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                             <input
                                                 type="password"
                                                 required
                                                 minLength={6}
                                                 value={formData.password}
                                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                 placeholder="Cryptographic String"
                                             />
                                         </div>
@@ -360,7 +360,7 @@ const UserManagement = () => {
                                     <button
                                         type="submit"
                                         disabled={submitting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-emerald-500 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2"
                                     >
                                         {submitting ? (
                                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

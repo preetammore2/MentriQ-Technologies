@@ -170,13 +170,13 @@ const PartnerManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden group">
                 <div className="flex flex-col lg:flex-row gap-8 lg:items-center lg:justify-between relative z-10">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center border border-indigo-100 shadow-sm">
-                            <Handshake size={28} className="text-indigo-600" />
+                        <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100 shadow-sm">
+                            <Handshake size={28} className="text-emerald-600" />
                         </div>
                         <div>
                             <div className="flex items-center gap-3 mb-1">
                                 <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Alliance Registry</h2>
-                                <span className="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                                <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                                     {partners.length} Entities
                                 </span>
                             </div>
@@ -195,8 +195,8 @@ const PartnerManagement = () => {
                                 <span>{isSyncing ? "Syncing..." : "Sync Partners"}</span>
                             </button>
                         )}
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all w-full lg:w-auto">
-                            <Search className="text-slate-400 ml-4 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                        <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all w-full lg:w-auto">
+                            <Search className="text-slate-400 ml-4 group-focus-within:text-emerald-500 transition-colors" size={18} />
                             <input
                                 type="text"
                                 placeholder="Search partners..."
@@ -211,7 +211,7 @@ const PartnerManagement = () => {
                                 setFormData(initialFormState);
                                 setIsModalOpen(true);
                             }}
-                            className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
+                            className="bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all active:scale-95 text-[10px] uppercase tracking-widest whitespace-nowrap"
                         >
                             <Plus size={18} />
                             <span>Add Partner</span>
@@ -227,7 +227,7 @@ const PartnerManagement = () => {
                     </div>
                 ) : filteredPartners.length === 0 ? (
                     <div className="bg-white border border-slate-200 rounded-[2.5rem] p-32 text-center group shadow-sm">
-                        <div className="w-24 h-24 bg-indigo-50 rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-indigo-100 text-indigo-600 shadow-sm">
+                        <div className="w-24 h-24 bg-emerald-50 rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-emerald-100 text-emerald-600 shadow-sm">
                             <Building2 size={48} />
                         </div>
                         <h3 className="text-3xl font-extrabold text-slate-900 mb-3 tracking-tight">Alliance Network Offline</h3>
@@ -243,7 +243,7 @@ const PartnerManagement = () => {
                             </button>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 active:scale-95 text-[10px] uppercase tracking-widest"
+                                className="bg-emerald-600 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 justify-center hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-600/20 active:scale-95 text-[10px] uppercase tracking-widest"
                             >
                                 <Plus size={18} />
                                 Initialize Registry
@@ -274,7 +274,7 @@ const PartnerManagement = () => {
                                             >
                                                 <td className="px-8 py-6">
                                                     <div className="flex items-center gap-5">
-                                                        <div className="w-20 h-14 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-2.5 shrink-0 group-hover:border-indigo-300 transition-all shadow-sm">
+                                                        <div className="w-20 h-14 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-2.5 shrink-0 group-hover:border-emerald-300 transition-all shadow-sm">
                                                             <img
                                                                 src={resolveImageUrl(partner.logo)}
                                                                 alt={partner.name}
@@ -290,7 +290,7 @@ const PartnerManagement = () => {
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     {partner.website ? (
-                                                        <a href={partner.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-600 hover:text-indigo-700 text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-indigo-100">
+                                                        <a href={partner.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-lg text-emerald-600 hover:text-emerald-700 text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-emerald-100">
                                                             <Globe size={12} />
                                                             {getSafeWebsiteHost(partner.website)}
                                                         </a>
@@ -350,22 +350,22 @@ const PartnerManagement = () => {
                                 <form id="partnerForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto pr-4 -mr-4 space-y-10 custom-scrollbar">
                                     <div className="flex flex-col items-center justify-center">
                                         <label className="relative group cursor-pointer">
-                                            <div className={`w-48 h-48 rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.logo ? 'border-indigo-400 bg-white' : 'border-slate-200 bg-slate-50 hover:border-indigo-400'}`}>
+                                            <div className={`w-48 h-48 rounded-[2.5rem] border-2 border-dashed flex items-center justify-center overflow-hidden transition-all relative ${formData.logo ? 'border-emerald-400 bg-white' : 'border-slate-200 bg-slate-50 hover:border-emerald-400'}`}>
                                                 {formData.logo ? (
                                                     <img src={resolveImageUrl(formData.logo)} alt="Preview" className="w-full h-full object-contain p-6 relative z-10" />
                                                 ) : (
-                                                    <div className="flex flex-col items-center gap-4 text-slate-400 group-hover:text-indigo-500 transition-colors relative z-10">
+                                                    <div className="flex flex-col items-center gap-4 text-slate-400 group-hover:text-emerald-500 transition-colors relative z-10">
                                                         <Camera size={32} strokeWidth={1.5} />
                                                         <span className="text-[10px] font-black uppercase tracking-[0.3em]">Initialize Logo</span>
                                                     </div>
                                                 )}
                                                 {uploading && (
                                                     <div className="absolute inset-0 bg-white/80 flex items-center justify-center backdrop-blur-sm z-20">
-                                                        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                                                        <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
                                                     </div>
                                                 )}
                                             </div>
-                                            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-white text-indigo-600 border border-slate-200 rounded-2xl shadow-xl group-hover:-translate-y-1 transition-all flex items-center gap-3 text-xs font-black uppercase tracking-widest z-30 opacity-0 group-hover:opacity-100">
+                                            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-white text-emerald-600 border border-slate-200 rounded-2xl shadow-xl group-hover:-translate-y-1 transition-all flex items-center gap-3 text-xs font-black uppercase tracking-widest z-30 opacity-0 group-hover:opacity-100">
                                                 <Upload size={14} strokeWidth={3} />
                                                 <span>Inject Asset</span>
                                             </div>
@@ -377,12 +377,12 @@ const PartnerManagement = () => {
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Entity Designation</label>
                                             <div className="relative group">
-                                                <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                                <Building2 size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                                 <input
                                                     required
                                                     value={formData.name}
                                                     onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                     placeholder="e.g. Aether Dynamics"
                                                 />
                                             </div>
@@ -390,11 +390,11 @@ const PartnerManagement = () => {
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Digital Domain</label>
                                             <div className="relative group">
-                                                <Globe size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+                                                <Globe size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
                                                 <input
                                                     value={formData.website}
                                                     onChange={e => setFormData({ ...formData, website: e.target.value })}
-                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/30 transition-all placeholder:text-slate-300"
+                                                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-6 pl-16 text-slate-900 font-bold focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/30 transition-all placeholder:text-slate-300"
                                                     placeholder="https://aether.network"
                                                 />
                                             </div>
@@ -414,7 +414,7 @@ const PartnerManagement = () => {
                                         form="partnerForm"
                                         type="submit"
                                         disabled={uploading || submitting}
-                                        className="flex-2 py-4.5 rounded-2xl bg-indigo-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 active:scale-95"
+                                        className="flex-2 py-4.5 rounded-2xl bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 active:scale-95"
                                     >
                                         <Check size={18} strokeWidth={3} />
                                         <span>{submitting ? "Processing..." : (editingPartner ? "Sync Changes" : "Deploy Entity")}</span>

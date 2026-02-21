@@ -96,9 +96,9 @@ const EnrollmentManagement = () => {
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 overflow-hidden relative group">
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-1">
-                        <GraduationCap size={28} className="text-indigo-600" />
+                        <GraduationCap size={28} className="text-emerald-600" />
                         <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Access Registry</h2>
-                        <span className="ml-2 text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100 text-xs font-bold">
+                        <span className="ml-2 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-100 text-xs font-bold">
                             {enrollments.length} Active Records
                         </span>
                     </div>
@@ -106,7 +106,7 @@ const EnrollmentManagement = () => {
                 </div>
 
                 <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3 relative z-10">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-indigo-300 focus-within:ring-4 focus-within:ring-indigo-500/5 transition-all">
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl pr-6 flex items-center group focus-within:border-emerald-300 focus-within:ring-4 focus-within:ring-emerald-500/5 transition-all">
                         <Search className="text-slate-400 ml-4" size={18} />
                         <input
                             type="text"
@@ -143,7 +143,7 @@ const EnrollmentManagement = () => {
                             {loading ? (
                                 <tr>
                                     <td colSpan="5" className="px-6 py-16 text-center">
-                                        <div className="w-8 h-8 border-2 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin mx-auto mb-4" />
+                                        <div className="w-8 h-8 border-2 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4" />
                                         <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">Fetching Enrollments...</p>
                                     </td>
                                 </tr>
